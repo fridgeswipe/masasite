@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kauneushoitola Kahdeksas Aisti – Tampere</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: #2d1a2e;
+      --accent: #c9a96e;
+      --bg: #faf8f5;
+      --surface: #ffffff;
+      --text: #1a1218;
+      --muted: #7a6b7d;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding-top: 40px;
+      font-size: 1rem;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'DM Serif Display', serif;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    /* DEMO BANNER */
+    #demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(201, 169, 110, 0.92);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.02em;
+      text-align: center;
+      padding: 0 16px;
+    }
+    #demo-banner a {
+      color: #fff;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      margin-left: 4px;
+    }
+    #demo-banner a:hover { opacity: 0.85; }
+
+    /* NAV */
+    #main-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(250, 248, 245, 0.92);
+      border-bottom: 1px solid rgba(45, 26, 46, 0.08);
+      backdrop-filter: blur(12px);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    #main-nav.scrolled {
+      background: rgba(250, 248, 245, 0.97);
+      box-shadow: 0 2px 20px rgba(45, 26, 46, 0.07);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 48px);
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .btn-nav {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-nav:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(201, 169, 110, 0.35);
+    }
+    .btn-nav:active { transform: translateY(0); }
+
+    /* HERO */
+    #hero {
+      min-height: 100svh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('assets/kauneushoitola-kahdeksas-aisti-9084c081/photo1.jpg') center center / cover no-repeat;
+      z-index: 0;
+    }
+    #hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.65) 100%);
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 0 clamp(16px, 5vw, 48px);
+      animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: block;
+    }
+    .hero-h1 {
+      font-size: clamp(2.6rem, 6.5vw, 5.5rem);
+      font-family: 'DM Serif Display', serif;
+      color: #fff;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255,255,255,0.82);
+      max-width: 580px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+    .hero-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 36px;
+    }
+    .hero-rating .stars {
+      display: flex;
+      gap: 3px;
+    }
+    .hero-rating .stars i {
+      width: 18px;
+      height: 18px;
+      color: #f5c842;
+      fill: #f5c842;
+    }
+    .hero-rating span {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.88);
+      font-weight: 500;
+    }
+    .hero-btns {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 15px 32px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(201, 169, 110, 0.4);
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+    .btn-ghost {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 14px 30px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 1.5px solid rgba(255,255,255,0.45);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      backdrop-filter: blur(6px);
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.25);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+    }
+
+    /* SECTION SHARED */
+    .section-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .section-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      font-family: 'DM Serif Display', serif;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    /* REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* SERVICES */
+    #palvelut { padding-block: clamp(64px, 10vw, 120px); background: var(--bg); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .service-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+      cursor: default;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(45, 26, 46, 0.12);
+    }
+    .service-icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: color-mix(in srgb, var(--accent) 14%, transparent);
+      margin-bottom: 20px;
+    }
+    .service-icon-wrap i {
+      width: 28px;
+      height: 28px;
+      color: var(--accent);
+    }
+    .service-card h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      color: var(--primary);
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+    .service-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* WHY US */
+    #why { padding-block: clamp(64px, 10vw, 120px); background: var(--surface); }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 40px;
+      margin-top: 64px;
+    }
+    .why-item {
+      text-align: center;
+      padding: 0 16px;
+    }
+    .why-item i {
+      width: 42px;
+      height: 42px;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .why-item h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.15rem;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    .why-item p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
+    /* GALLERY STRIP */
+    #gallery { padding-block: clamp(48px, 7vw, 88px); background: var(--bg); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 0;
+    }
+    .gallery-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 16px;
+      display: block;
+      transition: transform 0.4s ease, filter 0.4s ease;
+    }
+    .gallery-img:hover { transform: scale(1.025); filter: brightness(0.92); }
+
+    /* REVIEWS */
+    #arvostelut { padding-block: clamp(64px, 10vw, 120px); background: #faf4ef; }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .review-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .review-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 16px;
+    }
+    .review-stars i {
+      width: 16px;
+      height: 16px;
+      color: #f5c842;
+      fill: #f5c842;
+    }
+    .review-quote {
+      font-size: 0.92rem;
+      color: var(--muted);
+      font-style: italic;
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .review-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--primary) 12%, var(--accent) 15%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Serif Display', serif;
+      font-size: 0.95rem;
+      color: var(--primary);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .review-author-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .review-verified {
+      font-size: 0.72rem;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    /* HOURS */
+    #aukioloajat { padding-block: clamp(64px, 10vw, 120px); background: var(--surface); }
+    .hours-card {
+      max-width: 560px;
+      margin: 56px auto 0;
+      background: var(--bg);
+      border-radius: 20px;
+      padding: 40px 40px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(45, 26, 46, 0.07);
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-day {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    .hours-time {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    /* CONTACT */
+    #yhteystiedot { padding-block: clamp(64px, 10vw, 120px); background: var(--bg); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+      margin-top: 56px;
+    }
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr; }
+    }
+    .contact-info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .contact-icon-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--accent) 14%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon-wrap i {
+      width: 20px;
+      height: 20px;
+      color: var(--accent);
+    }
+    .contact-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .contact-value {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--primary);
+      line-height: 1.5;
+    }
+    .contact-value a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .contact-value a:hover { color: var(--accent); }
+
+    /* FOOTER */
+    footer {
+      background: var(--primary);
+      padding: 48px clamp(16px, 5vw, 48px) 32px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+    }
+    .footer-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.35rem;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+    .footer-address {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.55);
+    }
+    .footer-divider {
+      width: 40px;
+      height: 1px;
+      background: rgba(201, 169, 110, 0.4);
+      margin: 8px auto;
+    }
+    .footer-credit {
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.04em;
+    }
+    .footer-credit a {
+      color: rgba(201, 169, 110, 0.6);
+      text-decoration: none;
+    }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hours-card { padding: 28px 20px; }
+      .contact-info-row { gap: 12px; }
+    }
+
+    /* Decorative accent line */
+    .accent-line {
+      display: inline-block;
+      width: 48px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- DEMO BANNER -->
+<div id="demo-banner">
+  Kauneushoitola Kahdeksas Aisti — tämä esimerkkisivu on tehty juuri teille · Haluatko oman?
+  <a href="mailto:team@masasite.com">Ota yhteyttä →</a>
+</div>
+
+<!-- STICKY NAV -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="#hero">
+      <img src="https://b9999bbea8.clvaw-cdnwnd.com/e00d41c76a1394e9bb36ae5368d6164a/200000023-36936378e6/Aisti-logo-candy-apple-white-licourice-5.jpeg?ph=b9999bbea8"
+           class="h-9 object-contain" alt="Kahdeksas Aisti logo" style="height:40px; object-fit:contain;" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="#palvelut">Palvelut</a></li>
+      <li><a href="#aukioloajat">Aukioloajat</a></li>
+      <li><a href="#yhteystiedot">Yhteystiedot</a></li>
+    </ul>
+    <a href="http://www.8aisti.com/" target="_blank" class="btn-nav">Varaa aika</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-content">
+    <span class="hero-eyebrow">Kauneushoitola · Tampere</span>
+    <h1 class="hero-h1">Luksusta ja hetkeä<br>vain sinulle</h1>
+    <p class="hero-sub">Kauneushoitola Kahdeksas Aisti on Tampereen keskustassa sijaitseva korkealaatuinen kauneuspalveluiden toimittaja. Kokeneesta tiimistämme löytyvät kosmetologit, jalkahoitaja ja hierojat, jotka tarjoavat kasvohoidoista urheiluhierontaan saakka monipuolisia palveluja.</p>
+    <div class="hero-rating">
+      <div class="stars">
+        <i data-lucide="star"></i>
+        <i data-lucide="star"></i>
+        <i data-lucide="star"></i>
+        <i data-lucide="star"></i>
+        <i data-lucide="star"></i>
+      </div>
+      <span>4.9/5 · 327 arvostelua Google</span>
+    </div>
+    <div class="hero-btns">
+      <a href="http://www.8aisti.com/" target="_blank" class="btn-primary">
+        <i data-lucide="calendar" style="width:18px;height:18px;"></i>
+        Varaa aika nyt
+      </a>
+      <a href="tel:0504089918" class="btn-ghost">
+        <i data-lucide="phone" style="width:18px;height:18px;"></i>
+        050 4089918
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="palvelut">
+  <div class="section-wrap">
+    <div class="reveal" style="text-align:center;">
+      <span class="section-label">Palvelumme</span>
+      <div class="accent-line"></div>
+      <h2 class="section-title">Mitä tarjoamme?</h2>
+      <p style="color:var(--muted); max-width:560px; margin: 16px auto 0; font-size:0.97rem;">
+        Sertifioitu ammattilaistiimimme takaa parhaan tuloksen jokaisen käynnin yhteydessä.
+      </p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon-wrap">
+          <i data-lucide="sparkles"></i>
+        </div>
+        <h3>Kasvohoidot</h3>
+        <p>Ammattilaiset kasvohoidot, joilla päivität ihon ja saavutat kirkkaamman ihonvärin. Räätälöity sinun ihotyypillesi.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon-wrap">
+          <i data-lucide="eye"></i>
+        </div>
+        <h3>Ripsipalvelut</h3>
+        <p>Ripsien pidennys ja kestotaivutukset sekä laminoinnit ammattilaisella tekniikalla. Kestävä ja luonnollinen lopputulos.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon-wrap">
+          <i data-lucide="heart"></i>
+        </div>
+        <h3>Vartalohoidot & Sokeroinnit</h3>
+        <p>Koko vartalon hoitoa sokeroinnista ihonhoitoon asti. Lempeä ja tehokas menetelmä ihon hyvinvointiin.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon-wrap">
+          <i data-lucide="hand"></i>
+        </div>
+        <h3>Jalka- ja käsihoidot</h3>
+        <p>Ammattimainen jalkahoito ja käsihoidot rauhoittavalla tuoksuilla. Arki tuntuu kevyemmältä hoidon jälkeen.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon-wrap">
+          <i data-lucide="activity"></i>
+        </div>
+        <h3>Hieronta & Urheiluhieronta</h3>
+        <p>Perinteinen rentoutava hieronta ja urheiluhieronta lihaksille. Kokeneet hierojamme löytävät oikeat kohdat.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section id="why">
+  <div class="section-wrap">
+    <div class="reveal" style="text-align:center;">
+      <span class="section-label">Miksi valita meidät</span>
+      <div class="accent-line"></div>
+      <h2 class="section-title">Luottamuksen arvoinen valinta</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-item reveal">
+        <i data-lucide="award"></i>
+        <h3>4.9/5 luotetuin Tampereella</h3>
+        <p>327 tyytyväistä asiakasta on arvioinut meidät huippuluokkaiseksi. Laatu ei ole sattumaa.</p>
+      </div>
+      <div class="why-item reveal">
+        <i data-lucide="users"></i>
+        <h3>Kokenut ammattilaistiimi</h3>
+        <p>Kosmetologit, jalkahoitaja ja hierojat — sertifioitu tiimi, joka tuntee alansa läpikotaisin.</p>
+      </div>
+      <div class="why-item reveal">
+        <i data-lucide="zap"></i>
+        <h3>24/7 verkkoajanvaraus</h3>
+        <p>Varaa aikasi milloin tahansa verkossa. Pitkät aukioloajat arjelle ja viikonlopulle.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-wrap">
+    <div class="gallery-grid">
+      <img src="assets/kauneushoitola-kahdeksas-aisti-9084c081/photo1.jpg" alt="Kauneushoitola Kahdeksas Aisti" class="gallery-img reveal" />
+      <img src="assets/kauneushoitola-kahdeksas-aisti-9084c081/photo2.jpg" alt="Kauneushoitola Kahdeksas Aisti palvelut" class="gallery-img reveal" />
+      <img src="assets/kauneushoitola-kahdeksas-aisti-9084c081/photo3.jpg" alt="Kauneushoitola Kahdeksas Aisti tilat" class="gallery-img reveal" />
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="arvostelut">
+  <div class="section-wrap">
+    <div class="reveal" style="text-align:center;">
+      <span class="section-label">Asiakaskokemukset</span>
+      <div class="accent-line"></div>
+      <h2 class="section-title">Mitä asiakkaamme sanovat</h2>
+      <p style="color:var(--muted); max-width:500px; margin: 16px auto 0; font-size:0.95rem;">
+        Yli 327 Google-arvostelua. Tyytyväinen asiakas on paras mittarimme.
+      </p>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card reveal">
+        <div class="review-stars">
+          <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+        </div>
+        <p class="review-quote">"Had a massage with Niko and can highly recommend it. Your back will thank you after."</p>
+        <div class="review-author">
+          <div class="review-avatar">LE</div>
+          <div>
+            <div class="review-author-name">Ludvig Elveberg</div>
+            <div class="review-verified">✓ Vahvistettu arvostelu</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal">
+        <div class="review-stars">
+          <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+        </div>
+        <p class="review-quote">"High quality service with professionals at a good price. Very recommended."</p>
+        <div class="review-author">
+          <div class="review-avatar">WS</div>
+          <div>
+            <div class="review-author-name">Wendy Santana</div>
+            <div class="review-verified">✓ Vahvistettu arvostelu</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal">
+        <div class="review-stars">
+          <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+        </div>
+        <p class="review-quote">"We had a very nice experience, Niko and Jonna were very mindful and applied exactly the right pressure to the right places. They took their time to give us a very good massage."</p>
+        <div class="review-author">
+          <div class="review-avatar">AS</div>
+          <div>
+            <div class="review-author-name">A S</div>
+            <div class="review-verified">✓ Vahvistettu arvostelu</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OPENING HOURS -->
+<section id="aukioloajat">
+  <div class="section-wrap">
+    <div class="reveal" style="text-align:center;">
+      <span class="section-label">Aukioloajat</span>
+      <div class="accent-line"></div>
+      <h2 class="section-title">Milloin olemme avoinna?</h2>
+    </div>
+    <div class="hours-card reveal">
+      <div class="hours-row">
+        <span class="hours-day">Maanantai</span>
+        <span class="hours-time">9:00 – 20:00</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day">Tiistai</span>
+        <span class="hours-time">9:00 – 20:00</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day">Keskiviikko</span>
+        <span class="hours-time">9:00 – 20:00</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day">Torstai</span>
+        <span class="hours-time">9:00 – 20:00</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day">Perjantai</span>
+        <span class="hours-time">9:00 – 20:00</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day">Lauantai</span>
+        <span class="hours-time">10:00 – 18:00</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day">Sunnuntai</span>
+        <span class="hours-time">10:00 – 18:00</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="yhteystiedot">
+  <div class="section-wrap">
+    <div class="reveal" style="text-align:center;">
+      <span class="section-label">Yhteystiedot</span>
+      <div class="accent-line"></div>
+      <h2 class="section-title">Löydät meidät täältä</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="reveal">
+        <div class="contact-info-row">
+          <div class="contact-icon-wrap"><i data-lucide="map-pin"></i></div>
+          <div>
+            <div class="contact-label">Osoite</div>
+            <div class="contact-value">Tuomiokirkonkatu 8<br>33100 Tampere, Suomi</div>
+          </div>
+        </div>
+        <div class="contact-info-row">
+          <div class="contact-icon-wrap"><i data-lucide="phone"></i></div>
+          <div>
+            <div class="contact-label">Puhelin</div>
+            <div class="contact-value"><a href="tel:0504089918">050 4089918</a></div>
+          </div>
+        </div>
+        <div class="contact-info-row">
+          <div class="contact-icon-wrap"><i data-lucide="globe"></i></div>
+          <div>
+            <div class="contact-label">Verkkosivut</div>
+            <div class="contact-value"><a href="http://www.8aisti.com/" target="_blank">www.8aisti.com</a></div>
+          </div>
+        </div>
+        <div class="contact-info-row">
+          <div class="contact-icon-wrap"><i data-lucide="clock"></i></div>
+          <div>
+            <div class="contact-label">Aukioloajat</div>
+            <div class="contact-value">Ma–Pe 9:00–20:00<br>La–Su 10:00–18:00</div>
+          </div>
+        </div>
+        <div style="margin-top: 32px;">
+          <a href="http://www.8aisti.com/" target="_blank" class="btn-primary" style="background:var(--primary);">
+            <i data-lucide="calendar" style="width:18px;height:18px;"></i>
+            Varaa aika verkossa
+          </a>
+        </div>
+      </div>
+      <div class="reveal">
+        <iframe
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Tuomiokirkonkatu%208%2C%2033100%20Tampere%2C%20Suomi%2C%20Tampere%2C%20Finland&language=fi"
+          width="100%"
+          height="380"
+          style="border:0; border-radius:20px; box-shadow: 0 4px 24px rgba(45,26,46,0.1); min-height:280px;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Kauneushoitola Kahdeksas Aisti sijainti kartalla">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-name">Kauneushoitola Kahdeksas Aisti</div>
+    <div class="footer-address">Tuomiokirkonkatu 8, 33100 Tampere · 050 4089918</div>
+    <div class="footer-divider"></div>
+    <div class="footer-credit">Demo luotu <a href="https://masasite.com" target="_blank">masasite.com</a> palvelulla</div>
+  </div>
+</footer>
+
+<script>
+  // Lucide icons
+  lucide.createIcons();
+
+  // Nav scroll effect
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }, { passive: true });
+
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry, idx) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+
+  // Stagger cards
+  const serviceCards = document.querySelectorAll('.service-card');
+  serviceCards.forEach((card, i) => {
+    card.style.transitionDelay = `calc(${i} * 80ms)`;
+  });
+
+  const reviewCards = document.querySelectorAll('.review-card');
+  reviewCards.forEach((card, i) => {
+    card.style.transitionDelay = `calc(${i} * 80ms)`;
+  });
+
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // Re-run lucide after DOM settle
+  window.addEventListener('load', () => {
+    lucide.createIcons();
+  });
+</script>
+</body>
+</html>
