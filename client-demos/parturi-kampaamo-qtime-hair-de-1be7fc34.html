@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parturi-Kampaamo Qtime Hair Design — Helsinki</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #1c1208;
+      --accent: #b8860b;
+      --accent-light: #d4a017;
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --text: #1c1208;
+      --muted: #7a6a55;
+      --border: #e8e0d4;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      padding-top: 40px;
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    h1, h2, h3, .font-headline {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    /* DEMO BANNER */
+    .demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(184, 134, 11, 0.88);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .demo-banner p {
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.02em;
+      text-align: center;
+      padding: 0 16px;
+    }
+    .demo-banner a {
+      color: #fff;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(250, 250, 249, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    nav.scrolled {
+      box-shadow: 0 2px 24px rgba(28,18,8,0.08);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 48px);
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .btn-nav {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 10px 24px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-nav:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(184,134,11,0.35);
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100svh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: url('assets/parturi-kampaamo-qtime-hair-de-1be7fc34/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.65) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: clamp(32px, 8vw, 80px) clamp(20px, 5vw, 48px);
+      max-width: 860px;
+      animation: heroFadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.1s both;
+    }
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: block;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .hero-subtitle {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255,255,255,0.82);
+      max-width: 580px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+    .hero-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+    .hero-rating .stars {
+      display: flex;
+      gap: 3px;
+    }
+    .hero-rating .stars i {
+      width: 18px;
+      height: 18px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+    .hero-rating span {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.85);
+      font-weight: 500;
+    }
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 16px 36px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(184,134,11,0.4);
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+    .btn-ghost {
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 16px 36px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 1.5px solid rgba(255,255,255,0.45);
+      backdrop-filter: blur(8px);
+      transition: transform 0.2s ease, background 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.28);
+      transform: translateY(-3px);
+    }
+
+    /* SECTIONS */
+    .section-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+    .section-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* SERVICES */
+    .services-section { background: #f3ede6; }
+    .service-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(28,18,8,0.06), 0 4px 16px rgba(28,18,8,0.04);
+      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s ease;
+      cursor: default;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(28,18,8,0.12);
+    }
+    .service-icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--accent) 14%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .service-icon-wrap i {
+      width: 28px;
+      height: 28px;
+      color: var(--accent);
+    }
+    .service-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    .service-card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* WHY US */
+    .why-section { background: #fff; }
+    .why-card {
+      text-align: center;
+      padding: 40px 24px;
+    }
+    .why-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      color: var(--accent);
+    }
+    .why-icon i {
+      width: 44px;
+      height: 44px;
+    }
+    .why-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    .why-card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    /* GALLERY */
+    .gallery-section { background: #f3ede6; }
+    .gallery-grid img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+
+    /* REVIEWS */
+    .reviews-section { background: #faf8f4; }
+    .review-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(28,18,8,0.06), 0 4px 20px rgba(28,18,8,0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .review-stars {
+      display: flex;
+      gap: 3px;
+    }
+    .review-stars i {
+      width: 16px;
+      height: 16px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+    .review-text {
+      font-size: 0.95rem;
+      color: #4a3f30;
+      font-style: italic;
+      line-height: 1.75;
+    }
+    .review-author {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .verified-badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      padding: 2px 8px;
+      border-radius: 999px;
+      letter-spacing: 0.04em;
+    }
+
+    /* HOURS */
+    .hours-section { background: #fff; }
+    .hours-card {
+      background: var(--bg);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      max-width: 480px;
+    }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 28px;
+      font-size: 0.95rem;
+    }
+    .hours-row:not(:last-child) {
+      border-bottom: 1px solid var(--border);
+    }
+    .hours-row .day {
+      font-weight: 600;
+      color: var(--primary);
+    }
+    .hours-row .time {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .hours-row.closed .time {
+      color: #c0392b;
+    }
+
+    /* CONTACT */
+    .contact-section { background: #f3ede6; }
+    .contact-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .contact-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--accent);
+    }
+    .contact-icon i { width: 20px; height: 20px; }
+    .contact-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .contact-value {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    .contact-value a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .contact-value a:hover { color: var(--accent); }
+
+    /* FOOTER */
+    footer {
+      background: var(--primary);
+      padding: 48px clamp(16px, 5vw, 48px) 32px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.92);
+      margin-bottom: 8px;
+    }
+    .footer-address {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 4px;
+    }
+    .footer-bottom {
+      margin-top: 32px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.03em;
+    }
+
+    /* REVEAL ANIMATIONS */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .section-pad {
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+
+    /* GRID */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 8px;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+    @media(min-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* Mobile nav */
+    @media(max-width: 640px) {
+      .nav-links { display: none; }
+    }
+
+    /* Hours banner strip */
+    .hours-accent-strip {
+      height: 4px;
+      background: linear-gradient(to right, var(--accent), var(--accent-light));
+      border-radius: 4px 4px 0 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- DEMO BANNER -->
+  <div class="demo-banner">
+    <p>Parturi-Kampaamo Qtime Hair Design — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman? <a href="mailto:team@masasite.com">Ota yhteyttä →</a></p>
+  </div>
+
+  <!-- STICKY NAV -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <a href="#" aria-label="Etusivu">
+        <img src="https://qtime.fi/wp-content/uploads/2022/07/qtime_logo_black.svg" alt="Qtime Hair Design" style="height:36px; object-fit:contain; display:block;">
+      </a>
+      <ul class="nav-links">
+        <li><a href="#palvelut">Palvelut</a></li>
+        <li><a href="#aukioloajat">Aukioloajat</a></li>
+        <li><a href="#yhteystiedot">Yhteystiedot</a></li>
+      </ul>
+      <a href="https://qtime.fi/" target="_blank" rel="noopener" class="btn-nav">Varaa aika</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" role="banner">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Helsinki — Kamppi</span>
+      <h1>Trendikkäät hiukset,<br>jotka sopivat sinulle</h1>
+      <p class="hero-subtitle">Parturi-Kampaamo QTime Hair Design Helsinki-Kampissa tarjoaa teknisesti huippuluokan hiusten leikkauksia ja väripalveluja. Vidal Sassoonin sopivuusajattelun pohjalta löydämme juuri sinulle parhaat hiusratkaisut.</p>
+      <div class="hero-rating">
+        <div class="stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <span>4.8 / 5 &nbsp;(83 arvostelua)</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="https://qtime.fi/" target="_blank" rel="noopener" class="btn-primary">
+          <i data-lucide="calendar" style="width:18px;height:18px;"></i>
+          Varaa aikasi nyt
+        </a>
+        <a href="#palvelut" class="btn-ghost">
+          Katso palvelut
+          <i data-lucide="arrow-right" style="width:18px;height:18px;"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="palvelut" class="services-section section-pad">
+    <div class="container">
+      <div class="reveal" style="text-align:center; margin-bottom: 64px;">
+        <span class="section-label">Palvelumme</span>
+        <h2 class="section-title" style="margin-bottom:16px;">Mitä teemme parhaiten</h2>
+        <p class="section-sub" style="margin:0 auto;">Ammattitaidollamme ja sopivuusajattelullamme saat hiusratkaisun, joka toimii arjessa ja heijastaa persoonallisuuttasi.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-icon-wrap">
+            <i data-lucide="scissors"></i>
+          </div>
+          <h3>Hiusten leikkaus</h3>
+          <p>Tarkat tekniset leikkaukset, joissa huomioidaan kasvonpiirteet ja elämäntyylit — tulos, joka toimii arjessa ja pidentää muodonsa.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon-wrap">
+            <i data-lucide="sparkles"></i>
+          </div>
+          <h3>Väripalvelut</h3>
+          <p>Taidokas väriosaamiseen perustuva väritykset, joissa yhdistyvät trendit ja sopivuus — sävyt, jotka toimivat juuri sinun ihollesi.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon-wrap">
+            <i data-lucide="heart"></i>
+          </div>
+          <h3>Hiustenhoito-ohjaus</h3>
+          <p>Ammattilaiset neuvovat sinua arjen hiuspulmien ratkaisemisessa — vinkit ja tuotteet, jotka tekevät hiuksistasi helpot hoitaa kotona.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section class="why-section section-pad">
+    <div class="container">
+      <div class="reveal" style="text-align:center; margin-bottom: 64px;">
+        <span class="section-label">Miksi valita meidät</span>
+        <h2 class="section-title">Ammatillisuus, joka näkyy</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-card reveal">
+          <div class="why-icon">
+            <i data-lucide="award"></i>
+          </div>
+          <h3>Vidal Sassoon -osaaminen</h3>
+          <p>Työmme perustuu Vidal Sassoonin sopivuusajatteluun — tekniseen tarkkuuteen ja yksilölliseen ratkaisuun jokaiselle asiakkaalle.</p>
+        </div>
+        <div class="why-card reveal">
+          <div class="why-icon">
+            <i data-lucide="star"></i>
+          </div>
+          <h3>4.8 / 5 arvostelu</h3>
+          <p>Yli 83 aitoa arvostelua kertoo siitä, että jokainen asiakas kuullaan — ja tulokset vastaavat odotuksia, usein ylittäen ne.</p>
+        </div>
+        <div class="why-card reveal">
+          <div class="why-icon">
+            <i data-lucide="zap"></i>
+          </div>
+          <h3>Trendit + sopivuus</h3>
+          <p>Tiimimme seuraa uusimpia trendejä, mutta soveltaa niitä sinulle sopivaksi — ei vain muodikasta, vaan aidosti toimivaa.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery-section section-pad">
+    <div class="container">
+      <div class="reveal" style="text-align:center; margin-bottom:48px;">
+        <span class="section-label">Ilmapiiri</span>
+        <h2 class="section-title">Tervetuloa Qtimeen</h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="reveal">
+          <img src="assets/parturi-kampaamo-qtime-hair-de-1be7fc34/photo1.jpg" alt="Qtime Hair Design — Studio" style="width:100%;height:300px;object-fit:cover;border-radius:16px;">
+        </div>
+        <div class="reveal">
+          <img src="assets/parturi-kampaamo-qtime-hair-de-1be7fc34/photo2.jpg" alt="Qtime Hair Design — Hiustenleikkaus" style="width:100%;height:300px;object-fit:cover;border-radius:16px;">
+        </div>
+        <div class="reveal">
+          <img src="assets/parturi-kampaamo-qtime-hair-de-1be7fc34/photo3.jpg" alt="Qtime Hair Design — Väripalvelut" style="width:100%;height:300px;object-fit:cover;border-radius:16px;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="arvostelut" class="reviews-section section-pad">
+    <div class="container">
+      <div class="reveal" style="text-align:center; margin-bottom:64px;">
+        <span class="section-label">Asiakaskokemukset</span>
+        <h2 class="section-title" style="margin-bottom:16px;">Mitä asiakkaamme sanovat</h2>
+        <p class="section-sub" style="margin:0 auto;">Aito palaute, aidoilta ihmisiltä — katso miksi asiakkaat palaavat aina uudelleen.</p>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card reveal">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-text">"I have been visiting Disa a couple of times now and every cut she has given me has been perfect. I'm very happy with how she handles my hair, listens to my wishes and gives me new ideas as well. I won't be going anywhere else anymore!"</p>
+          <div class="review-author">
+            SAN0JA
+            <span class="verified-badge">✓ Verified</span>
+          </div>
+        </div>
+        <div class="review-card reveal">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-text">"Disa is a literal angel/goddess (and looks like one too). Absolutely stunning work — the kind of experience you tell all your friends about."</p>
+          <div class="review-author">
+            Anniina Keijunen
+            <span class="verified-badge">✓ Verified</span>
+          </div>
+        </div>
+        <div class="review-card reveal">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-text">"My usual hairdresser! Excellent at choosing the best suited colors and cuts. And if I'm not happy with the results, they always re-schedule a new free-of-charge appointment so that they can fix it. Totally recommend!"</p>
+          <div class="review-author">
+            Senja Jarva
+            <span class="verified-badge">✓ Verified</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPENING HOURS -->
+  <section id="aukioloajat" class="hours-section section-pad">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr;gap:48px;align-items:start;" class="md-two-col">
+        <div class="reveal">
+          <span class="section-label">Aukioloajat</span>
+          <h2 class="section-title" style="margin-bottom:24px;">Milloin löydät meidät</h2>
+          <p class="section-sub" style="margin-bottom:40px;">Olemme avoinna arkisin. Suosittelemme varaamaan ajan etukäteen saatavuuden varmistamiseksi.</p>
+          <div class="hours-card">
+            <div class="hours-accent-strip"></div>
+            <div class="hours-row">
+              <span class="day">Maanantai</span>
+              <span class="time">10:00 – 17:00</span>
+            </div>
+            <div class="hours-row">
+              <span class="day">Tiistai</span>
+              <span class="time">10:00 – 17:00</span>
+            </div>
+            <div class="hours-row">
+              <span class="day">Keskiviikko</span>
+              <span class="time">10:00 – 17:00</span>
+            </div>
+            <div class="hours-row">
+              <span class="day">Torstai</span>
+              <span class="time">10:00 – 17:00</span>
+            </div>
+            <div class="hours-row">
+              <span class="day">Perjantai</span>
+              <span class="time">10:00 – 17:00</span>
+            </div>
+            <div class="hours-row closed">
+              <span class="day">Lauantai</span>
+              <span class="time">Suljettu</span>
+            </div>
+            <div class="hours-row closed">
+              <span class="day">Sunnuntai</span>
+              <span class="time">Suljettu</span>
+            </div>
+          </div>
+        </div>
+        <div class="reveal" style="display:flex;flex-direction:column;gap:24px;padding-top:8px;">
+          <div style="background:#f3ede6;border-radius:20px;padding:36px;border:1px solid var(--border);">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+              <div style="width:48px;height:48px;border-radius:12px;background:color-mix(in srgb, var(--accent) 14%, transparent);display:flex;align-items:center;justify-content:center;color:var(--accent);">
+                <i data-lucide="clock" style="width:24px;height:24px;"></i>
+              </div>
+              <div>
+                <span style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);font-weight:600;display:block;">Vastaanottoaika</span>
+                <span style="font-weight:700;color:var(--primary);font-size:1rem;">Varaa etukäteen</span>
+              </div>
+            </div>
+            <p style="font-size:0.95rem;color:var(--muted);line-height:1.7;margin-bottom:24px;">Haluatko varmistaa ajan juuri sinulle sopivaan hetkeen? Varaa oma aikasi helposti verkossa — nopea ja vaivaton.</p>
+            <a href="https://qtime.fi/" target="_blank" rel="noopener" class="btn-primary" style="display:inline-flex;">
+              <i data-lucide="calendar" style="width:18px;height:18px;"></i>
+              Varaa aika nyt
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="yhteystiedot" class="contact-section section-pad">
+    <div class="container">
+      <div class="reveal" style="margin-bottom:64px;">
+        <span class="section-label">Yhteystiedot</span>
+        <h2 class="section-title" style="margin-bottom:12px;">Löydä meidät</h2>
+        <p class="section-sub">Olemme Kampissa, sydän Helsinkiä. Tule käymään tai ota yhteyttä.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="reveal">
+          <div class="contact-info-item">
+            <div class="contact-icon">
+              <i data-lucide="map-pin"></i>
+            </div>
+            <div>
+              <span class="contact-label">Osoite</span>
+              <span class="contact-value">Malminkatu 20, 00100 Helsinki</span>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon">
+              <i data-lucide="phone"></i>
+            </div>
+            <div>
+              <span class="contact-label">Puhelin</span>
+              <span class="contact-value"><a href="tel:0447770776">044 7770776</a></span>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon">
+              <i data-lucide="globe"></i>
+            </div>
+            <div>
+              <span class="contact-label">Verkkosivut</span>
+              <span class="contact-value"><a href="http://qtime.fi/" target="_blank" rel="noopener">qtime.fi</a></span>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon">
+              <i data-lucide="clock"></i>
+            </div>
+            <div>
+              <span class="contact-label">Aukioloajat</span>
+              <span class="contact-value">Ma–Pe: 10:00–17:00</span>
+            </div>
+          </div>
+          <div style="margin-top:32px;">
+            <a href="https://qtime.fi/" target="_blank" rel="noopener" class="btn-primary">
+              <i data-lucide="calendar" style="width:18px;height:18px;"></i>
+              Varaa aikasi nyt
+            </a>
+          </div>
+        </div>
+        <div class="reveal">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Malminkatu%2020%2C%2000100%20Helsinki%2C%20Suomi%2C%20Helsinki%2C%20Finland&language=fi"
+            width="100%"
+            height="380"
+            style="border:0;border-radius:16px;box-shadow:0 4px 24px rgba(28,18,8,0.1);"
+            loading="lazy"
+            allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Qtime Hair Design sijainti kartalla">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:24px;">
+        <div>
+          <p class="footer-name">Parturi-Kampaamo Qtime Hair Design</p>
+          <p class="footer-address">Malminkatu 20, 00100 Helsinki</p>
+          <p class="footer-address">044 7770776</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;text-align:right;">
+          <a href="https://qtime.fi/" target="_blank" rel="noopener" style="font-size:0.875rem;color:rgba(255,255,255,0.5);text-decoration:none;">qtime.fi →</a>
+          <a href="#palvelut" style="font-size:0.875rem;color:rgba(255,255,255,0.5);text-decoration:none;">Palvelut</a>
+          <a href="#aukioloajat" style="font-size:0.875rem;color:rgba(255,255,255,0.5);text-decoration:none;">Aukioloajat</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        Demo luotu masasite.com palvelulla
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Lucide icons
+    lucide.createIcons();
+
+    // NAV SCROLL EFFECT
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // INTERSECTION OBSERVER — REVEAL
+    const revealEls = document.querySelectorAll('.reveal');
+    revealEls.forEach((el, i) => {
+      el.style.setProperty('--i', i);
+    });
+
+    const io = new IntersectionObserver(
+      entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            // Stagger for grid children
+            const siblings = e.target.parentElement.querySelectorAll('.reveal');
+            let delay = 0;
+            siblings.forEach((sib, idx) => {
+              if (sib === e.target) delay = idx * 80;
+            });
+            setTimeout(() => {
+              e.target.classList.add('visible');
+            }, delay);
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    revealEls.forEach(el => io.observe(el));
+
+    // Responsive two-col hours section
+    const twoCol = document.querySelector('.md-two-col');
+    if (twoCol && window.innerWidth >= 768) {
+      twoCol.style.gridTemplateColumns = '1fr 1fr';
+    }
+    window.addEventListener('resize', () => {
+      if (twoCol) {
+        twoCol.style.gridTemplateColumns = window.innerWidth >= 768 ? '1fr 1fr' : '1fr';
+      }
+    });
+  </script>
+</body>
+</html>
