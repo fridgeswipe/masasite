@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beautiful You — Medikaalinen ihoklinikka Tampere</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #2d1a2e;
+      --accent: #c9a96e;
+      --bg: #faf8f5;
+      --surface: #ffffff;
+      --text: #1a0f1b;
+      --muted: #7a6b7b;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding-top: 40px;
+      margin: 0;
+    }
+
+    h1, h2, h3, .headline-font {
+      font-family: 'DM Serif Display', serif;
+      letter-spacing: -0.02em;
+    }
+
+    /* Demo Banner */
+    #demo-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(201, 169, 110, 0.88);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: 0.02em;
+      padding: 0 16px;
+      text-align: center;
+    }
+    #demo-banner a {
+      color: #fff;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      margin-left: 4px;
+    }
+
+    /* Nav */
+    #main-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(250, 248, 245, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(45, 26, 46, 0.08);
+      transition: box-shadow 0.3s ease;
+    }
+    #main-nav.scrolled {
+      box-shadow: 0 4px 24px rgba(45, 26, 46, 0.08);
+    }
+
+    /* Hero */
+    #hero {
+      min-height: 100svh;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.65) 100%),
+                  url('assets/beautiful-you-65e17358/photo1.jpg') center center / cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content {
+      animation: heroFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+    }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Stagger */
+    .reveal-stagger { transition-delay: calc(var(--i, 0) * 80ms); }
+
+    /* Service Cards */
+    .service-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+      cursor: default;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(45,26,46,0.13);
+    }
+
+    .icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: var(--accent);
+    }
+    .icon-wrap i { width: 28px; height: 28px; }
+
+    /* Why icons */
+    .why-icon {
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .why-icon i { width: 40px; height: 40px; }
+
+    /* Star gold */
+    .star-gold i {
+      color: #f59e0b;
+      fill: #f59e0b;
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background: var(--accent);
+      color: var(--primary);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 14px 32px;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      letter-spacing: 0.01em;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(201, 169, 110, 0.4);
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 14px 32px;
+      border-radius: 9999px;
+      border: 1.5px solid rgba(255,255,255,0.45);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      backdrop-filter: blur(8px);
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      letter-spacing: 0.01em;
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.25);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+    }
+
+    .btn-dark {
+      background: var(--primary);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 14px 32px;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-dark:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(45,26,46,0.35);
+    }
+
+    /* Section padding */
+    .section-pad {
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+
+    /* Max container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+
+    /* Section title */
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 12px;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      color: var(--primary);
+      line-height: 1.15;
+      margin: 0 0 16px;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      max-width: 560px;
+    }
+
+    /* Review cards */
+    .review-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    }
+
+    /* Hours row */
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(45,26,46,0.07);
+      font-size: 0.95rem;
+    }
+    .hours-row:last-child { border-bottom: none; }
+
+    /* Footer */
+    #footer {
+      background: var(--primary);
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* Nav CTA */
+    .nav-cta {
+      background: var(--accent);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.875rem;
+      padding: 10px 22px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+    }
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(201, 169, 110, 0.35);
+    }
+
+    @media (max-width: 768px) {
+      .hide-mobile { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- [1] DEMO BANNER -->
+<div id="demo-banner">
+  Beautiful You — tämä esimerkkisivu on tehty juuri teille · Haluatko oman?
+  <a href="mailto:team@masasite.com">Ota yhteyttä →</a>
+</div>
+
+<!-- [2] STICKY NAV -->
+<nav id="main-nav">
+  <div class="container" style="display:flex; align-items:center; justify-content:space-between; height:68px;">
+    <a href="#hero" style="display:flex; align-items:center; text-decoration:none;">
+      <img src="https://www.beautifulyou.fi/wp-content/uploads/2025/11/2.png" alt="Beautiful You logo" style="height:36px; object-fit:contain;" />
+    </a>
+    <div class="hide-mobile" style="display:flex; align-items:center; gap:36px;">
+      <a href="#services" style="color:var(--primary); text-decoration:none; font-size:0.9rem; font-weight:500; opacity:0.8; transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">Palvelut</a>
+      <a href="#contact" style="color:var(--primary); text-decoration:none; font-size:0.9rem; font-weight:500; opacity:0.8; transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">Yhteystiedot</a>
+    </div>
+    <a href="tel:0401566151" class="nav-cta">Varaa aika</a>
+  </div>
+</nav>
+
+<!-- [3] HERO -->
+<section id="hero">
+  <div class="container" style="width:100%; text-align:center;">
+    <div class="hero-content" style="max-width:760px; margin:0 auto; padding: 48px 0;">
+      <p class="section-label" style="color:rgba(201,169,110,0.9);">Medikaalinen ihoklinikka · Tampere</p>
+      <h1 style="font-size: clamp(2.5rem, 6vw, 5.5rem); color:#fff; line-height:1.1; letter-spacing:-0.02em; margin:0 0 24px;">
+        Ihon terveys perustuu asiantuntijoihin
+      </h1>
+      <p style="font-size:1.2rem; color:rgba(255,255,255,0.82); line-height:1.75; max-width:600px; margin:0 auto 32px;">
+        Beautiful You on medikaalinen ihoklinikka Tampereen keskustassa, joka tarjoaa fysiologiaan perustuvaa yksilöllistä ihonhoitoa. Lupa- ja valvontavirasto rekisteröity palveluntuottaja, jolle ihonhoito on asiantuntijatyötä, ei rutiinia.
+      </p>
+      <!-- Rating -->
+      <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:36px;">
+        <div class="star-gold" style="display:flex; gap:2px;">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star" style="color:#f59e0b; fill:#f59e0b; opacity:0.6;"></i>
+        </div>
+        <span style="color:rgba(255,255,255,0.85); font-size:0.9rem; font-weight:500;">4.6/5 (59 arvostelua)</span>
+      </div>
+      <!-- CTAs -->
+      <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+        <a href="tel:0401566151" class="btn-primary">
+          <i data-lucide="calendar" style="width:18px;height:18px;"></i>
+          Varaa aika nyt
+        </a>
+        <a href="#services" class="btn-ghost">
+          <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
+          Tutustu palveluihin
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- [4] SERVICES GRID -->
+<section id="services" style="background:#f3ede8;">
+  <div class="container section-pad">
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <p class="section-label">Palvelumme</p>
+      <h2 class="section-title" style="margin:0 auto 16px;">Mitä teemme</h2>
+      <p class="section-sub" style="margin:0 auto; text-align:center;">
+        Jokainen hoito suunnitellaan yksilöllisesti ihonanalyysin ja fysiologiaan perustuvan asiantuntemuksen pohjalta.
+      </p>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:24px;">
+
+      <div class="service-card reveal reveal-stagger" style="--i:0;">
+        <div class="icon-wrap">
+          <i data-lucide="zap"></i>
+        </div>
+        <h3 style="font-family:'DM Serif Display',serif; font-size:1.25rem; color:var(--primary); margin:0 0 12px; font-weight:400;">Laserkarvanpoisto</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7; margin:0;">
+          Anthélia® LASER -järjestelmällä toteutettu modernin sukupolven karvanpoisto — tehokas, turvallinen ja tuloksellinen.
+        </p>
+      </div>
+
+      <div class="service-card reveal reveal-stagger" style="--i:1;">
+        <div class="icon-wrap">
+          <i data-lucide="sparkles"></i>
+        </div>
+        <h3 style="font-family:'DM Serif Display',serif; font-size:1.25rem; color:var(--primary); margin:0 0 12px; font-weight:400;">Medikaalinen ihonhoito</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7; margin:0;">
+          Yksilöllisesti suunnitellut hoitokuurit ihon fysiologian mukaan. Ei yleispätevää, vaan sinulle räätälöityä.
+        </p>
+      </div>
+
+      <div class="service-card reveal reveal-stagger" style="--i:2;">
+        <div class="icon-wrap">
+          <i data-lucide="heart"></i>
+        </div>
+        <h3 style="font-family:'DM Serif Display',serif; font-size:1.25rem; color:var(--primary); margin:0 0 12px; font-weight:400;">Esteettiset hoitokäynnit</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7; margin:0;">
+          Analyysiin ja kokemukseen perustuvat hoitot todellisen ihontilan perusteella — ei arvailua, vaan asiantuntemusta.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Gallery strip -->
+    <div class="reveal" style="margin-top:64px; display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:16px; border-radius:20px; overflow:hidden;">
+      <div style="aspect-ratio:4/3; overflow:hidden; border-radius:16px;">
+        <img src="assets/beautiful-you-65e17358/photo2.jpg" alt="Beautiful You hoitola" style="width:100%; height:100%; object-fit:cover; transition:transform 0.5s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'" />
+      </div>
+      <div style="aspect-ratio:4/3; overflow:hidden; border-radius:16px;">
+        <img src="assets/beautiful-you-65e17358/photo3.jpg" alt="Beautiful You klinikka" style="width:100%; height:100%; object-fit:cover; transition:transform 0.5s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'" />
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- [5] WHY CHOOSE US -->
+<section id="why" style="background:var(--surface);">
+  <div class="container section-pad">
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <p class="section-label">Miksi valita meidät</p>
+      <h2 class="section-title" style="margin:0 auto 16px;">Asiantuntijatyötä, ei rutiinia</h2>
+      <p class="section-sub" style="margin:0 auto; text-align:center;">
+        Beautiful You erottautuu massasta medikaalisella osaamisella, yksilöllisellä lähestymistavalla ja uusimmalla teknologialla.
+      </p>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:48px;">
+
+      <div class="reveal reveal-stagger" style="--i:0; text-align:center;">
+        <div class="why-icon">
+          <i data-lucide="award"></i>
+        </div>
+        <h3 style="font-family:'DM Serif Display',serif; font-size:1.25rem; color:var(--primary); margin:0 0 12px; font-weight:400;">Viralliset luvat</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7; margin:0; max-width:280px; margin-inline:auto;">
+          Medikaalisesti valtuutettu klinikka virallisilla terveyshuollon luvilla. Lupa- ja valvontavirasto rekisteröity palveluntuottaja.
+        </p>
+      </div>
+
+      <div class="reveal reveal-stagger" style="--i:1; text-align:center;">
+        <div class="why-icon">
+          <i data-lucide="user-check"></i>
+        </div>
+        <h3 style="font-family:'DM Serif Display',serif; font-size:1.25rem; color:var(--primary); margin:0 0 12px; font-weight:400;">Täysin yksilöllinen</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7; margin:0; max-width:280px; margin-inline:auto;">
+          Jokainen hoito räätälöidään yksilöllisen ihonanalyysin perusteella. Et saa kenenkään muun hoitoa — saat omasi.
+        </p>
+      </div>
+
+      <div class="reveal reveal-stagger" style="--i:2; text-align:center;">
+        <div class="why-icon">
+          <i data-lucide="zap"></i>
+        </div>
+        <h3 style="font-family:'DM Serif Display',serif; font-size:1.25rem; color:var(--primary); margin:0 0 12px; font-weight:400;">Huippumoderni teknologia</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7; margin:0; max-width:280px; margin-inline:auto;">
+          Uusimman sukupolven Anthélia® -laser teknologia takaa turvalliset ja tehokkaat tulokset.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Divider accent -->
+    <div class="reveal" style="margin-top:80px; padding:48px; background:linear-gradient(135deg, var(--primary) 0%, #4a2b4c 100%); border-radius:24px; text-align:center;">
+      <p style="font-family:'DM Serif Display',serif; font-size:clamp(1.4rem,3vw,2rem); color:#fff; margin:0 0 8px; letter-spacing:-0.01em;">
+        Valmis aloittamaan ihonhoidon matkan?
+      </p>
+      <p style="color:rgba(255,255,255,0.7); font-size:0.95rem; margin:0 0 28px;">
+        Varaa ensimmäinen käyntisi tänään — yksilöllinen ihonanalyysi mukaan lukien.
+      </p>
+      <a href="tel:0401566151" class="btn-primary">
+        <i data-lucide="phone" style="width:18px;height:18px;"></i>
+        Soita 040 1566151
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- [6] REVIEWS -->
+<section id="reviews" style="background:var(--bg);">
+  <div class="container section-pad">
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <p class="section-label">Asiakaskokemukset</p>
+      <h2 class="section-title" style="margin:0 auto 16px;">Mitä asiakkaamme sanovat</h2>
+      <p class="section-sub" style="margin:0 auto; text-align:center;">
+        Aito palaute oikeilta asiakkailta, jotka ovat kokeneet Beautiful You -eron.
+      </p>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:24px;">
+
+      <div class="review-card reveal reveal-stagger" style="--i:0;">
+        <div class="star-gold" style="display:flex; gap:3px; margin-bottom:16px;">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star" style="color:#e5e7eb; fill:#e5e7eb;"></i>
+        </div>
+        <p style="font-style:italic; color:var(--text); font-size:0.9rem; line-height:1.75; margin:0 0 20px;">
+          "I had the Retix.C SMART DNA facial and I can recommend it. My skin texture improved significantly after the first treatment."
+        </p>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:36px; height:36px; border-radius:50%; background:color-mix(in srgb, var(--accent) 20%, transparent); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.85rem; color:var(--accent);">P</div>
+          <div>
+            <p style="font-weight:700; font-size:0.85rem; color:var(--primary); margin:0;">P H</p>
+            <p style="font-size:0.75rem; color:var(--muted); margin:0;">Google-arvostelu</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card reveal reveal-stagger" style="--i:1;">
+        <div class="star-gold" style="display:flex; gap:3px; margin-bottom:16px;">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <p style="font-style:italic; color:var(--text); font-size:0.9rem; line-height:1.75; margin:0 0 20px;">
+          "First time at this store, the goal was to save my badly clogged facial skin, and they succeeded brilliantly! Expert and warm service, they thought out the best solutions for my situation 🤗"
+        </p>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:36px; height:36px; border-radius:50%; background:color-mix(in srgb, var(--accent) 20%, transparent); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.85rem; color:var(--accent);">A</div>
+          <div>
+            <p style="font-weight:700; font-size:0.85rem; color:var(--primary); margin:0;">Anni Kärkkäinen</p>
+            <p style="font-size:0.75rem; color:var(--muted); margin:0;">Google-arvostelu · Vahvistettu</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card reveal reveal-stagger" style="--i:2;">
+        <div class="star-gold" style="display:flex; gap:3px; margin-bottom:16px;">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <p style="font-style:italic; color:var(--text); font-size:0.9rem; line-height:1.75; margin:0 0 20px;">
+          "A very pleasant facial experience, excellent and professional service and stylish facilities. I recommend!"
+        </p>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:36px; height:36px; border-radius:50%; background:color-mix(in srgb, var(--accent) 20%, transparent); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.85rem; color:var(--accent);">R</div>
+          <div>
+            <p style="font-weight:700; font-size:0.85rem; color:var(--primary); margin:0;">Riikka Toivonen</p>
+            <p style="font-size:0.75rem; color:var(--muted); margin:0;">Google-arvostelu · Vahvistettu</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Aggregate rating -->
+    <div class="reveal" style="margin-top:48px; text-align:center;">
+      <div style="display:inline-flex; align-items:center; gap:12px; background:var(--surface); padding:16px 28px; border-radius:999px; box-shadow:0 1px 3px rgba(0,0,0,0.06),0 4px 16px rgba(0,0,0,0.04);">
+        <div class="star-gold" style="display:flex; gap:3px;">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star" style="color:#f59e0b; fill:#f59e0b; opacity:0.55;"></i>
+        </div>
+        <span style="font-weight:700; color:var(--primary); font-size:1.05rem;">4.6/5</span>
+        <span style="color:var(--muted); font-size:0.9rem;">· 59 Google-arvostelua</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- [8] CONTACT -->
+<section id="contact" style="background:#f3ede8;">
+  <div class="container section-pad">
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <p class="section-label">Yhteystiedot</p>
+      <h2 class="section-title" style="margin:0 auto 16px;">Löydät meidät Tampereen keskustasta</h2>
+      <p class="section-sub" style="margin:0 auto; text-align:center;">
+        Olemme helposti saavutettavissa Tampereen ydinkeskustassa. Varaa aikasi suoraan puhelimitse.
+      </p>
+    </div>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:48px; align-items:start;" class="contact-grid">
+
+      <!-- Left: contact info -->
+      <div class="reveal" style="display:flex; flex-direction:column; gap:24px;">
+
+        <div style="display:flex; align-items:flex-start; gap:16px;">
+          <div style="width:44px; height:44px; border-radius:12px; background:color-mix(in srgb, var(--accent) 15%, transparent); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--accent);">
+            <i data-lucide="map-pin" style="width:20px;height:20px;"></i>
+          </div>
+          <div>
+            <p style="font-weight:700; color:var(--primary); margin:0 0 4px; font-size:0.9rem; text-transform:uppercase; letter-spacing:0.08em;">Osoite</p>
+            <p style="color:var(--text); margin:0; line-height:1.6;">Kuninkaankatu 32<br/>33200 Tampere, Suomi</p>
+          </div>
+        </div>
+
+        <div style="display:flex; align-items:flex-start; gap:16px;">
+          <div style="width:44px; height:44px; border-radius:12px; background:color-mix(in srgb, var(--accent) 15%, transparent); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--accent);">
+            <i data-lucide="phone" style="width:20px;height:20px;"></i>
+          </div>
+          <div>
+            <p style="font-weight:700; color:var(--primary); margin:0 0 4px; font-size:0.9rem; text-transform:uppercase; letter-spacing:0.08em;">Puhelin</p>
+            <a href="tel:0401566151" style="color:var(--text); text-decoration:none; font-size:1.05rem; font-weight:500; transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text)'">040 1566151</a>
+          </div>
+        </div>
+
+        <div style="display:flex; align-items:flex-start; gap:16px;">
+          <div style="width:44px; height:44px; border-radius:12px; background:color-mix(in srgb, var(--accent) 15%, transparent); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--accent);">
+            <i data-lucide="globe" style="width:20px;height:20px;"></i>
+          </div>
+          <div>
+            <p style="font-weight:700; color:var(--primary); margin:0 0 4px; font-size:0.9rem; text-transform:uppercase; letter-spacing:0.08em;">Verkkosivut</p>
+            <a href="http://www.beautifulyou.fi/" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none; font-size:0.95rem; transition:opacity 0.2s;" onmouseover="this.style.opacity=0.7" onmouseout="this.style.opacity=1">www.beautifulyou.fi</a>
+          </div>
+        </div>
+
+        <div style="margin-top:8px;">
+          <a href="tel:0401566151" class="btn-dark">
+            <i data-lucide="calendar" style="width:18px;height:18px;"></i>
+            Varaa aika nyt
+          </a>
+        </div>
+
+        <!-- Trust badge -->
+        <div style="margin-top:16px; padding:20px 24px; background:var(--surface); border-radius:16px; display:flex; align-items:center; gap:14px; box-shadow:0 1px 3px rgba(0,0,0,0.06);">
+          <div style="color:var(--accent);">
+            <i data-lucide="shield-check" style="width:28px;height:28px;"></i>
+          </div>
+          <div>
+            <p style="font-weight:700; color:var(--primary); margin:0 0 2px; font-size:0.9rem;">Rekisteröity palveluntuottaja</p>
+            <p style="color:var(--muted); font-size:0.8rem; margin:0;">Lupa- ja valvontaviraston rekisterissä</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right: Google Maps -->
+      <div class="reveal">
+        <iframe
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Kuninkaankatu%2032%2C%2033200%20Tampere%2C%20Suomi%2C%20Tampere%2C%20Finland&language=fi"
+          width="100%"
+          height="380"
+          style="border:0; border-radius:20px; box-shadow:0 8px 32px rgba(45,26,46,0.12); display:block; min-height:280px;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Beautiful You sijainti kartalla">
+        </iframe>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- [9] FOOTER -->
+<footer id="footer">
+  <div class="container" style="padding-block:48px 32px;">
+    <div style="display:flex; flex-wrap:wrap; gap:32px; justify-content:space-between; align-items:flex-start; margin-bottom:32px;">
+      <div>
+        <img src="https://www.beautifulyou.fi/wp-content/uploads/2025/11/2.png" alt="Beautiful You" style="height:40px; object-fit:contain; margin-bottom:16px; filter:brightness(0) invert(1);" />
+        <p style="color:rgba(255,255,255,0.6); font-size:0.9rem; line-height:1.7; max-width:280px; margin:0;">
+          Medikaalinen ihoklinikka Tampereen keskustassa. Asiantunteva, yksilöllinen ihonhoito.
+        </p>
+      </div>
+      <div>
+        <p style="font-weight:700; color:rgba(255,255,255,0.9); margin:0 0 12px; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.1em;">Yhteystiedot</p>
+        <p style="color:rgba(255,255,255,0.6); font-size:0.9rem; line-height:1.9; margin:0;">
+          Kuninkaankatu 32<br/>33200 Tampere<br/>
+          <a href="tel:0401566151" style="color:var(--accent); text-decoration:none;">040 1566151</a>
+        </p>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:20px; text-align:center;">
+      <p style="font-size:11px; color:rgba(255,255,255,0.28); margin:0; letter-spacing:0.04em;">
+        Demo luotu masasite.com palvelulla
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  @media (max-width: 768px) {
+    .contact-grid {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>
+
+<script>
+  // Nav scroll effect
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  });
+
+  // IntersectionObserver for .reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  revealEls.forEach((el, i) => {
+    if (el.classList.contains('reveal-stagger')) {
+      // already has --i set inline
+    }
+  });
+
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    }),
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+  revealEls.forEach(el => io.observe(el));
+
+  // Init Lucide icons
+  lucide.createIcons();
+</script>
+
+</body>
+</html>
