@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pro Skin Tampere – Ammattimainen ihonhoito</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #2d1a2e;
+      --accent: #c9a96e;
+      --bg: #faf8f5;
+      --surface: #ffffff;
+      --text: #1a1020;
+      --muted: #7a6a7e;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding-top: 40px;
+      font-size: 1rem;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'DM Serif Display', serif;
+    }
+
+    /* Demo Banner */
+    #demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 40px;
+      z-index: 200;
+      background: rgba(201, 169, 110, 0.92);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.03em;
+      text-align: center;
+      padding: 0 16px;
+    }
+    #demo-banner a {
+      color: #fff;
+      font-weight: 600;
+      text-decoration: underline;
+      margin-left: 4px;
+    }
+    #demo-banner a:hover { opacity: 0.85; }
+
+    /* Nav */
+    #main-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(250, 248, 245, 0.92);
+      border-bottom: 1px solid rgba(45, 26, 46, 0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    #main-nav.scrolled {
+      box-shadow: 0 2px 24px rgba(45, 26, 46, 0.10);
+      background: rgba(250, 248, 245, 0.97);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 48px);
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .btn-nav {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-nav:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(201, 169, 110, 0.38);
+    }
+
+    /* Hero */
+    #hero {
+      min-height: 100svh;
+      background: url('assets/pro-skin-tampere-4a218d56/photo1.jpg') center center / cover no-repeat;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(20, 8, 22, 0.50) 0%, rgba(20, 8, 22, 0.72) 100%);
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: clamp(32px, 8vw, 80px) clamp(16px, 5vw, 48px);
+      max-width: 820px;
+      animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: block;
+    }
+    .hero-h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: #fff;
+      margin-bottom: 24px;
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255,255,255,0.82);
+      line-height: 1.7;
+      max-width: 600px;
+      margin: 0 auto 32px;
+    }
+    .hero-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 40px;
+      color: rgba(255,255,255,0.9);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    .hero-stars {
+      display: flex;
+      gap: 2px;
+    }
+    .hero-stars i {
+      width: 18px; height: 18px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+    .hero-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 16px 32px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: inline-block;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(201, 169, 110, 0.45);
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+    .btn-ghost {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 16px 32px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.35);
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+      display: inline-block;
+    }
+    .btn-ghost:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.22);
+    }
+
+    /* Section basics */
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .section-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+    .section-subtitle {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+    .section-head {
+      text-align: center;
+      margin-bottom: clamp(48px, 6vw, 72px);
+    }
+    .section-head .section-subtitle { margin: 0 auto; }
+
+    /* Services */
+    #services {
+      background: var(--bg);
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .service-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.28s cubic-bezier(0.16,1,0.3,1), box-shadow 0.28s cubic-bezier(0.16,1,0.3,1);
+      border: 1px solid rgba(45, 26, 46, 0.06);
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(45, 26, 46, 0.12);
+    }
+    .service-icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .service-icon-wrap i {
+      width: 28px; height: 28px;
+      color: var(--accent);
+    }
+    .service-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      color: var(--primary);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .service-desc {
+      font-size: 0.925rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* Why us */
+    #why-us {
+      background: var(--surface);
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px 32px;
+    }
+    .why-item {
+      text-align: center;
+      padding: 16px 8px;
+    }
+    .why-icon {
+      width: 48px; height: 48px;
+      color: var(--accent);
+      margin: 0 auto 20px;
+    }
+    .why-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      color: var(--primary);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .why-desc {
+      font-size: 0.925rem;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    /* Reviews */
+    #reviews {
+      background: #f3ede8;
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .review-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      border: 1px solid rgba(45, 26, 46, 0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .review-stars {
+      display: flex;
+      gap: 3px;
+    }
+    .review-stars i {
+      width: 16px; height: 16px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+    .review-text {
+      font-size: 0.9rem;
+      color: #4a3d4e;
+      line-height: 1.7;
+      font-style: italic;
+      flex: 1;
+    }
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .review-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--accent) 20%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Serif Display', serif;
+      font-size: 0.85rem;
+      color: var(--accent);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .review-name {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .review-badge {
+      font-size: 0.7rem;
+      color: #2a9d5c;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      margin-top: 2px;
+    }
+    .review-badge i { width: 12px; height: 12px; }
+
+    /* Photo section */
+    #gallery {
+      background: var(--surface);
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .gallery-grid .photo-main {
+      grid-row: span 2;
+    }
+    .gallery-grid img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px;
+      display: block;
+    }
+    .gallery-grid .photo-main { height: 480px; }
+    .gallery-grid .photo-side { height: 230px; }
+
+    /* Contact */
+    #contact {
+      background: var(--bg);
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-grid .photo-main { height: 280px; grid-row: span 1; }
+      .gallery-grid .photo-side { height: 200px; }
+      .nav-links { display: none; }
+    }
+    .contact-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .contact-icon-wrap {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon-wrap i {
+      width: 20px; height: 20px;
+      color: var(--accent);
+    }
+    .contact-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .contact-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--primary);
+      line-height: 1.4;
+    }
+    .contact-value a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .contact-value a:hover { color: var(--accent); }
+
+    /* Footer */
+    #footer {
+      background: var(--primary);
+      padding-block: 48px 32px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .footer-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .footer-address {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+    }
+    .footer-bottom {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 11px;
+      color: rgba(255,255,255,0.28);
+      text-align: center;
+    }
+    .footer-bottom a { color: rgba(255,255,255,0.4); text-decoration: none; }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Divider */
+    .accent-divider {
+      width: 48px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin: 20px auto 0;
+    }
+    .accent-divider-left {
+      width: 48px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin: 20px 0 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- DEMO BANNER -->
+  <div id="demo-banner">
+    Pro Skin Tampere — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman?
+    <a href="mailto:team@masasite.com">Ota yhteyttä →</a>
+  </div>
+
+  <!-- STICKY NAV -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <a href="#hero" style="display:flex;align-items:center;text-decoration:none;flex-shrink:0;">
+        <img src="https://proskinbeauty.fi/wp-content/uploads/2019/08/ProSkinBeautyLogotype.svg"
+             alt="Pro Skin Tampere"
+             style="height:36px;object-fit:contain;max-width:180px;" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="#services">Palvelut</a></li>
+        <li><a href="#reviews">Arvostelut</a></li>
+        <li><a href="#contact">Yhteystiedot</a></li>
+      </ul>
+      <a href="tel:0401907089" class="btn-nav">
+        Varaa aika
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Tampere · Ihonhoitohoitola</span>
+      <h1 class="hero-h1">Ammattimainen ihonhoito Tampereen keskustassa</h1>
+      <p class="hero-sub">Pro Skin Tampere on tulokselliseen ihonhoitoon erikoistunut hoitola, joka yhdistää tehokkaat kosmetologiset hoidot ja asiantuntevaa ohjausta.</p>
+      <div class="hero-rating">
+        <div class="hero-stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <span>5.0 / 5 &nbsp;(51 arvostelua)</span>
+      </div>
+      <div class="hero-btns">
+        <a href="tel:0401907089" class="btn-primary">Varaa aika ihonhoitoon</a>
+        <a href="#services" class="btn-ghost">Tutustu palveluihin</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-container">
+      <div class="section-head reveal">
+        <span class="section-label">Palvelumme</span>
+        <h2 class="section-title">Hoidot kauniille ja terveelle iholle</h2>
+        <div class="accent-divider"></div>
+        <p class="section-subtitle" style="margin-top:20px;">Käytössämme ovat markkinoiden parhaimmat laitteet ja tunnetut huippubrändit kuten Hydrafacial ja Dermapen.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal" style="transition-delay:0ms;">
+          <div class="service-icon-wrap">
+            <i data-lucide="droplets"></i>
+          </div>
+          <h3 class="service-name">Hydrafacial</h3>
+          <p class="service-desc">Tehokas puhdistava ja kosteuttava pintakäsittely kaikille ihotyypeille. Välittömästi näkyvä, kirkastava tulos.</p>
+        </div>
+        <div class="service-card reveal" style="transition-delay:80ms;">
+          <div class="service-icon-wrap">
+            <i data-lucide="sparkles"></i>
+          </div>
+          <h3 class="service-name">Dermapen mikroneulahoito</h3>
+          <p class="service-desc">Kollageenin muodostusta stimuloiva hoito ikääntyvälle ja ongelmaiselle iholle. Tehokas ja turvallinen.</p>
+        </div>
+        <div class="service-card reveal" style="transition-delay:160ms;">
+          <div class="service-icon-wrap">
+            <i data-lucide="shield-check"></i>
+          </div>
+          <h3 class="service-name">Aknen erikoishoito</h3>
+          <p class="service-desc">Kiira SKY:n asiantunteva acne specialist -palvelu ongelmallisen ihon hoitoon. Räätälöity sinulle.</p>
+        </div>
+        <div class="service-card reveal" style="transition-delay:240ms;">
+          <div class="service-icon-wrap">
+            <i data-lucide="heart"></i>
+          </div>
+          <h3 class="service-name">Kotihoidonohjaus</h3>
+          <p class="service-desc">Ammattimainen opastus tehokkaisiin päivittäisiin ihonhoitokäytäntöihin. Tuloksia myös kotona.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="section-container">
+      <div class="section-head reveal">
+        <span class="section-label">Hoitola</span>
+        <h2 class="section-title">Viihtyisä ja ammattimainen ympäristö</h2>
+        <div class="accent-divider"></div>
+      </div>
+      <div class="gallery-grid reveal">
+        <div class="photo-main">
+          <img src="assets/pro-skin-tampere-4a218d56/photo2.jpg" alt="Pro Skin Tampere hoitohuone" />
+        </div>
+        <div>
+          <img src="assets/pro-skin-tampere-4a218d56/photo3.jpg" alt="Pro Skin Tampere palvelut" class="photo-side" />
+        </div>
+        <div>
+          <img src="assets/pro-skin-tampere-4a218d56/photo1.jpg" alt="Pro Skin Tampere sisätilat" class="photo-side" style="margin-top:16px;" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section id="why-us" style="background:#faf8f5;">
+    <div class="section-container">
+      <div class="section-head reveal">
+        <span class="section-label">Miksi Pro Skin?</span>
+        <h2 class="section-title">Ammattitaito, tulokset ja luottamus</h2>
+        <div class="accent-divider"></div>
+      </div>
+      <div class="why-grid">
+        <div class="why-item reveal" style="transition-delay:0ms;">
+          <i data-lucide="award" class="why-icon"></i>
+          <h3 class="why-title">Akne-specialisti & kokenut kosmetologi</h3>
+          <p class="why-desc">Kiira SKY:n ammattitaito taataan. Sertifioitu acne specialist -osaaminen yhdistyy vuosien kokemukseen ihonhoidosta.</p>
+        </div>
+        <div class="why-item reveal" style="transition-delay:80ms;">
+          <i data-lucide="zap" class="why-icon"></i>
+          <h3 class="why-title">Huippubrändit & tutkitut laitteet</h3>
+          <p class="why-desc">Medik8, pHformula, iS Clinical sekä Hydrafacial ja Dermapen — vain markkinoiden tehokkaimmat ratkaisut.</p>
+        </div>
+        <div class="why-item reveal" style="transition-delay:160ms;">
+          <i data-lucide="star" class="why-icon"></i>
+          <h3 class="why-title">5/5 tähteä 51 arvostelussa</h3>
+          <p class="why-desc">Asiakkaidemme luottamus puhuu puolestaan — täydellinen arvosana kertoo aidosta sitoutumisesta tuloksiin.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews">
+    <div class="section-container">
+      <div class="section-head reveal">
+        <span class="section-label">Asiakaskokemukset</span>
+        <h2 class="section-title">Mitä asiakkaamme sanovat</h2>
+        <div class="accent-divider"></div>
+      </div>
+      <div class="reviews-grid">
+
+        <div class="review-card reveal" style="transition-delay:0ms;">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-text">"I highly recommend it! I have been to Kiira for a hydrafacial and microneedling, each time I have been very satisfied with the results and received a lot of skincare tips at the same time. Kiira is a professional at her job. The facilities are great and I always feel very relaxed after the visit."</p>
+          <div class="review-author">
+            <div class="review-avatar">JD</div>
+            <div>
+              <div class="review-name">Jasmine Duhulow</div>
+              <div class="review-badge">
+                <i data-lucide="check-circle"></i>
+                Vahvistettu asiakas
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card reveal" style="transition-delay:80ms;">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-text">"I went for a facial at Pro Skin for the first time and booked a facial as an option, where a suitable treatment was chosen for me. I was chosen for the Hydrafacial treatment with an LED light mask. Throughout the treatment, Kiira explained the different stages of the treatment and made sure that I was comfortable."</p>
+          <div class="review-author">
+            <div class="review-avatar">HS</div>
+            <div>
+              <div class="review-name">Heli Schubin</div>
+              <div class="review-badge">
+                <i data-lucide="check-circle"></i>
+                Vahvistettu asiakas
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card reveal" style="transition-delay:160ms;">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-text">"I got help with my acne skin. Very happy with the service I received every time! This has become my regular spot!"</p>
+          <div class="review-author">
+            <div class="review-avatar">JK</div>
+            <div>
+              <div class="review-name">Julia Kähkönen</div>
+              <div class="review-badge">
+                <i data-lucide="check-circle"></i>
+                Vakioasiakas
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Overall rating bar -->
+      <div class="reveal" style="margin-top:56px;text-align:center;">
+        <div style="display:inline-flex;align-items:center;gap:16px;background:var(--surface);padding:20px 36px;border-radius:16px;box-shadow:0 1px 3px rgba(0,0,0,0.06),0 4px 16px rgba(0,0,0,0.04);">
+          <div style="font-family:'DM Serif Display',serif;font-size:3rem;color:var(--primary);line-height:1;">5.0</div>
+          <div>
+            <div style="display:flex;gap:3px;margin-bottom:4px;">
+              <i data-lucide="star" style="width:20px;height:20px;color:#f59e0b;fill:#f59e0b;"></i>
+              <i data-lucide="star" style="width:20px;height:20px;color:#f59e0b;fill:#f59e0b;"></i>
+              <i data-lucide="star" style="width:20px;height:20px;color:#f59e0b;fill:#f59e0b;"></i>
+              <i data-lucide="star" style="width:20px;height:20px;color:#f59e0b;fill:#f59e0b;"></i>
+              <i data-lucide="star" style="width:20px;height:20px;color:#f59e0b;fill:#f59e0b;"></i>
+            </div>
+            <div style="font-size:0.8rem;color:var(--muted);font-weight:500;">51 Google-arvostelua</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-container">
+      <div class="contact-grid">
+        <!-- Left: Info -->
+        <div class="reveal">
+          <span class="section-label">Yhteystiedot</span>
+          <h2 class="section-title" style="text-align:left;">Löydät meidät Tampereen keskustasta</h2>
+          <div class="accent-divider-left"></div>
+          <p style="margin-top:24px;margin-bottom:40px;font-size:0.95rem;color:var(--muted);line-height:1.7;">Jokainen asiakas saa yksilöllisen hoitosuunnitelman kauniin ja terveen ihon saavuttamiseksi. Varaa aikasi ja tule tutustumaan!</p>
+
+          <div class="contact-info-item">
+            <div class="contact-icon-wrap">
+              <i data-lucide="map-pin"></i>
+            </div>
+            <div>
+              <div class="contact-label">Osoite</div>
+              <div class="contact-value">Näsilinnankatu 27<br>33200 Tampere, Suomi</div>
+            </div>
+          </div>
+
+          <div class="contact-info-item">
+            <div class="contact-icon-wrap">
+              <i data-lucide="phone"></i>
+            </div>
+            <div>
+              <div class="contact-label">Puhelin</div>
+              <div class="contact-value"><a href="tel:0401907089">040 1907089</a></div>
+            </div>
+          </div>
+
+          <div class="contact-info-item">
+            <div class="contact-icon-wrap">
+              <i data-lucide="globe"></i>
+            </div>
+            <div>
+              <div class="contact-label">Verkkosivut</div>
+              <div class="contact-value"><a href="http://www.proskinbeauty.fi/" target="_blank" rel="noopener">www.proskinbeauty.fi</a></div>
+            </div>
+          </div>
+
+          <a href="tel:0401907089" class="btn-primary" style="margin-top:16px;display:inline-block;">
+            Varaa aika ihonhoitoon
+          </a>
+        </div>
+
+        <!-- Right: Map -->
+        <div class="reveal" style="transition-delay:100ms;">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=N%C3%A4silinnankatu%2027%2C%2033200%20Tampere%2C%20Suomi%2C%20Tampere%2C%20Finland&language=fi"
+            width="100%"
+            height="420"
+            style="border:0;border-radius:20px;box-shadow:0 4px 24px rgba(45,26,46,0.12);min-height:280px;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Pro Skin Tampere sijainti kartalla">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="footer-inner">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:32px;">
+        <div>
+          <div class="footer-name">Pro Skin Tampere</div>
+          <div class="footer-address">
+            Näsilinnankatu 27, 33200 Tampere<br>
+            040 1907089<br>
+            www.proskinbeauty.fi
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="#services" style="font-size:0.85rem;color:rgba(255,255,255,0.55);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.9)'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Palvelut</a>
+          <a href="#reviews" style="font-size:0.85rem;color:rgba(255,255,255,0.55);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.9)'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Arvostelut</a>
+          <a href="#contact" style="font-size:0.85rem;color:rgba(255,255,255,0.55);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.9)'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Yhteystiedot</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        Demo luotu <a href="https://masasite.com" target="_blank" rel="noopener">masasite.com</a> palvelulla
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Lucide icons
+    lucide.createIcons();
+
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // Reveal on scroll
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    revealEls.forEach(el => io.observe(el));
+
+    // Stagger cards
+    document.querySelectorAll('.service-card').forEach((card, i) => {
+      card.style.setProperty('--i', i);
+      card.style.transitionDelay = `${i * 80}ms`;
+    });
+    document.querySelectorAll('.review-card').forEach((card, i) => {
+      card.style.setProperty('--i', i);
+      card.style.transitionDelay = `${i * 80}ms`;
+    });
+    document.querySelectorAll('.why-item').forEach((item, i) => {
+      item.style.setProperty('--i', i);
+      item.style.transitionDelay = `${i * 80}ms`;
+    });
+
+    // Re-run icons after DOM changes
+    setTimeout(() => lucide.createIcons(), 100);
+  </script>
+</body>
+</html>
