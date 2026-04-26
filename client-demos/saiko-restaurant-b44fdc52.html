@@ -3,705 +3,998 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Saiko Restaurant — Japanilainen Robata-Grilli Helsingissä</title>
+  <title>Saiko Restaurant – Japanilainen robata-grilli Helsinki</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
   <style>
     :root {
       --primary: #1a0a00;
       --accent: #c0392b;
-      --bg: #fafaf9;
+      --bg: #0f0900;
+      --surface: #1a1000;
+      --gold: #d4a847;
+      --cream: #f5e6c8;
+      --text: #f0e8d8;
+      --muted: rgba(240, 232, 216, 0.6);
     }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     html { scroll-behavior: smooth; }
+
     body {
-      padding-top: 40px;
       font-family: 'DM Sans', sans-serif;
       background-color: var(--bg);
-      color: var(--primary);
+      color: var(--text);
+      padding-top: 40px;
+      line-height: 1.7;
     }
-    h1, h2, h3, .font-headline {
+
+    h1, h2, h3, h4 {
       font-family: 'Playfair Display', serif;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
     }
 
     /* Demo Banner */
     #demo-banner {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 100;
+      z-index: 200;
       height: 40px;
-      background: rgba(192, 57, 43, 0.88);
+      background: rgba(192, 57, 43, 0.92);
       backdrop-filter: blur(10px);
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+    #demo-banner p {
       font-size: 11px;
       color: #fff;
       letter-spacing: 0.02em;
     }
     #demo-banner a {
-      color: #ffd9d6;
+      color: #fff;
       text-decoration: underline;
-      margin-left: 4px;
+      text-underline-offset: 2px;
       font-weight: 600;
-    }
-    #demo-banner a:hover { color: #fff; }
-
-    /* Animations */
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: none; }
-    }
-    .hero-animate {
-      animation: fadeUp 1s ease forwards;
-    }
-    .hero-animate-delay {
-      animation: fadeUp 1s ease 0.2s forwards;
-      opacity: 0;
-    }
-    .hero-animate-delay2 {
-      animation: fadeUp 1s ease 0.4s forwards;
-      opacity: 0;
-    }
-    .hero-animate-delay3 {
-      animation: fadeUp 1s ease 0.6s forwards;
-      opacity: 0;
     }
 
     /* Nav */
-    #navbar {
+    #main-nav {
       position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(255, 255, 255, 0.95);
+      top: 40px;
+      z-index: 100;
+      background: rgba(26, 10, 0, 0.88);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(26, 10, 0, 0.08);
+      border-bottom: 1px solid rgba(212, 168, 71, 0.15);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    #main-nav.scrolled {
+      background: rgba(15, 9, 0, 0.96);
+      box-shadow: 0 2px 24px rgba(0,0,0,0.4);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 48px);
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: rgba(240, 232, 216, 0.8);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 10px 24px;
+      border-radius: 9999px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(192, 57, 43, 0.4);
+      background: #a93226;
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 12px 28px;
+      border-radius: 9999px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.25);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    .btn-ghost:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.3);
+      background: rgba(255,255,255,0.2);
     }
 
     /* Hero */
     #hero {
-      min-height: 100vh;
-      background: url('assets/saiko-restaurant-b44fdc52/photo1.jpg') center center / cover no-repeat;
+      min-height: 100svh;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
+      text-align: center;
+      background: url('assets/saiko-restaurant-b44fdc52/photo1.jpg') center center / cover no-repeat;
     }
     #hero::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(26,10,0,0.75) 100%);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(15,6,0,0.72) 100%);
     }
-    #hero > * { position: relative; z-index: 1; }
 
-    /* Service Cards Hover */
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 820px;
+      padding: clamp(16px, 5vw, 48px);
+      animation: heroFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+    }
+
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      padding: 6px 16px;
+      border: 1px solid rgba(212, 168, 71, 0.4);
+      border-radius: 9999px;
+    }
+
+    .hero-h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 24px;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.4);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255,255,255,0.82);
+      max-width: 640px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+
+    .rating-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+    .rating-stars {
+      display: flex;
+      gap: 3px;
+    }
+    .rating-stars i {
+      width: 18px;
+      height: 18px;
+      color: var(--gold);
+      fill: var(--gold);
+    }
+    .rating-text {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.75);
+      font-weight: 500;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-hero-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: 9999px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    .btn-hero-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(192, 57, 43, 0.5);
+      background: #a93226;
+    }
+
+    /* Section shared */
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .section-eyebrow {
+      font-size: 0.7rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      font-weight: 800;
+    }
+
+    /* Services */
+    #services {
+      padding-block: clamp(64px, 10vw, 120px);
+      background: var(--surface);
+    }
+    #services .section-title { color: var(--cream); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+
     .service-card {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(212, 168, 71, 0.12);
+      border-radius: 20px;
+      padding: 36px 32px;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease, border-color 0.3s ease;
     }
     .service-card:hover {
       transform: translateY(-6px);
-      box-shadow: 0 20px 40px rgba(26, 10, 0, 0.15);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+      border-color: rgba(212, 168, 71, 0.3);
     }
 
-    /* CTA hover lift */
-    .btn-primary {
-      background-color: var(--accent);
-      color: #fff;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
-    }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(192, 57, 43, 0.45);
-      background-color: #a93226;
-    }
-
-    .btn-secondary-hero {
-      background: rgba(255,255,255,0.18);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,0.4);
-      color: #fff;
-      transition: transform 0.2s ease, background 0.2s ease;
-    }
-    .btn-secondary-hero:hover {
-      transform: translateY(-2px);
-      background: rgba(255,255,255,0.28);
-    }
-
-    /* Stars */
-    .star-icon {
-      color: #f0b429;
-      display: inline-flex;
-    }
-    .star-icon svg {
-      fill: #f0b429;
-      stroke: #f0b429;
-    }
-
-    /* Hours table */
-    .hours-row {
+    .service-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: rgba(192, 57, 43, 0.18);
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 12px 20px;
-      border-radius: 10px;
-      transition: background 0.2s;
+      justify-content: center;
+      margin-bottom: 24px;
     }
-    .hours-row:nth-child(odd) {
-      background: rgba(26, 10, 0, 0.03);
+    .service-icon i {
+      width: 28px;
+      height: 28px;
+      color: var(--accent);
     }
-    .hours-row.closed-day .hours-time {
-      color: #b0a9a4;
-      font-style: italic;
+    .service-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 12px;
     }
-    .hours-row.open-day .hours-time {
-      color: #c0392b;
-      font-weight: 600;
-    }
-
-    /* Map iframe */
-    .map-frame {
-      width: 100%;
-      height: 350px;
-      border-radius: 16px;
-      box-shadow: 0 8px 30px rgba(26,10,0,0.12);
-      border: none;
+    .service-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
     }
 
-    /* Divider ornament */
-    .ornament-line {
-      width: 60px;
-      height: 2px;
-      background: var(--accent);
+    /* Why us */
+    #why {
+      padding-block: clamp(64px, 10vw, 120px);
+      background: var(--bg);
+    }
+    #why .section-title { color: var(--cream); text-align: center; }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 48px;
+      margin-top: 64px;
+    }
+    .why-item {
+      text-align: center;
+    }
+    .why-icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(192,57,43,0.12);
+    }
+    .why-icon i {
+      width: 36px;
+      height: 36px;
+      color: var(--accent);
+    }
+    .why-item h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 10px;
+    }
+    .why-item p {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 280px;
       margin: 0 auto;
     }
 
-    /* Review card quote */
+    /* Reviews */
+    #reviews {
+      padding-block: clamp(64px, 10vw, 120px);
+      background: var(--surface);
+    }
+    #reviews .section-title { color: var(--cream); }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
     .review-card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 28px;
-      box-shadow: 0 4px 20px rgba(26,10,0,0.07);
-      border: 1px solid rgba(26,10,0,0.06);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(212,168,71,0.1);
+      border-radius: 20px;
+      padding: 32px;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     .review-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(26,10,0,0.12);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
     }
-
-    /* Nav link hover */
-    .nav-link {
-      position: relative;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--primary);
-      text-decoration: none;
-      padding-bottom: 2px;
-      transition: color 0.2s;
+    .review-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 16px;
     }
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: -2px; left: 0; right: 0;
-      height: 2px;
+    .review-stars i {
+      width: 16px;
+      height: 16px;
+      color: var(--gold);
+      fill: var(--gold);
+    }
+    .review-text {
+      font-size: 0.875rem;
+      font-style: italic;
+      color: rgba(240,232,216,0.75);
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .review-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
       background: var(--accent);
-      transform: scaleX(0);
-      transition: transform 0.25s ease;
-    }
-    .nav-link:hover::after { transform: scaleX(1); }
-    .nav-link:hover { color: var(--accent); }
-
-    /* Why us icon wrapper */
-    .why-icon-wrap {
-      width: 64px;
-      height: 64px;
-      border-radius: 16px;
-      background: rgba(192, 57, 43, 0.08);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
     }
-    .why-icon-wrap svg {
+    .review-author-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--cream);
+    }
+    .review-badge {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.7rem;
+      color: var(--gold);
+    }
+    .review-badge i { width: 12px; height: 12px; color: var(--gold); }
+
+    /* Hours */
+    #hours {
+      padding-block: clamp(64px, 10vw, 120px);
+      background: var(--bg);
+    }
+    #hours .section-title { color: var(--cream); }
+
+    .hours-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(212,168,71,0.15);
+      border-radius: 20px;
+      overflow: hidden;
+      max-width: 520px;
+    }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 28px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: background 0.2s ease;
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-row:hover { background: rgba(255,255,255,0.03); }
+    .hours-day {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: rgba(240,232,216,0.8);
+    }
+    .hours-time {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--cream);
+    }
+    .hours-closed {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: rgba(192,57,43,0.7);
+    }
+    .hours-today-badge {
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: rgba(212,168,71,0.12);
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-weight: 600;
+    }
+
+    /* Contact */
+    #contact {
+      padding-block: clamp(64px, 10vw, 120px);
+      background: var(--surface);
+    }
+    #contact .section-title { color: var(--cream); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-top: 56px;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+
+    .contact-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .contact-icon-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(192,57,43,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon-wrap i {
+      width: 20px;
+      height: 20px;
       color: var(--accent);
     }
+    .contact-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .contact-value {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--cream);
+    }
+    .contact-value a {
+      color: var(--cream);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .contact-value a:hover { color: var(--gold); }
 
-    /* Photo gallery */
-    .photo-item {
-      overflow: hidden;
+    /* Footer */
+    footer {
+      background: #0a0500;
+      border-top: 1px solid rgba(212,168,71,0.1);
+      padding: 48px 0 24px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .footer-name {
+      font-size: 1.25rem;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 8px;
+    }
+    .footer-address {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .footer-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      margin: 32px 0 20px;
+    }
+    .footer-bottom {
+      font-size: 11px;
+      color: rgba(240,232,216,0.25);
+      letter-spacing: 0.03em;
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Gallery */
+    .photo-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .photo-strip img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
       border-radius: 16px;
     }
-    .photo-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
-    .photo-item:hover img {
-      transform: scale(1.05);
-    }
 
-    @media (max-width: 768px) {
-      #hero h1 { font-size: 2.5rem; }
+    /* Mobile nav */
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
     }
   </style>
 </head>
 <body>
 
-<!-- [1] DEMO BANNER -->
-<div id="demo-banner">
-  Saiko Restaurant — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman?
-  <a href="mailto:team@masasite.com">Ota yhteyttä →</a>
-</div>
-
-<!-- [2] STICKY NAV -->
-<nav id="navbar">
-  <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
-    <a href="#hero" class="flex-shrink-0">
-      <img src="http://images.squarespace-cdn.com/content/v1/65fe8fb4f8735f09d5de7c10/afb08736-efd4-4806-8387-c230a013040b/SAIKO+Logo.png?format=1500w"
-           alt="Saiko Restaurant" class="h-9 object-contain" />
-    </a>
-    <div class="hidden md:flex items-center gap-8">
-      <a href="#services" class="nav-link">Palvelut</a>
-      <a href="#hours" class="nav-link">Aukioloajat</a>
-      <a href="#contact" class="nav-link">Yhteystiedot</a>
-    </div>
-    <a href="#contact"
-       class="btn-primary text-sm font-semibold px-5 py-2.5 rounded-full inline-block">
-      Varaa pöytä
-    </a>
+  <!-- [1] DEMO BANNER -->
+  <div id="demo-banner">
+    <p>Saiko Restaurant — tämä esimerkkisivu on tehty juuri teille&nbsp;·&nbsp;Haluatko oman? <a href="mailto:team@masasite.com">Ota yhteyttä →</a></p>
   </div>
-</nav>
 
-<!-- [3] HERO -->
-<section id="hero">
-  <div class="max-w-4xl mx-auto px-6 text-center text-white">
-    <div class="hero-animate mb-5">
-      <span style="font-family: 'DM Sans', sans-serif; font-size:12px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:rgba(255,255,255,0.65);">
-        Helsinki &nbsp;·&nbsp; Robata Fusion
-      </span>
-    </div>
-    <h1 class="hero-animate-delay text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6" style="font-family:'Playfair Display',serif; text-shadow:0 2px 20px rgba(0,0,0,0.4);">
-      Japanilaisen robata-grillin taidetta Helsingissä
-    </h1>
-    <p class="hero-animate-delay2 text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-4 leading-relaxed" style="font-family:'DM Sans',sans-serif; font-weight:300;">
-      Saiko on Helsingin sydämessä sijaitseva robata-style fusioravintola, joka yhdistää japanilaisen grillaustradition innovatiivisiin kulinaraarisiin tekniikoihin.
-    </p>
-    <div class="hero-animate-delay2 flex items-center justify-center gap-1.5 mb-8">
-      <span class="star-icon"><i data-lucide="star" style="width:18px;height:18px;"></i></span>
-      <span class="star-icon"><i data-lucide="star" style="width:18px;height:18px;"></i></span>
-      <span class="star-icon"><i data-lucide="star" style="width:18px;height:18px;"></i></span>
-      <span class="star-icon"><i data-lucide="star" style="width:18px;height:18px;"></i></span>
-      <span class="star-icon"><i data-lucide="star" style="width:18px;height:18px;"></i></span>
-      <span class="text-white/70 text-sm ml-2" style="font-family:'DM Sans',sans-serif;">4.9/5 · 267 arvostelua Googlessa</span>
-    </div>
-    <div class="hero-animate-delay3 flex flex-col sm:flex-row gap-4 justify-center">
-      <a href="#contact"
-         class="btn-primary font-semibold px-8 py-4 rounded-full text-base inline-block">
-        Varaa pöytä nyt
+  <!-- [2] STICKY NAV -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <a href="#hero">
+        <img src="http://images.squarespace-cdn.com/content/v1/65fe8fb4f8735f09d5de7c10/afb08736-efd4-4806-8387-c230a013040b/SAIKO+Logo.png?format=1500w"
+             alt="Saiko Restaurant Logo"
+             style="height:40px; width:auto; object-fit:contain;" />
       </a>
-      <a href="#services"
-         class="btn-secondary-hero font-semibold px-8 py-4 rounded-full text-base inline-block">
-        Tutustu palveluihin
+      <ul class="nav-links">
+        <li><a href="#services">Palvelut</a></li>
+        <li><a href="#hours">Aukioloajat</a></li>
+        <li><a href="#contact">Yhteystiedot</a></li>
+      </ul>
+      <a href="tel:0503088890" class="btn-primary">
+        <i data-lucide="phone" style="width:15px;height:15px;"></i>
+        050 308 8890
       </a>
     </div>
-  </div>
-</section>
+  </nav>
 
-<!-- PHOTO GALLERY STRIP -->
-<section class="py-16 px-6" style="background:#fff;">
-  <div class="max-w-6xl mx-auto">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4" style="height:280px;">
-      <div class="photo-item reveal md:col-span-1" style="height:280px;">
-        <img src="assets/saiko-restaurant-b44fdc52/photo1.jpg" alt="Saiko Restaurant" />
+  <!-- [3] HERO -->
+  <section id="hero">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Helsinki · Fredrikinkatu 47</span>
+      <h1 class="hero-h1">Japanilainen robata-grilli Helsingin sydämessä</h1>
+      <p class="hero-subtitle">Saiko Restaurant yhdistää perinteisen japanilaisen grillauksen ja innovatiivisen fusion-keittiön luoden ainutlaatuisen ruokaelämyksen. Moderni ja viihtyisä tunnelma sopii sekä intiimeille illallisille että juhlallisille tilaisuuksille.</p>
+      <div class="rating-row">
+        <div class="rating-stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <span class="rating-text">4.9/5 (267 arvostelua)</span>
       </div>
-      <div class="photo-item reveal md:col-span-1" style="height:280px;">
-        <img src="assets/saiko-restaurant-b44fdc52/photo2.jpg" alt="Saiko Restaurant ruoka" />
-      </div>
-      <div class="photo-item reveal md:col-span-1" style="height:280px;">
-        <img src="assets/saiko-restaurant-b44fdc52/photo3.jpg" alt="Saiko Restaurant tunnelma" />
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- [4] SERVICES GRID -->
-<section id="services" style="background:#f7f5f3;" class="py-20 md:py-28 px-6">
-  <div class="max-w-6xl mx-auto">
-    <div class="text-center mb-16 reveal">
-      <span style="font-size:12px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); font-family:'DM Sans',sans-serif;">Palvelumme</span>
-      <h2 class="text-4xl md:text-5xl font-bold mt-3 mb-4" style="color:var(--primary);">Mitä tarjoamme</h2>
-      <div class="ornament-line mt-4"></div>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-      <!-- Ramen -->
-      <div class="service-card bg-white rounded-2xl shadow-md p-8 reveal">
-        <div class="mb-5 inline-flex items-center justify-center w-14 h-14 rounded-2xl" style="background:rgba(192,57,43,0.08);">
-          <i data-lucide="coffee" style="width:28px;height:28px;color:var(--accent);"></i>
-        </div>
-        <h3 class="text-xl font-bold mb-3" style="font-family:'Playfair Display',serif; color:var(--primary);">Ramen</h3>
-        <p class="text-sm leading-relaxed" style="color:#6b5e57;">
-          Perinteinen japanilainen ramenkeitto, tarjolla lounaalla ja illalla. Syvät maut, tuoreet ainekset ja autenttinen resepti luovat ainutlaatuisen ramenelämyksen.
-        </p>
-        <div class="mt-5 pt-5 border-t border-gray-100 flex items-center gap-2">
-          <i data-lucide="clock" style="width:14px;height:14px;color:var(--accent);"></i>
-          <span class="text-xs" style="color:#9a8e89;">Lounas &amp; illallinen</span>
-        </div>
-      </div>
-
-      <!-- Robata Grill -->
-      <div class="service-card bg-white rounded-2xl shadow-md p-8 reveal" style="transition-delay:0.1s;">
-        <div class="mb-5 inline-flex items-center justify-center w-14 h-14 rounded-2xl" style="background:rgba(192,57,43,0.08);">
-          <i data-lucide="flame" style="width:28px;height:28px;color:var(--accent);"></i>
-        </div>
-        <h3 class="text-xl font-bold mb-3" style="font-family:'Playfair Display',serif; color:var(--primary);">Robata Grill</h3>
-        <p class="text-sm leading-relaxed" style="color:#6b5e57;">
-          Klassinen japanilainen grillaustyyli, varattavissa etukäteen. Koe perinteinen hiiligrilli, jossa raaka-aineet puhuvat puolestaan.
-        </p>
-        <div class="mt-5 pt-5 border-t border-gray-100 flex items-center gap-2">
-          <i data-lucide="calendar" style="width:14px;height:14px;color:var(--accent);"></i>
-          <span class="text-xs" style="color:#9a8e89;">Varattavissa etukäteen</span>
-        </div>
-      </div>
-
-      <!-- Pöytävaraus -->
-      <div class="service-card bg-white rounded-2xl shadow-md p-8 reveal" style="transition-delay:0.2s;">
-        <div class="mb-5 inline-flex items-center justify-center w-14 h-14 rounded-2xl" style="background:rgba(192,57,43,0.08);">
-          <i data-lucide="users" style="width:28px;height:28px;color:var(--accent);"></i>
-        </div>
-        <h3 class="text-xl font-bold mb-3" style="font-family:'Playfair Display',serif; color:var(--primary);">Pöytävaraus</h3>
-        <p class="text-sm leading-relaxed" style="color:#6b5e57;">
-          Yksityiset tilaisuudet ja ryhmät tervetulleita. Järjestämme unohtumattomia juhlia ja erityisiä tapahtumia intiimiistä illallisista läheisten juhliin.
-        </p>
-        <div class="mt-5 pt-5 border-t border-gray-100 flex items-center gap-2">
-          <i data-lucide="gift" style="width:14px;height:14px;color:var(--accent);"></i>
-          <span class="text-xs" style="color:#9a8e89;">Yksityistilaisuudet</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- [5] WHY CHOOSE US -->
-<section id="why" style="background:#fff;" class="py-20 md:py-28 px-6">
-  <div class="max-w-6xl mx-auto">
-    <div class="text-center mb-16 reveal">
-      <span style="font-size:12px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); font-family:'DM Sans',sans-serif;">Miksi Saiko</span>
-      <h2 class="text-4xl md:text-5xl font-bold mt-3 mb-4" style="color:var(--primary);">Miksi valita meidät?</h2>
-      <div class="ornament-line mt-4"></div>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-
-      <div class="text-center reveal">
-        <div class="why-icon-wrap">
-          <i data-lucide="award" style="width:30px;height:30px;"></i>
-        </div>
-        <h3 class="text-lg font-bold mb-3" style="font-family:'Playfair Display',serif; color:var(--primary);">Erittäin korkea laatu</h3>
-        <p class="text-sm leading-relaxed" style="color:#6b5e57;">
-          Google-arvio 4.9/5 yli 260 arvostelulla kertoo poikkeuksellisesta laadusta ja asiakastyytyväisyydestä, jota ylläpidämme joka päivä.
-        </p>
-      </div>
-
-      <div class="text-center reveal" style="transition-delay:0.1s;">
-        <div class="why-icon-wrap">
-          <i data-lucide="zap" style="width:30px;height:30px;"></i>
-        </div>
-        <h3 class="text-lg font-bold mb-3" style="font-family:'Playfair Display',serif; color:var(--primary);">Ainutlaatuinen konsepti</h3>
-        <p class="text-sm leading-relaxed" style="color:#6b5e57;">
-          Ainutlaatuinen robata-fusion-konsepti Helsingissä — emme pelkää yhdistää japanilaisia, korealaisia ja vietnamilaisia makuja rohkeasti.
-        </p>
-      </div>
-
-      <div class="text-center reveal" style="transition-delay:0.2s;">
-        <div class="why-icon-wrap">
-          <i data-lucide="heart" style="width:30px;height:30px;"></i>
-        </div>
-        <h3 class="text-lg font-bold mb-3" style="font-family:'Playfair Display',serif; color:var(--primary);">Erityinen tunnelma</h3>
-        <p class="text-sm leading-relaxed" style="color:#6b5e57;">
-          Moderni, lämmin tunnelma erityisille juhlille ja kokemuksille. Jokainen ilta Saikossa on muisto, joka jää mieleen.
-        </p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- [6] REVIEWS -->
-<section id="reviews" style="background:#f7f5f3;" class="py-20 md:py-28 px-6">
-  <div class="max-w-6xl mx-auto">
-    <div class="text-center mb-16 reveal">
-      <span style="font-size:12px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); font-family:'DM Sans',sans-serif;">Asiakaskokemukset</span>
-      <h2 class="text-4xl md:text-5xl font-bold mt-3 mb-2" style="color:var(--primary);">Mitä asiakkaamme sanovat</h2>
-      <div class="ornament-line mt-4 mb-5"></div>
-      <div class="flex items-center justify-center gap-2 mt-4">
-        <span class="star-icon"><i data-lucide="star" style="width:20px;height:20px;"></i></span>
-        <span class="star-icon"><i data-lucide="star" style="width:20px;height:20px;"></i></span>
-        <span class="star-icon"><i data-lucide="star" style="width:20px;height:20px;"></i></span>
-        <span class="star-icon"><i data-lucide="star" style="width:20px;height:20px;"></i></span>
-        <span class="star-icon"><i data-lucide="star" style="width:20px;height:20px;"></i></span>
-        <span class="font-bold text-lg ml-2" style="color:var(--primary);">4.9</span>
-        <span class="text-sm ml-1" style="color:#9a8e89;">/ 267 arvostelua</span>
-      </div>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-      <!-- Review 1 -->
-      <div class="review-card reveal">
-        <div class="flex items-center gap-1 mb-4">
-          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
-          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
-          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
-          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
-          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
-        </div>
-        <p class="text-sm leading-relaxed italic mb-5" style="color:#5a4f4a;">
-          "Authentic and unique experience! We found this place accidentally and luckily we were not too late after 17:00 to join the course dinner. Everyone from the personnel were super friendly and special thanks to the Chef — not only for the delicious food but for the good mood!"
-        </p>
-        <div class="flex items-center gap-3 pt-4 border-t border-gray-100">
-          <div class="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold" style="background:var(--accent);">E</div>
-          <div>
-            <div class="text-sm font-semibold" style="color:var(--primary);">Elena S.</div>
-            <div class="text-xs" style="color:#9a8e89;">Google-arvostelu</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Review 2 -->
-      <div class="review-card reveal" style="transition-delay:0.1s;">
-        <div class="flex items-center gap-1 mb-4">
-          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
-          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
-          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
-          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
-          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
-        </div>
-        <p class="text-sm leading-relaxed italic mb-5" style="color:#5a4f4a;">
-          "Amazing multi-course dining experience with the Chef, who was very kind and warm. All dishes were beautifully plated and tasted delicious, and flavors were complex and well-balanced. My favorites were the mango dessert, which was light and not overly sweet, and the fish and radish."
-        </p>
-        <div class="flex items-center gap-3 pt-4 border-t border-gray-100">
-          <div class="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold" style="background:var(--accent);">A</div>
-          <div>
-            <div class="text-sm font-semibold" style="color:var(--primary);">Abby</div>
-            <div class="text-xs" style="color:#9a8e89;">Google-arvostelu</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Review 3 -->
-      <div class="review-card reveal" style="transition-delay:0.2s;">
-        <div class="flex items-center gap-1 mb-4">
-          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
-          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
-          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
-          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
-          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
-        </div>
-        <p class="text-sm leading-relaxed italic mb-5" style="color:#5a4f4a;">
-          "You can really tell the chef puts a lot of thought and care into the food. He mixes spices and flavors from different parts of Asia, and each dish is unique and tasty. I personally enjoyed the Japanese, Korean, and Vietnamese influences as it made the food interesting and not predictable."
-        </p>
-        <div class="flex items-center gap-3 pt-4 border-t border-gray-100">
-          <div class="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold" style="background:var(--accent);">H</div>
-          <div>
-            <div class="text-sm font-semibold" style="color:var(--primary);">H Shin</div>
-            <div class="text-xs" style="color:#9a8e89;">Google-arvostelu</div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- [7] OPENING HOURS -->
-<section id="hours" style="background:#fff;" class="py-20 md:py-28 px-6">
-  <div class="max-w-2xl mx-auto">
-    <div class="text-center mb-12 reveal">
-      <span style="font-size:12px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); font-family:'DM Sans',sans-serif;">Aukioloajat</span>
-      <h2 class="text-4xl md:text-5xl font-bold mt-3 mb-4" style="color:var(--primary);">Olemme avoinna</h2>
-      <div class="ornament-line mt-4"></div>
-    </div>
-    <div class="reveal rounded-2xl overflow-hidden shadow-md border border-gray-100">
-      <div style="background:var(--primary);" class="px-6 py-5 flex items-center gap-3">
-        <i data-lucide="clock" style="width:20px;height:20px;color:rgba(255,255,255,0.7);"></i>
-        <span class="font-semibold text-white" style="font-family:'DM Sans',sans-serif;">Viikkoaikataulu</span>
-      </div>
-      <div class="bg-white">
-
-        <div class="hours-row closed-day">
-          <span class="text-sm font-medium" style="color:var(--primary);">Maanantai</span>
-          <span class="hours-time text-sm">Suljettu</span>
-        </div>
-        <div class="hours-row closed-day">
-          <span class="text-sm font-medium" style="color:var(--primary);">Tiistai</span>
-          <span class="hours-time text-sm">Suljettu</span>
-        </div>
-        <div class="hours-row open-day">
-          <span class="text-sm font-medium" style="color:var(--primary);">Keskiviikko</span>
-          <span class="hours-time text-sm">11:00 – 21:00</span>
-        </div>
-        <div class="hours-row open-day">
-          <span class="text-sm font-medium" style="color:var(--primary);">Torstai</span>
-          <span class="hours-time text-sm">11:00 – 21:00</span>
-        </div>
-        <div class="hours-row open-day">
-          <span class="text-sm font-medium" style="color:var(--primary);">Perjantai</span>
-          <span class="hours-time text-sm">11:00 – 21:00</span>
-        </div>
-        <div class="hours-row open-day">
-          <span class="text-sm font-medium" style="color:var(--primary);">Lauantai</span>
-          <span class="hours-time text-sm">12:00 – 21:00</span>
-        </div>
-        <div class="hours-row closed-day">
-          <span class="text-sm font-medium" style="color:var(--primary);">Sunnuntai</span>
-          <span class="hours-time text-sm">Suljettu</span>
-        </div>
-
-      </div>
-    </div>
-    <div class="text-center mt-8 reveal">
-      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm" style="background:rgba(192,57,43,0.08); color:var(--accent);">
-        <i data-lucide="info" style="width:14px;height:14px;"></i>
-        <span>Pöytävaraukset suositeltavia ruuhka-aikoina</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- [8] CONTACT -->
-<section id="contact" style="background:#f7f5f3;" class="py-20 md:py-28 px-6">
-  <div class="max-w-6xl mx-auto">
-    <div class="text-center mb-16 reveal">
-      <span style="font-size:12px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); font-family:'DM Sans',sans-serif;">Yhteystiedot</span>
-      <h2 class="text-4xl md:text-5xl font-bold mt-3 mb-4" style="color:var(--primary);">Tule käymään</h2>
-      <div class="ornament-line mt-4"></div>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-
-      <!-- Left: Contact Info -->
-      <div class="reveal">
-        <h3 class="text-2xl font-bold mb-6" style="font-family:'Playfair Display',serif; color:var(--primary);">Saiko Restaurant</h3>
-        <p class="text-sm leading-relaxed mb-8" style="color:#6b5e57; max-width:420px;">
-          Tunnelmaltaan moderni ja lämmin ravintola tarjoaa unohtumattoman ruokakokemuksen intiimiistä illallisista läheisiin juhliin. Tervetuloa nauttimaan japanilaisen fusion-keittiön parhaista paloista.
-        </p>
-
-        <div class="space-y-5 mb-8">
-          <div class="flex items-start gap-4">
-            <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(192,57,43,0.1);">
-              <i data-lucide="map-pin" style="width:18px;height:18px;color:var(--accent);"></i>
-            </div>
-            <div>
-              <div class="text-xs font-semibold uppercase tracking-widest mb-1" style="color:#9a8e89;">Osoite</div>
-              <div class="text-sm font-medium" style="color:var(--primary);">Fredrikinkatu 47, 00100 Helsinki, Suomi</div>
-            </div>
-          </div>
-          <div class="flex items-start gap-4">
-            <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(192,57,43,0.1);">
-              <i data-lucide="phone" style="width:18px;height:18px;color:var(--accent);"></i>
-            </div>
-            <div>
-              <div class="text-xs font-semibold uppercase tracking-widest mb-1" style="color:#9a8e89;">Puhelin</div>
-              <a href="tel:0503088890" class="text-sm font-medium hover:underline" style="color:var(--primary);">050 3088890</a>
-            </div>
-          </div>
-          <div class="flex items-start gap-4">
-            <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(192,57,43,0.1);">
-              <i data-lucide="globe" style="width:18px;height:18px;color:var(--accent);"></i>
-            </div>
-            <div>
-              <div class="text-xs font-semibold uppercase tracking-widest mb-1" style="color:#9a8e89;">Verkkosivut</div>
-              <a href="http://saikorestaurant.com/" target="_blank" rel="noopener" class="text-sm font-medium hover:underline" style="color:var(--primary);">saikorestaurant.com</a>
-            </div>
-          </div>
-        </div>
-
-        <a href="tel:0503088890"
-           class="btn-primary font-semibold px-8 py-4 rounded-full inline-flex items-center gap-2 text-sm">
-          <i data-lucide="phone" style="width:16px;height:16px;"></i>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn-hero-primary">
+          <i data-lucide="calendar" style="width:18px;height:18px;"></i>
           Varaa pöytä nyt
         </a>
-      </div>
-
-      <!-- Right: Map -->
-      <div class="reveal" style="transition-delay:0.15s;">
-        <iframe
-          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Fredrikinkatu%2047%2C%2000100%20Helsinki%2C%20Suomi%2C%20Helsinki%2C%20Finland&language=fi"
-          class="map-frame"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          title="Saiko Restaurant sijainti kartalla">
-        </iframe>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- [9] FOOTER -->
-<footer style="background:var(--primary);" class="py-14 px-6">
-  <div class="max-w-6xl mx-auto">
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 pb-10 border-b border-white/10">
-      <div>
-        <img src="http://images.squarespace-cdn.com/content/v1/65fe8fb4f8735f09d5de7c10/afb08736-efd4-4806-8387-c230a013040b/SAIKO+Logo.png?format=1500w"
-             alt="Saiko Restaurant" class="h-10 object-contain mb-4 brightness-200" />
-        <p class="text-sm" style="color:rgba(255,255,255,0.5);">Japanilaisen robata-grillin taidetta Helsingissä</p>
-      </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-x-16 gap-y-3">
-        <a href="#services" class="text-sm hover:text-white transition-colors" style="color:rgba(255,255,255,0.6);">Palvelut</a>
-        <a href="#hours" class="text-sm hover:text-white transition-colors" style="color:rgba(255,255,255,0.6);">Aukioloajat</a>
-        <a href="#contact" class="text-sm hover:text-white transition-colors" style="color:rgba(255,255,255,0.6);">Yhteystiedot</a>
-        <a href="#reviews" class="text-sm hover:text-white transition-colors" style="color:rgba(255,255,255,0.6);">Arvostelut</a>
-        <a href="http://saikorestaurant.com/" target="_blank" class="text-sm hover:text-white transition-colors" style="color:rgba(255,255,255,0.6);">Verkkosivut</a>
-        <a href="tel:0503088890" class="text-sm hover:text-white transition-colors" style="color:rgba(255,255,255,0.6);">Soita meille</a>
+        <a href="#services" class="btn-ghost">Tutustu menuun</a>
       </div>
     </div>
-    <div class="pt-8 flex flex-col md:flex-row justify-between items-center gap-3">
-      <div>
-        <p class="text-sm font-semibold" style="color:rgba(255,255,255,0.7);">Saiko Restaurant</p>
-        <p class="text-xs mt-1" style="color:rgba(255,255,255,0.4);">Fredrikinkatu 47, 00100 Helsinki, Suomi</p>
+  </section>
+
+  <!-- [4] SERVICES -->
+  <section id="services">
+    <div class="section-container">
+      <div class="reveal" style="text-align:center; max-width:600px; margin:0 auto 0;">
+        <span class="section-eyebrow">Mitä tarjoamme</span>
+        <h2 class="section-title">Ainutlaatuisia makuelämyksiä</h2>
+        <p style="color:var(--muted); font-size:0.95rem; margin-top:16px; line-height:1.75;">Saiko on Helsingissä paras valinta robata-grillin ja ramen-nuudeleiden harrastajille. Jokainen annos on taidolla valmistettu.</p>
       </div>
-      <p class="text-xs" style="color:rgba(255,255,255,0.3);">
-        Demo luotu <a href="https://masasite.com" target="_blank" class="underline hover:text-white/50 transition-colors">masasite.com</a> palvelulla
-      </p>
+
+      <div class="services-grid">
+        <div class="service-card reveal" style="transition-delay: 0ms;">
+          <div class="service-icon">
+            <i data-lucide="flame"></i>
+          </div>
+          <h3>Robata Grill</h3>
+          <p>Perinteisen japanilaisen grillauksen taito ja uudet kulinaristiset tekniikat yhdessä. Herkullinen kokemus avotulella valmistettuja annoksia.</p>
+        </div>
+        <div class="service-card reveal" style="transition-delay: 80ms;">
+          <div class="service-icon">
+            <i data-lucide="soup"></i>
+          </div>
+          <h3>Ramen-ateria</h3>
+          <p>Autenttiset japanilaiset ramen-nuudelit lounaalla ja illallisella. Syvät, tasapainoiset liemet pitkästä kypsytyksestä.</p>
+        </div>
+        <div class="service-card reveal" style="transition-delay: 160ms;">
+          <div class="service-icon">
+            <i data-lucide="calendar-check"></i>
+          </div>
+          <h3>Pöytävaraus</h3>
+          <p>Varaa pöytä robata-grill-kokemukselle tai erityisille tilaisuuksille. Järjestämme myös yksityistilaisuuksia ja illallisia ryhmille.</p>
+        </div>
+      </div>
+
+      <!-- Photo strip -->
+      <div class="reveal" style="margin-top:48px;">
+        <div class="photo-strip">
+          <img src="assets/saiko-restaurant-b44fdc52/photo2.jpg" alt="Saiko Restaurant ruoka" />
+          <img src="assets/saiko-restaurant-b44fdc52/photo3.jpg" alt="Saiko Restaurant tunnelma" />
+        </div>
+      </div>
     </div>
-  </div>
-</footer>
+  </section>
 
-<!-- JS -->
-<script>
-  // Initialize Lucide icons
-  lucide.createIcons();
+  <!-- [5] WHY CHOOSE US -->
+  <section id="why">
+    <div class="section-container">
+      <div class="reveal" style="text-align:center;">
+        <span class="section-eyebrow">Miksi Saiko</span>
+        <h2 class="section-title">Helsingissä ainutlaatuinen</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-item reveal" style="transition-delay:0ms;">
+          <div class="why-icon">
+            <i data-lucide="award"></i>
+          </div>
+          <h3>4.9/5 arvio</h3>
+          <p>267 tyytyväisen asiakkaan suosikkipaikka. Yksi Helsingin parhaiten arvostelluista japanilaisista ravintoloista.</p>
+        </div>
+        <div class="why-item reveal" style="transition-delay:80ms;">
+          <div class="why-icon">
+            <i data-lucide="sparkles"></i>
+          </div>
+          <h3>Ainutlaatuinen kokemus</h3>
+          <p>Ainutlaatuinen japanilaisen robata-grillauksen kokemus Helsingissä. Moderni fuusio-keittiö kohtaa perinteen.</p>
+        </div>
+        <div class="why-item reveal" style="transition-delay:160ms;">
+          <div class="why-icon">
+            <i data-lucide="heart"></i>
+          </div>
+          <h3>Jokaiselle tilaisuudelle</h3>
+          <p>Viihtyisä moderni tunnelma jokaiselle tilaisuudelle – intiimeistä illallisista suuriin juhliin ja yritystilaisuuksiin.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  // Intersection Observer for .reveal elements
-  const revealEls = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
+  <!-- [6] REVIEWS -->
+  <section id="reviews">
+    <div class="section-container">
+      <div class="reveal" style="text-align:center; max-width:560px; margin:0 auto 0;">
+        <span class="section-eyebrow">Asiakasarvostelut</span>
+        <h2 class="section-title">Mitä asiakkaamme sanovat</h2>
+      </div>
+      <div class="reviews-grid">
+
+        <div class="review-card reveal" style="transition-delay:0ms;">
+          <div class="review-stars">
+            <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+          </div>
+          <p class="review-text">"Authentic and unique experience! We found this place accidentally and luckily we were not too late after 17:00 to join the course dinner. Everyone from the personnel were super friendly and special thanks to the Chef – not only for the delicious food but for the good mood! Some tastes were very new."</p>
+          <div class="review-author">
+            <div class="review-avatar">ES</div>
+            <div>
+              <div class="review-author-name">Elena S.</div>
+              <div class="review-badge"><i data-lucide="check-circle"></i> Vahvistettu arvostelu</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card reveal" style="transition-delay:80ms;">
+          <div class="review-stars">
+            <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+          </div>
+          <p class="review-text">"Amazing multi-course dining experience with the Chef, who was very kind and warm. All dishes were beautifully plated and tasted delicious, and flavors were complex and well-balanced. My favorites were the mango dessert, which was light and not overly sweet, and the fish and radish, which was so refreshing."</p>
+          <div class="review-author">
+            <div class="review-avatar">AB</div>
+            <div>
+              <div class="review-author-name">Abby</div>
+              <div class="review-badge"><i data-lucide="check-circle"></i> Vahvistettu arvostelu</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card reveal" style="transition-delay:160ms;">
+          <div class="review-stars">
+            <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+          </div>
+          <p class="review-text">"You can really tell the chef puts a lot of thought and care into the food. He mixes spices and flavors from different parts of Asia, and each dish is unique and tasty. I personally enjoyed the Japanese, Korean, and Vietnamese influences as it made the food interesting and not predictable."</p>
+          <div class="review-author">
+            <div class="review-avatar">HS</div>
+            <div>
+              <div class="review-author-name">H Shin</div>
+              <div class="review-badge"><i data-lucide="check-circle"></i> Vahvistettu arvostelu</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- [7] OPENING HOURS -->
+  <section id="hours">
+    <div class="section-container">
+      <div class="reveal" style="display:flex; align-items:flex-start; gap:64px; flex-wrap:wrap;">
+        <div style="flex:1; min-width:260px;">
+          <span class="section-eyebrow">Aukioloajat</span>
+          <h2 class="section-title" style="margin-bottom:16px;">Milloin olemme auki</h2>
+          <p style="color:var(--muted); font-size:0.9rem; line-height:1.7; max-width:340px;">Tervetuloa nauttimaan japanilaisesta robata-grillaus­elämyksestä. Suosittelemme pöytävarausta erityisesti viikonloppuisin.</p>
+          <div style="margin-top:32px;">
+            <a href="tel:0503088890" class="btn-primary">
+              <i data-lucide="phone" style="width:16px;height:16px;"></i>
+              Varaa pöytä puhelimitse
+            </a>
+          </div>
+        </div>
+        <div style="flex:1; min-width:300px;">
+          <div class="hours-card reveal">
+            <div class="hours-row">
+              <span class="hours-day">Maanantai</span>
+              <span class="hours-closed">Suljettu</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Tiistai</span>
+              <span class="hours-closed">Suljettu</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Keskiviikko</span>
+              <span class="hours-time">11:00 – 21:00</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Torstai</span>
+              <span class="hours-time">11:00 – 21:00</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Perjantai</span>
+              <span class="hours-time">11:00 – 21:00</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Lauantai</span>
+              <span class="hours-time">12:00 – 21:00</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Sunnuntai</span>
+              <span class="hours-closed">Suljettu</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [8] CONTACT -->
+  <section id="contact">
+    <div class="section-container">
+      <div class="reveal" style="text-align:center; max-width:560px; margin:0 auto 0;">
+        <span class="section-eyebrow">Yhteystiedot</span>
+        <h2 class="section-title">Löydä meidät</h2>
+      </div>
+      <div class="contact-grid">
+        <div class="reveal">
+          <div class="contact-info-item">
+            <div class="contact-icon-wrap"><i data-lucide="map-pin"></i></div>
+            <div>
+              <div class="contact-label">Osoite</div>
+              <div class="contact-value">Fredrikinkatu 47<br />00100 Helsinki, Suomi</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon-wrap"><i data-lucide="phone"></i></div>
+            <div>
+              <div class="contact-label">Puhelin</div>
+              <div class="contact-value"><a href="tel:0503088890">050 308 8890</a></div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon-wrap"><i data-lucide="globe"></i></div>
+            <div>
+              <div class="contact-label">Verkkosivut</div>
+              <div class="contact-value"><a href="http://saikorestaurant.com/" target="_blank" rel="noopener">saikorestaurant.com</a></div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon-wrap"><i data-lucide="clock"></i></div>
+            <div>
+              <div class="contact-label">Aukioloajat</div>
+              <div class="contact-value">Ke–Pe 11:00–21:00<br />La 12:00–21:00</div>
+            </div>
+          </div>
+          <div style="margin-top:32px;">
+            <a href="tel:0503088890" class="btn-primary" style="font-size:1rem; padding:14px 32px;">
+              <i data-lucide="calendar" style="width:18px;height:18px;"></i>
+              Varaa pöytä nyt
+            </a>
+          </div>
+        </div>
+        <div class="reveal">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Fredrikinkatu%2047%2C%2000100%20Helsinki%2C%20Suomi%2C%20Helsinki%2C%20Finland&language=fi"
+            width="100%"
+            height="380"
+            style="border:0; border-radius:16px; box-shadow:0 4px 32px rgba(0,0,0,0.4); min-height:280px;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Saiko Restaurant sijainti">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [9] FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:24px;">
+        <div>
+          <img src="http://images.squarespace-cdn.com/content/v1/65fe8fb4f8735f09d5de7c10/afb08736-efd4-4806-8387-c230a013040b/SAIKO+Logo.png?format=1500w"
+               alt="Saiko Restaurant"
+               style="height:36px; width:auto; object-fit:contain; margin-bottom:16px; display:block; opacity:0.9;" />
+          <div class="footer-address">Fredrikinkatu 47, 00100 Helsinki, Suomi</div>
+          <div class="footer-address">050 308 8890</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:0.75rem; color:var(--muted); margin-bottom:8px; letter-spacing:0.05em; text-transform:uppercase; font-weight:600;">Aukioloajat</div>
+          <div style="font-size:0.8rem; color:rgba(240,232,216,0.5); line-height:1.8;">
+            Ma–Ti: Suljettu<br/>
+            Ke–Pe: 11:00–21:00<br/>
+            La: 12:00–21:00<br/>
+            Su: Suljettu
+          </div>
+        </div>
+      </div>
+      <hr class="footer-divider" />
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <div class="footer-bottom">Demo luotu masasite.com palvelulla</div>
+        <div class="footer-bottom">Saiko Restaurant · Helsinki</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Lucide Icons
+    lucide.createIcons();
+
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
       }
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-  revealEls.forEach(el => observer.observe(el));
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    revealEls.forEach((el) => io.observe(el));
 
-  // Re-initialize icons after DOM is ready (in case of dynamic content)
-  document.addEventListener('DOMContentLoaded', () => {
-    lucide.createIcons();
-  });
-</script>
+    // Stagger cards
+    document.querySelectorAll('.services-grid .service-card').forEach((c, i) => {
+      c.style.setProperty('--i', i);
+    });
+    document.querySelectorAll('.reviews-grid .review-card').forEach((c, i) => {
+      c.style.setProperty('--i', i);
+    });
 
+    // Re-init icons after DOM ready
+    window.addEventListener('load', () => {
+      lucide.createIcons();
+    });
+  </script>
+</body>
 </html>
