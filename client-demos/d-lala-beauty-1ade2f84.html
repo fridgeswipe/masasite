@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>D'LaLa Beauty – Kauneussalonki Espoossa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #2d1a2e;
+      --accent: #c9a96e;
+      --bg: #faf8f5;
+      --surface: #fff;
+      --text: #1a1a2e;
+      --muted: #7a6b7c;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding-top: 40px;
+      margin: 0;
+    }
+
+    h1, h2, h3, .headline-font {
+      font-family: 'DM Serif Display', serif;
+    }
+
+    /* DEMO BANNER */
+    #demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(201, 169, 110, 0.92);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.02em;
+      text-align: center;
+      padding: 0 16px;
+    }
+    #demo-banner a {
+      color: #fff;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      margin-left: 4px;
+    }
+    #demo-banner a:hover { opacity: 0.85; }
+
+    /* NAV */
+    #main-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(250, 248, 245, 0.92);
+      border-bottom: 1px solid rgba(45,26,46,0.08);
+      backdrop-filter: blur(12px);
+      transition: box-shadow 0.3s ease;
+    }
+    #main-nav.scrolled {
+      box-shadow: 0 4px 24px rgba(45,26,46,0.08);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 48px);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.375rem;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--primary);
+      text-decoration: none;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+      letter-spacing: 0.01em;
+    }
+    .nav-links a:hover { opacity: 1; }
+    .btn-nav {
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: inline-block;
+    }
+    .btn-nav:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(201, 169, 110, 0.4);
+    }
+
+    /* HERO */
+    #hero {
+      min-height: 100svh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(20,5,22,0.7) 100%),
+        url('assets/d-lala-beauty-1ade2f84/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 780px;
+      padding: clamp(16px, 5vw, 48px);
+      animation: heroFadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.1s both;
+    }
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .hero-h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.5rem, 6.5vw, 5.25rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: #fff;
+      margin: 0 0 24px;
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255,255,255,0.82);
+      line-height: 1.7;
+      max-width: 580px;
+      margin: 0 auto 28px;
+    }
+    .hero-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 36px;
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.85);
+      font-weight: 500;
+    }
+    .hero-rating .stars {
+      display: flex;
+      gap: 2px;
+    }
+    .hero-rating i {
+      width: 16px;
+      height: 16px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 15px 32px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: inline-block;
+      border: 2px solid var(--accent);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(201,169,110,0.45);
+    }
+    .btn-ghost {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 15px 32px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 2px solid rgba(255,255,255,0.35);
+      backdrop-filter: blur(8px);
+      transition: transform 0.2s ease, background 0.2s ease;
+      display: inline-block;
+    }
+    .btn-ghost:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* SECTION COMMON */
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      color: var(--primary);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin: 0 0 16px;
+    }
+    .section-desc {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 540px;
+    }
+
+    /* REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* SERVICE CARDS */
+    .services-section {
+      padding-block: clamp(64px, 10vw, 120px);
+      background: #f3ede9;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .service-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(45,26,46,0.06), 0 4px 16px rgba(45,26,46,0.05);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(45,26,46,0.13);
+    }
+    .service-icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--accent) 16%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .service-icon-wrap i {
+      width: 28px;
+      height: 28px;
+      color: var(--accent);
+    }
+    .service-card h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0 0 10px;
+      letter-spacing: -0.01em;
+    }
+    .service-card p {
+      font-size: 0.93rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* WHY US */
+    .why-section {
+      padding-block: clamp(64px, 10vw, 120px);
+      background: #fff;
+    }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 40px;
+      margin-top: 64px;
+    }
+    .why-item {
+      text-align: center;
+    }
+    .why-icon {
+      width: 48px;
+      height: 48px;
+      color: var(--accent);
+      margin: 0 auto 20px;
+      display: block;
+    }
+    .why-item h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.15rem;
+      color: var(--primary);
+      margin: 0 0 10px;
+      letter-spacing: -0.01em;
+    }
+    .why-item p {
+      font-size: 0.93rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 0;
+      max-width: 280px;
+      margin-inline: auto;
+    }
+
+    /* GALLERY */
+    .gallery-section {
+      padding-block: clamp(64px, 10vw, 120px);
+      background: #f3ede9;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 56px;
+    }
+    .gallery-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 16px;
+      display: block;
+      transition: transform 0.4s ease, box-shadow 0.3s ease;
+    }
+    .gallery-img:hover {
+      transform: scale(1.02);
+      box-shadow: 0 12px 36px rgba(45,26,46,0.15);
+    }
+
+    /* REVIEWS */
+    .reviews-section {
+      padding-block: clamp(64px, 10vw, 120px);
+      background: #faf8f5;
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .review-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(45,26,46,0.06), 0 4px 16px rgba(45,26,46,0.05);
+    }
+    .review-stars {
+      display: flex;
+      gap: 2px;
+      margin-bottom: 16px;
+    }
+    .review-stars i {
+      width: 16px;
+      height: 16px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+    .review-quote {
+      font-size: 0.9rem;
+      color: #4a3d4b;
+      line-height: 1.7;
+      font-style: italic;
+      margin: 0 0 20px;
+    }
+    .review-author {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .verified-badge {
+      font-size: 0.7rem;
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    /* HOURS */
+    .hours-section {
+      padding-block: clamp(64px, 10vw, 120px);
+      background: #fff;
+    }
+    .hours-card {
+      background: #faf8f5;
+      border-radius: 20px;
+      padding: 40px 48px;
+      max-width: 560px;
+      box-shadow: 0 1px 3px rgba(45,26,46,0.05), 0 4px 16px rgba(45,26,46,0.04);
+    }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      font-size: 0.95rem;
+      border-bottom: 1px solid rgba(45,26,46,0.07);
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-day {
+      font-weight: 600;
+      color: var(--primary);
+    }
+    .hours-time {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .hours-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .hours-info-side h2 {
+      margin-bottom: 16px;
+    }
+    .hours-info-side p {
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 32px;
+      font-size: 0.95rem;
+    }
+    .hours-clock-icon {
+      width: 40px;
+      height: 40px;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    @media (max-width: 768px) {
+      .hours-layout {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .hours-card {
+        padding: 28px 24px;
+      }
+      .nav-links { display: none; }
+    }
+
+    /* CONTACT */
+    .contact-section {
+      padding-block: clamp(64px, 10vw, 120px);
+      background: #f3ede9;
+    }
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .contact-layout { grid-template-columns: 1fr; gap: 36px; }
+    }
+    .contact-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .contact-info-item i {
+      width: 20px;
+      height: 20px;
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .contact-info-item span {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .contact-info-item strong {
+      display: block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--primary);
+      padding: 48px clamp(16px, 5vw, 48px) 32px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      color: var(--accent);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .footer-address {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.7;
+      margin-bottom: 8px;
+    }
+    .footer-phone {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.6);
+    }
+    .footer-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      margin: 32px 0 20px;
+    }
+    .footer-bottom {
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.03em;
+    }
+    .footer-bottom a {
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+    }
+    .footer-bottom a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <!-- [1] DEMO BANNER -->
+  <div id="demo-banner">
+    D'LaLa Beauty — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman?
+    <a href="mailto:team@masasite.com">Ota yhteyttä →</a>
+  </div>
+
+  <!-- [2] STICKY NAV -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">D'LaLa Beauty</a>
+      <ul class="nav-links">
+        <li><a href="#palvelut">Palvelut</a></li>
+        <li><a href="#aukioloajat">Aukioloajat</a></li>
+        <li><a href="#yhteystiedot">Yhteystiedot</a></li>
+      </ul>
+      <a href="tel:0413273139" class="btn-nav">Varaa aika</a>
+    </div>
+  </nav>
+
+  <!-- [3] HERO -->
+  <section id="hero">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Kauneussalonki · Espoo</span>
+      <h1 class="hero-h1">Kauneus ja luottamus kotiutuu Espoossa</h1>
+      <p class="hero-sub">D'LaLa Beauty on Espoon suosikki kauneussalonki, jossa ammattitaitoiset kosmetologit luovat sinulle unohtumattomia kauneus- ja hoitokokemuksia. Yli 4,6 tähden arvostelut kertovat asiakkaiden tyytyväisyydestä ja palvelun laadusta.</p>
+      <div class="hero-rating">
+        <div class="stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <span>4,6/5 &nbsp;(28 arvostelua)</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="tel:0413273139" class="btn-primary">Varaa aika nyt</a>
+        <a href="#palvelut" class="btn-ghost">Katso palvelut</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- [4] SERVICES -->
+  <section id="palvelut" class="services-section">
+    <div class="section-container">
+      <div class="reveal" style="text-align:center; max-width:600px; margin:0 auto 0;">
+        <span class="section-label">Palvelumme</span>
+        <h2 class="section-title">Kaikki kauneuden tarvitsemasi yhdessä paikassa</h2>
+        <p class="section-desc" style="margin:0 auto;">Ammattitaitoiset kosmetologimme ovat valmiita palvelemaan sinua yksilöllisesti – ihotyypistäsi tai tarpeestasi riippumatta.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-icon-wrap">
+            <i data-lucide="sparkles"></i>
+          </div>
+          <h3>Kasvohoitot</h3>
+          <p>Ammattimaiset ja yksilölliset kasvohoitokäsittelyt kaikille ihotyypeille</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon-wrap">
+            <i data-lucide="heart"></i>
+          </div>
+          <h3>Meikki ja kauneus</h3>
+          <p>Ammattilaisten tekemä meikkaus ja kauneuskäsittelyt erityistapahtumiin</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon-wrap">
+            <i data-lucide="zap"></i>
+          </div>
+          <h3>Vartalonhoito</h3>
+          <p>Rentouttavat ja kuntouttavat vartalon hoitokäsittelyt</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [5] WHY CHOOSE US -->
+  <section class="why-section">
+    <div class="section-container">
+      <div class="reveal" style="text-align:center; max-width:600px; margin:0 auto 0;">
+        <span class="section-label">Miksi D'LaLa Beauty</span>
+        <h2 class="section-title">Laatu ja luottamus jokaisessa hoidossa</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-item reveal">
+          <i data-lucide="award" class="why-icon"></i>
+          <h3>Yli 28 tyytyväistä asiakasta</h3>
+          <p>Lähes 30 tyytyväisen asiakkaan antamat 4,6 tähden arvostelu kertoo laadusta ja luottamuksesta.</p>
+        </div>
+        <div class="why-item reveal">
+          <i data-lucide="shield-check" class="why-icon"></i>
+          <h3>Ammattitaitoiset kosmetologit</h3>
+          <p>Ammattitaitoiset kosmetologit ja modernit hoitomenetelmät takaavat täydellisen tuloksen.</p>
+        </div>
+        <div class="why-item reveal">
+          <i data-lucide="clock" class="why-icon"></i>
+          <h3>Pitkät aukioloajat</h3>
+          <p>Pitkät aukioloajat – auki jopa 19:00 asti myös keskellä viikkoa. Löydät ajan helposti.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery-section">
+    <div class="section-container">
+      <div class="reveal" style="text-align:center; max-width:600px; margin:0 auto 0;">
+        <span class="section-label">Galleria</span>
+        <h2 class="section-title">Katso työmme</h2>
+        <p class="section-desc" style="margin:0 auto; margin-bottom:0;">Kuvista näet ammattitaidon ja yksityiskohtien tarkkuuden, joka tekee D'LaLa Beautysta erityisen.</p>
+      </div>
+      <div class="gallery-grid" style="margin-top:56px;">
+        <div class="reveal">
+          <img src="assets/d-lala-beauty-1ade2f84/photo1.jpg" alt="D'LaLa Beauty salonki" class="gallery-img" />
+        </div>
+        <div class="reveal">
+          <img src="assets/d-lala-beauty-1ade2f84/photo2.jpg" alt="Kauneushoitoja Espoossa" class="gallery-img" />
+        </div>
+        <div class="reveal">
+          <img src="assets/d-lala-beauty-1ade2f84/photo3.jpg" alt="D'LaLa Beauty palvelut" class="gallery-img" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [6] REVIEWS -->
+  <section class="reviews-section">
+    <div class="section-container">
+      <div class="reveal" style="text-align:center; max-width:600px; margin:0 auto 0;">
+        <span class="section-label">Asiakasarvostelut</span>
+        <h2 class="section-title">Mitä asiakkaamme sanovat</h2>
+        <p class="section-desc" style="margin:0 auto;">Google-arvostelut suoraan asiakkailta, jotka ovat kokeneet D'LaLa Beautyn palvelut.</p>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card reveal">
+          <div class="review-stars">
+            <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"The service was excellent, very professional and friendly. I can recommend. Had my nails (in the photo) and lashes done. Very happy with the result all together. Thank you! =)"</p>
+          <div class="review-author">
+            Annele <span class="verified-badge">Vahvistettu</span>
+          </div>
+        </div>
+        <div class="review-card reveal">
+          <div class="review-stars">
+            <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"i just did my nails and my eyelashes here. Really nice, the nails last long, the eyelashes looks really good!! ❤️❤️ Their services are really nice too, they gave me tea and candies too!!"</p>
+          <div class="review-author">
+            Olivia Vy <span class="verified-badge">Vahvistettu</span>
+          </div>
+        </div>
+        <div class="review-card reveal">
+          <div class="review-stars">
+            <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"5 star rating isn't enough! I got amazing nails again. Mia is super talented and the salon is always nice and clean."</p>
+          <div class="review-author">
+            minna paavonsalo <span class="verified-badge">Vahvistettu</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [7] OPENING HOURS -->
+  <section id="aukioloajat" class="hours-section">
+    <div class="section-container">
+      <div class="hours-layout">
+        <div class="hours-info-side reveal">
+          <i data-lucide="clock" class="hours-clock-icon"></i>
+          <span class="section-label">Aukioloajat</span>
+          <h2 class="section-title">Palvelemme sinua laajasti</h2>
+          <p>Olemme auki myös viikonloppuisin – löydät ajan helposti tiukan viikko-ohjelman ympärille. Tervetuloa!</p>
+          <a href="tel:0413273139" class="btn-primary" style="font-size:0.9rem; padding:13px 28px;">
+            Soita ja varaa aika
+          </a>
+        </div>
+        <div class="reveal">
+          <div class="hours-card">
+            <div class="hours-row">
+              <span class="hours-day">Maanantai</span>
+              <span class="hours-time">10:00 – 19:00</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Tiistai</span>
+              <span class="hours-time">10:00 – 19:00</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Keskiviikko</span>
+              <span class="hours-time">10:00 – 19:00</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Torstai</span>
+              <span class="hours-time">10:00 – 19:00</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Perjantai</span>
+              <span class="hours-time">10:00 – 19:00</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Lauantai</span>
+              <span class="hours-time">11:00 – 18:00</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Sunnuntai</span>
+              <span class="hours-time">12:00 – 17:00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [8] CONTACT -->
+  <section id="yhteystiedot" class="contact-section">
+    <div class="section-container">
+      <div class="reveal" style="margin-bottom:56px;">
+        <span class="section-label">Yhteystiedot</span>
+        <h2 class="section-title">Löydä meidät Espoosta</h2>
+      </div>
+      <div class="contact-layout">
+        <div class="reveal">
+          <div class="contact-info-item">
+            <i data-lucide="map-pin"></i>
+            <span>
+              <strong>Osoite</strong>
+              Kirkkojärventie 10b, LT 1<br />02770 Espoo, Suomi
+            </span>
+          </div>
+          <div class="contact-info-item">
+            <i data-lucide="phone"></i>
+            <span>
+              <strong>Puhelin</strong>
+              <a href="tel:0413273139" style="color:var(--text); text-decoration:none;">041 3273139</a>
+            </span>
+          </div>
+          <div class="contact-info-item">
+            <i data-lucide="clock"></i>
+            <span>
+              <strong>Aukioloajat</strong>
+              Ma–Pe 10:00–19:00 &nbsp;·&nbsp; La 11:00–18:00 &nbsp;·&nbsp; Su 12:00–17:00
+            </span>
+          </div>
+          <div style="margin-top:36px;">
+            <a href="tel:0413273139" class="btn-primary">
+              Varaa aika nyt
+            </a>
+          </div>
+        </div>
+        <div class="reveal">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Kirkkoj%C3%A4rventie%2010b%2C%20LT%201%2C%2002770%20Espoo%2C%20Suomi%2C%20Espoo%2C%20Finland&language=fi"
+            width="100%"
+            height="380"
+            style="border:0; border-radius:16px; display:block; box-shadow: 0 4px 24px rgba(45,26,46,0.1);"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="D'LaLa Beauty sijainti kartalla">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [9] FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">D'LaLa Beauty</div>
+      <div class="footer-address">
+        Kirkkojärventie 10b, LT 1<br />
+        02770 Espoo, Suomi
+      </div>
+      <div class="footer-phone">
+        <a href="tel:0413273139" style="color:rgba(255,255,255,0.6); text-decoration:none;">041 3273139</a>
+      </div>
+      <hr class="footer-divider" />
+      <div class="footer-bottom">
+        Demo luotu <a href="https://masasite.com" target="_blank" rel="noopener">masasite.com</a> palvelulla
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Init Lucide icons
+    lucide.createIcons();
+
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Reveal on scroll
+    const revealEls = document.querySelectorAll('.reveal');
+    revealEls.forEach((el, i) => {
+      const parent = el.closest('.services-grid, .why-grid, .reviews-grid, .gallery-grid');
+      if (parent) {
+        const siblings = Array.from(parent.children);
+        const idx = siblings.indexOf(el);
+        if (idx > -1) {
+          el.style.transitionDelay = (idx * 80) + 'ms';
+        }
+      }
+    });
+
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    revealEls.forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
