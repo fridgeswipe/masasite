@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Q Hair Lounge – Helsingin paras kampaamo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: #0073a8;
+      --accent: #b8860b;
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --text: #0f1a24;
+      --muted: #6b7280;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      padding-top: 40px;
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, .font-headline {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    /* Demo banner */
+    #demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(184, 134, 11, 0.88);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.01em;
+      text-align: center;
+      padding: 0 16px;
+    }
+    #demo-banner a {
+      color: #fff;
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      margin-left: 4px;
+    }
+
+    /* Nav */
+    #main-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      transition: box-shadow 0.3s ease;
+    }
+    #main-nav.scrolled {
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+
+    /* Hero */
+    #hero {
+      min-height: 100svh;
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.68) 100%),
+        url('assets/the-q-hair-lounge---runebergin-cf226cc8/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: clamp(64px, 10vw, 120px) clamp(16px, 5vw, 48px);
+    }
+
+    .hero-content {
+      animation: heroFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+      max-width: 860px;
+    }
+
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.6rem, 6.5vw, 5.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: #ffffff;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      line-height: 1.7;
+      color: rgba(255,255,255,0.82);
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    /* Section headings */
+    .section-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.9rem, 4vw, 3.2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--text);
+    }
+
+    /* Buttons */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 14px 32px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      box-shadow: 0 4px 16px rgba(184,134,11,0.35);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(184,134,11,0.45);
+      background: #9a7009;
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 14px 32px;
+      border-radius: 9999px;
+      text-decoration: none;
+      border: 1.5px solid rgba(255,255,255,0.4);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    .btn-ghost:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.25);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+    }
+    .btn-ghost:active { transform: translateY(-1px); }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--primary);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 13px 30px;
+      border-radius: 9999px;
+      text-decoration: none;
+      border: 2px solid var(--primary);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+    .btn-outline:hover {
+      transform: translateY(-3px);
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 12px 28px rgba(0,115,168,0.3);
+    }
+
+    /* Service cards */
+    .service-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+
+    .icon-box {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--accent) 14%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .icon-box i {
+      width: 28px;
+      height: 28px;
+      color: var(--accent);
+    }
+
+    /* Why us */
+    .why-item i {
+      width: 40px;
+      height: 40px;
+      color: var(--accent);
+    }
+
+    /* Stars */
+    .star-icon {
+      color: #f59e0b;
+      fill: #f59e0b;
+      width: 16px;
+      height: 16px;
+    }
+    .star-icon-lg {
+      color: #f59e0b;
+      fill: #f59e0b;
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Review cards */
+    .review-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    }
+
+    /* Hours */
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-row.closed .hours-time { color: var(--muted); }
+
+    /* Reveal animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Stagger */
+    .stagger-child {
+      transition-delay: calc(var(--i, 0) * 80ms);
+    }
+
+    /* Responsive nav */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+    }
+
+    /* Map */
+    .map-frame {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+    }
+
+    /* Footer */
+    footer {
+      background: #0d2035;
+    }
+  </style>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0073a8',
+            accent: '#b8860b',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body>
+
+  <!-- [1] DEMO BANNER -->
+  <div id="demo-banner">
+    <span>The Q Hair Lounge — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman? <a href="mailto:team@masasite.com">Ota yhteyttä →</a></span>
+  </div>
+
+  <!-- [2] STICKY NAV -->
+  <nav id="main-nav">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,5vw,48px);">
+      <div class="flex items-center justify-between" style="height:68px;">
+        <a href="#hero">
+          <img src="https://qhair.fi/wp-content/uploads/2019/02/logo.svg" class="h-9 object-contain" alt="Q Hair Lounge logo" />
+        </a>
+        <div class="nav-links flex items-center gap-8">
+          <a href="#services" class="text-sm font-medium" style="color:var(--text);text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text)'">Palvelut</a>
+          <a href="#hours" class="text-sm font-medium" style="color:var(--text);text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text)'">Aukioloajat</a>
+          <a href="#contact" class="text-sm font-medium" style="color:var(--text);text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text)'">Yhteystiedot</a>
+        </div>
+        <a href="tel:09626670" class="btn-primary" style="font-size:0.875rem;padding:11px 24px;">
+          <i data-lucide="phone" style="width:16px;height:16px;"></i>
+          Varaa aikasi
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- [3] HERO -->
+  <section id="hero">
+    <div class="hero-content">
+      <span class="section-label" style="color:rgba(255,255,255,0.7);margin-bottom:20px;">Helsinki · Runeberginkatu 4 a D</span>
+      <h1 class="hero-h1" style="margin-bottom:24px;">
+        Helsingin paras kampaamo<br/>— Q Hair Lounge
+      </h1>
+      <p class="hero-subtitle" style="margin-bottom:32px;">
+        Q Hair on kampaamoalan edelläkävijä Helsingin keskustassa, joka tarjoaa laadukasta ja luotettavaa palvelua ammattitaitoisella tiimillä.
+      </p>
+      <!-- Rating row -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:40px;">
+        <div style="display:flex;gap:3px;">
+          <i data-lucide="star" class="star-icon-lg"></i>
+          <i data-lucide="star" class="star-icon-lg"></i>
+          <i data-lucide="star" class="star-icon-lg"></i>
+          <i data-lucide="star" class="star-icon-lg"></i>
+          <i data-lucide="star" class="star-icon-lg"></i>
+        </div>
+        <span style="color:rgba(255,255,255,0.9);font-size:0.9rem;font-weight:600;letter-spacing:0.02em;">5.0/5 <span style="font-weight:400;color:rgba(255,255,255,0.65)">(268 arvostelua)</span></span>
+      </div>
+      <!-- CTAs -->
+      <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;">
+        <a href="tel:09626670" class="btn-primary">
+          <i data-lucide="calendar" style="width:18px;height:18px;"></i>
+          Varaa aikasi nyt
+        </a>
+        <a href="#services" class="btn-ghost">
+          <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
+          Tutustu palveluihin
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- [4] SERVICES GRID -->
+  <section id="services" style="background:#f5f3ef;padding-block:clamp(64px,10vw,120px);">
+    <div style="max-width:1200px;margin:0 auto;padding-inline:clamp(16px,5vw,48px);">
+      <div class="reveal" style="text-align:center;margin-bottom:64px;">
+        <span class="section-label">Palvelumme</span>
+        <h2 class="section-title">Kaikki hiuspalvelut<br/>yhdessä paikassa</h2>
+        <p style="color:var(--muted);font-size:1rem;line-height:1.7;max-width:520px;margin:16px auto 0;">Tarjoamme alan uusimmat tekniikat ja klassiset palvelut räätälöitynä juuri sinulle.</p>
+      </div>
+      <div class="services-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;">
+
+        <div class="service-card reveal stagger-child">
+          <div class="icon-box">
+            <i data-lucide="scissors"></i>
+          </div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:700;color:var(--text);margin-bottom:10px;letter-spacing:-0.01em;">Hiusten leikkaukset</h3>
+          <p style="color:var(--muted);font-size:0.95rem;line-height:1.7;">Ammattitaitoiset leikkaukset uusimmilla tekniikoilla — löydät meiltä juuri sinulle sopivan tyylin.</p>
+        </div>
+
+        <div class="service-card reveal stagger-child">
+          <div class="icon-box">
+            <i data-lucide="sparkles"></i>
+          </div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:700;color:var(--text);margin-bottom:10px;letter-spacing:-0.01em;">Hiusten värjäykset</h3>
+          <p style="color:var(--muted);font-size:0.95rem;line-height:1.7;">Väripalvelut ja värinvaihdot asiantuntijan käsiin — balayage, ombre, klassinen värjäys ja paljon muuta.</p>
+        </div>
+
+        <div class="service-card reveal stagger-child">
+          <div class="icon-box">
+            <i data-lucide="heart"></i>
+          </div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:700;color:var(--text);margin-bottom:10px;letter-spacing:-0.01em;">Hoitokäsittelyt</h3>
+          <p style="color:var(--muted);font-size:0.95rem;line-height:1.7;">Kotiutuvat hoitokäsittelyt ja digitaalinen permanentti — anna hiuksillesi uusi elämä.</p>
+        </div>
+
+        <div class="service-card reveal stagger-child">
+          <div class="icon-box">
+            <i data-lucide="user"></i>
+          </div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:700;color:var(--text);margin-bottom:10px;letter-spacing:-0.01em;">Parturipalvelut</h3>
+          <p style="color:var(--muted);font-size:0.95rem;line-height:1.7;">Miesten parranajo ja leikkaus ammattilaiselta — tarkka käsityö ja huolella viimeistelty lopputulos.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY STRIP -->
+  <section style="background:#ffffff;padding-block:clamp(40px,6vw,80px);overflow:hidden;">
+    <div style="max-width:1200px;margin:0 auto;padding-inline:clamp(16px,5vw,48px);">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;border-radius:20px;overflow:hidden;">
+        <div style="aspect-ratio:4/3;overflow:hidden;border-radius:16px;">
+          <img src="assets/the-q-hair-lounge---runebergin-cf226cc8/photo1.jpg" alt="Q Hair Lounge salonki" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
+        </div>
+        <div style="aspect-ratio:4/3;overflow:hidden;border-radius:16px;">
+          <img src="assets/the-q-hair-lounge---runebergin-cf226cc8/photo2.jpg" alt="Q Hair Lounge palvelut" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
+        </div>
+        <div style="aspect-ratio:4/3;overflow:hidden;border-radius:16px;">
+          <img src="assets/the-q-hair-lounge---runebergin-cf226cc8/photo3.jpg" alt="Q Hair Lounge tulos" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [5] WHY CHOOSE US -->
+  <section id="why" style="background:#ffffff;padding-block:clamp(64px,10vw,120px);">
+    <div style="max-width:1200px;margin:0 auto;padding-inline:clamp(16px,5vw,48px);">
+      <div class="reveal" style="text-align:center;margin-bottom:64px;">
+        <span class="section-label">Miksi Q Hair?</span>
+        <h2 class="section-title">Ylittämme odotuksesi<br/>joka kerta</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:48px;">
+
+        <div class="why-item reveal stagger-child" style="text-align:center;">
+          <div style="display:flex;justify-content:center;margin-bottom:20px;">
+            <i data-lucide="award" style="width:44px;height:44px;color:var(--accent);"></i>
+          </div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:700;color:var(--text);margin-bottom:10px;letter-spacing:-0.01em;">Täydellinen 5.0/5 arvio</h3>
+          <p style="color:var(--muted);font-size:0.95rem;line-height:1.7;max-width:280px;margin:0 auto;">268 Google-arvostelua — kaikki tähtien arvoisia. Asiakkaidemme tyytyväisyys on prioriteettimme numero yksi.</p>
+        </div>
+
+        <div class="why-item reveal stagger-child" style="text-align:center;">
+          <div style="display:flex;justify-content:center;margin-bottom:20px;">
+            <i data-lucide="zap" style="width:44px;height:44px;color:var(--accent);"></i>
+          </div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:700;color:var(--text);margin-bottom:10px;letter-spacing:-0.01em;">Edelläkävijä alalla</h3>
+          <p style="color:var(--muted);font-size:0.95rem;line-height:1.7;max-width:280px;margin:0 auto;">Käytämme uusimpia tekniikoita ja trendejä — ammattitaitomme pitää sinut ajan hermolla.</p>
+        </div>
+
+        <div class="why-item reveal stagger-child" style="text-align:center;">
+          <div style="display:flex;justify-content:center;margin-bottom:20px;">
+            <i data-lucide="map-pin" style="width:44px;height:44px;color:var(--accent);"></i>
+          </div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:700;color:var(--text);margin-bottom:10px;letter-spacing:-0.01em;">Kolme salonkia</h3>
+          <p style="color:var(--muted);font-size:0.95rem;line-height:1.7;max-width:280px;margin:0 auto;">Kolme kätevää salonkia Helsingin keskustassa — löydät aina lähimmän toimipisteemme helposti.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- [6] REVIEWS -->
+  <section id="reviews" style="background:#f5f3ef;padding-block:clamp(64px,10vw,120px);">
+    <div style="max-width:1200px;margin:0 auto;padding-inline:clamp(16px,5vw,48px);">
+      <div class="reveal" style="text-align:center;margin-bottom:64px;">
+        <span class="section-label">Asiakkaiden kokemuksia</span>
+        <h2 class="section-title">Mitä asiakkaamme sanovat</h2>
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;">
+          <div style="display:flex;gap:3px;">
+            <i data-lucide="star" class="star-icon-lg"></i>
+            <i data-lucide="star" class="star-icon-lg"></i>
+            <i data-lucide="star" class="star-icon-lg"></i>
+            <i data-lucide="star" class="star-icon-lg"></i>
+            <i data-lucide="star" class="star-icon-lg"></i>
+          </div>
+          <span style="font-size:0.95rem;color:var(--muted);font-weight:500;">5.0 · 268 arvostelua Googlessa</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
+
+        <div class="review-card reveal stagger-child">
+          <div style="display:flex;gap:3px;margin-bottom:16px;">
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+          </div>
+          <p style="font-style:italic;font-size:0.92rem;line-height:1.75;color:var(--muted);margin-bottom:20px;">"Highly recommended! My stylist was Ksenia, a real professional hairstylist. The result was perfect and beyond my expectations. It was my first time at Q hair lounge but I've made my decision to be their regular customer from now on. Worth every penny."</p>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:0.8rem;flex-shrink:0;">KM</div>
+            <div>
+              <div style="font-weight:700;font-size:0.88rem;color:var(--text);">Ketsarin Metsovuori</div>
+              <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
+                <i data-lucide="check-circle" style="width:13px;height:13px;color:#22c55e;"></i>
+                <span style="font-size:0.75rem;color:var(--muted);">Vahvistettu arvostelu</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card reveal stagger-child">
+          <div style="display:flex;gap:3px;margin-bottom:16px;">
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+          </div>
+          <p style="font-style:italic;font-size:0.92rem;line-height:1.75;color:var(--muted);margin-bottom:20px;">"Amazing! I went for balayage treatment and my hair looks SO much nicer and healthier after my visit. Siru was super professional, very kind and asked me important questions which really helped to determine exactly what kind of hairstyle I wanted to have. Thank you Siru 😊 will visit again!"</p>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:0.8rem;flex-shrink:0;">CH</div>
+            <div>
+              <div style="font-weight:700;font-size:0.88rem;color:var(--text);">Chantal van Herwijnen</div>
+              <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
+                <i data-lucide="check-circle" style="width:13px;height:13px;color:#22c55e;"></i>
+                <span style="font-size:0.75rem;color:var(--muted);">Vahvistettu arvostelu</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card reveal stagger-child">
+          <div style="display:flex;gap:3px;margin-bottom:16px;">
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+          </div>
+          <p style="font-style:italic;font-size:0.92rem;line-height:1.75;color:var(--muted);margin-bottom:20px;">"Got vibrant and beautiful ginger hair color as I wanted, thanks Oscar for your professionalism and effort :)"</p>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:#7c3aed;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:0.8rem;flex-shrink:0;">ZB</div>
+            <div>
+              <div style="font-weight:700;font-size:0.88rem;color:var(--text);">Zilia Bikkulova</div>
+              <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
+                <i data-lucide="check-circle" style="width:13px;height:13px;color:#22c55e;"></i>
+                <span style="font-size:0.75rem;color:var(--muted);">Vahvistettu arvostelu</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- [7] OPENING HOURS -->
+  <section id="hours" style="background:#ffffff;padding-block:clamp(64px,10vw,120px);">
+    <div style="max-width:1200px;margin:0 auto;padding-inline:clamp(16px,5vw,48px);">
+      <div class="reveal" style="text-align:center;margin-bottom:64px;">
+        <span class="section-label">Olemme auki</span>
+        <h2 class="section-title">Aukioloajat</h2>
+      </div>
+      <div class="reveal" style="max-width:560px;margin:0 auto;background:#ffffff;border-radius:20px;padding:40px 48px;box-shadow:0 1px 3px rgba(0,0,0,0.06),0 4px 24px rgba(0,0,0,0.07);">
+        <div class="hours-row">
+          <span style="font-weight:600;font-size:0.95rem;color:var(--text);">Maanantai</span>
+          <span class="hours-time" style="font-size:0.95rem;color:var(--muted);font-weight:500;">10:00 – 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:600;font-size:0.95rem;color:var(--text);">Tiistai</span>
+          <span class="hours-time" style="font-size:0.95rem;color:var(--muted);font-weight:500;">10:00 – 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:600;font-size:0.95rem;color:var(--text);">Keskiviikko</span>
+          <span class="hours-time" style="font-size:0.95rem;color:var(--muted);font-weight:500;">10:00 – 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:600;font-size:0.95rem;color:var(--text);">Torstai</span>
+          <span class="hours-time" style="font-size:0.95rem;color:var(--muted);font-weight:500;">10:00 – 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:600;font-size:0.95rem;color:var(--text);">Perjantai</span>
+          <span class="hours-time" style="font-size:0.95rem;color:var(--muted);font-weight:500;">10:00 – 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:600;font-size:0.95rem;color:var(--text);">Lauantai</span>
+          <span class="hours-time" style="font-size:0.95rem;color:var(--muted);font-weight:500;">10:00 – 17:00</span>
+        </div>
+        <div class="hours-row closed">
+          <span style="font-weight:600;font-size:0.95rem;color:var(--muted);">Sunnuntai</span>
+          <span class="hours-time" style="font-size:0.95rem;font-weight:500;">Suljettu</span>
+        </div>
+        <div style="margin-top:28px;padding-top:24px;border-top:1px solid rgba(0,0,0,0.06);display:flex;align-items:center;gap:8px;">
+          <i data-lucide="phone" style="width:18px;height:18px;color:var(--accent);flex-shrink:0;"></i>
+          <span style="font-size:0.95rem;color:var(--text);">Puhelin: <a href="tel:09626670" style="color:var(--primary);font-weight:600;text-decoration:none;">09 626670</a></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [8] CONTACT -->
+  <section id="contact" style="background:#f5f3ef;padding-block:clamp(64px,10vw,120px);">
+    <div style="max-width:1200px;margin:0 auto;padding-inline:clamp(16px,5vw,48px);">
+      <div class="reveal" style="text-align:center;margin-bottom:64px;">
+        <span class="section-label">Tule meille</span>
+        <h2 class="section-title">Löydät meidät helposti<br/>Helsingin keskustasta</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;" class="reveal">
+
+        <div style="display:flex;flex-direction:column;gap:32px;">
+          <div>
+            <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;color:var(--text);margin-bottom:24px;letter-spacing:-0.01em;">Yhteystiedot</h3>
+            <div style="display:flex;flex-direction:column;gap:20px;">
+              <div style="display:flex;align-items:flex-start;gap:14px;">
+                <div style="width:40px;height:40px;border-radius:10px;background:color-mix(in srgb,var(--accent) 14%,transparent);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <i data-lucide="map-pin" style="width:20px;height:20px;color:var(--accent);"></i>
+                </div>
+                <div>
+                  <div style="font-weight:600;font-size:0.9rem;color:var(--text);margin-bottom:2px;">Osoite</div>
+                  <div style="color:var(--muted);font-size:0.92rem;line-height:1.6;">Runeberginkatu 4 a D<br/>00100 Helsinki, Suomi</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:14px;">
+                <div style="width:40px;height:40px;border-radius:10px;background:color-mix(in srgb,var(--accent) 14%,transparent);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <i data-lucide="phone" style="width:20px;height:20px;color:var(--accent);"></i>
+                </div>
+                <div>
+                  <div style="font-weight:600;font-size:0.9rem;color:var(--text);margin-bottom:2px;">Puhelin</div>
+                  <a href="tel:09626670" style="color:var(--primary);font-size:0.92rem;font-weight:600;text-decoration:none;">09 626670</a>
+                </div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:14px;">
+                <div style="width:40px;height:40px;border-radius:10px;background:color-mix(in srgb,var(--accent) 14%,transparent);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <i data-lucide="clock" style="width:20px;height:20px;color:var(--accent);"></i>
+                </div>
+                <div>
+                  <div style="font-weight:600;font-size:0.9rem;color:var(--text);margin-bottom:2px;">Aukioloajat</div>
+                  <div style="color:var(--muted);font-size:0.92rem;line-height:1.6;">Ma–Pe: 10:00–20:00<br/>La: 10:00–17:00<br/>Su: Suljettu</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <a href="tel:09626670" class="btn-primary" style="width:fit-content;">
+              <i data-lucide="phone" style="width:17px;height:17px;"></i>
+              Soita meille
+            </a>
+            <a href="http://qhair.fi/?utm_source=google&utm_medium=gmb&utm_campaign=UUDENMANKATU" target="_blank" class="btn-outline" style="width:fit-content;">
+              <i data-lucide="arrow-right" style="width:17px;height:17px;"></i>
+              Varaa aika verkossa
+            </a>
+          </div>
+        </div>
+
+        <div class="map-frame">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Runeberginkatu%204%20a%20D%2C%2000100%20Helsinki%2C%20Suomi%2C%20Helsinki%2C%20Finland&language=fi"
+            width="100%"
+            height="400"
+            style="border:0;display:block;min-height:280px;"
+            loading="lazy"
+            allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+            title="The Q Hair Lounge sijainti kartalla"
+          ></iframe>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- [9] FOOTER -->
+  <footer style="background:#0d2035;padding:48px clamp(16px,5vw,48px) 32px;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:32px;margin-bottom:40px;">
+        <div>
+          <img src="https://qhair.fi/wp-content/uploads/2019/02/logo.svg" class="h-9 object-contain" alt="Q Hair Lounge" style="height:36px;filter:brightness(0) invert(1);opacity:0.9;margin-bottom:16px;display:block;" />
+          <p style="color:rgba(255,255,255,0.55);font-size:0.9rem;line-height:1.7;max-width:300px;">Kampaamoalan edelläkävijä Helsingin keskustassa. Kolme salonkia lähellä sinua.</p>
+        </div>
+        <div>
+          <h4 style="color:#fff;font-weight:600;font-size:0.9rem;margin-bottom:16px;letter-spacing:0.05em;text-transform:uppercase;font-size:0.75rem;">Yhteystiedot</h4>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <i data-lucide="map-pin" style="width:15px;height:15px;color:var(--accent);flex-shrink:0;"></i>
+              <span style="color:rgba(255,255,255,0.65);font-size:0.88rem;">Runeberginkatu 4 a D, 00100 Helsinki</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <i data-lucide="phone" style="width:15px;height:15px;color:var(--accent);flex-shrink:0;"></i>
+              <a href="tel:09626670" style="color:rgba(255,255,255,0.65);font-size:0.88rem;text-decoration:none;">09 626670</a>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h4 style="color:#fff;font-weight:600;font-size:0.75rem;margin-bottom:16px;letter-spacing:0.05em;text-transform:uppercase;">Nopeat linkit</h4>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <a href="#services" style="color:rgba(255,255,255,0.65);font-size:0.88rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">Palvelut</a>
+            <a href="#hours" style="color:rgba(255,255,255,0.65);font-size:0.88rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">Aukioloajat</a>
+            <a href="#contact" style="color:rgba(255,255,255,0.65);font-size:0.88rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">Yhteystiedot</a>
+          </div>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+        <span style="color:rgba(255,255,255,0.3);font-size:11px;">The Q Hair Lounge · Helsinki</span>
+        <span style="color:rgba(255,255,255,0.3);font-size:11px;">Demo luotu <a href="https://masasite.com" style="color:rgba(255,255,255,0.45);text-decoration:none;" target="_blank">masasite.com</a> palvelulla</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Lucide icons
+    lucide.createIcons();
+
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Reveal on scroll with stagger
+    const revealEls = document.querySelectorAll('.reveal');
+
+    // Set stagger indexes for grid children
+    document.querySelectorAll('.services-grid').forEach(grid => {
+      grid.querySelectorAll('.reveal').forEach((el, i) => {
+        el.style.setProperty('--i', i);
+      });
+    });
+
+    // Also stagger review cards and why items
+    document.querySelectorAll('.stagger-child').forEach((el, i) => {
+      const siblings = el.parentElement.querySelectorAll('.stagger-child');
+      const idx = Array.from(siblings).indexOf(el);
+      el.style.setProperty('--i', idx);
+    });
+
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    revealEls.forEach(el => io.observe(el));
+
+    // Responsive contact grid
+    const contactGrid = document.querySelector('#contact [style*="grid-template-columns:1fr 1fr"]');
+    function handleContactResize() {
+      if (window.innerWidth < 768) {
+        contactGrid.style.gridTemplateColumns = '1fr';
+      } else {
+        contactGrid.style.gridTemplateColumns = '1fr 1fr';
+      }
+    }
+    if (contactGrid) {
+      handleContactResize();
+      window.addEventListener('resize', handleContactResize);
+    }
+
+    // Responsive gallery grid
+    const galleryGrid = document.querySelector('section [style*="grid-template-columns:1fr 1fr 1fr"]');
+    function handleGalleryResize() {
+      if (window.innerWidth < 640 && galleryGrid) {
+        galleryGrid.style.gridTemplateColumns = '1fr';
+      } else if (window.innerWidth < 900 && galleryGrid) {
+        galleryGrid.style.gridTemplateColumns = '1fr 1fr';
+      } else if (galleryGrid) {
+        galleryGrid.style.gridTemplateColumns = '1fr 1fr 1fr';
+      }
+    }
+    if (galleryGrid) {
+      handleGalleryResize();
+      window.addEventListener('resize', handleGalleryResize);
+    }
+  </script>
+</body>
+</html>
