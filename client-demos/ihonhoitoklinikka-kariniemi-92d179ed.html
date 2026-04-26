@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ihonhoitoklinikka Kariniemi – Tampere</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ffffff;
+      --accent: #c9a96e;
+      --accent-dark: #a8843f;
+      --bg: #faf8f5;
+      --surface: #ffffff;
+      --deep: #2d1a2e;
+      --text: #1a1018;
+      --muted: #7a6b78;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding-top: 40px;
+      line-height: 1.7;
+    }
+
+    h1, h2, h3, .headline-font {
+      font-family: 'DM Serif Display', serif;
+      letter-spacing: -0.02em;
+    }
+
+    /* DEMO BANNER */
+    #demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(201, 169, 110, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #demo-banner span {
+      font-size: 11px;
+      color: #fff;
+      text-align: center;
+      letter-spacing: 0.01em;
+      font-family: 'DM Sans', sans-serif;
+    }
+    #demo-banner a {
+      color: #fff;
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
+    /* NAV */
+    #main-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(255,255,255,0.97);
+      border-bottom: 1px solid rgba(201,169,110,0.15);
+      transition: box-shadow 0.3s ease, background 0.3s ease;
+    }
+    #main-nav.scrolled {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.88);
+      box-shadow: 0 2px 24px rgba(45,26,46,0.08);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 48px);
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 999px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      letter-spacing: 0.01em;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(201,169,110,0.35);
+      background: var(--accent-dark);
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.45);
+      padding: 14px 32px;
+      border-radius: 999px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-ghost:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.22);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+
+    .btn-hero-primary {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 16px 36px;
+      border-radius: 999px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      letter-spacing: 0.01em;
+    }
+    .btn-hero-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 32px rgba(201,169,110,0.45);
+      background: var(--accent-dark);
+    }
+    .btn-hero-primary:active { transform: translateY(-1px); }
+
+    /* HERO */
+    #hero {
+      min-height: 100svh;
+      background: url('assets/ihonhoitoklinikka-kariniemi-92d179ed/photo1.jpg') center center / cover no-repeat;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(45,26,46,0.52) 0%, rgba(15,5,18,0.72) 100%);
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 860px;
+      padding: 0 clamp(16px, 5vw, 48px);
+      animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .hero-h1 {
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      font-family: 'DM Serif Display', serif;
+      color: #fff;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+    .hero-h1 em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255,255,255,0.82);
+      max-width: 620px;
+      margin: 0 auto 32px;
+      line-height: 1.75;
+    }
+
+    .rating-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 36px;
+    }
+    .rating-row .stars {
+      display: flex;
+      gap: 3px;
+    }
+    .rating-row .stars i {
+      color: #f59e0b;
+      fill: #f59e0b;
+      width: 18px;
+      height: 18px;
+    }
+    .rating-text {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.85);
+      font-weight: 500;
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* SECTION SHARED */
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+
+    .section-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      font-family: 'DM Serif Display', serif;
+      color: var(--deep);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 560px;
+    }
+
+    /* SERVICES */
+    #palvelut {
+      background: var(--bg);
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+
+    .service-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1);
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(to right, var(--accent), rgba(201,169,110,0.3));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(45,26,46,0.12), 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .service-card:hover::before { opacity: 1; }
+
+    .icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--accent) 14%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      flex-shrink: 0;
+    }
+    .icon-wrap i {
+      color: var(--accent);
+      width: 28px;
+      height: 28px;
+    }
+
+    .service-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--deep);
+      margin-bottom: 10px;
+      font-family: 'DM Serif Display', serif;
+      letter-spacing: -0.01em;
+    }
+    .service-card p {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* WHY US */
+    #why-us {
+      background: var(--surface);
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+
+    .why-card {
+      text-align: center;
+      padding: 40px 32px;
+    }
+    .why-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .why-icon i {
+      color: var(--accent);
+      width: 40px;
+      height: 40px;
+    }
+    .why-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--deep);
+      margin-bottom: 12px;
+      font-family: 'DM Serif Display', serif;
+    }
+    .why-card p {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    /* REVIEWS */
+    #arvostelut {
+      background: #f5f0eb;
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+
+    .review-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .review-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(45,26,46,0.1);
+    }
+    .review-stars {
+      display: flex;
+      gap: 3px;
+    }
+    .review-stars i {
+      color: #f59e0b;
+      fill: #f59e0b;
+      width: 16px;
+      height: 16px;
+    }
+    .review-quote {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.75;
+      font-style: italic;
+      flex: 1;
+    }
+    .review-author {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--deep);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .verified-badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      padding: 2px 8px;
+      border-radius: 999px;
+      letter-spacing: 0.03em;
+    }
+
+    /* CONTACT */
+    #yhteystiedot {
+      background: #f0ebe5;
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+
+    .contact-info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .contact-info-row i {
+      color: var(--accent);
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .contact-info-row span {
+      font-size: 0.9375rem;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .contact-info-row a {
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .contact-info-row a:hover { color: var(--accent); }
+
+    /* FOOTER */
+    #footer {
+      background: var(--deep);
+      padding-block: 48px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .footer-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+    .footer-address {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.7;
+    }
+    .footer-bottom {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      text-align: center;
+      letter-spacing: 0.03em;
+    }
+
+    /* REVEAL ANIMATIONS */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* MOBILE NAV */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-inner { justify-content: space-between; }
+    }
+
+    /* DIVIDER ORNAMENT */
+    .ornament {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .ornament-line {
+      flex: 1;
+      height: 1px;
+      background: color-mix(in srgb, var(--accent) 30%, transparent);
+      max-width: 60px;
+    }
+    .ornament-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    /* Grid helpers */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 8px;
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* Photo section */
+    #about-photo {
+      padding-block: clamp(64px, 10vw, 120px);
+      background: var(--surface);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .about-photo-wrap {
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+      box-shadow: 0 8px 40px rgba(45,26,46,0.15);
+    }
+    .about-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .about-text h2 {
+      font-size: clamp(1.75rem, 3.5vw, 2.6rem);
+      font-family: 'DM Serif Display', serif;
+      color: var(--deep);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .about-text p {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    /* Stat pills */
+    .stat-pills {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
+    .stat-pill {
+      background: var(--bg);
+      border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+      border-radius: 12px;
+      padding: 14px 20px;
+      text-align: center;
+    }
+    .stat-pill .num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.75rem;
+      color: var(--deep);
+      letter-spacing: -0.02em;
+      display: block;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-pill .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- DEMO BANNER -->
+  <div id="demo-banner">
+    <span>Ihonhoitoklinikka Kariniemi — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman? <a href="mailto:team@masasite.com">Ota yhteyttä →</a></span>
+  </div>
+
+  <!-- STICKY NAV -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <a href="#hero">
+        <img src="https://klinikkakariniemi.fi/wp-content/uploads/2024/10/kariniemi-logo.png" alt="Kariniemi logo" style="height:36px; object-fit:contain; display:block;">
+      </a>
+      <ul class="nav-links">
+        <li><a href="#palvelut">Palvelut</a></li>
+        <li><a href="#arvostelut">Arvostelut</a></li>
+        <li><a href="#yhteystiedot">Yhteystiedot</a></li>
+      </ul>
+      <a href="tel:0505710556" class="btn-primary" style="padding:10px 22px; font-size:0.8125rem;">
+        <i data-lucide="phone" style="width:15px;height:15px;"></i>
+        050 5710556
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-content">
+      <span class="eyebrow">Ihonhoitoklinikka · Tampere</span>
+      <h1 class="hero-h1">Ikääntyvän ihon hoito <em>asiantuntijalta</em></h1>
+      <p class="hero-subtitle">Diplomikosmetologi Heli Kariniemi tuo yli 40 vuoden kokemuksen jokaisen hoidon taakse — uusimmalla teknologialla, syvällä ammattitaidolla.</p>
+      <div class="rating-row">
+        <div class="stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <span class="rating-text">4.9/5 &nbsp;(104 arvostelua)</span>
+      </div>
+      <div class="cta-row">
+        <a href="#yhteystiedot" class="btn-hero-primary">
+          Varaa hoitoaikasi nyt
+          <i data-lucide="arrow-right" style="width:17px;height:17px;"></i>
+        </a>
+        <a href="#palvelut" class="btn-ghost">
+          Tutustu palveluihin
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT PHOTO SECTION -->
+  <section id="about-photo">
+    <div class="section-container">
+      <div class="about-grid">
+        <div class="about-photo-wrap reveal">
+          <img src="assets/ihonhoitoklinikka-kariniemi-92d179ed/photo2.jpg" alt="Ihonhoitoklinikka Kariniemi hoitohuone">
+        </div>
+        <div class="about-text reveal" style="transition-delay: 0.12s;">
+          <span class="section-eyebrow">Asiantuntijuus &amp; kokemus</span>
+          <div class="ornament">
+            <div class="ornament-line"></div>
+            <div class="ornament-dot"></div>
+            <div class="ornament-line"></div>
+          </div>
+          <h2>Heli Kariniemi — diplomikosmetologi Tampereella</h2>
+          <p>Ihonhoitoklinikka Kariniemi on erikoistunut ikääntyvän ihon hoitoihin Tampereen keskustassa. Diplomikosmetologi Heli Kariniemi tuo yli 40 vuoden kokemuksen ja syvän asiantuntijuuden jokaisen hoidon taakse.</p>
+          <p>Ryppyjen, kuivuuden ja ihon kiinteyttämisen ongelmiin saat tehokkaita ratkaisuja uusimmalla teknologialla — yksilöllisesti räätälöitynä juuri sinulle.</p>
+          <div class="stat-pills">
+            <div class="stat-pill">
+              <span class="num">40+</span>
+              <span class="label">Vuotta kokemusta</span>
+            </div>
+            <div class="stat-pill">
+              <span class="num">4.9</span>
+              <span class="label">Google-arvosana</span>
+            </div>
+            <div class="stat-pill">
+              <span class="num">104</span>
+              <span class="label">Arvostelua</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="palvelut">
+    <div class="section-container">
+      <div style="text-align:center; margin-bottom: 64px;">
+        <span class="section-eyebrow reveal">Hoidot &amp; palvelut</span>
+        <h2 class="section-title reveal" style="margin-bottom:16px; transition-delay:0.08s;">Erikoistuneet ihonhoitohoidot</h2>
+        <p class="section-subtitle reveal" style="margin:0 auto; text-align:center; transition-delay:0.16s;">Kehittyneet hoitoprotokollat, jotka on suunniteltu erityisesti ikääntyvän ihon tarpeisiin.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal" style="--i:0;">
+          <div class="icon-wrap">
+            <i data-lucide="sparkles"></i>
+          </div>
+          <h3>Täyttöliftaus</h3>
+          <p>Kiinteyttävä ja kostea iho moderneilla menetelmillä. Iho saa uutta elinvoimaa ja ryppyjen näkyvyys vähenee tehokkaasti.</p>
+        </div>
+        <div class="service-card reveal" style="--i:1;">
+          <div class="icon-wrap">
+            <i data-lucide="zap"></i>
+          </div>
+          <h3>RF-mikroneulaus</h3>
+          <p>Ihon uudistumisen edistäminen ja tasaisen värin saavuttaminen. Radiofrekvenssi yhdistettynä mikroneulauksen tehoon.</p>
+        </div>
+        <div class="service-card reveal" style="--i:2;">
+          <div class="icon-wrap">
+            <i data-lucide="droplets"></i>
+          </div>
+          <h3>Infuzion System</h3>
+          <p>Syväkosteus ja ihon luonnollinen hehku. Tehokas infuusiomenetelmä, joka ravitsee ihoa syvältä sisältä.</p>
+        </div>
+        <div class="service-card reveal" style="--i:3;">
+          <div class="icon-wrap">
+            <i data-lucide="heart"></i>
+          </div>
+          <h3>PRX-T33</h3>
+          <p>Ihoa uudistava ja korjaava hoitoprotokolla. Innovatiivinen peeling, joka stimuloi kollageenin tuotantoa ilman toipumisaikaa.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section id="why-us">
+    <div class="section-container">
+      <div style="text-align:center; margin-bottom: 64px;">
+        <span class="section-eyebrow reveal">Miksi Kariniemi?</span>
+        <h2 class="section-title reveal" style="transition-delay:0.08s;">Ammattitaito, joka näkyy tuloksissa</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-card reveal" style="--i:0;">
+          <div class="why-icon">
+            <i data-lucide="award"></i>
+          </div>
+          <h3>Yli 40 vuoden kokemus</h3>
+          <p>Dokumentoitu asiantuntijuus ikääntyvän ihon hoitoihin — vuosikymmenten tieto jokaisen hoidon takana.</p>
+        </div>
+        <div class="why-card reveal" style="--i:1; transition-delay: calc(1 * 80ms);">
+          <div class="why-icon">
+            <i data-lucide="shield-check"></i>
+          </div>
+          <h3>Hienotunteinen ammattilinen</h3>
+          <p>Diplomikosmetologi Heli Kariniemi tunnetaan ammattitaidostaan, hienotunteisuudestaan ja yksilöllisestä palvelustaan.</p>
+        </div>
+        <div class="why-card reveal" style="--i:2; transition-delay: calc(2 * 80ms);">
+          <div class="why-icon">
+            <i data-lucide="trending-up"></i>
+          </div>
+          <h3>Todistettuja tuloksia</h3>
+          <p>4.9/5 arvosana 104 arvostelun perusteella kertoo enemmän kuin sanatkaan — asiakkaat palaavat yhä uudelleen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="arvostelut">
+    <div class="section-container">
+      <div style="text-align:center; margin-bottom:64px;">
+        <span class="section-eyebrow reveal">Asiakkaiden kokemuksia</span>
+        <h2 class="section-title reveal" style="transition-delay:0.08s;">Mitä asiakkaat kertovat</h2>
+        <div class="reveal" style="transition-delay:0.16s; display:flex; align-items:center; justify-content:center; gap:10px; margin-top:16px;">
+          <div style="display:flex; gap:4px;">
+            <i data-lucide="star" style="color:#f59e0b; fill:#f59e0b; width:20px; height:20px;"></i>
+            <i data-lucide="star" style="color:#f59e0b; fill:#f59e0b; width:20px; height:20px;"></i>
+            <i data-lucide="star" style="color:#f59e0b; fill:#f59e0b; width:20px; height:20px;"></i>
+            <i data-lucide="star" style="color:#f59e0b; fill:#f59e0b; width:20px; height:20px;"></i>
+            <i data-lucide="star" style="color:#f59e0b; fill:#f59e0b; width:20px; height:20px;"></i>
+          </div>
+          <span style="font-size:0.9375rem; color:var(--muted); font-weight:500;">4.9/5 · 104 Google-arvostelua</span>
+        </div>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card reveal" style="--i:0;">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"Good and professional customer service. A calm way of working where you can also calm down during the facial treatment."</p>
+          <div class="review-author">
+            Niilo
+            <span class="verified-badge">Vahvistettu</span>
+          </div>
+        </div>
+        <div class="review-card reveal" style="--i:1; transition-delay: calc(1 * 80ms);">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"Calm atmosphere and the beautician kept telling me what she was going to do next. My skin had a brand new glow after the treatment. I also received good instructions for home care. Highly recommended!"</p>
+          <div class="review-author">
+            Reetta Salo
+            <span class="verified-badge">Vahvistettu</span>
+          </div>
+        </div>
+        <div class="review-card reveal" style="--i:2; transition-delay: calc(2 * 80ms);">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"Again a wonderful treatment and a pleasant visit. The skin looks and feels great after the microneedling."</p>
+          <div class="review-author">
+            Laura Jokisalo
+            <span class="verified-badge">Vahvistettu</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="yhteystiedot">
+    <div class="section-container">
+      <div style="margin-bottom:64px; text-align:center;">
+        <span class="section-eyebrow reveal">Tule käymään</span>
+        <h2 class="section-title reveal" style="transition-delay:0.08s;">Löydä meidät Tampereen keskustasta</h2>
+      </div>
+      <div class="contact-grid">
+        <div class="reveal">
+          <div style="background:var(--surface); border-radius:20px; padding:40px; box-shadow:0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);">
+            <h3 style="font-family:'DM Serif Display',serif; font-size:1.4rem; color:var(--deep); margin-bottom:28px; letter-spacing:-0.01em;">Yhteystiedot</h3>
+            <div class="contact-info-row">
+              <i data-lucide="map-pin"></i>
+              <span>Aleksanterinkatu 17 LH 1<br>33100 Tampere, Suomi</span>
+            </div>
+            <div class="contact-info-row">
+              <i data-lucide="phone"></i>
+              <span><a href="tel:0505710556">050 5710556</a></span>
+            </div>
+            <div class="contact-info-row">
+              <i data-lucide="globe"></i>
+              <span><a href="http://www.klinikkakariniemi.fi/" target="_blank" rel="noopener">www.klinikkakariniemi.fi</a></span>
+            </div>
+            <div class="contact-info-row">
+              <i data-lucide="clock"></i>
+              <span style="color:var(--muted);">Ota yhteyttä ajanvarausta varten</span>
+            </div>
+            <div style="margin-top:32px; padding-top:28px; border-top:1px solid rgba(201,169,110,0.15);">
+              <a href="tel:0505710556" class="btn-primary" style="width:100%; justify-content:center; padding:16px 28px; font-size:1rem;">
+                <i data-lucide="phone" style="width:17px;height:17px;"></i>
+                Soita ja varaa aika
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="reveal" style="transition-delay:0.12s;">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Aleksanterinkatu%2017%20LH%201%2C%2033100%20Tampere%2C%20Suomi%2C%20Tampere%2C%20Finland&language=fi"
+            width="100%"
+            height="420"
+            style="border:0; border-radius:20px; box-shadow:0 4px 24px rgba(45,26,46,0.1); display:block;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Ihonhoitoklinikka Kariniemi sijainti">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="footer-inner">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:32px;">
+        <div>
+          <div class="footer-name">Ihonhoitoklinikka Kariniemi</div>
+          <div class="footer-address">
+            Aleksanterinkatu 17 LH 1<br>
+            33100 Tampere<br>
+            <a href="tel:0505710556" style="color:rgba(255,255,255,0.6); text-decoration:none;">050 5710556</a>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-start;">
+          <span style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.12em; color:rgba(255,255,255,0.35); font-weight:600;">Palvelut</span>
+          <span style="font-size:0.875rem; color:rgba(255,255,255,0.55);">Täyttöliftaus</span>
+          <span style="font-size:0.875rem; color:rgba(255,255,255,0.55);">RF-mikroneulaus</span>
+          <span style="font-size:0.875rem; color:rgba(255,255,255,0.55);">Infuzion System</span>
+          <span style="font-size:0.875rem; color:rgba(255,255,255,0.55);">PRX-T33</span>
+        </div>
+        <div>
+          <div style="display:flex; gap:4px; margin-bottom:8px;">
+            <i data-lucide="star" style="color:#f59e0b; fill:#f59e0b; width:16px; height:16px;"></i>
+            <i data-lucide="star" style="color:#f59e0b; fill:#f59e0b; width:16px; height:16px;"></i>
+            <i data-lucide="star" style="color:#f59e0b; fill:#f59e0b; width:16px; height:16px;"></i>
+            <i data-lucide="star" style="color:#f59e0b; fill:#f59e0b; width:16px; height:16px;"></i>
+            <i data-lucide="star" style="color:#f59e0b; fill:#f59e0b; width:16px; height:16px;"></i>
+          </div>
+          <div style="font-size:0.875rem; color:rgba(255,255,255,0.55);">4.9/5 · 104 arvostelua</div>
+          <div style="margin-top:16px;">
+            <a href="http://www.klinikkakariniemi.fi/" target="_blank" rel="noopener" style="font-size:0.8125rem; color:var(--accent); text-decoration:none;">www.klinikkakariniemi.fi →</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">Demo luotu masasite.com palvelulla</div>
+    </div>
+  </footer>
+
+  <script>
+    // Lucide icons
+    lucide.createIcons();
+
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // IntersectionObserver for reveal animations
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    document.querySelectorAll('.reveal').forEach((el, i) => {
+      // Apply stagger delay if --i is set
+      const iVal = el.style.getPropertyValue('--i');
+      if (iVal && !el.style.transitionDelay) {
+        el.style.transitionDelay = `calc(${iVal} * 80ms)`;
+      }
+      io.observe(el);
+    });
+
+    // Fill review star icons with gold via attribute
+    document.querySelectorAll('.review-stars i, .rating-row .stars i').forEach(star => {
+      star.style.color = '#f59e0b';
+      star.style.fill = '#f59e0b';
+    });
+  </script>
+</body>
+</html>
