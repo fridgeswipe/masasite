@@ -1,0 +1,130 @@
+/* Instrument Serif — editorial display font */
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+
+@import "tailwindcss";
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+
+@theme {
+  /* ── Colors ──────────────────────────────────────── */
+  --color-bg:            #080810;
+  --color-bg-subtle:     #0e0e18;
+  --color-bg-elevated:   #13131e;
+  --color-accent:        #00ff88;
+  --color-accent-dim:    color-mix(in srgb, #00ff88 15%, transparent);
+  --color-blue:          #3b82f6;
+  --color-blue-dim:      color-mix(in srgb, #3b82f6 15%, transparent);
+  --color-text:          #f0f0f4;
+  --color-muted:         #8888a4;
+  --color-border:        color-mix(in srgb, #ffffff 6%, transparent);
+  --color-border-hover:  color-mix(in srgb, #ffffff 12%, transparent);
+
+  /* ── Typography ──────────────────────────────────── */
+  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-sans:    "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    "Geist Mono", ui-monospace, monospace;
+
+  /* ── Border radius ───────────────────────────────── */
+  --radius-sm:  4px;
+  --radius:     6px;
+  --radius-lg:  10px;
+  --radius-xl:  16px;
+
+  /* ── Easing curves (Emil Kowalski) ────────────────── */
+  --ease-out-strong:    cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer:        cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* ── Durations ────────────────────────────────────── */
+  --duration-fast:   150ms;
+  --duration-base:   220ms;
+  --duration-slow:   400ms;
+  --duration-enter:  600ms;
+}
+
+/* ── Reset & Base ────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  color-scheme: dark;
+}
+
+body { overflow-x: hidden; }
+
+#root { min-height: 100dvh; }
+
+/* ── Display headings use serif ───────────────────── */
+h1, h2 {
+  font-family: var(--font-display);
+  font-weight: 400; /* Instrument Serif looks best at regular weight */
+  font-style: italic;
+}
+
+/* ── Selection ────────────────────────────────────── */
+::selection {
+  background: var(--color-accent-dim);
+  color: var(--color-accent);
+}
+
+/* ── Focus ────────────────────────────────────────── */
+:focus-visible {
+  outline: 1.5px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Scrollbar ────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-hover);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-muted); }
+
+/* ── Scroll offset for fixed navbar ──────────────── */
+section[id] {
+  scroll-margin-top: 72px;
+}
+
+/* ── Section dividers ─────────────────────────────── */
+.section-glow-divider {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  overflow: hidden;
+}
+.section-glow-divider::after {
+  content: '';
+  display: block;
+  width: 58%;
+  height: 1px;
+  background: radial-gradient(
+    ellipse 100% 100% at 50% 0%,
+    rgba(0, 255, 136, 0.22) 0%,
+    transparent 70%
+  );
+}
+
+/* ── Reduced motion ───────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

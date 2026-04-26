@@ -1,0 +1,19 @@
+.ls-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.ls-logo {
+  font-family: var(--font-mono);
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--color-accent);
+  text-shadow: 0 0 40px rgba(0,255,136,0.4);
+}

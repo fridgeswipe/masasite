@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hilla Helsinki - Day Spa & Shop — Helsinki</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --primary: #c2185b;
+    --accent:  #f48fb1;
+  }
+  * { font-family: 'Cormorant Garamond', sans-serif; }
+  .hero-bg {
+    background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.45)), url(assets/hilla-helsinki---day-spa---sho-5c29d0a8/photo1.jpg);
+    background-size: cover;
+    background-position: center;
+    min-height: 90vh;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    padding: 14px 36px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+  .fade-in.visible { opacity: 1; transform: none; }
+  .demo-banner {
+    background: var(--accent);
+    color: #fff;
+    text-align: center;
+    padding: 10px 20px;
+    font-size: .85rem;
+    font-weight: 500;
+  }
+</style>
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+<!-- Demo banner -->
+<div class="demo-banner">
+  ✦ Tämä on ilmainen demo — teimme sen juuri teille. Kiinnostuitko?
+  <a href="mailto:team@masasite.com" class="underline ml-2 font-bold">Ota yhteyttä →</a>
+</div>
+
+<!-- Nav -->
+<nav class="bg-white shadow-sm sticky top-0 z-50">
+  <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+    <img src="https://hillahelsinki.fi/img/cms/Kuvakkeet/Hilla%20Reward%20logo%202@2x.png" alt="Hilla Helsinki - Day Spa & Shop logo" class="h-10 object-contain">
+    <div class="hidden md:flex gap-8 text-sm font-medium text-gray-600">
+      <a href="#services" class="hover:text-gray-900 transition-colors">Palvelut</a>
+      <a href="#hours" class="hover:text-gray-900 transition-colors">Aukioloajat</a>
+      <a href="#contact" class="hover:text-gray-900 transition-colors">Yhteystiedot</a>
+    </div>
+    <a href="#contact" class="btn-primary text-sm py-2 px-5">Varaa aikasi tai aloita</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero-bg flex items-center justify-center text-center text-white px-4">
+  <div class="max-w-3xl fade-in">
+    <h1 class="text-5xl md:text-6xl font-bold leading-tight mb-6">Luonnollinen ihonhoito ja rentoutuminen Helsingissä</h1>
+    <p class="text-xl md:text-2xl text-white/85 mb-8 max-w-xl mx-auto">Hilla Helsinki on erikoistunut räätälöityihin ihonhoitokokonaisuuksiin, joissa yhdistyy tuloksellisuus ja rentoutus. Käytämme suomalaisia, luonnollisia ja vegaanisia tuotteita sekä elämyksellisiä hoitoja. Uudistuneella sivustolla löydät hoitolat, verkkokaupan, lahjakortit ja inspiraatiota yhdestä paikasta.</p>
+    <div class="flex items-center gap-2 mt-4"><span class="text-yellow-400 text-lg">★★★★★</span><span class="text-white/80 text-sm">5.0/5 (376 arvostelua)</span></div>
+    <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="#contact" class="btn-primary">Varaa aikasi tai aloita</a>
+      <a href="#services" class="btn-primary" style="background:rgba(255,255,255,.15);backdrop-filter:blur(4px)">Katso palvelut</a>
+    </div>
+  </div>
+</section>
+
+
+        <section class="py-8 bg-white">
+          <div class="max-w-5xl mx-auto px-4">
+            <div class="grid grid-cols-2 gap-4"><img src="assets/hilla-helsinki---day-spa---sho-5c29d0a8/photo2.jpg" alt="Hilla Helsinki - Day Spa & Shop" class="rounded-xl object-cover w-full h-48">
+<img src="assets/hilla-helsinki---day-spa---sho-5c29d0a8/photo3.jpg" alt="Hilla Helsinki - Day Spa & Shop" class="rounded-xl object-cover w-full h-48"></div>
+          </div>
+        </section>
+
+
+        <section id="services" class="py-16 bg-gray-50">
+          <div class="max-w-5xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-10" style="color:#c2185b">Palvelumme</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bg-white rounded-2xl shadow-sm p-6 hover:shadow-md transition-shadow fade-in">
+            <div class="text-2xl mb-3" style="color:#f48fb1">✦</div>
+            <h3 class="text-lg font-bold mb-2" style="color:#c2185b">Kasvohoitokokonaisuudet</h3>
+            <p class="text-gray-600 text-sm">Räätälöidyt, tuloksellisen ja rentouttavat kasvohoidot luonnollisilla tuotteilla</p>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow-sm p-6 hover:shadow-md transition-shadow fade-in">
+            <div class="text-2xl mb-3" style="color:#f48fb1">◆</div>
+            <h3 class="text-lg font-bold mb-2" style="color:#c2185b">Hierontahoitot</h3>
+            <p class="text-gray-600 text-sm">Täydellisesti rentouttavat kehon hierontahoidot stressinlievitykseen</p>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow-sm p-6 hover:shadow-md transition-shadow fade-in">
+            <div class="text-2xl mb-3" style="color:#f48fb1">▲</div>
+            <h3 class="text-lg font-bold mb-2" style="color:#c2185b">Verkkokauppa</h3>
+            <p class="text-gray-600 text-sm">Suomalaista, vegaanista kosmetiikkaa ja ihonhoitotuotteita kotiintoimituksella</p>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow-sm p-6 hover:shadow-md transition-shadow fade-in">
+            <div class="text-2xl mb-3" style="color:#f48fb1">●</div>
+            <h3 class="text-lg font-bold mb-2" style="color:#c2185b">Lahjakortit</h3>
+            <p class="text-gray-600 text-sm">Lahjakortit hoitoloiden palveluihin ja verkkokauppaan</p>
+          </div></div>
+          </div>
+        </section>
+
+<!-- Why us -->
+<section class="py-16 bg-white">
+  <div class="max-w-4xl mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-12" style="color:#c2185b">Miksi valita meidät?</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="text-center fade-in">
+        <div class="text-4xl mb-4">🏆</div>
+        <p class="text-lg font-semibold" style="color:#c2185b">Hyväksi arvioitu 5/5 tähdellä 376 asiakasarvostelun perusteella</p>
+      </div>
+
+      <div class="text-center fade-in">
+        <div class="text-4xl mb-4">⚡</div>
+        <p class="text-lg font-semibold" style="color:#c2185b">Suomalaisia, luonnollisia ja vegaanisia tuotteita ihoystävällisin menetelmin</p>
+      </div>
+
+      <div class="text-center fade-in">
+        <div class="text-4xl mb-4">💎</div>
+        <p class="text-lg font-semibold" style="color:#c2185b">Hillapisteet jokaisesta ostosta – kanta-asiakasohjelma palkinnoineen</p>
+      </div></div>
+  </div>
+</section>
+
+
+        <section id="reviews" class="py-16 bg-white">
+          <div class="max-w-5xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-10" style="color:#c2185b">Asiakkaat sanovat</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-white rounded-2xl shadow-sm p-6 fade-in">
+            <div class="text-yellow-400 text-xl mb-2">★★★★★</div>
+            <p class="text-gray-700 italic mb-4">"What a hidden gem! The front part of the place is like any other beauty store but then you’re brought to the back … and you feel like stepping into a mini day spa—calm, inviting, and so relaxing.
+
+My microneedling treatment was not only expertly done but also paired with the most blissful facial mas"</p>
+            <p class="text-sm font-semibold text-gray-500">— Kielo Stevenson</p>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow-sm p-6 fade-in">
+            <div class="text-yellow-400 text-xl mb-2">★★★★★</div>
+            <p class="text-gray-700 italic mb-4">"Most relaxing treatment ever. Absolutely perfect start for the weekend. Products were chosen according to my skin type. Truly joyfull experience. Will definately  come again!"</p>
+            <p class="text-sm font-semibold text-gray-500">— Eeva Hottinen</p>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow-sm p-6 fade-in">
+            <div class="text-yellow-400 text-xl mb-2">★★★★★</div>
+            <p class="text-gray-700 italic mb-4">"Had a USVA treatment for a couple and it was excellent. Best one where I have been in Finland or elsewhere. Me and my partner both really enjoyed and felt completely relaxed afterwards."</p>
+            <p class="text-sm font-semibold text-gray-500">— Eerik Klemetti</p>
+          </div></div>
+          </div>
+        </section>
+
+
+        <section id="hours" class="py-16 bg-gray-50">
+          <div class="max-w-2xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-10" style="color:#c2185b">Aukioloajat</h2>
+            <div class="bg-white rounded-2xl shadow-sm p-8">
+              <table class="w-full"><tbody><tr class="border-b border-gray-100"><td class="py-2 pr-6 font-medium text-gray-700">Monday</td><td class="py-2 text-gray-600">12:00 – 6:00 PM</td></tr>
+<tr class="border-b border-gray-100"><td class="py-2 pr-6 font-medium text-gray-700">Tuesday</td><td class="py-2 text-gray-600">12:00 – 6:00 PM</td></tr>
+<tr class="border-b border-gray-100"><td class="py-2 pr-6 font-medium text-gray-700">Wednesday</td><td class="py-2 text-gray-600">12:00 – 6:00 PM</td></tr>
+<tr class="border-b border-gray-100"><td class="py-2 pr-6 font-medium text-gray-700">Thursday</td><td class="py-2 text-gray-600">12:00 – 6:00 PM</td></tr>
+<tr class="border-b border-gray-100"><td class="py-2 pr-6 font-medium text-gray-700">Friday</td><td class="py-2 text-gray-600">12:00 – 6:00 PM</td></tr>
+<tr class="border-b border-gray-100"><td class="py-2 pr-6 font-medium text-gray-700">Saturday</td><td class="py-2 text-gray-600">12:00 – 4:00 PM</td></tr>
+<tr class="border-b border-gray-100"><td class="py-2 pr-6 font-medium text-gray-700">Sunday</td><td class="py-2 text-gray-600">Closed</td></tr></tbody></table>
+            </div>
+          </div>
+        </section>
+
+<!-- Contact -->
+<section id="contact" class="py-16 bg-gray-50">
+  <div class="max-w-5xl mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-10" style="color:#c2185b">Ota yhteyttä</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="bg-white rounded-2xl shadow-sm p-8 fade-in">
+        <h3 class="text-xl font-bold mb-6" style="color:#c2185b">Yhteystiedot</h3>
+        <div class="flex items-start gap-3 mb-4"><span class="text-2xl">📍</span><div><p class="text-xs text-gray-400 uppercase tracking-wider mb-1">Osoite</p><p class="font-medium">Yrjönkatu 11, 00120 Helsinki, Suomi</p></div></div>
+        <div class="flex items-start gap-3 mb-4"><span class="text-2xl">📞</span><div><p class="text-xs text-gray-400 uppercase tracking-wider mb-1">Puhelin</p><a href="tel:050 5182828" class="font-medium hover:underline" style="color:{accent}">050 5182828</a></div></div>
+        <div class="flex items-start gap-3 mb-4"><span class="text-2xl">✉️</span><div><p class="text-xs text-gray-400 uppercase tracking-wider mb-1">Sähköposti</p><a href="mailto:your@email.com" class="font-medium hover:underline" style="color:{accent}">your@email.com</a></div></div>
+        <div class="flex items-start gap-3 mb-4">
+          <span class="text-2xl">📍</span>
+          <div>
+            <p class="text-xs text-gray-400 uppercase tracking-wider mb-1">Kaupunki</p>
+            <p class="font-medium">Helsinki</p>
+          </div>
+        </div>
+        <div class="mt-6 pt-6 border-t"><a href="mailto:team@masasite.com" class="btn-primary w-full text-center">Varaa aikasi tai aloita</a></div>
+      </div>
+      <div class="rounded-2xl overflow-hidden shadow-sm fade-in h-64 md:h-auto">
+        <iframe
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Yrj%C3%B6nkatu%2011%2C%2000120%20Helsinki%2C%20Suomi%2C%20Helsinki%2C%20Finland&language=fi"
+          width="100%" height="100%"
+          style="border:0;min-height:300px" allowfullscreen loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-10 text-center">
+  <p class="text-lg font-bold mb-1">Hilla Helsinki - Day Spa & Shop</p>
+  <p class="text-gray-400 text-sm mb-4">Yrjönkatu 11, 00120 Helsinki, Suomi, Helsinki</p>
+  <p class="text-gray-500 text-xs">
+    Demo luotu automaattisesti ·
+    <a href="https://masasite.com" class="underline hover:text-white">masasite.com</a>
+  </p>
+</footer>
+
+<script>
+// Scroll fade-in via IntersectionObserver
+const observer = new IntersectionObserver(
+  entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); }),
+  { threshold: 0.12 }
+);
+document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
+// Hero fade on load
+setTimeout(() => document.querySelector(".hero-bg .fade-in")?.classList.add("visible"), 100);
+</script>
+</body>
+</html>

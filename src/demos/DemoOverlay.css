@@ -1,0 +1,162 @@
+/* ── Demo overlay shell ───────────────────────────── */
+.demo-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  flex-direction: column;
+  animation: demo-overlay-in 0.28s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+@keyframes demo-overlay-in {
+  from { opacity: 0; transform: scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── Browser chrome bar ───────────────────────────── */
+.demo-chrome {
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  height: 46px;
+  background: #18181f;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.demo-chrome-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.demo-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  cursor: default;
+  flex-shrink: 0;
+  display: block;
+  padding: 0;
+}
+
+.demo-dot-red    { background: #ff5f57; cursor: pointer; }
+.demo-dot-yellow { background: #febc2e; }
+.demo-dot-green  { background: #28c840; }
+
+.demo-urlbar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 340px;
+  margin: 0 auto;
+  padding: 5px 12px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.55);
+  font-family: ui-monospace, "SF Mono", monospace;
+  user-select: none;
+}
+
+.demo-url-lock {
+  color: rgba(255, 255, 255, 0.35);
+  flex-shrink: 0;
+  display: flex;
+}
+
+.demo-close {
+  position: absolute;
+  right: 1rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s, color 0.18s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .demo-close:hover { background: rgba(255, 255, 255, 0.14); color: #fff; }
+  .demo-dot-red:hover { filter: brightness(1.15); }
+}
+
+/* ── Preview notice bar ───────────────────────────── */
+.demo-notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(245, 158, 11, 0.1);
+  border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+  color: rgba(245, 158, 11, 0.85);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+/* ── Scrollable content ───────────────────────────── */
+.demo-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* ── Floating CTA ────────────────────────────────── */
+.demo-float-cta {
+  position: fixed;
+  bottom: 1.75rem;
+  right: 1.75rem;
+  z-index: 9001;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.7rem 1.3rem;
+  border-radius: 100px;
+  background: #00ff88;
+  color: #000;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  box-shadow:
+    0 4px 20px rgba(0, 255, 136, 0.45),
+    0 2px 8px rgba(0, 0, 0, 0.35);
+  animation: demo-cta-in 0.4s 0.15s cubic-bezier(0.23, 1, 0.32, 1) both;
+  transition:
+    transform 0.22s cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 0.22s;
+  cursor: pointer;
+  border: none;
+}
+
+@keyframes demo-cta-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.92); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .demo-float-cta:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 8px 32px rgba(0, 255, 136, 0.55),
+      0 2px 12px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.demo-float-cta:active { transform: scale(0.97); }

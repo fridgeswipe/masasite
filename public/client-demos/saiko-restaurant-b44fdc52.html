@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saiko Restaurant — Japanilainen Robata-Grilli Helsingissä</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #1a0a00;
+      --accent: #c0392b;
+      --bg: #fafaf9;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      padding-top: 40px;
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--primary);
+    }
+    h1, h2, h3, .font-headline {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* Demo Banner */
+    #demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 40px;
+      background: rgba(192, 57, 43, 0.88);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.02em;
+    }
+    #demo-banner a {
+      color: #ffd9d6;
+      text-decoration: underline;
+      margin-left: 4px;
+      font-weight: 600;
+    }
+    #demo-banner a:hover { color: #fff; }
+
+    /* Animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: none; }
+    }
+    .hero-animate {
+      animation: fadeUp 1s ease forwards;
+    }
+    .hero-animate-delay {
+      animation: fadeUp 1s ease 0.2s forwards;
+      opacity: 0;
+    }
+    .hero-animate-delay2 {
+      animation: fadeUp 1s ease 0.4s forwards;
+      opacity: 0;
+    }
+    .hero-animate-delay3 {
+      animation: fadeUp 1s ease 0.6s forwards;
+      opacity: 0;
+    }
+
+    /* Nav */
+    #navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(26, 10, 0, 0.08);
+    }
+
+    /* Hero */
+    #hero {
+      min-height: 100vh;
+      background: url('assets/saiko-restaurant-b44fdc52/photo1.jpg') center center / cover no-repeat;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(26,10,0,0.75) 100%);
+    }
+    #hero > * { position: relative; z-index: 1; }
+
+    /* Service Cards Hover */
+    .service-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(26, 10, 0, 0.15);
+    }
+
+    /* CTA hover lift */
+    .btn-primary {
+      background-color: var(--accent);
+      color: #fff;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(192, 57, 43, 0.45);
+      background-color: #a93226;
+    }
+
+    .btn-secondary-hero {
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.4);
+      color: #fff;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    .btn-secondary-hero:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.28);
+    }
+
+    /* Stars */
+    .star-icon {
+      color: #f0b429;
+      display: inline-flex;
+    }
+    .star-icon svg {
+      fill: #f0b429;
+      stroke: #f0b429;
+    }
+
+    /* Hours table */
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      border-radius: 10px;
+      transition: background 0.2s;
+    }
+    .hours-row:nth-child(odd) {
+      background: rgba(26, 10, 0, 0.03);
+    }
+    .hours-row.closed-day .hours-time {
+      color: #b0a9a4;
+      font-style: italic;
+    }
+    .hours-row.open-day .hours-time {
+      color: #c0392b;
+      font-weight: 600;
+    }
+
+    /* Map iframe */
+    .map-frame {
+      width: 100%;
+      height: 350px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(26,10,0,0.12);
+      border: none;
+    }
+
+    /* Divider ornament */
+    .ornament-line {
+      width: 60px;
+      height: 2px;
+      background: var(--accent);
+      margin: 0 auto;
+    }
+
+    /* Review card quote */
+    .review-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 4px 20px rgba(26,10,0,0.07);
+      border: 1px solid rgba(26,10,0,0.06);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .review-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(26,10,0,0.12);
+    }
+
+    /* Nav link hover */
+    .nav-link {
+      position: relative;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--primary);
+      text-decoration: none;
+      padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
+    }
+    .nav-link:hover::after { transform: scaleX(1); }
+    .nav-link:hover { color: var(--accent); }
+
+    /* Why us icon wrapper */
+    .why-icon-wrap {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      background: rgba(192, 57, 43, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .why-icon-wrap svg {
+      color: var(--accent);
+    }
+
+    /* Photo gallery */
+    .photo-item {
+      overflow: hidden;
+      border-radius: 16px;
+    }
+    .photo-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .photo-item:hover img {
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      #hero h1 { font-size: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- [1] DEMO BANNER -->
+<div id="demo-banner">
+  Saiko Restaurant — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman?
+  <a href="mailto:team@masasite.com">Ota yhteyttä →</a>
+</div>
+
+<!-- [2] STICKY NAV -->
+<nav id="navbar">
+  <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
+    <a href="#hero" class="flex-shrink-0">
+      <img src="http://images.squarespace-cdn.com/content/v1/65fe8fb4f8735f09d5de7c10/afb08736-efd4-4806-8387-c230a013040b/SAIKO+Logo.png?format=1500w"
+           alt="Saiko Restaurant" class="h-9 object-contain" />
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#services" class="nav-link">Palvelut</a>
+      <a href="#hours" class="nav-link">Aukioloajat</a>
+      <a href="#contact" class="nav-link">Yhteystiedot</a>
+    </div>
+    <a href="#contact"
+       class="btn-primary text-sm font-semibold px-5 py-2.5 rounded-full inline-block">
+      Varaa pöytä
+    </a>
+  </div>
+</nav>
+
+<!-- [3] HERO -->
+<section id="hero">
+  <div class="max-w-4xl mx-auto px-6 text-center text-white">
+    <div class="hero-animate mb-5">
+      <span style="font-family: 'DM Sans', sans-serif; font-size:12px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:rgba(255,255,255,0.65);">
+        Helsinki &nbsp;·&nbsp; Robata Fusion
+      </span>
+    </div>
+    <h1 class="hero-animate-delay text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6" style="font-family:'Playfair Display',serif; text-shadow:0 2px 20px rgba(0,0,0,0.4);">
+      Japanilaisen robata-grillin taidetta Helsingissä
+    </h1>
+    <p class="hero-animate-delay2 text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-4 leading-relaxed" style="font-family:'DM Sans',sans-serif; font-weight:300;">
+      Saiko on Helsingin sydämessä sijaitseva robata-style fusioravintola, joka yhdistää japanilaisen grillaustradition innovatiivisiin kulinaraarisiin tekniikoihin.
+    </p>
+    <div class="hero-animate-delay2 flex items-center justify-center gap-1.5 mb-8">
+      <span class="star-icon"><i data-lucide="star" style="width:18px;height:18px;"></i></span>
+      <span class="star-icon"><i data-lucide="star" style="width:18px;height:18px;"></i></span>
+      <span class="star-icon"><i data-lucide="star" style="width:18px;height:18px;"></i></span>
+      <span class="star-icon"><i data-lucide="star" style="width:18px;height:18px;"></i></span>
+      <span class="star-icon"><i data-lucide="star" style="width:18px;height:18px;"></i></span>
+      <span class="text-white/70 text-sm ml-2" style="font-family:'DM Sans',sans-serif;">4.9/5 · 267 arvostelua Googlessa</span>
+    </div>
+    <div class="hero-animate-delay3 flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="#contact"
+         class="btn-primary font-semibold px-8 py-4 rounded-full text-base inline-block">
+        Varaa pöytä nyt
+      </a>
+      <a href="#services"
+         class="btn-secondary-hero font-semibold px-8 py-4 rounded-full text-base inline-block">
+        Tutustu palveluihin
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO GALLERY STRIP -->
+<section class="py-16 px-6" style="background:#fff;">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4" style="height:280px;">
+      <div class="photo-item reveal md:col-span-1" style="height:280px;">
+        <img src="assets/saiko-restaurant-b44fdc52/photo1.jpg" alt="Saiko Restaurant" />
+      </div>
+      <div class="photo-item reveal md:col-span-1" style="height:280px;">
+        <img src="assets/saiko-restaurant-b44fdc52/photo2.jpg" alt="Saiko Restaurant ruoka" />
+      </div>
+      <div class="photo-item reveal md:col-span-1" style="height:280px;">
+        <img src="assets/saiko-restaurant-b44fdc52/photo3.jpg" alt="Saiko Restaurant tunnelma" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- [4] SERVICES GRID -->
+<section id="services" style="background:#f7f5f3;" class="py-20 md:py-28 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <span style="font-size:12px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); font-family:'DM Sans',sans-serif;">Palvelumme</span>
+      <h2 class="text-4xl md:text-5xl font-bold mt-3 mb-4" style="color:var(--primary);">Mitä tarjoamme</h2>
+      <div class="ornament-line mt-4"></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <!-- Ramen -->
+      <div class="service-card bg-white rounded-2xl shadow-md p-8 reveal">
+        <div class="mb-5 inline-flex items-center justify-center w-14 h-14 rounded-2xl" style="background:rgba(192,57,43,0.08);">
+          <i data-lucide="coffee" style="width:28px;height:28px;color:var(--accent);"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="font-family:'Playfair Display',serif; color:var(--primary);">Ramen</h3>
+        <p class="text-sm leading-relaxed" style="color:#6b5e57;">
+          Perinteinen japanilainen ramenkeitto, tarjolla lounaalla ja illalla. Syvät maut, tuoreet ainekset ja autenttinen resepti luovat ainutlaatuisen ramenelämyksen.
+        </p>
+        <div class="mt-5 pt-5 border-t border-gray-100 flex items-center gap-2">
+          <i data-lucide="clock" style="width:14px;height:14px;color:var(--accent);"></i>
+          <span class="text-xs" style="color:#9a8e89;">Lounas &amp; illallinen</span>
+        </div>
+      </div>
+
+      <!-- Robata Grill -->
+      <div class="service-card bg-white rounded-2xl shadow-md p-8 reveal" style="transition-delay:0.1s;">
+        <div class="mb-5 inline-flex items-center justify-center w-14 h-14 rounded-2xl" style="background:rgba(192,57,43,0.08);">
+          <i data-lucide="flame" style="width:28px;height:28px;color:var(--accent);"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="font-family:'Playfair Display',serif; color:var(--primary);">Robata Grill</h3>
+        <p class="text-sm leading-relaxed" style="color:#6b5e57;">
+          Klassinen japanilainen grillaustyyli, varattavissa etukäteen. Koe perinteinen hiiligrilli, jossa raaka-aineet puhuvat puolestaan.
+        </p>
+        <div class="mt-5 pt-5 border-t border-gray-100 flex items-center gap-2">
+          <i data-lucide="calendar" style="width:14px;height:14px;color:var(--accent);"></i>
+          <span class="text-xs" style="color:#9a8e89;">Varattavissa etukäteen</span>
+        </div>
+      </div>
+
+      <!-- Pöytävaraus -->
+      <div class="service-card bg-white rounded-2xl shadow-md p-8 reveal" style="transition-delay:0.2s;">
+        <div class="mb-5 inline-flex items-center justify-center w-14 h-14 rounded-2xl" style="background:rgba(192,57,43,0.08);">
+          <i data-lucide="users" style="width:28px;height:28px;color:var(--accent);"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="font-family:'Playfair Display',serif; color:var(--primary);">Pöytävaraus</h3>
+        <p class="text-sm leading-relaxed" style="color:#6b5e57;">
+          Yksityiset tilaisuudet ja ryhmät tervetulleita. Järjestämme unohtumattomia juhlia ja erityisiä tapahtumia intiimiistä illallisista läheisten juhliin.
+        </p>
+        <div class="mt-5 pt-5 border-t border-gray-100 flex items-center gap-2">
+          <i data-lucide="gift" style="width:14px;height:14px;color:var(--accent);"></i>
+          <span class="text-xs" style="color:#9a8e89;">Yksityistilaisuudet</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- [5] WHY CHOOSE US -->
+<section id="why" style="background:#fff;" class="py-20 md:py-28 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <span style="font-size:12px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); font-family:'DM Sans',sans-serif;">Miksi Saiko</span>
+      <h2 class="text-4xl md:text-5xl font-bold mt-3 mb-4" style="color:var(--primary);">Miksi valita meidät?</h2>
+      <div class="ornament-line mt-4"></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+
+      <div class="text-center reveal">
+        <div class="why-icon-wrap">
+          <i data-lucide="award" style="width:30px;height:30px;"></i>
+        </div>
+        <h3 class="text-lg font-bold mb-3" style="font-family:'Playfair Display',serif; color:var(--primary);">Erittäin korkea laatu</h3>
+        <p class="text-sm leading-relaxed" style="color:#6b5e57;">
+          Google-arvio 4.9/5 yli 260 arvostelulla kertoo poikkeuksellisesta laadusta ja asiakastyytyväisyydestä, jota ylläpidämme joka päivä.
+        </p>
+      </div>
+
+      <div class="text-center reveal" style="transition-delay:0.1s;">
+        <div class="why-icon-wrap">
+          <i data-lucide="zap" style="width:30px;height:30px;"></i>
+        </div>
+        <h3 class="text-lg font-bold mb-3" style="font-family:'Playfair Display',serif; color:var(--primary);">Ainutlaatuinen konsepti</h3>
+        <p class="text-sm leading-relaxed" style="color:#6b5e57;">
+          Ainutlaatuinen robata-fusion-konsepti Helsingissä — emme pelkää yhdistää japanilaisia, korealaisia ja vietnamilaisia makuja rohkeasti.
+        </p>
+      </div>
+
+      <div class="text-center reveal" style="transition-delay:0.2s;">
+        <div class="why-icon-wrap">
+          <i data-lucide="heart" style="width:30px;height:30px;"></i>
+        </div>
+        <h3 class="text-lg font-bold mb-3" style="font-family:'Playfair Display',serif; color:var(--primary);">Erityinen tunnelma</h3>
+        <p class="text-sm leading-relaxed" style="color:#6b5e57;">
+          Moderni, lämmin tunnelma erityisille juhlille ja kokemuksille. Jokainen ilta Saikossa on muisto, joka jää mieleen.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- [6] REVIEWS -->
+<section id="reviews" style="background:#f7f5f3;" class="py-20 md:py-28 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <span style="font-size:12px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); font-family:'DM Sans',sans-serif;">Asiakaskokemukset</span>
+      <h2 class="text-4xl md:text-5xl font-bold mt-3 mb-2" style="color:var(--primary);">Mitä asiakkaamme sanovat</h2>
+      <div class="ornament-line mt-4 mb-5"></div>
+      <div class="flex items-center justify-center gap-2 mt-4">
+        <span class="star-icon"><i data-lucide="star" style="width:20px;height:20px;"></i></span>
+        <span class="star-icon"><i data-lucide="star" style="width:20px;height:20px;"></i></span>
+        <span class="star-icon"><i data-lucide="star" style="width:20px;height:20px;"></i></span>
+        <span class="star-icon"><i data-lucide="star" style="width:20px;height:20px;"></i></span>
+        <span class="star-icon"><i data-lucide="star" style="width:20px;height:20px;"></i></span>
+        <span class="font-bold text-lg ml-2" style="color:var(--primary);">4.9</span>
+        <span class="text-sm ml-1" style="color:#9a8e89;">/ 267 arvostelua</span>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- Review 1 -->
+      <div class="review-card reveal">
+        <div class="flex items-center gap-1 mb-4">
+          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
+          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
+          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
+          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
+          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
+        </div>
+        <p class="text-sm leading-relaxed italic mb-5" style="color:#5a4f4a;">
+          "Authentic and unique experience! We found this place accidentally and luckily we were not too late after 17:00 to join the course dinner. Everyone from the personnel were super friendly and special thanks to the Chef — not only for the delicious food but for the good mood!"
+        </p>
+        <div class="flex items-center gap-3 pt-4 border-t border-gray-100">
+          <div class="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold" style="background:var(--accent);">E</div>
+          <div>
+            <div class="text-sm font-semibold" style="color:var(--primary);">Elena S.</div>
+            <div class="text-xs" style="color:#9a8e89;">Google-arvostelu</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Review 2 -->
+      <div class="review-card reveal" style="transition-delay:0.1s;">
+        <div class="flex items-center gap-1 mb-4">
+          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
+          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
+          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
+          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
+          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
+        </div>
+        <p class="text-sm leading-relaxed italic mb-5" style="color:#5a4f4a;">
+          "Amazing multi-course dining experience with the Chef, who was very kind and warm. All dishes were beautifully plated and tasted delicious, and flavors were complex and well-balanced. My favorites were the mango dessert, which was light and not overly sweet, and the fish and radish."
+        </p>
+        <div class="flex items-center gap-3 pt-4 border-t border-gray-100">
+          <div class="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold" style="background:var(--accent);">A</div>
+          <div>
+            <div class="text-sm font-semibold" style="color:var(--primary);">Abby</div>
+            <div class="text-xs" style="color:#9a8e89;">Google-arvostelu</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Review 3 -->
+      <div class="review-card reveal" style="transition-delay:0.2s;">
+        <div class="flex items-center gap-1 mb-4">
+          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
+          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
+          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
+          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
+          <span class="star-icon"><i data-lucide="star" style="width:16px;height:16px;"></i></span>
+        </div>
+        <p class="text-sm leading-relaxed italic mb-5" style="color:#5a4f4a;">
+          "You can really tell the chef puts a lot of thought and care into the food. He mixes spices and flavors from different parts of Asia, and each dish is unique and tasty. I personally enjoyed the Japanese, Korean, and Vietnamese influences as it made the food interesting and not predictable."
+        </p>
+        <div class="flex items-center gap-3 pt-4 border-t border-gray-100">
+          <div class="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold" style="background:var(--accent);">H</div>
+          <div>
+            <div class="text-sm font-semibold" style="color:var(--primary);">H Shin</div>
+            <div class="text-xs" style="color:#9a8e89;">Google-arvostelu</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- [7] OPENING HOURS -->
+<section id="hours" style="background:#fff;" class="py-20 md:py-28 px-6">
+  <div class="max-w-2xl mx-auto">
+    <div class="text-center mb-12 reveal">
+      <span style="font-size:12px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); font-family:'DM Sans',sans-serif;">Aukioloajat</span>
+      <h2 class="text-4xl md:text-5xl font-bold mt-3 mb-4" style="color:var(--primary);">Olemme avoinna</h2>
+      <div class="ornament-line mt-4"></div>
+    </div>
+    <div class="reveal rounded-2xl overflow-hidden shadow-md border border-gray-100">
+      <div style="background:var(--primary);" class="px-6 py-5 flex items-center gap-3">
+        <i data-lucide="clock" style="width:20px;height:20px;color:rgba(255,255,255,0.7);"></i>
+        <span class="font-semibold text-white" style="font-family:'DM Sans',sans-serif;">Viikkoaikataulu</span>
+      </div>
+      <div class="bg-white">
+
+        <div class="hours-row closed-day">
+          <span class="text-sm font-medium" style="color:var(--primary);">Maanantai</span>
+          <span class="hours-time text-sm">Suljettu</span>
+        </div>
+        <div class="hours-row closed-day">
+          <span class="text-sm font-medium" style="color:var(--primary);">Tiistai</span>
+          <span class="hours-time text-sm">Suljettu</span>
+        </div>
+        <div class="hours-row open-day">
+          <span class="text-sm font-medium" style="color:var(--primary);">Keskiviikko</span>
+          <span class="hours-time text-sm">11:00 – 21:00</span>
+        </div>
+        <div class="hours-row open-day">
+          <span class="text-sm font-medium" style="color:var(--primary);">Torstai</span>
+          <span class="hours-time text-sm">11:00 – 21:00</span>
+        </div>
+        <div class="hours-row open-day">
+          <span class="text-sm font-medium" style="color:var(--primary);">Perjantai</span>
+          <span class="hours-time text-sm">11:00 – 21:00</span>
+        </div>
+        <div class="hours-row open-day">
+          <span class="text-sm font-medium" style="color:var(--primary);">Lauantai</span>
+          <span class="hours-time text-sm">12:00 – 21:00</span>
+        </div>
+        <div class="hours-row closed-day">
+          <span class="text-sm font-medium" style="color:var(--primary);">Sunnuntai</span>
+          <span class="hours-time text-sm">Suljettu</span>
+        </div>
+
+      </div>
+    </div>
+    <div class="text-center mt-8 reveal">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm" style="background:rgba(192,57,43,0.08); color:var(--accent);">
+        <i data-lucide="info" style="width:14px;height:14px;"></i>
+        <span>Pöytävaraukset suositeltavia ruuhka-aikoina</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- [8] CONTACT -->
+<section id="contact" style="background:#f7f5f3;" class="py-20 md:py-28 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <span style="font-size:12px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); font-family:'DM Sans',sans-serif;">Yhteystiedot</span>
+      <h2 class="text-4xl md:text-5xl font-bold mt-3 mb-4" style="color:var(--primary);">Tule käymään</h2>
+      <div class="ornament-line mt-4"></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+
+      <!-- Left: Contact Info -->
+      <div class="reveal">
+        <h3 class="text-2xl font-bold mb-6" style="font-family:'Playfair Display',serif; color:var(--primary);">Saiko Restaurant</h3>
+        <p class="text-sm leading-relaxed mb-8" style="color:#6b5e57; max-width:420px;">
+          Tunnelmaltaan moderni ja lämmin ravintola tarjoaa unohtumattoman ruokakokemuksen intiimiistä illallisista läheisiin juhliin. Tervetuloa nauttimaan japanilaisen fusion-keittiön parhaista paloista.
+        </p>
+
+        <div class="space-y-5 mb-8">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(192,57,43,0.1);">
+              <i data-lucide="map-pin" style="width:18px;height:18px;color:var(--accent);"></i>
+            </div>
+            <div>
+              <div class="text-xs font-semibold uppercase tracking-widest mb-1" style="color:#9a8e89;">Osoite</div>
+              <div class="text-sm font-medium" style="color:var(--primary);">Fredrikinkatu 47, 00100 Helsinki, Suomi</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(192,57,43,0.1);">
+              <i data-lucide="phone" style="width:18px;height:18px;color:var(--accent);"></i>
+            </div>
+            <div>
+              <div class="text-xs font-semibold uppercase tracking-widest mb-1" style="color:#9a8e89;">Puhelin</div>
+              <a href="tel:0503088890" class="text-sm font-medium hover:underline" style="color:var(--primary);">050 3088890</a>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(192,57,43,0.1);">
+              <i data-lucide="globe" style="width:18px;height:18px;color:var(--accent);"></i>
+            </div>
+            <div>
+              <div class="text-xs font-semibold uppercase tracking-widest mb-1" style="color:#9a8e89;">Verkkosivut</div>
+              <a href="http://saikorestaurant.com/" target="_blank" rel="noopener" class="text-sm font-medium hover:underline" style="color:var(--primary);">saikorestaurant.com</a>
+            </div>
+          </div>
+        </div>
+
+        <a href="tel:0503088890"
+           class="btn-primary font-semibold px-8 py-4 rounded-full inline-flex items-center gap-2 text-sm">
+          <i data-lucide="phone" style="width:16px;height:16px;"></i>
+          Varaa pöytä nyt
+        </a>
+      </div>
+
+      <!-- Right: Map -->
+      <div class="reveal" style="transition-delay:0.15s;">
+        <iframe
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Fredrikinkatu%2047%2C%2000100%20Helsinki%2C%20Suomi%2C%20Helsinki%2C%20Finland&language=fi"
+          class="map-frame"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Saiko Restaurant sijainti kartalla">
+        </iframe>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- [9] FOOTER -->
+<footer style="background:var(--primary);" class="py-14 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 pb-10 border-b border-white/10">
+      <div>
+        <img src="http://images.squarespace-cdn.com/content/v1/65fe8fb4f8735f09d5de7c10/afb08736-efd4-4806-8387-c230a013040b/SAIKO+Logo.png?format=1500w"
+             alt="Saiko Restaurant" class="h-10 object-contain mb-4 brightness-200" />
+        <p class="text-sm" style="color:rgba(255,255,255,0.5);">Japanilaisen robata-grillin taidetta Helsingissä</p>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-x-16 gap-y-3">
+        <a href="#services" class="text-sm hover:text-white transition-colors" style="color:rgba(255,255,255,0.6);">Palvelut</a>
+        <a href="#hours" class="text-sm hover:text-white transition-colors" style="color:rgba(255,255,255,0.6);">Aukioloajat</a>
+        <a href="#contact" class="text-sm hover:text-white transition-colors" style="color:rgba(255,255,255,0.6);">Yhteystiedot</a>
+        <a href="#reviews" class="text-sm hover:text-white transition-colors" style="color:rgba(255,255,255,0.6);">Arvostelut</a>
+        <a href="http://saikorestaurant.com/" target="_blank" class="text-sm hover:text-white transition-colors" style="color:rgba(255,255,255,0.6);">Verkkosivut</a>
+        <a href="tel:0503088890" class="text-sm hover:text-white transition-colors" style="color:rgba(255,255,255,0.6);">Soita meille</a>
+      </div>
+    </div>
+    <div class="pt-8 flex flex-col md:flex-row justify-between items-center gap-3">
+      <div>
+        <p class="text-sm font-semibold" style="color:rgba(255,255,255,0.7);">Saiko Restaurant</p>
+        <p class="text-xs mt-1" style="color:rgba(255,255,255,0.4);">Fredrikinkatu 47, 00100 Helsinki, Suomi</p>
+      </div>
+      <p class="text-xs" style="color:rgba(255,255,255,0.3);">
+        Demo luotu <a href="https://masasite.com" target="_blank" class="underline hover:text-white/50 transition-colors">masasite.com</a> palvelulla
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- JS -->
+<script>
+  // Initialize Lucide icons
+  lucide.createIcons();
+
+  // Intersection Observer for .reveal elements
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  revealEls.forEach(el => observer.observe(el));
+
+  // Re-initialize icons after DOM is ready (in case of dynamic content)
+  document.addEventListener('DOMContentLoaded', () => {
+    lucide.createIcons();
+  });
+</script>
+
+</html>
