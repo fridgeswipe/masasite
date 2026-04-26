@@ -1,605 +1,1034 @@
 <!DOCTYPE html>
 <html lang="fi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Street Canteen – Autenttiset Aasialaiset Street Food -makuelämykset</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-:root {
-  --primary: #1a0a00;
-  --accent: #c0392b;
-  --bg: #fafaf9;
-}
-html { scroll-behavior: smooth; }
-body {
-  font-family: 'DM Sans', sans-serif;
-  background-color: var(--bg);
-  color: var(--primary);
-  padding-top: 40px;
-}
-h1, h2, h3 { font-family: 'Playfair Display', serif; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Street Canteen – Autenttinen Street Food Helsingin sydämessä</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #1a0a00;
+      --accent: #c0392b;
+      --bg: #faf8f5;
+      --surface: #ffffff;
+      --text: #1a0a00;
+      --muted: #7a6055;
+      --gold: #d4a843;
+    }
 
-/* Demo banner */
-#demo-banner {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  height: 40px;
-  background: rgba(192,57,43,0.88);
-  backdrop-filter: blur(10px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  color: #fff;
-  letter-spacing: 0.02em;
-}
-#demo-banner a { color: #fff; text-decoration: underline; margin-left: 4px; font-weight: 600; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* Hero */
-.hero-bg {
-  background: linear-gradient(rgba(0,0,0,0.55), rgba(26,10,0,0.82)), url('assets/street-canteen-34ed2533/photo1.jpg') center center / cover no-repeat;
-}
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: none; }
-}
-.hero-content { animation: fadeUp 0.9s ease both; }
-.hero-content-delay { animation: fadeUp 0.9s ease 0.2s both; }
-.hero-content-delay2 { animation: fadeUp 0.9s ease 0.4s both; }
-.hero-content-delay3 { animation: fadeUp 0.9s ease 0.6s both; }
+    html { scroll-behavior: smooth; }
 
-/* Reveal */
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
-.reveal.visible { opacity: 1; transform: none; }
+    body {
+      padding-top: 40px;
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 1rem;
+      -webkit-font-smoothing: antialiased;
+    }
 
-/* Service card hover */
-.service-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.service-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 48px rgba(26,10,0,0.13);
-}
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
 
-/* Nav */
-.nav-link {
-  position: relative;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--primary);
-  transition: color 0.2s;
-}
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: -3px; left: 0; right: 0;
-  height: 2px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transition: transform 0.25s ease;
-}
-.nav-link:hover { color: var(--accent); }
-.nav-link:hover::after { transform: scaleX(1); }
+    /* Demo Banner */
+    #demo-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(192, 57, 43, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #demo-banner p {
+      font-size: 11px;
+      color: rgba(255,255,255,0.95);
+      letter-spacing: 0.02em;
+      font-family: 'DM Sans', sans-serif;
+      text-align: center;
+      line-height: 1;
+    }
+    #demo-banner a {
+      color: #fff;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      font-weight: 600;
+    }
+    #demo-banner a:hover { opacity: 0.85; }
 
-/* CTA button primary */
-.btn-primary {
-  background: var(--accent);
-  color: #fff;
-  border-radius: 9999px;
-  font-weight: 600;
-  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-}
-.btn-primary:hover {
-  background: #a93226;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(192,57,43,0.35);
-}
+    /* Nav */
+    #main-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.96);
+      border-bottom: 1px solid rgba(26,10,0,0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: box-shadow 0.3s ease;
+    }
+    #main-nav.scrolled {
+      box-shadow: 0 2px 20px rgba(26,10,0,0.1);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 48px);
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+      object-fit: contain;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      opacity: 0.75;
+      transition: opacity 0.2s ease;
+      letter-spacing: 0.01em;
+    }
+    .nav-links a:hover { opacity: 1; }
+    .btn-nav {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-nav:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(192,57,43,0.35);
+    }
 
-/* Stars gold */
-.star-gold { color: #f0b429; }
+    /* Hero */
+    #hero {
+      min-height: 100svh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: url('assets/street-canteen-34ed2533/photo1.jpg') center center / cover no-repeat;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(10,3,0,0.52) 0%, rgba(10,3,0,0.70) 100%);
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: clamp(48px, 8vw, 96px) clamp(16px, 5vw, 48px);
+      max-width: 820px;
+      animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .hero-h1 {
+      font-size: clamp(2.4rem, 6vw, 5.2rem);
+      color: #fff;
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      line-height: 1.08;
+      margin-bottom: 24px;
+    }
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255,255,255,0.82);
+      max-width: 580px;
+      margin: 0 auto 28px;
+      line-height: 1.7;
+    }
+    .hero-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 36px;
+    }
+    .hero-rating .stars {
+      display: flex;
+      gap: 3px;
+    }
+    .hero-rating .stars i {
+      color: var(--gold);
+      fill: var(--gold);
+      width: 18px;
+      height: 18px;
+    }
+    .hero-rating span {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.85);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+    }
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 15px 32px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: inline-block;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(192,57,43,0.5);
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+    .btn-ghost {
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 15px 32px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 1.5px solid rgba(255,255,255,0.4);
+      transition: transform 0.2s ease, background 0.2s ease;
+      display: inline-block;
+    }
+    .btn-ghost:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.28);
+    }
 
-/* Hours row */
-.hours-row:not(:last-child) { border-bottom: 1px solid rgba(26,10,0,0.07); }
-.hours-row.today { background: rgba(192,57,43,0.06); border-radius: 10px; }
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
 
-/* Quote card */
-.review-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-.review-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(26,10,0,0.1); }
+    /* Section base */
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .section-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 540px;
+      line-height: 1.7;
+    }
 
-/* Divider ornament */
-.ornament { display: flex; align-items: center; gap: 12px; }
-.ornament::before, .ornament::after { content: ''; flex: 1; height: 1px; background: rgba(26,10,0,0.12); }
+    /* Services */
+    #services {
+      background: #f2ede8;
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .services-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .services-header .section-subtitle { margin: 0 auto; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .service-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: default;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(26,10,0,0.12);
+    }
+    .service-icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .service-icon-wrap i {
+      color: var(--accent);
+      width: 28px;
+      height: 28px;
+    }
+    .service-card h3 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
+    .service-card .price-tag {
+      display: inline-block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+    .service-card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
 
-/* Map iframe */
-.map-frame { border: none; width: 100%; height: 350px; border-radius: 16px; box-shadow: 0 8px 32px rgba(26,10,0,0.12); }
+    /* Why us */
+    #why-us {
+      background: #fff;
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .why-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .why-header .section-subtitle { margin: 0 auto; }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 40px;
+    }
+    .why-item {
+      text-align: center;
+      padding: 8px 16px;
+    }
+    .why-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      width: 64px;
+      height: 64px;
+    }
+    .why-icon i {
+      color: var(--accent);
+      width: 40px;
+      height: 40px;
+    }
+    .why-item h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    .why-item p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 280px;
+      margin: 0 auto;
+    }
 
-/* Accent line */
-.accent-line { display: inline-block; width: 48px; height: 3px; background: var(--accent); border-radius: 2px; }
-</style>
+    /* Reviews */
+    #reviews {
+      background: #f9f5f0;
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .reviews-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .reviews-header .section-subtitle { margin: 0 auto; }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .review-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .review-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 16px;
+    }
+    .review-stars i {
+      color: var(--gold);
+      fill: var(--gold);
+      width: 16px;
+      height: 16px;
+    }
+    .review-quote {
+      font-size: 0.92rem;
+      color: #4a3828;
+      line-height: 1.75;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .review-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--accent) 15%, #f2ede8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .review-author-info strong {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--primary);
+      font-family: 'DM Sans', sans-serif;
+    }
+    .review-author-info span {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 0.7rem;
+      color: #2e7d32;
+      font-weight: 600;
+    }
+    .verified-badge i { width: 12px; height: 12px; }
+
+    /* Hours */
+    #hours {
+      background: #fff;
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .hours-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .hours-card {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #faf8f5;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 6px 24px rgba(0,0,0,0.06);
+    }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 32px;
+      border-bottom: 1px solid rgba(26,10,0,0.06);
+      transition: background 0.15s ease;
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-row:hover { background: rgba(192,57,43,0.04); }
+    .hours-day {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    .hours-time {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+    .hours-time.closed {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .hours-row.today {
+      background: color-mix(in srgb, var(--accent) 6%, transparent);
+    }
+    .hours-row.today .hours-day {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Contact */
+    #contact {
+      background: #f2ede8;
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 24px; }
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .contact-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon i {
+      color: var(--accent);
+      width: 20px;
+      height: 20px;
+    }
+    .contact-item-text strong {
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+    .contact-item-text span {
+      font-size: 0.97rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+    .contact-cta {
+      margin-top: 8px;
+    }
+    .btn-accent {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 14px 30px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-accent:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(192,57,43,0.4);
+    }
+    .map-wrap iframe {
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+      display: block;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--primary);
+      padding: 48px clamp(16px, 5vw, 48px) 32px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+    }
+    .footer-logo img {
+      height: 48px;
+      object-fit: contain;
+      opacity: 0.9;
+      margin-bottom: 8px;
+    }
+    .footer-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #f5e6c8;
+      letter-spacing: -0.01em;
+    }
+    .footer-address {
+      font-size: 0.9rem;
+      color: rgba(245,230,200,0.6);
+      line-height: 1.6;
+    }
+    .footer-divider {
+      width: 48px;
+      height: 1px;
+      background: rgba(245,230,200,0.2);
+      margin: 16px auto;
+    }
+    .footer-credit {
+      font-size: 11px;
+      color: rgba(245,230,200,0.35);
+      letter-spacing: 0.04em;
+    }
+    .footer-credit a {
+      color: rgba(245,230,200,0.5);
+      text-decoration: none;
+    }
+    .footer-credit a:hover { color: rgba(245,230,200,0.75); }
+
+    /* Mobile nav */
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+    }
+
+    /* Photo section between services and why us */
+    #photo-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      max-height: 360px;
+      overflow: hidden;
+    }
+    @media (max-width: 640px) {
+      #photo-strip { grid-template-columns: 1fr; max-height: none; }
+    }
+    .photo-strip-img {
+      width: 100%;
+      height: 360px;
+      object-fit: cover;
+      display: block;
+    }
+    @media (max-width: 640px) {
+      .photo-strip-img { height: 220px; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- [1] DEMO BANNER -->
-<div id="demo-banner">
-  Street Canteen — tämä esimerkkisivu on tehty juuri teille · Haluatko oman?
-  <a href="mailto:team@masasite.com">Ota yhteyttä →</a>
-</div>
+  <!-- [1] DEMO BANNER -->
+  <div id="demo-banner">
+    <p>Street Canteen — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman? <a href="mailto:team@masasite.com">Ota yhteyttä →</a></p>
+  </div>
 
-<!-- [2] STICKY NAV -->
-<nav style="position:sticky;top:0;z-index:50;background:rgba(250,250,249,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(26,10,0,0.08);">
-  <div style="max-width:1200px;margin:0 auto;padding:0 24px;height:68px;display:flex;align-items:center;justify-content:space-between;">
-    <a href="#hero">
-      <img src="http://images.squarespace-cdn.com/content/v1/5fa6fef01afe336e4732b822/1604844329905-6NUSSTLLHN5BVPPDQ36W/monkey+logo+%281%29.png?format=1500w" class="h-9 object-contain" alt="Street Canteen logo" style="height:36px;object-fit:contain;">
-    </a>
-    <div style="display:flex;align-items:center;gap:32px;">
-      <a href="#services" class="nav-link hidden md:block">Palvelut</a>
-      <a href="#hours" class="nav-link hidden md:block">Aukioloajat</a>
-      <a href="#contact" class="nav-link hidden md:block">Yhteystiedot</a>
-      <a href="tel:0401875911" class="btn-primary" style="padding:10px 22px;font-size:0.875rem;">
-        <span style="display:flex;align-items:center;gap:6px;"><i data-lucide="phone" style="width:15px;height:15px;"></i> 040 1875911</span>
+  <!-- [2] STICKY NAV -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo" aria-label="Street Canteen">
+        <img src="http://images.squarespace-cdn.com/content/v1/5fa6fef01afe336e4732b822/1604844329905-6NUSSTLLHN5BVPPDQ36W/monkey+logo+%281%29.png?format=1500w" alt="Street Canteen logo" />
       </a>
+      <ul class="nav-links">
+        <li><a href="#services">Palvelut</a></li>
+        <li><a href="#hours">Aukioloajat</a></li>
+        <li><a href="#contact">Yhteystiedot</a></li>
+      </ul>
+      <a href="#contact" class="btn-nav">Varaa pöytä</a>
     </div>
+  </nav>
+
+  <!-- [3] HERO -->
+  <section id="hero">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Mannerheimintie 3 · Helsinki</span>
+      <h1 class="hero-h1">Autenttinen Street Food Helsingin sydämessä</h1>
+      <p class="hero-subtitle">Street Canteen tarjoaa maukkaita malesialaisia ja kaakkois-aasialaisia ruokia, jotka valmistetaan tuoreista raaka-aineista. Päivittäinen Street Lunch -tarjous sisältää neljä vaihtoehtoa ja laajan aasialaiseen salaattipöydän. Ravintolalla on kiitettävä 4,7/5 tähden arvio yli 450 asiakkaalta.</p>
+      <div class="hero-rating">
+        <div class="stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <span>4.7/5 (453 arvostelua)</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="#services" class="btn-primary">Tule nauttimaan Street Foodia</a>
+        <a href="#hours" class="btn-ghost">Aukioloajat</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- [4] SERVICES -->
+  <section id="services">
+    <div class="section-container">
+      <div class="services-header reveal">
+        <span class="section-eyebrow">Mitä tarjoamme</span>
+        <h2 class="section-title">Aasian maut suoraan lautasellesi</h2>
+        <p class="section-subtitle">Tuoreista raaka-aineista valmistettua autenttista aasialaista ruokaa — joka päivä.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-icon-wrap">
+            <i data-lucide="sun"></i>
+          </div>
+          <span class="price-tag">Vain 14,30 € / arkisin 11–16</span>
+          <h3>Street Lunch</h3>
+          <p>Arkipäivisin kello 11–16 vain 14,30 € — neljä pääruokavalintaa ja täydellinen salaattipöytä. Paras lounas Helsingissä hintaansa nähden.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon-wrap">
+            <i data-lucide="flame"></i>
+          </div>
+          <h3>Aasialaiset pääruoat</h3>
+          <p>Laaja valikoima malesialaisia ja kaakkois-aasialaisia perinneruokia — nasi goreng, laksa, char kway teow ja paljon muuta. Aitoutta jokaisessa suupalassa.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon-wrap">
+            <i data-lucide="leaf"></i>
+          </div>
+          <h3>Aasialainen salaattipöytä</h3>
+          <p>Jokaisen lounaan sisältämä tuore ja monipuolinen salaattivalikoima. Rakenna oma lautasesi — täydellinen lisä päiväruokaasi.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO STRIP -->
+  <div id="photo-strip" aria-hidden="true">
+    <img src="assets/street-canteen-34ed2533/photo2.jpg" alt="Street Canteen ruoka" class="photo-strip-img" />
+    <img src="assets/street-canteen-34ed2533/photo3.jpg" alt="Street Canteen ravintola" class="photo-strip-img" />
   </div>
-</nav>
 
-<!-- [3] HERO -->
-<section id="hero" class="hero-bg" style="min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:80px 24px;">
-  <div style="max-width:820px;">
-    <div class="hero-content" style="margin-bottom:16px;">
-      <span style="display:inline-block;background:rgba(192,57,43,0.8);color:#fff;font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:6px 18px;border-radius:9999px;margin-bottom:28px;">Helsinki · Mannerheimintie 3</span>
-    </div>
-    <h1 class="hero-content-delay" style="font-size:clamp(2.2rem,5.5vw,3.8rem);font-weight:800;color:#fff;line-height:1.18;margin-bottom:24px;text-shadow:0 2px 20px rgba(0,0,0,0.4);">
-      Autenttiset Aasialaiset<br><span style="color:#f5a623;">Street Food -makuelämykset</span>
-    </h1>
-    <p class="hero-content-delay2" style="font-size:clamp(1rem,2vw,1.15rem);color:rgba(255,255,255,0.88);line-height:1.75;margin-bottom:32px;max-width:680px;margin-left:auto;margin-right:auto;">
-      Street Canteen tarjoaa Helsingin suosituimman aasialaisruoan, jossa yhdistyvät Malesialaisen ja Kaakkois-Aasialaisenkeittön parhaat makujen sävy. Lounaalla nautat neljästä eri vaihtoehdosta sekä laajasta aasialaisesta salaattipöydästä.
-    </p>
-    <div class="hero-content-delay2" style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:36px;">
-      <i data-lucide="star" style="width:18px;height:18px;color:#f0b429;fill:#f0b429;"></i>
-      <i data-lucide="star" style="width:18px;height:18px;color:#f0b429;fill:#f0b429;"></i>
-      <i data-lucide="star" style="width:18px;height:18px;color:#f0b429;fill:#f0b429;"></i>
-      <i data-lucide="star" style="width:18px;height:18px;color:#f0b429;fill:#f0b429;"></i>
-      <i data-lucide="star" style="width:18px;height:18px;color:#f0b429;fill:#f0b429;"></i>
-      <span style="color:rgba(255,255,255,0.9);font-size:0.9rem;margin-left:8px;font-weight:500;">4.7/5 · 453 arvostelua Googlessa</span>
-    </div>
-    <div class="hero-content-delay3" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px;">
-      <a href="#contact" class="btn-primary" style="padding:15px 34px;font-size:1rem;">
-        Käy maistelemassa nyt
-      </a>
-      <a href="#services" style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);color:#fff;border:1.5px solid rgba(255,255,255,0.35);border-radius:9999px;padding:14px 30px;font-size:0.95rem;font-weight:500;transition:background 0.2s;">
-        <i data-lucide="utensils" style="width:16px;height:16px;"></i> Katso menu
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- [4] SERVICES GRID -->
-<section id="services" style="background:#f4f1ee;padding:96px 24px;">
-  <div style="max-width:1100px;margin:0 auto;">
-    <div class="reveal" style="text-align:center;margin-bottom:64px;">
-      <span style="font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);">Mitä tarjoamme</span>
-      <h2 style="font-size:clamp(1.9rem,4vw,2.8rem);font-weight:700;margin:12px 0 16px;color:var(--primary);">Palvelumme</h2>
-      <div class="ornament" style="max-width:320px;margin:0 auto;">
-        <span class="accent-line"></span>
-        <i data-lucide="utensils" style="width:18px;height:18px;color:var(--accent);flex-shrink:0;"></i>
-        <span class="accent-line"></span>
+  <!-- [5] WHY CHOOSE US -->
+  <section id="why-us">
+    <div class="section-container">
+      <div class="why-header reveal">
+        <span class="section-eyebrow">Miksi valita meidät</span>
+        <h2 class="section-title">Laatu ja arvo yhdistyvät</h2>
+        <p class="section-subtitle" style="margin: 0 auto;">Olemme ylpeitä asiakastyytyväisyydestämme ja autenttisesta ruokakulttuuristamme.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-item reveal">
+          <div class="why-icon">
+            <i data-lucide="award"></i>
+          </div>
+          <h3>Erinomaisen hyvät arvostelut</h3>
+          <p>4,7/5 arvosanaa 453 asiakkaalta. Asiakkaamme palaavat yhä uudelleen — se kertoo kaiken.</p>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-icon">
+            <i data-lucide="tag"></i>
+          </div>
+          <h3>Arvokas lounastarjous</h3>
+          <p>Vain 14,30 € arkisin kaikilla valinnoilla — neljä pääruokavaihtoehtoa ja salaattipöytä sisältyvät hintaan.</p>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-icon">
+            <i data-lucide="sparkles"></i>
+          </div>
+          <h3>Autenttinen aasialaisuus</h3>
+          <p>Aasialaisesta ruokakulttuurista nousseet erikoisruoat — valmistettu perinteisiä menetelmiä kunnioittaen.</p>
+        </div>
       </div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px;">
+  </section>
 
-      <!-- Card 1 -->
-      <div class="service-card reveal" style="background:#fff;border-radius:20px;padding:40px 32px;box-shadow:0 4px 24px rgba(26,10,0,0.07);">
-        <div style="width:58px;height:58px;background:rgba(192,57,43,0.1);border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;">
-          <i data-lucide="sun" style="width:26px;height:26px;color:var(--accent);"></i>
-        </div>
-        <div style="display:inline-block;background:rgba(192,57,43,0.1);color:var(--accent);font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:4px 12px;border-radius:9999px;margin-bottom:14px;">Lounas ark. 11–16</div>
-        <h3 style="font-size:1.4rem;font-weight:700;margin-bottom:12px;color:var(--primary);">Street Lunch</h3>
-        <p style="color:#5a4a3a;line-height:1.7;font-size:0.95rem;margin-bottom:20px;">4 lounasvaihtoehtoa + laaja salaattipöytä arkisin klo 11–16. Nauti raikkaista salaateista ja täyteläisistä aasialaisista pääruoista.</p>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <span style="font-size:1.6rem;font-weight:800;color:var(--accent);">14,30 €</span>
-          <span style="font-size:0.82rem;color:#888;font-weight:500;">/ henkilö</span>
-        </div>
+  <!-- [6] REVIEWS -->
+  <section id="reviews">
+    <div class="section-container">
+      <div class="reviews-header reveal">
+        <span class="section-eyebrow">Asiakaskokemukset</span>
+        <h2 class="section-title">Mitä asiakkaamme sanovat</h2>
+        <p class="section-subtitle">Yli 450 tyytyväistä asiakasta Helsingissä ja maailmalta.</p>
       </div>
-
-      <!-- Card 2 -->
-      <div class="service-card reveal" style="background:#fff;border-radius:20px;padding:40px 32px;box-shadow:0 4px 24px rgba(26,10,0,0.07);">
-        <div style="width:58px;height:58px;background:rgba(192,57,43,0.1);border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;">
-          <i data-lucide="book-open" style="width:26px;height:26px;color:var(--accent);"></i>
+      <div class="reviews-grid">
+        <div class="review-card reveal">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"The nasi goreng sambal really good! Taste like Malaysia or Singapore style. Laksa gravy good too but only the noodles not rice noodles. Char kway teow a bit too dry. If you miss asian food you should try it. One worker really from Malaysia."</p>
+          <div class="review-author">
+            <div class="review-avatar">AT</div>
+            <div class="review-author-info">
+              <strong>Alan Teo</strong>
+              <span class="verified-badge"><i data-lucide="check-circle"></i> Vahvistettu arvostelu</span>
+            </div>
+          </div>
         </div>
-        <div style="display:inline-block;background:rgba(192,57,43,0.1);color:var(--accent);font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:4px 12px;border-radius:9999px;margin-bottom:14px;">Illallinen</div>
-        <h3 style="font-size:1.4rem;font-weight:700;margin-bottom:12px;color:var(--primary);">À la Carte -menu</h3>
-        <p style="color:#5a4a3a;line-height:1.7;font-size:0.95rem;margin-bottom:20px;">Laaja valikoima autenttisia Malesialaisia ja Kaakkois-Aasialaisia ruokia. Nasi goreng, laksa, char kway teow ja paljon muuta.</p>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <i data-lucide="check-circle" style="width:16px;height:16px;color:var(--accent);"></i>
-          <span style="font-size:0.88rem;color:#5a4a3a;font-weight:500;">Halal-sertifioitu kana</span>
+        <div class="review-card reveal">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"Came here everyday since I landed in Helsinki. Food was amazing and service was superb. They have halal chicken and there's no pork in the menu. Highly recommended if you're craving for some decent malaysian/singaporean style fold."</p>
+          <div class="review-author">
+            <div class="review-avatar">BH</div>
+            <div class="review-author-info">
+              <strong>Baby Hamster</strong>
+              <span class="verified-badge"><i data-lucide="check-circle"></i> Vahvistettu arvostelu</span>
+            </div>
+          </div>
         </div>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="service-card reveal" style="background:#fff;border-radius:20px;padding:40px 32px;box-shadow:0 4px 24px rgba(26,10,0,0.07);">
-        <div style="width:58px;height:58px;background:rgba(192,57,43,0.1);border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;">
-          <i data-lucide="zap" style="width:26px;height:26px;color:var(--accent);"></i>
+        <div class="review-card reveal">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"Just great. Fast, yummy and good portions! Perfect for lunch. Also free self service salad bar. Friendly staff and easy to find! Highly recommend!"</p>
+          <div class="review-author">
+            <div class="review-avatar">GM</div>
+            <div class="review-author-info">
+              <strong>Geri Miragaya</strong>
+              <span class="verified-badge"><i data-lucide="check-circle"></i> Vahvistettu arvostelu</span>
+            </div>
+          </div>
         </div>
-        <div style="display:inline-block;background:rgba(192,57,43,0.1);color:var(--accent);font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:4px 12px;border-radius:9999px;margin-bottom:14px;">Nopea palvelu</div>
-        <h3 style="font-size:1.4rem;font-weight:700;margin-bottom:12px;color:var(--primary);">Street Food -kokemus</h3>
-        <p style="color:#5a4a3a;line-height:1.7;font-size:0.95rem;margin-bottom:20px;">Paikan päällä valmistetut, nopeasti palvellut ruoat takuuvarmasti tuoreimmista raaka-aineista. Aito street food -tunnelma Helsingin sydämessä.</p>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <i data-lucide="check-circle" style="width:16px;height:16px;color:var(--accent);"></i>
-          <span style="font-size:0.88rem;color:#5a4a3a;font-weight:500;">Tuoreet ingrediensit päivittäin</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- PHOTO GALLERY STRIP -->
-<section style="overflow:hidden;display:grid;grid-template-columns:repeat(3,1fr);height:300px;">
-  <div style="background:url('assets/street-canteen-34ed2533/photo1.jpg') center/cover no-repeat;"></div>
-  <div style="background:url('assets/street-canteen-34ed2533/photo2.jpg') center/cover no-repeat;"></div>
-  <div style="background:url('assets/street-canteen-34ed2533/photo3.jpg') center/cover no-repeat;"></div>
-</section>
-
-<!-- [5] WHY CHOOSE US -->
-<section style="background:#fff;padding:96px 24px;">
-  <div style="max-width:1100px;margin:0 auto;">
-    <div class="reveal" style="text-align:center;margin-bottom:64px;">
-      <span style="font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);">Miksi valita meidät</span>
-      <h2 style="font-size:clamp(1.9rem,4vw,2.8rem);font-weight:700;margin:12px 0 16px;color:var(--primary);">Helsingin paras aasialaisruoka</h2>
-      <div class="ornament" style="max-width:320px;margin:0 auto;">
-        <span class="accent-line"></span>
-        <i data-lucide="award" style="width:18px;height:18px;color:var(--accent);flex-shrink:0;"></i>
-        <span class="accent-line"></span>
       </div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:40px;">
+  </section>
 
-      <div class="reveal" style="text-align:center;padding:16px;">
-        <div style="width:72px;height:72px;background:rgba(192,57,43,0.08);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;">
-          <i data-lucide="award" style="width:32px;height:32px;color:var(--accent);"></i>
+  <!-- [7] OPENING HOURS -->
+  <section id="hours">
+    <div class="section-container">
+      <div class="hours-header reveal">
+        <span class="section-eyebrow">Aukioloajat</span>
+        <h2 class="section-title">Milloin olemme auki</h2>
+      </div>
+      <div class="hours-card reveal">
+        <div class="hours-row">
+          <span class="hours-day">Maanantai</span>
+          <span class="hours-time">11:00 – 21:00</span>
         </div>
-        <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:12px;color:var(--primary);">Korkein Google-arvio</h3>
-        <p style="color:#5a4a3a;line-height:1.7;font-size:0.93rem;">4.7/5 yli 450 arvostelulla — Helsingin arvostetuimpia aasialaisia ravintoloita asiakkaiden mielestä.</p>
-        <div style="display:flex;justify-content:center;gap:4px;margin-top:14px;">
-          <i data-lucide="star" style="width:16px;height:16px;color:#f0b429;fill:#f0b429;"></i>
-          <i data-lucide="star" style="width:16px;height:16px;color:#f0b429;fill:#f0b429;"></i>
-          <i data-lucide="star" style="width:16px;height:16px;color:#f0b429;fill:#f0b429;"></i>
-          <i data-lucide="star" style="width:16px;height:16px;color:#f0b429;fill:#f0b429;"></i>
-          <i data-lucide="star" style="width:16px;height:16px;color:#f0b429;fill:#f0b429;"></i>
+        <div class="hours-row">
+          <span class="hours-day">Tiistai</span>
+          <span class="hours-time">11:00 – 21:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Keskiviikko</span>
+          <span class="hours-time">11:00 – 21:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Torstai</span>
+          <span class="hours-time">11:00 – 21:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Perjantai</span>
+          <span class="hours-time">11:00 – 22:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Lauantai</span>
+          <span class="hours-time">11:30 – 22:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Sunnuntai</span>
+          <span class="hours-time closed">Suljettu</span>
         </div>
       </div>
-
-      <div class="reveal" style="text-align:center;padding:16px;">
-        <div style="width:72px;height:72px;background:rgba(192,57,43,0.08);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;">
-          <i data-lucide="globe" style="width:32px;height:32px;color:var(--accent);"></i>
-        </div>
-        <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:12px;color:var(--primary);">Autenttiset reseptit</h3>
-        <p style="color:#5a4a3a;line-height:1.7;font-size:0.93rem;">Malesialaisen ja kaakkois-aasialaisen keittiön aidot reseptit — maut suoraan Kuala Lumpurista ja Singaporesta.</p>
-      </div>
-
-      <div class="reveal" style="text-align:center;padding:16px;">
-        <div style="width:72px;height:72px;background:rgba(192,57,43,0.08);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;">
-          <i data-lucide="tag" style="width:32px;height:32px;color:var(--accent);"></i>
-        </div>
-        <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:12px;color:var(--primary);">Edullinen lounas</h3>
-        <p style="color:#5a4a3a;line-height:1.7;font-size:0.93rem;">Vain 14,30 € sisältää 4 lounasvaihtoehtoa sekä rajoittamattoman aasialaisen salaattipöydän. Paras vastine rahoille.</p>
-        <div style="margin-top:14px;font-size:1.5rem;font-weight:800;color:var(--accent);">14,30 €</div>
-      </div>
-
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- [6] REVIEWS -->
-<section style="background:#faf7f4;padding:96px 24px;">
-  <div style="max-width:1100px;margin:0 auto;">
-    <div class="reveal" style="text-align:center;margin-bottom:64px;">
-      <span style="font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);">Asiakkaat kertovat</span>
-      <h2 style="font-size:clamp(1.9rem,4vw,2.8rem);font-weight:700;margin:12px 0 16px;color:var(--primary);">Arvostelut</h2>
-      <div class="ornament" style="max-width:320px;margin:0 auto;">
-        <span class="accent-line"></span>
-        <i data-lucide="message-circle" style="width:18px;height:18px;color:var(--accent);flex-shrink:0;"></i>
-        <span class="accent-line"></span>
-      </div>
-      <p style="margin-top:20px;color:#5a4a3a;font-size:0.95rem;">Google-arvosana <strong style="color:var(--accent);">4.7 / 5</strong> · 453 arvostelua</p>
-    </div>
-
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px;">
-
-      <!-- Review 1 -->
-      <div class="review-card reveal" style="background:#fff;border-radius:20px;padding:36px 32px;box-shadow:0 4px 20px rgba(26,10,0,0.07);display:flex;flex-direction:column;gap:16px;">
-        <div style="display:flex;gap:4px;">
-          <i data-lucide="star" style="width:16px;height:16px;color:#f0b429;fill:#f0b429;"></i>
-          <i data-lucide="star" style="width:16px;height:16px;color:#f0b429;fill:#f0b429;"></i>
-          <i data-lucide="star" style="width:16px;height:16px;color:#f0b429;fill:#f0b429;"></i>
-          <i data-lucide="star" style="width:16px;height:16px;color:#f0b429;fill:#f0b429;"></i>
-          <i data-lucide="star" style="width:16px;height:16px;color:#f0b429;fill:#f0b429;"></i>
-        </div>
-        <p style="font-style:italic;color:#4a3a2a;line-height:1.75;font-size:0.93rem;flex:1;">"The nasi goreng sambal really good! Taste like Malaysia or Singapore style. Laksa gravy good too but only the noodles not rice noodles. Char kway teow a bit too dry. If you miss asian food you should try it. One worker really from Malaysia"</p>
-        <div style="display:flex;align-items:center;gap:12px;border-top:1px solid rgba(26,10,0,0.07);padding-top:16px;">
-          <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.9rem;">A</div>
+  <!-- [8] CONTACT -->
+  <section id="contact">
+    <div class="section-container">
+      <div class="contact-grid">
+        <div class="contact-info reveal">
           <div>
-            <div style="font-weight:600;font-size:0.9rem;color:var(--primary);">Alan Teo</div>
-            <div style="font-size:0.78rem;color:#888;">Google-arvostelu</div>
+            <span class="section-eyebrow">Yhteystiedot</span>
+            <h2 class="section-title">Tule käymään</h2>
+            <p style="font-size:0.97rem; color:var(--muted); line-height:1.7; max-width:400px; margin-top:8px;">Löydät meidät helposti Mannerheimintien varrelta Helsingin ydinkeskustasta. Tervetuloa!</p>
           </div>
-        </div>
-      </div>
-
-      <!-- Review 2 -->
-      <div class="review-card reveal" style="background:#fff;border-radius:20px;padding:36px 32px;box-shadow:0 4px 20px rgba(26,10,0,0.07);display:flex;flex-direction:column;gap:16px;">
-        <div style="display:flex;gap:4px;">
-          <i data-lucide="star" style="width:16px;height:16px;color:#f0b429;fill:#f0b429;"></i>
-          <i data-lucide="star" style="width:16px;height:16px;color:#f0b429;fill:#f0b429;"></i>
-          <i data-lucide="star" style="width:16px;height:16px;color:#f0b429;fill:#f0b429;"></i>
-          <i data-lucide="star" style="width:16px;height:16px;color:#f0b429;fill:#f0b429;"></i>
-          <i data-lucide="star" style="width:16px;height:16px;color:#f0b429;fill:#f0b429;"></i>
-        </div>
-        <p style="font-style:italic;color:#4a3a2a;line-height:1.75;font-size:0.93rem;flex:1;">"Came here everyday since I landed in Helsinki. Food was amazing and service was superb. They have halal chicken and there's no pork in the menu. Highly recommended if you're craving for some decent malaysian/singaporean style food."</p>
-        <div style="display:flex;align-items:center;gap:12px;border-top:1px solid rgba(26,10,0,0.07);padding-top:16px;">
-          <div style="width:40px;height:40px;border-radius:50%;background:#c0392b;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.9rem;">B</div>
-          <div>
-            <div style="font-weight:600;font-size:0.9rem;color:var(--primary);">Baby Hamster</div>
-            <div style="font-size:0.78rem;color:#888;">Google-arvostelu</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Review 3 -->
-      <div class="review-card reveal" style="background:#fff;border-radius:20px;padding:36px 32px;box-shadow:0 4px 20px rgba(26,10,0,0.07);display:flex;flex-direction:column;gap:16px;">
-        <div style="display:flex;gap:4px;">
-          <i data-lucide="star" style="width:16px;height:16px;color:#f0b429;fill:#f0b429;"></i>
-          <i data-lucide="star" style="width:16px;height:16px;color:#f0b429;fill:#f0b429;"></i>
-          <i data-lucide="star" style="width:16px;height:16px;color:#f0b429;fill:#f0b429;"></i>
-          <i data-lucide="star" style="width:16px;height:16px;color:#f0b429;fill:#f0b429;"></i>
-          <i data-lucide="star" style="width:16px;height:16px;color:#f0b429;fill:#f0b429;"></i>
-        </div>
-        <p style="font-style:italic;color:#4a3a2a;line-height:1.75;font-size:0.93rem;flex:1;">"Just great. Fast, yummy and good portions! Perfect for lunch. Also free self service salad bar. Friendly staff and easy to find! Highly recommend!"</p>
-        <div style="display:flex;align-items:center;gap:12px;border-top:1px solid rgba(26,10,0,0.07);padding-top:16px;">
-          <div style="width:40px;height:40px;border-radius:50%;background:#a93226;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.9rem;">G</div>
-          <div>
-            <div style="font-weight:600;font-size:0.9rem;color:var(--primary);">geri miragaya</div>
-            <div style="font-size:0.78rem;color:#888;">Google-arvostelu</div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- [7] OPENING HOURS -->
-<section id="hours" style="background:#fff;padding:96px 24px;">
-  <div style="max-width:640px;margin:0 auto;">
-    <div class="reveal" style="text-align:center;margin-bottom:56px;">
-      <span style="font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);">Milloin olemme auki</span>
-      <h2 style="font-size:clamp(1.9rem,4vw,2.8rem);font-weight:700;margin:12px 0 16px;color:var(--primary);">Aukioloajat</h2>
-      <div class="ornament" style="max-width:260px;margin:0 auto;">
-        <span class="accent-line"></span>
-        <i data-lucide="clock" style="width:18px;height:18px;color:var(--accent);flex-shrink:0;"></i>
-        <span class="accent-line"></span>
-      </div>
-    </div>
-    <div class="reveal" style="background:#fff;border-radius:20px;box-shadow:0 4px 28px rgba(26,10,0,0.09);overflow:hidden;">
-      <div style="background:var(--accent);padding:18px 32px;display:flex;align-items:center;gap:10px;">
-        <i data-lucide="clock" style="width:18px;height:18px;color:#fff;"></i>
-        <span style="color:#fff;font-weight:600;font-size:0.9rem;letter-spacing:0.04em;">Aukioloajat viikolla</span>
-      </div>
-      <div style="padding:8px 0;">
-        <div class="hours-row" style="display:flex;justify-content:space-between;align-items:center;padding:16px 32px;">
-          <span style="font-weight:500;color:var(--primary);">Maanantai</span>
-          <span style="color:#5a4a3a;font-weight:500;">11:00 – 21:00</span>
-        </div>
-        <div class="hours-row" style="display:flex;justify-content:space-between;align-items:center;padding:16px 32px;">
-          <span style="font-weight:500;color:var(--primary);">Tiistai</span>
-          <span style="color:#5a4a3a;font-weight:500;">11:00 – 21:00</span>
-        </div>
-        <div class="hours-row" style="display:flex;justify-content:space-between;align-items:center;padding:16px 32px;">
-          <span style="font-weight:500;color:var(--primary);">Keskiviikko</span>
-          <span style="color:#5a4a3a;font-weight:500;">11:00 – 21:00</span>
-        </div>
-        <div class="hours-row" style="display:flex;justify-content:space-between;align-items:center;padding:16px 32px;">
-          <span style="font-weight:500;color:var(--primary);">Torstai</span>
-          <span style="color:#5a4a3a;font-weight:500;">11:00 – 21:00</span>
-        </div>
-        <div class="hours-row" style="display:flex;justify-content:space-between;align-items:center;padding:16px 32px;background:rgba(192,57,43,0.04);">
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span style="font-weight:600;color:var(--primary);">Perjantai</span>
-            <span style="background:rgba(192,57,43,0.1);color:var(--accent);font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:9999px;">Pidempään</span>
-          </div>
-          <span style="color:var(--accent);font-weight:600;">11:00 – 22:00</span>
-        </div>
-        <div class="hours-row" style="display:flex;justify-content:space-between;align-items:center;padding:16px 32px;background:rgba(192,57,43,0.04);">
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span style="font-weight:600;color:var(--primary);">Lauantai</span>
-            <span style="background:rgba(192,57,43,0.1);color:var(--accent);font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:9999px;">Pidempään</span>
-          </div>
-          <span style="color:var(--accent);font-weight:600;">11:30 – 22:00</span>
-        </div>
-        <div class="hours-row" style="display:flex;justify-content:space-between;align-items:center;padding:16px 32px;">
-          <span style="font-weight:500;color:#9ca3af;">Sunnuntai</span>
-          <span style="color:#9ca3af;font-weight:500;">Suljettu</span>
-        </div>
-      </div>
-      <div style="padding:16px 32px;background:#faf7f4;border-top:1px solid rgba(26,10,0,0.06);display:flex;align-items:center;gap:8px;">
-        <i data-lucide="info" style="width:15px;height:15px;color:var(--accent);flex-shrink:0;"></i>
-        <span style="font-size:0.82rem;color:#5a4a3a;">Lounasbuffet arkisin klo 11–16 — hinta 14,30 €</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- [8] CONTACT -->
-<section id="contact" style="background:#f4f1ee;padding:96px 24px;">
-  <div style="max-width:1100px;margin:0 auto;">
-    <div class="reveal" style="text-align:center;margin-bottom:64px;">
-      <span style="font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);">Löydä meidät</span>
-      <h2 style="font-size:clamp(1.9rem,4vw,2.8rem);font-weight:700;margin:12px 0 16px;color:var(--primary);">Yhteystiedot</h2>
-      <div class="ornament" style="max-width:260px;margin:0 auto;">
-        <span class="accent-line"></span>
-        <i data-lucide="map-pin" style="width:18px;height:18px;color:var(--accent);flex-shrink:0;"></i>
-        <span class="accent-line"></span>
-      </div>
-    </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;" class="reveal">
-      <!-- Left -->
-      <div>
-        <div style="background:#fff;border-radius:20px;padding:40px 36px;box-shadow:0 4px 24px rgba(26,10,0,0.08);">
-          <h3 style="font-size:1.5rem;font-weight:700;margin-bottom:32px;color:var(--primary);">Street Canteen</h3>
-
-          <div style="display:flex;flex-direction:column;gap:24px;margin-bottom:36px;">
-            <div style="display:flex;align-items:flex-start;gap:16px;">
-              <div style="width:42px;height:42px;background:rgba(192,57,43,0.1);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <i data-lucide="map-pin" style="width:20px;height:20px;color:var(--accent);"></i>
-              </div>
-              <div>
-                <div style="font-weight:600;font-size:0.88rem;color:#888;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.06em;">Osoite</div>
-                <div style="color:var(--primary);font-weight:500;line-height:1.5;">Mannerheimintie 3<br>00100 Helsinki, Suomi</div>
-              </div>
-            </div>
-
-            <div style="display:flex;align-items:flex-start;gap:16px;">
-              <div style="width:42px;height:42px;background:rgba(192,57,43,0.1);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <i data-lucide="phone" style="width:20px;height:20px;color:var(--accent);"></i>
-              </div>
-              <div>
-                <div style="font-weight:600;font-size:0.88rem;color:#888;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.06em;">Puhelin</div>
-                <a href="tel:0401875911" style="color:var(--primary);font-weight:500;font-size:1.05rem;text-decoration:none;">040 1875911</a>
-              </div>
-            </div>
-
-            <div style="display:flex;align-items:flex-start;gap:16px;">
-              <div style="width:42px;height:42px;background:rgba(192,57,43,0.1);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <i data-lucide="globe" style="width:20px;height:20px;color:var(--accent);"></i>
-              </div>
-              <div>
-                <div style="font-weight:600;font-size:0.88rem;color:#888;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.06em;">Verkkosivut</div>
-                <a href="http://www.streetcanteen.fi/" target="_blank" style="color:var(--accent);font-weight:500;text-decoration:none;">www.streetcanteen.fi</a>
-              </div>
-            </div>
-
-            <div style="display:flex;align-items:flex-start;gap:16px;">
-              <div style="width:42px;height:42px;background:rgba(192,57,43,0.1);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <i data-lucide="star" style="width:20px;height:20px;color:var(--accent);"></i>
-              </div>
-              <div>
-                <div style="font-weight:600;font-size:0.88rem;color:#888;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.06em;">Google-arvio</div>
-                <div style="display:flex;align-items:center;gap:6px;">
-                  <span style="font-weight:700;color:var(--primary);font-size:1rem;">4.7 / 5</span>
-                  <div style="display:flex;gap:2px;">
-                    <i data-lucide="star" style="width:14px;height:14px;color:#f0b429;fill:#f0b429;"></i>
-                    <i data-lucide="star" style="width:14px;height:14px;color:#f0b429;fill:#f0b429;"></i>
-                    <i data-lucide="star" style="width:14px;height:14px;color:#f0b429;fill:#f0b429;"></i>
-                    <i data-lucide="star" style="width:14px;height:14px;color:#f0b429;fill:#f0b429;"></i>
-                    <i data-lucide="star" style="width:14px;height:14px;color:#f0b429;fill:#f0b429;"></i>
-                  </div>
-                  <span style="font-size:0.82rem;color:#888;">(453)</span>
-                </div>
-              </div>
+          <div class="contact-item">
+            <div class="contact-icon"><i data-lucide="map-pin"></i></div>
+            <div class="contact-item-text">
+              <strong>Osoite</strong>
+              <span>Mannerheimintie 3, 00100 Helsinki</span>
             </div>
           </div>
-
-          <a href="tel:0401875911" class="btn-primary" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:15px 28px;font-size:0.95rem;text-decoration:none;width:100%;box-sizing:border-box;">
-            <i data-lucide="phone" style="width:17px;height:17px;"></i>
-            Soita nyt — 040 1875911
-          </a>
-        </div>
-      </div>
-
-      <!-- Right: Map -->
-      <div>
-        <iframe
-          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Mannerheimintie%203%2C%2000100%20Helsinki%2C%20Suomi%2C%20Helsinki%2C%20Finland&language=fi"
-          class="map-frame"
-          allowfullscreen
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
-        <p style="margin-top:12px;font-size:0.82rem;color:#888;text-align:center;display:flex;align-items:center;justify-content:center;gap:5px;">
-          <i data-lucide="navigation" style="width:13px;height:13px;"></i>
-          Mannerheimintie 3 · Helppo löytää metroasemalta
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- [9] FOOTER -->
-<footer style="background:var(--primary);padding:56px 24px 32px;">
-  <div style="max-width:1100px;margin:0 auto;">
-    <div style="display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;margin-bottom:48px;">
-      <div style="max-width:320px;">
-        <img src="http://images.squarespace-cdn.com/content/v1/5fa6fef01afe336e4732b822/1604844329905-6NUSSTLLHN5BVPPDQ36W/monkey+logo+%281%29.png?format=1500w" alt="Street Canteen" style="height:50px;object-fit:contain;margin-bottom:20px;filter:brightness(0) invert(1);">
-        <p style="color:rgba(255,255,255,0.6);font-size:0.88rem;line-height:1.75;">Autenttiset Aasialaiset Street Food -makuelämykset Helsingin sydämessä. Malesialaisen ja Kaakkois-Aasialaisen keittiön parhaat maut.</p>
-      </div>
-      <div>
-        <h4 style="color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:20px;">Yhteystiedot</h4>
-        <div style="display:flex;flex-direction:column;gap:12px;">
-          <div style="display:flex;align-items:center;gap:10px;color:rgba(255,255,255,0.7);font-size:0.9rem;">
-            <i data-lucide="map-pin" style="width:15px;height:15px;color:var(--accent);flex-shrink:0;"></i>
-            Mannerheimintie 3, 00100 Helsinki
+          <div class="contact-item">
+            <div class="contact-icon"><i data-lucide="phone"></i></div>
+            <div class="contact-item-text">
+              <strong>Puhelin</strong>
+              <span><a href="tel:0401875911" style="color:inherit; text-decoration:none;">040 1875911</a></span>
+            </div>
           </div>
-          <div style="display:flex;align-items:center;gap:10px;color:rgba(255,255,255,0.7);font-size:0.9rem;">
-            <i data-lucide="phone" style="width:15px;height:15px;color:var(--accent);flex-shrink:0;"></i>
-            040 1875911
+          <div class="contact-item">
+            <div class="contact-icon"><i data-lucide="clock"></i></div>
+            <div class="contact-item-text">
+              <strong>Lounastarjous</strong>
+              <span>Arkisin klo 11–16 · vain 14,30 €</span>
+            </div>
           </div>
-          <div style="display:flex;align-items:center;gap:10px;font-size:0.9rem;">
-            <i data-lucide="globe" style="width:15px;height:15px;color:var(--accent);flex-shrink:0;"></i>
-            <a href="http://www.streetcanteen.fi/" target="_blank" style="color:rgba(255,255,255,0.7);text-decoration:none;">www.streetcanteen.fi</a>
+          <div class="contact-cta">
+            <a href="tel:0401875911" class="btn-accent">
+              Soita meille →
+            </a>
           </div>
         </div>
-      </div>
-      <div>
-        <h4 style="color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:20px;">Aukioloajat</h4>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <div style="display:flex;justify-content:space-between;gap:32px;color:rgba(255,255,255,0.7);font-size:0.88rem;"><span>Ma–To</span><span>11:00–21:00</span></div>
-          <div style="display:flex;justify-content:space-between;gap:32px;color:rgba(255,255,255,0.85);font-size:0.88rem;font-weight:500;"><span>Pe</span><span>11:00–22:00</span></div>
-          <div style="display:flex;justify-content:space-between;gap:32px;color:rgba(255,255,255,0.85);font-size:0.88rem;font-weight:500;"><span>La</span><span>11:30–22:00</span></div>
-          <div style="display:flex;justify-content:space-between;gap:32px;color:rgba(255,255,255,0.4);font-size:0.88rem;"><span>Su</span><span>Suljettu</span></div>
+        <div class="map-wrap reveal">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Mannerheimintie%203%2C%2000100%20Helsinki%2C%20Suomi%2C%20Helsinki%2C%20Finland&language=fi"
+            width="100%"
+            height="380"
+            style="border:0; border-radius:16px; min-height:280px;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Street Canteen sijainti kartalla">
+          </iframe>
         </div>
       </div>
     </div>
-    <div style="border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;">
-      <p style="color:rgba(255,255,255,0.4);font-size:0.8rem;">© 2024 Street Canteen · Kaikki oikeudet pidätetään</p>
-      <p style="color:rgba(255,255,255,0.3);font-size:0.78rem;">Demo luotu <a href="https://masasite.com" style="color:rgba(255,255,255,0.45);text-decoration:none;">masasite.com</a> palvelulla</p>
+  </section>
+
+  <!-- [9] FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <img src="http://images.squarespace-cdn.com/content/v1/5fa6fef01afe336e4732b822/1604844329905-6NUSSTLLHN5BVPPDQ36W/monkey+logo+%281%29.png?format=1500w" alt="Street Canteen logo" />
+      </div>
+      <div class="footer-name">Street Canteen</div>
+      <div class="footer-address">
+        Mannerheimintie 3, 00100 Helsinki<br />
+        040 1875911
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-credit">Demo luotu <a href="https://masasite.com" target="_blank" rel="noopener">masasite.com</a> palvelulla</div>
     </div>
-  </div>
-</footer>
+  </footer>
 
-<script>
-// Lucide icons
-lucide.createIcons();
+  <script>
+    // Lucide icons
+    lucide.createIcons();
 
-// IntersectionObserver for .reveal
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.12 });
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }, { passive: true });
 
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    // Reveal on scroll with stagger for grids
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
 
-// Responsive grid fix for contact section on mobile
-function fixContactGrid() {
-  const contactGrid = document.querySelector('#contact [style*="grid-template-columns: 1fr 1fr"]');
-  if (contactGrid) {
-    if (window.innerWidth < 768) {
-      contactGrid.style.gridTemplateColumns = '1fr';
-    } else {
-      contactGrid.style.gridTemplateColumns = '1fr 1fr';
-    }
-  }
-}
-window.addEventListener('resize', fixContactGrid);
-fixContactGrid();
-</script>
+    // Stagger cards in grids
+    document.querySelectorAll('.services-grid .service-card').forEach((c, i) => {
+      c.style.transitionDelay = `${i * 80}ms`;
+    });
+    document.querySelectorAll('.why-grid .why-item').forEach((c, i) => {
+      c.style.transitionDelay = `${i * 80}ms`;
+    });
+    document.querySelectorAll('.reviews-grid .review-card').forEach((c, i) => {
+      c.style.transitionDelay = `${i * 80}ms`;
+    });
+
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Highlight today's hours row
+    const days = ['Sunnuntai', 'Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai', 'Lauantai'];
+    const today = days[new Date().getDay()];
+    document.querySelectorAll('.hours-row').forEach(row => {
+      const dayEl = row.querySelector('.hours-day');
+      if (dayEl && dayEl.textContent.trim() === today) {
+        row.classList.add('today');
+      }
+    });
+  </script>
 </body>
 </html>
