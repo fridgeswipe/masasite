@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mimi Nails — Kynsistudio Espoo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #2d1a2e;
+      --accent: #c9a96e;
+      --bg: #faf8f5;
+      --surface: #ffffff;
+      --text: #1a1218;
+      --muted: #7a6e78;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding-top: 40px;
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'DM Serif Display', serif;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    /* Demo Banner */
+    .demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(201, 169, 110, 0.92);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.02em;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+    }
+    .demo-banner a {
+      color: #fff;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      margin-left: 4px;
+    }
+    .demo-banner a:hover { opacity: 0.8; }
+
+    /* Nav */
+    .nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(250, 248, 245, 0.92);
+      border-bottom: 1px solid rgba(45, 26, 46, 0.08);
+      backdrop-filter: blur(12px);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    .nav.scrolled {
+      background: rgba(250, 248, 245, 0.96);
+      box-shadow: 0 2px 20px rgba(45, 26, 46, 0.08);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 48px);
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--primary);
+      text-decoration: none;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; }
+    .btn-nav {
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-nav:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(45, 26, 46, 0.25);
+      background: #3e2440;
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100svh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-image: url('assets/mimi-nails-31b9b40a/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.68) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 820px;
+      padding: clamp(32px, 8vw, 80px) clamp(16px, 5vw, 48px);
+      animation: heroFadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 20px;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      color: #fff;
+      font-family: 'DM Serif Display', serif;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.82);
+      max-width: 580px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+    .hero-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+    .hero-rating .stars {
+      display: flex;
+      gap: 3px;
+    }
+    .hero-rating .stars i {
+      color: #f59e0b;
+      fill: #f59e0b;
+      width: 18px;
+      height: 18px;
+    }
+    .hero-rating span {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.85);
+      font-weight: 500;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--primary);
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 14px 32px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.3);
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+    .btn-ghost {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: 100px;
+      text-decoration: none;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.3);
+      transition: transform 0.2s ease, background 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-ghost:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.22);
+    }
+
+    /* Section common */
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      color: var(--primary);
+      font-family: 'DM Serif Display', serif;
+      line-height: 1.15;
+    }
+
+    /* Services */
+    .services-section {
+      padding-block: clamp(64px, 10vw, 112px);
+      background: #f3ede8;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .service-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+      cursor: default;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(45,26,46,0.12);
+    }
+    .service-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .service-icon i {
+      color: var(--accent);
+      width: 28px;
+      height: 28px;
+    }
+    .service-card h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      color: var(--primary);
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    .service-card p {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* Why us */
+    .why-section {
+      padding-block: clamp(64px, 10vw, 112px);
+      background: var(--surface);
+    }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 40px;
+      margin-top: 64px;
+    }
+    .why-item {
+      text-align: center;
+    }
+    .why-item i {
+      color: var(--accent);
+      width: 40px;
+      height: 40px;
+      margin-bottom: 20px;
+    }
+    .why-item h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+    .why-item p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
+    /* Reviews */
+    .reviews-section {
+      padding-block: clamp(64px, 10vw, 112px);
+      background: var(--bg);
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .review-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .review-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 16px;
+    }
+    .review-stars i {
+      color: #f59e0b;
+      fill: #f59e0b;
+      width: 16px;
+      height: 16px;
+    }
+    .review-quote {
+      font-size: 0.9rem;
+      color: #4a4048;
+      line-height: 1.7;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+    .review-author {
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .verified-badge {
+      font-size: 0.7rem;
+      background: color-mix(in srgb, var(--accent) 18%, transparent);
+      color: #8a6a30;
+      padding: 2px 8px;
+      border-radius: 100px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    /* Gallery strip */
+    .gallery-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      height: 320px;
+      overflow: hidden;
+    }
+    .gallery-strip img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .gallery-strip img:hover { transform: scale(1.04); }
+    @media (max-width: 640px) {
+      .gallery-strip { height: 200px; }
+    }
+
+    /* Contact */
+    .contact-section {
+      padding-block: clamp(64px, 10vw, 112px);
+      background: #f3ede8;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+      margin-top: 56px;
+    }
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+    .contact-info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .contact-info-row i {
+      color: var(--accent);
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .contact-info-row .info-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .contact-info-row .info-value {
+      font-size: 1rem;
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .contact-info-row .info-value a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .contact-info-row .info-value a:hover {
+      color: var(--accent);
+    }
+    .btn-contact {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 14px 32px;
+      border-radius: 100px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-contact:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(45,26,46,0.25);
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--primary);
+      padding-block: 56px 32px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .footer-address {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.8;
+    }
+    .footer-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      margin: 40px 0 24px;
+    }
+    .footer-bottom {
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.05em;
+    }
+
+    /* Reveal animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Stagger */
+    .stagger-1 { transition-delay: 0ms; }
+    .stagger-2 { transition-delay: 80ms; }
+    .stagger-3 { transition-delay: 160ms; }
+    .stagger-4 { transition-delay: 240ms; }
+
+    /* Accent line */
+    .accent-line {
+      display: inline-block;
+      width: 48px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 20px;
+    }
+
+    /* No opening hours notice */
+    .hours-notice {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 32px 36px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .hours-notice i {
+      color: var(--accent);
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- DEMO BANNER -->
+<div class="demo-banner">
+  Mimi Nails — tämä esimerkkisivu on tehty juuri teille · Haluatko oman?
+  <a href="mailto:team@masasite.com">Ota yhteyttä →</a>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Mimi Nails</a>
+    <ul class="nav-links">
+      <li><a href="#palvelut">Palvelut</a></li>
+      <li><a href="#arvostelut">Arvostelut</a></li>
+      <li><a href="#yhteystiedot">Yhteystiedot</a></li>
+    </ul>
+    <a href="tel:0406800672" class="btn-nav">
+      Varaa aika
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">Kynsistudio · Espoo</span>
+    <h1>Kauniit kynnet ammattitaidolla tehdyt</h1>
+    <p class="hero-subtitle">Mimi Nails on Espoon johtava kynsihoitoalan ammattilainen, joka tarjoaa korkealaatuisia kynsistudio-palveluita. Asiakkaat luottavat meidän ammattitaitoon ja huolelliseen palveluun, kuten erinomaiset arvostelumme osoittavat.</p>
+    <div class="hero-rating">
+      <div class="stars">
+        <i data-lucide="star"></i>
+        <i data-lucide="star"></i>
+        <i data-lucide="star"></i>
+        <i data-lucide="star"></i>
+        <i data-lucide="star"></i>
+      </div>
+      <span>4.8/5 (5 arvostelua) · Google</span>
+    </div>
+    <div class="hero-ctas">
+      <a href="tel:0406800672" class="btn-primary">
+        <i data-lucide="phone" style="width:16px;height:16px;"></i>
+        Varaa aika nyt
+      </a>
+      <a href="#palvelut" class="btn-ghost">
+        Katso palvelut
+        <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY STRIP -->
+<div class="gallery-strip">
+  <img src="assets/mimi-nails-31b9b40a/photo1.jpg" alt="Mimi Nails kynsistudio" />
+  <img src="assets/mimi-nails-31b9b40a/photo2.jpg" alt="Kynsihoito Espoo" />
+  <img src="assets/mimi-nails-31b9b40a/photo3.jpg" alt="Nail art Espoo" />
+</div>
+
+<!-- SERVICES -->
+<section class="services-section" id="palvelut">
+  <div class="section-container">
+    <div class="reveal" style="text-align:center;">
+      <span class="section-label">Palvelumme</span>
+      <div class="accent-line"></div>
+      <h2 class="section-title">Mitä teemme sinulle?</h2>
+      <p style="margin-top:16px; font-size:1rem; color:var(--muted); max-width:520px; margin-inline:auto;">Tarjoamme kattavan valikoiman kynsipalveluita ammattitaitoisesti ja huolellisesti.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal stagger-1">
+        <div class="service-icon">
+          <i data-lucide="sparkles"></i>
+        </div>
+        <h3>Geelilakkaus</h3>
+        <p>Pitkäkestävä ja kiiltävä kynsilakkaus, joka kestää 3–4 viikkoa</p>
+      </div>
+      <div class="service-card reveal stagger-2">
+        <div class="service-icon">
+          <i data-lucide="zap"></i>
+        </div>
+        <h3>Kynsien jatkaminen</h3>
+        <p>Ammattimaisesti tehdyt pidennykset haluamallasi muodolla ja väreillä</p>
+      </div>
+      <div class="service-card reveal stagger-3">
+        <div class="service-icon">
+          <i data-lucide="star"></i>
+        </div>
+        <h3>Kynsien kaunistus</h3>
+        <p>Luovat nail art -mallit ja koristeelliset yksityiskohdat</p>
+      </div>
+      <div class="service-card reveal stagger-4">
+        <div class="service-icon">
+          <i data-lucide="heart"></i>
+        </div>
+        <h3>Jalkahoito</h3>
+        <p>Ammattimainen pedicure-hoito, joka rentouttaa ja kunnostaa jalat</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-section">
+  <div class="section-container">
+    <div class="reveal" style="text-align:center;">
+      <span class="section-label">Miksi meidät</span>
+      <div class="accent-line"></div>
+      <h2 class="section-title">Miksi valita Mimi Nails?</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-item reveal stagger-1">
+        <i data-lucide="award"></i>
+        <h3>Erinomainen maine</h3>
+        <p>Lähes täydellinen 4,8/5 arvosana osoittaa asiakkaidensa tyytyväisyyden</p>
+      </div>
+      <div class="why-item reveal stagger-2">
+        <i data-lucide="trending-up"></i>
+        <h3>Ammattitaito & trendit</h3>
+        <p>Ammattitaitoinen kosmetologi, joka hallitsee uusimmat kynsitrendit</p>
+      </div>
+      <div class="why-item reveal stagger-3">
+        <i data-lucide="shield-check"></i>
+        <h3>Hygieeniset käytännöt</h3>
+        <p>Hygieeniset työvälineet ja laadukkaat tuotteet jokaiselle asiakkaalle</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews-section" id="arvostelut">
+  <div class="section-container">
+    <div class="reveal" style="text-align:center;">
+      <span class="section-label">Asiakasarvostelut</span>
+      <div class="accent-line"></div>
+      <h2 class="section-title">Mitä asiakkaat sanovat?</h2>
+      <p style="margin-top:16px; font-size:1rem; color:var(--muted); max-width:480px; margin-inline:auto;">Aidot arvostelut oikeilta asiakkailta.</p>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card reveal stagger-1">
+        <div class="review-stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <p class="review-quote">"Excellent service and great customer service! I came for a Brazilian wax, a little nervous because it had been so long since my last one. But Kadi did such an excellent job that it was no more painful than it had to be! Will definitely use this service again next time ☺️"</p>
+        <div class="review-author">
+          Rachael Spencer
+          <span class="verified-badge">Vahvistettu</span>
+        </div>
+      </div>
+      <div class="review-card reveal stagger-2">
+        <div class="review-stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <p class="review-quote">"Cozy studio, absolutely wonderful customer service and the gel nails turned out incredibly beautiful and matched my style even though I didn't have a clear idea of what kind of nails I wanted when I went to the studio. I am very satisfied with the service and the end result! ☺️"</p>
+        <div class="review-author">
+          Senja Sidoro
+          <span class="verified-badge">Vahvistettu</span>
+        </div>
+      </div>
+      <div class="review-card reveal stagger-3">
+        <div class="review-stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <p class="review-quote">"The work is fast and very, very neat. The end result is beautiful. The service is friendly. The premises are clean."</p>
+        <div class="review-author">
+          Ene Tamme
+          <span class="verified-badge">Vahvistettu</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overall rating summary -->
+    <div class="reveal" style="text-align:center; margin-top:48px;">
+      <div style="display:inline-flex; align-items:center; gap:12px; background:var(--surface); padding:20px 36px; border-radius:100px; box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+        <div style="display:flex; gap:4px;">
+          <i data-lucide="star" style="color:#f59e0b;fill:#f59e0b;width:20px;height:20px;"></i>
+          <i data-lucide="star" style="color:#f59e0b;fill:#f59e0b;width:20px;height:20px;"></i>
+          <i data-lucide="star" style="color:#f59e0b;fill:#f59e0b;width:20px;height:20px;"></i>
+          <i data-lucide="star" style="color:#f59e0b;fill:#f59e0b;width:20px;height:20px;"></i>
+          <i data-lucide="star" style="color:#f59e0b;fill:#f59e0b;width:20px;height:20px;"></i>
+        </div>
+        <span style="font-weight:700; color:var(--primary); font-size:1.1rem;">4.8 / 5</span>
+        <span style="color:var(--muted); font-size:0.9rem;">· Google-arvostelut</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="yhteystiedot">
+  <div class="section-container">
+    <div class="reveal" style="text-align:center; margin-bottom:0;">
+      <span class="section-label">Yhteystiedot</span>
+      <div class="accent-line"></div>
+      <h2 class="section-title">Löydä meidät</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="reveal">
+        <div class="contact-info-row">
+          <i data-lucide="map-pin"></i>
+          <div>
+            <span class="info-label">Osoite</span>
+            <span class="info-value">Vieraskuja 4, 02770 Espoo, Suomi</span>
+          </div>
+        </div>
+        <div class="contact-info-row">
+          <i data-lucide="phone"></i>
+          <div>
+            <span class="info-label">Puhelin</span>
+            <span class="info-value"><a href="tel:0406800672">040 6800672</a></span>
+          </div>
+        </div>
+        <div class="contact-info-row">
+          <i data-lucide="clock"></i>
+          <div>
+            <span class="info-label">Aukioloajat</span>
+            <span class="info-value" style="font-weight:400; color:var(--muted); font-size:0.9rem;">Ota yhteyttä aukioloaikojen vahvistamiseksi</span>
+          </div>
+        </div>
+        <a href="tel:0406800672" class="btn-contact">
+          <i data-lucide="phone" style="width:16px;height:16px;"></i>
+          Soita meille
+        </a>
+      </div>
+      <div class="reveal stagger-2">
+        <iframe
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Vieraskuja%204%2C%2002770%20Espoo%2C%20Suomi%2C%20Espoo%2C%20Finland&language=fi"
+          width="100%"
+          height="360"
+          style="border:0; border-radius:20px; box-shadow:0 4px 24px rgba(45,26,46,0.1); min-height:280px;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Mimi Nails sijainti"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Mimi Nails</div>
+    <div class="footer-address">
+      Vieraskuja 4, 02770 Espoo<br />
+      040 6800672
+    </div>
+    <hr class="footer-divider" />
+    <p class="footer-bottom">Demo luotu masasite.com palvelulla</p>
+  </div>
+</footer>
+
+<script>
+  // Lucide icons
+  lucide.createIcons();
+
+  // Fill hero stars
+  document.querySelectorAll('.hero-rating .stars i').forEach(function(el) {
+    el.style.color = '#f59e0b';
+    el.style.fill = '#f59e0b';
+  });
+
+  // Fill review stars
+  document.querySelectorAll('.review-stars i').forEach(function(el) {
+    el.style.color = '#f59e0b';
+    el.style.fill = '#f59e0b';
+  });
+
+  // Nav scroll effect
+  var nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 60) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  });
+
+  // Intersection Observer for reveal
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(function(el) {
+    io.observe(el);
+  });
+</script>
+
+</body>
+</html>
