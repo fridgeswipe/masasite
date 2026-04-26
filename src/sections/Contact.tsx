@@ -49,18 +49,15 @@ export function Contact() {
     { scope: secRef },
   )
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const fd = new FormData(e.currentTarget)
-    try {
-      await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(fd as unknown as Record<string, string>).toString(),
-      })
-    } catch {
-      // fire-and-forget — show success regardless
-    }
+    const name    = (fd.get('name')    as string) || ''
+    const email   = (fd.get('email')   as string) || ''
+    const project = (fd.get('project') as string) || ''
+    const subject = encodeURIComponent(`Yhteydenotto masasite.com — ${name}`)
+    const body    = encodeURIComponent(`Nimi: ${name}\nSähköposti: ${email}\n\nProjektista:\n${project}`)
+    window.open(`mailto:team@masasite.com?subject=${subject}&body=${body}`, '_blank')
     setSent(true)
   }
 
@@ -109,9 +106,7 @@ export function Contact() {
                 <p className="success-body">Otan sinuun yhteyttä pian.</p>
               </div>
             ) : (
-              <form className="contact-form" onSubmit={handleSubmit} noValidate
-              data-netlify="true" name="contact" method="POST">
-              <input type="hidden" name="form-name" value="contact" />
+              <form className="contact-form" onSubmit={handleSubmit} noValidate>
                 <div className="field-row">
                   <div className="field">
                     <label className="field-label" htmlFor="name">Nimi</label>
