@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day Spa Studio Feel It Tampere – Luksusrentouttava hyvinvointi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: #2d1a2e;
+      --accent: #c9a96e;
+      --accent-light: #e8d5b0;
+      --bg: #faf8f5;
+      --surface: #ffffff;
+      --text: #1a1218;
+      --muted: #7a6b78;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      padding-top: 40px;
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    h1, h2, h3, .font-headline {
+      font-family: 'DM Serif Display', serif;
+    }
+
+    /* Demo Banner */
+    #demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(201, 169, 110, 0.92);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #demo-banner p {
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.03em;
+      text-align: center;
+    }
+
+    #demo-banner a {
+      color: #fff;
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* Nav */
+    #main-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(250, 248, 245, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(45, 26, 46, 0.08);
+      transition: box-shadow 0.3s ease;
+    }
+
+    #main-nav.scrolled {
+      box-shadow: 0 2px 20px rgba(45, 26, 46, 0.1);
+    }
+
+    /* Hero */
+    #hero {
+      min-height: 100svh;
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.65) 100%),
+        url('assets/day-spa-studio-feel-it-tampere-b080c30c/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-content {
+      animation: heroFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+    }
+
+    .hero-h1 {
+      font-size: clamp(2.4rem, 5.5vw, 5rem);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: #ffffff;
+    }
+
+    /* Section titles */
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      letter-spacing: -0.015em;
+      line-height: 1.2;
+      color: var(--primary);
+    }
+
+    /* Card */
+    .service-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(45,26,46,0.14);
+    }
+
+    .icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: rgba(201, 169, 110, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: var(--accent);
+    }
+
+    .icon-wrap i {
+      width: 28px;
+      height: 28px;
+    }
+
+    /* Lucide star gold */
+    .star-gold i {
+      color: #f59e0b;
+      fill: #f59e0b;
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Review card */
+    .review-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    }
+
+    /* Hours row */
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(45,26,46,0.07);
+    }
+    .hours-row:last-child { border-bottom: none; }
+
+    /* Buttons */
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 14px 32px;
+      border-radius: 100px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+      text-decoration: none;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(201,169,110,0.45);
+    }
+
+    .btn-primary:active { transform: translateY(-1px); }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 14px 32px;
+      border-radius: 100px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1.5px solid rgba(255,255,255,0.45);
+      backdrop-filter: blur(8px);
+      transition: transform 0.2s ease, background 0.2s ease;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn-ghost:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.22);
+    }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Eyebrow */
+    .eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--accent-light);
+    }
+
+    .eyebrow-dark {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    /* Why us icons */
+    .whyus-icon i {
+      width: 40px;
+      height: 40px;
+      color: var(--accent);
+    }
+
+    /* Nav CTA */
+    .nav-cta {
+      background: var(--primary);
+      color: var(--accent-light);
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 10px 22px;
+      border-radius: 100px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(45,26,46,0.25);
+    }
+
+    /* Accent divider */
+    .accent-divider {
+      width: 56px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 4px;
+      margin: 16px auto 0;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--primary);
+    }
+
+    /* Map container */
+    .map-wrapper iframe {
+      width: 100%;
+      height: 380px;
+      border: 0;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(45,26,46,0.12);
+    }
+
+    /* Contact info row */
+    .contact-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .contact-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(201,169,110,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--accent);
+    }
+
+    .contact-icon i {
+      width: 20px;
+      height: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .map-wrapper iframe { height: 280px; }
+      .btn-primary, .btn-ghost { padding: 12px 22px; font-size: 0.88rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- [1] DEMO BANNER -->
+  <div id="demo-banner">
+    <p>Day Spa Studio Feel It Tampere — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman? <a href="mailto:team@masasite.com">Ota yhteyttä →</a></p>
+  </div>
+
+  <!-- [2] STICKY NAV -->
+  <nav id="main-nav">
+    <div style="max-width:1200px;margin:0 auto;padding-inline:clamp(16px,5vw,48px);">
+      <div style="display:flex;align-items:center;justify-content:space-between;height:68px;gap:24px;">
+        <a href="#hero" style="flex-shrink:0;display:flex;align-items:center;">
+          <img src="https://www.studiofeelit.fi/wp-content/uploads/2025/11/SFI_logo_beige-1024x554.png" alt="Studio Feel It logo" style="height:38px;object-fit:contain;filter:brightness(0) saturate(100%) invert(11%) sepia(22%) saturate(1500%) hue-rotate(280deg) brightness(40%);" />
+        </a>
+
+        <div style="display:flex;align-items:center;gap:32px;">
+          <div class="hidden-mobile" style="display:flex;align-items:center;gap:28px;">
+            <a href="#services" style="font-size:0.9rem;font-weight:500;color:var(--text);text-decoration:none;opacity:0.8;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">Palvelut</a>
+            <a href="#hours" style="font-size:0.9rem;font-weight:500;color:var(--text);text-decoration:none;opacity:0.8;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">Aukioloajat</a>
+            <a href="#contact" style="font-size:0.9rem;font-weight:500;color:var(--text);text-decoration:none;opacity:0.8;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">Yhteystiedot</a>
+          </div>
+          <a href="tel:0404110096" class="nav-cta">Varaa hoito</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- [3] HERO -->
+  <section id="hero">
+    <div class="hero-content" style="max-width:820px;padding-inline:clamp(20px,5vw,48px);padding-block:80px;">
+
+      <div class="eyebrow" style="margin-bottom:18px;">
+        Day Spa · Tampere &amp; Levi
+      </div>
+
+      <h1 class="hero-h1" style="margin-bottom:24px;">
+        Luksusrentouttava hyvinvointi Tampereella ja Levillä
+      </h1>
+
+      <p style="font-size:1.2rem;color:rgba(255,255,255,0.82);max-width:580px;margin:0 auto 28px;line-height:1.7;">
+        Day Spa Studio Feel It on yksityinen kauneuden- ja hyvinvointikeskus, joka on palvellut asiakkaita vuodesta 2006 alkaen. Kouluttautunut ja nuorekas henkilökunta tarjoaa korkeatasoisia hoitoja rentoutumisen ja arjen helpotuksen tarpeisiin.
+      </p>
+
+      <!-- Rating row -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:36px;">
+        <div class="star-gold" style="display:flex;align-items:center;gap:2px;">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <span style="color:rgba(255,255,255,0.88);font-size:0.92rem;font-weight:500;">4.9/5 (262 arvostelua)</span>
+      </div>
+
+      <!-- CTA Buttons -->
+      <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;">
+        <a href="tel:0404110096" class="btn-primary">
+          <i data-lucide="phone" style="width:17px;height:17px;"></i>
+          Varaa hoitosi nyt
+        </a>
+        <a href="#services" class="btn-ghost">
+          Tutustu palveluihin
+          <i data-lucide="chevron-down" style="width:17px;height:17px;"></i>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- [4] SERVICES GRID -->
+  <section id="services" style="background:#f3efe9;padding-block:clamp(64px,10vw,120px);">
+    <div style="max-width:1200px;margin:0 auto;padding-inline:clamp(16px,5vw,48px);">
+
+      <div class="reveal" style="text-align:center;margin-bottom:56px;">
+        <div class="eyebrow-dark" style="margin-bottom:12px;">Palvelumme</div>
+        <h2 class="section-title">Korkealaatuiset hoidot sinulle</h2>
+        <div class="accent-divider"></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;">
+
+        <div class="service-card reveal" style="--i:0;">
+          <div class="icon-wrap">
+            <i data-lucide="sparkles"></i>
+          </div>
+          <h3 style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--primary);margin-bottom:10px;">Sokeroinnit</h3>
+          <p style="font-size:0.92rem;color:var(--muted);line-height:1.7;">Pitkäkestoinen ja hellävarainen karvanpoisto molemmissa toimipisteissä</p>
+        </div>
+
+        <div class="service-card reveal" style="--i:1;">
+          <div class="icon-wrap">
+            <i data-lucide="heart"></i>
+          </div>
+          <h3 style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--primary);margin-bottom:10px;">Hieronta</h3>
+          <p style="font-size:0.92rem;color:var(--muted);line-height:1.7;">Rentouttava hierontapalvelu arjen stressin lievitykseen</p>
+        </div>
+
+        <div class="service-card reveal" style="--i:2;">
+          <div class="icon-wrap">
+            <i data-lucide="users"></i>
+          </div>
+          <h3 style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--primary);margin-bottom:10px;">Ryhmähoitot</h3>
+          <p style="font-size:0.92rem;color:var(--muted);line-height:1.7;">Monipuoliset ryhmäkokoontumiset useissa hoitohuoneissa</p>
+        </div>
+
+        <div class="service-card reveal" style="--i:3;">
+          <div class="icon-wrap">
+            <i data-lucide="gift"></i>
+          </div>
+          <h3 style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--primary);margin-bottom:10px;">Lahjakortit</h3>
+          <p style="font-size:0.92rem;color:var(--muted);line-height:1.7;">Personoidut lahjakortit luksushetkille ystäville ja perheelle</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Strip -->
+  <section style="padding-block:0;overflow:hidden;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;height:340px;">
+      <div style="background-image:url('assets/day-spa-studio-feel-it-tampere-b080c30c/photo2.jpg');background-size:cover;background-position:center;"></div>
+      <div style="background-image:url('assets/day-spa-studio-feel-it-tampere-b080c30c/photo3.jpg');background-size:cover;background-position:center;"></div>
+    </div>
+  </section>
+
+  <!-- [5] WHY CHOOSE US -->
+  <section id="why" style="background:var(--surface);padding-block:clamp(64px,10vw,120px);">
+    <div style="max-width:1200px;margin:0 auto;padding-inline:clamp(16px,5vw,48px);">
+
+      <div class="reveal" style="text-align:center;margin-bottom:64px;">
+        <div class="eyebrow-dark" style="margin-bottom:12px;">Miksi valita meidät</div>
+        <h2 class="section-title">Laatu, jonka tunnet</h2>
+        <div class="accent-divider"></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:48px;">
+
+        <div class="reveal" style="text-align:center;--i:0;">
+          <div class="whyus-icon" style="display:flex;justify-content:center;margin-bottom:20px;">
+            <i data-lucide="award" style="width:44px;height:44px;color:var(--accent);"></i>
+          </div>
+          <h3 style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--primary);margin-bottom:10px;">Vuosien kokemus</h3>
+          <p style="font-size:0.93rem;color:var(--muted);max-width:300px;margin:0 auto;line-height:1.7;">Vuosien kokemus kauneudenhoidosta ja asiakastyytyväisyys, jonka rating on 4.9/5</p>
+        </div>
+
+        <div class="reveal" style="text-align:center;--i:1;">
+          <div class="whyus-icon" style="display:flex;justify-content:center;margin-bottom:20px;">
+            <i data-lucide="map-pin" style="width:44px;height:44px;color:var(--accent);"></i>
+          </div>
+          <h3 style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--primary);margin-bottom:10px;">Kaksi toimipistettä</h3>
+          <p style="font-size:0.93rem;color:var(--muted);max-width:300px;margin:0 auto;line-height:1.7;">Palvelu sekä Tampereella että Levillä — löydät meidät sieltä, missä sinäkin olet</p>
+        </div>
+
+        <div class="reveal" style="text-align:center;--i:2;">
+          <div class="whyus-icon" style="display:flex;justify-content:center;margin-bottom:20px;">
+            <i data-lucide="shield-check" style="width:44px;height:44px;color:var(--accent);"></i>
+          </div>
+          <h3 style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--primary);margin-bottom:10px;">Koulutettu tiimi</h3>
+          <p style="font-size:0.93rem;color:var(--muted);max-width:300px;margin:0 auto;line-height:1.7;">Jatkuvasti kouluttautunut henkilökunta alan uusimman tiedon kanssa</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- [6] REVIEWS -->
+  <section id="reviews" style="background:#f7f4ef;padding-block:clamp(64px,10vw,120px);">
+    <div style="max-width:1200px;margin:0 auto;padding-inline:clamp(16px,5vw,48px);">
+
+      <div class="reveal" style="text-align:center;margin-bottom:56px;">
+        <div class="eyebrow-dark" style="margin-bottom:12px;">Asiakaskokemukset</div>
+        <h2 class="section-title">Mitä asiakkaamme sanovat</h2>
+        <div class="accent-divider"></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
+
+        <div class="review-card reveal" style="--i:0;">
+          <div class="star-gold" style="display:flex;gap:3px;margin-bottom:16px;">
+            <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+          </div>
+          <p style="font-style:italic;font-size:0.92rem;color:var(--muted);line-height:1.75;margin-bottom:20px;">"So lovely! I always feel respected and appreciated as a client. The personnel are kind and professional, the premises are beautifully decorated and well cleaned, and the treatment menu is very reasonable. Props for the monthly offer!"</p>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:38px;height:38px;border-radius:50%;background:rgba(201,169,110,0.2);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700;font-size:0.88rem;">TK</div>
+            <div>
+              <div style="font-weight:700;font-size:0.88rem;color:var(--primary);">T K</div>
+              <div style="font-size:0.75rem;color:var(--muted);display:flex;align-items:center;gap:4px;"><i data-lucide="check-circle" style="width:12px;height:12px;color:var(--accent);"></i>Verified</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card reveal" style="--i:1;">
+          <div class="star-gold" style="display:flex;gap:3px;margin-bottom:16px;">
+            <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+          </div>
+          <p style="font-style:italic;font-size:0.92rem;color:var(--muted);line-height:1.75;margin-bottom:20px;">"Thank you so much to Jani (I think that was his name!) and the team for great responsiveness, a great welcome, and overall a great massage!"</p>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:38px;height:38px;border-radius:50%;background:rgba(201,169,110,0.2);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700;font-size:0.88rem;">CR</div>
+            <div>
+              <div style="font-weight:700;font-size:0.88rem;color:var(--primary);">Chantel Rowe</div>
+              <div style="font-size:0.75rem;color:var(--muted);display:flex;align-items:center;gap:4px;"><i data-lucide="check-circle" style="width:12px;height:12px;color:var(--accent);"></i>Verified</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card reveal" style="--i:2;">
+          <div class="star-gold" style="display:flex;gap:3px;margin-bottom:16px;">
+            <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+          </div>
+          <p style="font-style:italic;font-size:0.92rem;color:var(--muted);line-height:1.75;margin-bottom:20px;">"The customer service was friendly and as soon as I stepped into the studio I felt welcome!❤️ The artists were professional and approachable! I will definitely come again!"</p>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:38px;height:38px;border-radius:50%;background:rgba(201,169,110,0.2);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700;font-size:0.88rem;">JH</div>
+            <div>
+              <div style="font-weight:700;font-size:0.88rem;color:var(--primary);">Johanna Heikkinen</div>
+              <div style="font-size:0.75rem;color:var(--muted);display:flex;align-items:center;gap:4px;"><i data-lucide="check-circle" style="width:12px;height:12px;color:var(--accent);"></i>Verified</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Overall rating badge -->
+      <div class="reveal" style="text-align:center;margin-top:48px;">
+        <div style="display:inline-flex;align-items:center;gap:12px;background:var(--surface);border-radius:100px;padding:14px 28px;box-shadow:0 2px 16px rgba(45,26,46,0.08);">
+          <div class="star-gold" style="display:flex;gap:2px;">
+            <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+          </div>
+          <span style="font-weight:700;font-size:1rem;color:var(--primary);">4.9 / 5</span>
+          <span style="font-size:0.85rem;color:var(--muted);">262 Google-arvostelua</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- [7] OPENING HOURS -->
+  <section id="hours" style="background:var(--surface);padding-block:clamp(64px,10vw,120px);">
+    <div style="max-width:1200px;margin:0 auto;padding-inline:clamp(16px,5vw,48px);">
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;">
+
+        <div class="reveal">
+          <div class="eyebrow-dark" style="margin-bottom:12px;">Aukioloajat</div>
+          <h2 class="section-title" style="margin-bottom:8px;">Milloin olemme avoinna?</h2>
+          <div style="width:56px;height:3px;background:var(--accent);border-radius:4px;margin-bottom:40px;"></div>
+
+          <div style="background:#faf8f5;border-radius:20px;padding:32px 28px;">
+
+            <div class="hours-row">
+              <span style="font-weight:600;font-size:0.95rem;color:var(--primary);">Maanantai</span>
+              <span style="font-size:0.93rem;color:var(--muted);">10:00 – 18:00</span>
+            </div>
+            <div class="hours-row">
+              <span style="font-weight:600;font-size:0.95rem;color:var(--primary);">Tiistai</span>
+              <span style="font-size:0.93rem;color:var(--muted);">10:00 – 18:00</span>
+            </div>
+            <div class="hours-row">
+              <span style="font-weight:600;font-size:0.95rem;color:var(--primary);">Keskiviikko</span>
+              <span style="font-size:0.93rem;color:var(--muted);">10:00 – 18:00</span>
+            </div>
+            <div class="hours-row">
+              <span style="font-weight:600;font-size:0.95rem;color:var(--primary);">Torstai</span>
+              <span style="font-size:0.93rem;color:var(--muted);">10:00 – 18:00</span>
+            </div>
+            <div class="hours-row">
+              <span style="font-weight:600;font-size:0.95rem;color:var(--primary);">Perjantai</span>
+              <span style="font-size:0.93rem;color:var(--muted);">10:00 – 18:00</span>
+            </div>
+            <div class="hours-row">
+              <span style="font-weight:600;font-size:0.95rem;color:var(--primary);">Lauantai</span>
+              <span style="font-size:0.93rem;color:var(--muted);">10:00 – 16:00</span>
+            </div>
+            <div class="hours-row">
+              <span style="font-weight:600;font-size:0.95rem;color:var(--primary);">Sunnuntai</span>
+              <span style="font-size:0.93rem;color:var(--muted);font-style:italic;">Suljettu</span>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="reveal" style="display:flex;flex-direction:column;justify-content:center;padding-top:60px;">
+          <div style="background:var(--primary);border-radius:20px;padding:40px 36px;text-align:center;">
+            <div style="font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--accent-light);margin-bottom:12px;">Varaa aika nyt</div>
+            <p style="font-size:0.92rem;color:rgba(255,255,255,0.65);margin-bottom:28px;line-height:1.7;">Soita meille tai varaa aika suoraan – vastaamme nopeasti!</p>
+            <a href="tel:0404110096" class="btn-primary" style="justify-content:center;width:100%;box-sizing:border-box;">
+              <i data-lucide="phone" style="width:17px;height:17px;"></i>
+              040 4110096
+            </a>
+            <div style="margin-top:16px;font-size:0.78rem;color:rgba(255,255,255,0.4);letter-spacing:0.04em;">Ma–Pe 10:00–18:00 · La 10:00–16:00</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- [8] CONTACT -->
+  <section id="contact" style="background:#f0ebe2;padding-block:clamp(64px,10vw,120px);">
+    <div style="max-width:1200px;margin:0 auto;padding-inline:clamp(16px,5vw,48px);">
+
+      <div class="reveal" style="text-align:center;margin-bottom:56px;">
+        <div class="eyebrow-dark" style="margin-bottom:12px;">Yhteystiedot</div>
+        <h2 class="section-title">Löydä meidät</h2>
+        <div class="accent-divider"></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
+
+        <div class="reveal">
+          <div class="contact-row">
+            <div class="contact-icon">
+              <i data-lucide="map-pin"></i>
+            </div>
+            <div>
+              <div style="font-size:0.73rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:4px;">Osoite</div>
+              <div style="font-size:0.97rem;color:var(--primary);font-weight:500;line-height:1.5;">Satakunnankatu 22 F, katutaso<br/>33210 Tampere, Suomi</div>
+            </div>
+          </div>
+
+          <div class="contact-row">
+            <div class="contact-icon">
+              <i data-lucide="phone"></i>
+            </div>
+            <div>
+              <div style="font-size:0.73rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:4px;">Puhelin</div>
+              <a href="tel:0404110096" style="font-size:0.97rem;color:var(--primary);font-weight:500;text-decoration:none;">040 4110096</a>
+            </div>
+          </div>
+
+          <div class="contact-row">
+            <div class="contact-icon">
+              <i data-lucide="globe"></i>
+            </div>
+            <div>
+              <div style="font-size:0.73rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:4px;">Verkkosivut</div>
+              <a href="http://www.studiofeelit.fi/" target="_blank" rel="noopener" style="font-size:0.97rem;color:var(--primary);font-weight:500;text-decoration:none;">www.studiofeelit.fi</a>
+            </div>
+          </div>
+
+          <div class="contact-row">
+            <div class="contact-icon">
+              <i data-lucide="clock"></i>
+            </div>
+            <div>
+              <div style="font-size:0.73rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:4px;">Aukioloajat</div>
+              <div style="font-size:0.97rem;color:var(--primary);font-weight:500;line-height:1.6;">Ma–Pe 10:00–18:00<br/>La 10:00–16:00</div>
+            </div>
+          </div>
+
+          <div style="margin-top:12px;">
+            <a href="tel:0404110096" class="btn-primary">
+              <i data-lucide="phone" style="width:17px;height:17px;"></i>
+              Soita ja varaa aika
+            </a>
+          </div>
+        </div>
+
+        <div class="reveal map-wrapper">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Satakunnankatu%2022%20F%2C%20katutaso%2C%2033210%20Tampere%2C%20Suomi%2C%20Tampere%2C%20Finland&language=fi"
+            width="100%"
+            height="380"
+            style="border:0;border-radius:16px;box-shadow:0 4px 24px rgba(45,26,46,0.12);display:block;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Studio Feel It Tampere sijainti kartalla">
+          </iframe>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- [9] FOOTER -->
+  <footer>
+    <div style="max-width:1200px;margin:0 auto;padding-inline:clamp(16px,5vw,48px);padding-block:48px 32px;">
+
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:32px;margin-bottom:40px;">
+
+        <div>
+          <img src="https://www.studiofeelit.fi/wp-content/uploads/2025/11/SFI_logo_beige-1024x554.png" alt="Studio Feel It logo" style="height:42px;object-fit:contain;margin-bottom:16px;filter:brightness(0) saturate(100%) invert(81%) sepia(28%) saturate(400%) hue-rotate(3deg) brightness(98%);" />
+          <p style="font-size:0.88rem;color:rgba(255,255,255,0.45);max-width:280px;line-height:1.7;">Yksityinen kauneuden- ja hyvinvointikeskus Tampereella ja Levillä vuodesta 2006.</p>
+        </div>
+
+        <div>
+          <div style="font-size:0.73rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:16px;">Yhteystiedot</div>
+          <div style="font-size:0.88rem;color:rgba(255,255,255,0.55);line-height:2;">
+            Satakunnankatu 22 F, katutaso<br/>
+            33210 Tampere, Suomi<br/>
+            <a href="tel:0404110096" style="color:rgba(255,255,255,0.7);text-decoration:none;">040 4110096</a>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:0.73rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:16px;">Aukioloajat</div>
+          <div style="font-size:0.88rem;color:rgba(255,255,255,0.55);line-height:2;">
+            Maanantai–Perjantai: 10–18<br/>
+            Lauantai: 10–16<br/>
+            Sunnuntai: Suljettu
+          </div>
+        </div>
+
+      </div>
+
+      <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span style="font-size:11px;color:rgba(255,255,255,0.22);">Day Spa Studio Feel It Tampere · Tampere, Suomi</span>
+        <span style="font-size:11px;color:rgba(255,255,255,0.22);">Demo luotu <a href="https://masasite.com" style="color:rgba(255,255,255,0.35);text-decoration:none;">masasite.com</a> palvelulla</span>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    // Lucide icons
+    lucide.createIcons();
+
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // Reveal on scroll
+    const revealEls = document.querySelectorAll('.reveal');
+
+    // Set stagger index
+    revealEls.forEach((el, i) => {
+      if (!el.style.getPropertyValue('--i')) {
+        el.style.setProperty('--i', i);
+      }
+    });
+
+    // Apply stagger delay only on card grids
+    document.querySelectorAll('.service-card.reveal, .review-card.reveal').forEach((card, i) => {
+      const idx = card.style.getPropertyValue('--i') || i;
+      card.style.transitionDelay = `calc(${idx} * 80ms)`;
+    });
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    revealEls.forEach(el => io.observe(el));
+
+    // Re-init icons after DOM is ready
+    window.addEventListener('load', () => {
+      lucide.createIcons();
+    });
+  </script>
+
+  <style>
+    /* Responsive: stack on mobile */
+    @media (max-width: 768px) {
+      #hours > div > div[style*="grid-template-columns:1fr 1fr"],
+      #contact > div > div[style*="grid-template-columns:1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+      }
+      .hidden-mobile {
+        display: none !important;
+      }
+    }
+    @media (max-width: 640px) {
+      section[style*="grid-template-columns:1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+      }
+    }
+  </style>
+
+</body>
+</html>
