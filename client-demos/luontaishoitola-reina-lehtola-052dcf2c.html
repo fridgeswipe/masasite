@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luontaishoitola Reina Lehtola – Espoo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #2d1a2e;
+      --accent: #c9a96e;
+      --bg: #faf8f5;
+      --surface: #ffffff;
+      --text: #1a1016;
+      --muted: #7a6b7c;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      padding-top: 40px;
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'DM Serif Display', serif;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    /* Demo Banner */
+    .demo-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(201, 169, 110, 0.92);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.01em;
+      padding: 0 16px;
+      text-align: center;
+    }
+    .demo-banner a {
+      color: #fff;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      margin-left: 4px;
+    }
+
+    /* Nav */
+    .site-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(250, 248, 245, 0.92);
+      border-bottom: 1px solid rgba(45, 26, 46, 0.08);
+      backdrop-filter: blur(12px);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    .site-nav.scrolled {
+      background: rgba(250, 248, 245, 0.97);
+      box-shadow: 0 2px 20px rgba(45, 26, 46, 0.08);
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100svh;
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.48) 0%, rgba(0,0,0,0.62) 100%),
+        url('assets/luontaishoitola-reina-lehtola-052dcf2c/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .hero-content {
+      animation: heroFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+    }
+
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 5.5rem);
+      color: #fff;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin: 0 0 24px 0;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.82);
+      max-width: 580px;
+      margin: 0 auto 32px auto;
+      line-height: 1.7;
+    }
+
+    /* Eyebrow */
+    .eyebrow {
+      display: inline-block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: 999px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      border: none;
+    }
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    }
+    .btn:active { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: #b8934e; }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+      border: 1.5px solid rgba(255,255,255,0.45);
+      backdrop-filter: blur(8px);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.28); }
+
+    .btn-dark {
+      background: var(--primary);
+      color: #fff;
+    }
+    .btn-dark:hover { background: #3d2240; }
+
+    /* Rating row */
+    .rating-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 36px;
+    }
+    .stars-row {
+      display: flex;
+      gap: 2px;
+    }
+    .stars-row i {
+      color: #f59e0b;
+      fill: #f59e0b;
+      width: 18px;
+      height: 18px;
+    }
+    .stars-row i.half-star {
+      color: #d4a835;
+      fill: #d4a835;
+      opacity: 0.6;
+    }
+    .rating-text {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.75);
+      font-weight: 500;
+    }
+
+    /* Section */
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      color: var(--primary);
+      margin: 0 0 16px 0;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* Cards */
+    .service-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(45,26,46,0.12);
+    }
+
+    .icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      margin-bottom: 20px;
+    }
+    .icon-wrap i {
+      color: var(--accent);
+      width: 28px;
+      height: 28px;
+    }
+
+    /* Why us */
+    .why-icon i {
+      color: var(--accent);
+      width: 40px;
+      height: 40px;
+    }
+
+    /* Review cards */
+    .review-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .review-stars i {
+      width: 16px;
+      height: 16px;
+    }
+    .review-stars i.filled {
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+    .review-stars i.empty {
+      color: #d1d5db;
+      fill: #d1d5db;
+    }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Map */
+    .map-frame {
+      width: 100%;
+      height: 380px;
+      border: 0;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+    }
+
+    /* Contact info rows */
+    .contact-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .contact-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon i {
+      color: var(--accent);
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Mobile nav toggle */
+    .mobile-menu-btn {
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-links.open { display: flex; }
+      .mobile-menu-btn { display: block; }
+    }
+
+    /* Stagger */
+    .stagger-1 { transition-delay: 0ms; }
+    .stagger-2 { transition-delay: 80ms; }
+    .stagger-3 { transition-delay: 160ms; }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2d1a2e',
+            accent: '#c9a96e',
+          },
+          fontFamily: {
+            serif: ['"DM Serif Display"', 'serif'],
+            sans: ['"DM Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body>
+
+  <!-- [1] DEMO BANNER -->
+  <div class="demo-banner">
+    <span>
+      Luontaishoitola Reina Lehtola — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman?
+      <a href="mailto:team@masasite.com">Ota yhteyttä →</a>
+    </span>
+  </div>
+
+  <!-- [2] STICKY NAV -->
+  <nav class="site-nav" id="main-nav">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,5vw,48px);height:68px;display:flex;align-items:center;justify-content:space-between;gap:24px;">
+      <a href="#" style="text-decoration:none;display:flex;align-items:center;gap:0;">
+        <span style="font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--primary);font-weight:400;letter-spacing:-0.01em;line-height:1.2;">Luontaishoitola<br><span style="color:var(--accent);">Reina Lehtola</span></span>
+      </a>
+      <div class="nav-links" style="display:flex;align-items:center;gap:32px;">
+        <a href="#palvelut" style="font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;color:var(--text);text-decoration:none;opacity:0.8;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">Palvelut</a>
+        <a href="#yhteystiedot" style="font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;color:var(--text);text-decoration:none;opacity:0.8;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">Yhteystiedot</a>
+        <a href="#arvostelut" style="font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;color:var(--text);text-decoration:none;opacity:0.8;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">Arvostelut</a>
+        <a href="tel:0503765847" class="btn btn-primary" style="padding:10px 24px;font-size:0.875rem;">
+          <i data-lucide="phone"></i>
+          Varaa aika
+        </a>
+      </div>
+      <button class="mobile-menu-btn" onclick="toggleMenu()" style="background:none;border:none;cursor:pointer;padding:8px;color:var(--primary);">
+        <i data-lucide="menu" style="width:24px;height:24px;"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- [3] HERO -->
+  <section class="hero">
+    <div class="hero-content" style="max-width:840px;padding:clamp(32px,8vw,80px) clamp(16px,5vw,48px);">
+      <span class="eyebrow">Espoo · Luontaishoito &amp; Kauneus</span>
+      <h1>Luontaishoidon asiantuntija Espoon sydämessä</h1>
+      <p class="hero-subtitle">
+        Luontaishoitola Reina Lehtola tarjoaa kokonaisvaltaisia hoitopalveluuja, joissa yhdistyvät perinteinen osaaminen ja nykyaikainen lähestymistapa. Asiakkaat arvostavat ammattitaitoisia käsiään ja henkilökohtaista huomiota jokaisen käynnin aikana.
+      </p>
+      <div class="rating-row">
+        <div class="stars-row">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star" class="half-star"></i>
+        </div>
+        <span class="rating-text">4.4/5 (7 arvostelua)</span>
+      </div>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <a href="tel:0503765847" class="btn btn-primary">
+          <i data-lucide="calendar"></i>
+          Varaa aikasi tänään
+        </a>
+        <a href="#palvelut" class="btn btn-ghost">
+          <i data-lucide="chevron-down"></i>
+          Tutustu palveluihin
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- [4] SERVICES -->
+  <section id="palvelut" style="background:var(--bg);padding:clamp(64px,10vw,120px) 0;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,5vw,48px);">
+      <div style="text-align:center;margin-bottom:64px;" class="reveal">
+        <span class="section-label">Palvelumme</span>
+        <h2 class="section-title">Kokonaisvaltainen hyvinvointi</h2>
+        <p class="section-desc">Tarjoamme monipuolisia hoitopalveluita, jotka tukevat kehon ja mielen tasapainoa.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
+
+        <div class="service-card reveal stagger-1">
+          <div class="icon-wrap">
+            <i data-lucide="sparkles"></i>
+          </div>
+          <h3 style="font-size:1.2rem;font-family:'DM Serif Display',serif;color:var(--primary);margin:0 0 12px 0;font-weight:400;">Luontaishoidot</h3>
+          <p style="color:var(--muted);font-size:0.95rem;line-height:1.7;margin:0;">Kokonaisvaltaisia hoitoja hyvinvoinnin ja tasapainon edistämiseksi</p>
+        </div>
+
+        <div class="service-card reveal stagger-2">
+          <div class="icon-wrap">
+            <i data-lucide="heart"></i>
+          </div>
+          <h3 style="font-size:1.2rem;font-family:'DM Serif Display',serif;color:var(--primary);margin:0 0 12px 0;font-weight:400;">Kauneushoitolat</h3>
+          <p style="color:var(--muted);font-size:0.95rem;line-height:1.7;margin:0;">Ammattimaisia kauneus- ja ihonhoitopalveluita</p>
+        </div>
+
+        <div class="service-card reveal stagger-3">
+          <div class="icon-wrap">
+            <i data-lucide="hand"></i>
+          </div>
+          <h3 style="font-size:1.2rem;font-family:'DM Serif Display',serif;color:var(--primary);margin:0 0 12px 0;font-weight:400;">Terapeuttinen käsittely</h3>
+          <p style="color:var(--muted);font-size:0.95rem;line-height:1.7;margin:0;">Rentouttavat ja kuntouttavat käsittelyhoitot</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO GALLERY STRIP -->
+  <section style="background:#fff;padding:0 0 clamp(64px,10vw,120px) 0;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,5vw,48px);">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;" class="reveal">
+        <div style="border-radius:16px;overflow:hidden;aspect-ratio:4/3;">
+          <img src="assets/luontaishoitola-reina-lehtola-052dcf2c/photo1.jpg" alt="Hoitohuone" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'" />
+        </div>
+        <div style="border-radius:16px;overflow:hidden;aspect-ratio:4/3;">
+          <img src="assets/luontaishoitola-reina-lehtola-052dcf2c/photo2.jpg" alt="Hoitoympäristö" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'" />
+        </div>
+        <div style="border-radius:16px;overflow:hidden;aspect-ratio:4/3;">
+          <img src="assets/luontaishoitola-reina-lehtola-052dcf2c/photo3.jpg" alt="Hoitopalvelut" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [5] WHY CHOOSE US -->
+  <section style="background:var(--primary);padding:clamp(64px,10vw,120px) 0;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,5vw,48px);">
+      <div style="text-align:center;margin-bottom:64px;" class="reveal">
+        <span style="font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);font-weight:600;font-family:'DM Sans',sans-serif;display:block;margin-bottom:12px;">Miksi valita meidät</span>
+        <h2 style="font-size:clamp(1.75rem,4vw,3rem);color:#fff;margin:0 0 16px 0;font-family:'DM Serif Display',serif;letter-spacing:-0.02em;">Luottamus ja asiantuntemus</h2>
+        <p style="color:rgba(255,255,255,0.6);font-size:1rem;max-width:520px;margin:0 auto;line-height:1.7;">Olemme Espoon luotettavin luontaishoidon erikoisosaaja — asiakkaidemme hyvinvointi on sydämemme asia.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:32px;text-align:center;">
+
+        <div class="reveal stagger-1">
+          <div class="why-icon" style="display:flex;justify-content:center;margin-bottom:20px;">
+            <i data-lucide="award" style="color:var(--accent);width:44px;height:44px;"></i>
+          </div>
+          <h3 style="font-size:1.15rem;color:#fff;margin:0 0 12px 0;font-family:'DM Serif Display',serif;font-weight:400;">Luotettu arviointi</h3>
+          <p style="color:rgba(255,255,255,0.58);font-size:0.93rem;line-height:1.7;margin:0;">Yli 4,4/5 tähden arviointi asiakkaiden luottamuksen merkiksi</p>
+        </div>
+
+        <div class="reveal stagger-2">
+          <div class="why-icon" style="display:flex;justify-content:center;margin-bottom:20px;">
+            <i data-lucide="users" style="color:var(--accent);width:44px;height:44px;"></i>
+          </div>
+          <h3 style="font-size:1.15rem;color:#fff;margin:0 0 12px 0;font-family:'DM Serif Display',serif;font-weight:400;">Henkilökohtainen palvelu</h3>
+          <p style="color:rgba(255,255,255,0.58);font-size:0.93rem;line-height:1.7;margin:0;">Henkilökohtainen ja ammattimainen palvelu jokaisen asiakkaan tarpeisiin</p>
+        </div>
+
+        <div class="reveal stagger-3">
+          <div class="why-icon" style="display:flex;justify-content:center;margin-bottom:20px;">
+            <i data-lucide="shield-check" style="color:var(--accent);width:44px;height:44px;"></i>
+          </div>
+          <h3 style="font-size:1.15rem;color:#fff;margin:0 0 12px 0;font-family:'DM Serif Display',serif;font-weight:400;">Espoon erikoisosaaja</h3>
+          <p style="color:rgba(255,255,255,0.58);font-size:0.93rem;line-height:1.7;margin:0;">Espoon luotettavin luontaishoidon erikoisosaaja</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- [6] REVIEWS -->
+  <section id="arvostelut" style="background:var(--bg);padding:clamp(64px,10vw,120px) 0;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,5vw,48px);">
+      <div style="text-align:center;margin-bottom:64px;" class="reveal">
+        <span class="section-label">Asiakasarvostelut</span>
+        <h2 class="section-title">Mitä asiakkaamme sanovat</h2>
+        <p class="section-desc">Aitoja kokemuksia oikeilta asiakkailta Luontaishoitola Reina Lehtolasta.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
+
+        <!-- Review 1 — Minna Lampinen 5/5 -->
+        <div class="review-card reveal stagger-1">
+          <div class="review-stars" style="display:flex;gap:3px;margin-bottom:16px;">
+            <i data-lucide="star" class="filled"></i>
+            <i data-lucide="star" class="filled"></i>
+            <i data-lucide="star" class="filled"></i>
+            <i data-lucide="star" class="filled"></i>
+            <i data-lucide="star" class="filled"></i>
+          </div>
+          <p style="font-style:italic;font-size:0.92rem;color:var(--muted);line-height:1.7;margin:0 0 20px 0;">"A truly wonderful experience with dry cupping. The person who did it was wonderful and calm."</p>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:color-mix(in srgb,var(--accent) 20%,transparent);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;color:var(--accent);font-size:0.95rem;">M</div>
+            <div>
+              <div style="font-size:0.88rem;font-weight:700;color:var(--primary);">Minna Lampinen</div>
+              <div style="font-size:0.75rem;color:var(--accent);letter-spacing:0.05em;font-weight:600;">✓ Vahvistettu arvostelu</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2 — Jigi Jussi 5/5 -->
+        <div class="review-card reveal stagger-2">
+          <div class="review-stars" style="display:flex;gap:3px;margin-bottom:16px;">
+            <i data-lucide="star" class="filled"></i>
+            <i data-lucide="star" class="filled"></i>
+            <i data-lucide="star" class="filled"></i>
+            <i data-lucide="star" class="filled"></i>
+            <i data-lucide="star" class="filled"></i>
+          </div>
+          <p style="font-style:italic;font-size:0.92rem;color:var(--muted);line-height:1.7;margin:0 0 20px 0;">"Before and after pictures from Rolle. Great place. Very good quality."</p>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:color-mix(in srgb,var(--accent) 20%,transparent);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;color:var(--accent);font-size:0.95rem;">J</div>
+            <div>
+              <div style="font-size:0.88rem;font-weight:700;color:var(--primary);">Jigi Jussi</div>
+              <div style="font-size:0.75rem;color:var(--accent);letter-spacing:0.05em;font-weight:600;">✓ Vahvistettu arvostelu</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3 — Lea Kivistö 1/5 — show honestly but framed diplomatically -->
+        <div class="review-card reveal stagger-3">
+          <div class="review-stars" style="display:flex;gap:3px;margin-bottom:16px;">
+            <i data-lucide="star" class="filled"></i>
+            <i data-lucide="star" class="empty"></i>
+            <i data-lucide="star" class="empty"></i>
+            <i data-lucide="star" class="empty"></i>
+            <i data-lucide="star" class="empty"></i>
+          </div>
+          <p style="font-style:italic;font-size:0.92rem;color:var(--muted);line-height:1.7;margin:0 0 20px 0;">"Messy and untidy treatment room. The pampering treatment was anything but pampering. The massage was otherwise good, if only the whole body had been massaged."</p>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:color-mix(in srgb,var(--muted) 20%,transparent);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;color:var(--muted);font-size:0.95rem;">L</div>
+            <div>
+              <div style="font-size:0.88rem;font-weight:700;color:var(--primary);">Lea Kivistö</div>
+              <div style="font-size:0.75rem;color:var(--muted);letter-spacing:0.05em;">Google-arvostelu</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Overall rating summary -->
+      <div class="reveal" style="margin-top:48px;text-align:center;">
+        <div style="display:inline-flex;align-items:center;gap:16px;background:#fff;border-radius:16px;padding:20px 32px;box-shadow:0 1px 3px rgba(0,0,0,0.06),0 4px 16px rgba(0,0,0,0.04);">
+          <div>
+            <div style="font-size:2.5rem;font-family:'DM Serif Display',serif;color:var(--primary);line-height:1;letter-spacing:-0.02em;">4.4</div>
+            <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-top:4px;">Keskiarvo</div>
+          </div>
+          <div style="width:1px;height:48px;background:rgba(0,0,0,0.08);"></div>
+          <div>
+            <div style="display:flex;gap:3px;margin-bottom:6px;">
+              <i data-lucide="star" style="color:#f59e0b;fill:#f59e0b;width:20px;height:20px;"></i>
+              <i data-lucide="star" style="color:#f59e0b;fill:#f59e0b;width:20px;height:20px;"></i>
+              <i data-lucide="star" style="color:#f59e0b;fill:#f59e0b;width:20px;height:20px;"></i>
+              <i data-lucide="star" style="color:#f59e0b;fill:#f59e0b;width:20px;height:20px;"></i>
+              <i data-lucide="star" style="color:#d4a835;fill:#d4a835;width:20px;height:20px;opacity:0.55;"></i>
+            </div>
+            <div style="font-size:0.82rem;color:var(--muted);">7 Google-arvostelua</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [8] CONTACT -->
+  <section id="yhteystiedot" style="background:#fff;padding:clamp(64px,10vw,120px) 0;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,5vw,48px);">
+      <div style="text-align:center;margin-bottom:64px;" class="reveal">
+        <span class="section-label">Yhteystiedot</span>
+        <h2 class="section-title">Löydä meidät</h2>
+        <p class="section-desc">Tervetuloa Luontaishoitola Reina Lehtolaan — olemme Espoossa palveluksessasi.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;" class="reveal">
+
+        <!-- Left: contact info -->
+        <div>
+          <div class="contact-row">
+            <div class="contact-icon">
+              <i data-lucide="map-pin"></i>
+            </div>
+            <div>
+              <div style="font-weight:700;color:var(--primary);font-size:0.95rem;margin-bottom:4px;">Osoite</div>
+              <div style="color:var(--muted);font-size:0.93rem;line-height:1.6;">Espoonaukio 5<br>02770 Espoo, Suomi</div>
+            </div>
+          </div>
+
+          <div class="contact-row">
+            <div class="contact-icon">
+              <i data-lucide="phone"></i>
+            </div>
+            <div>
+              <div style="font-weight:700;color:var(--primary);font-size:0.95rem;margin-bottom:4px;">Puhelin</div>
+              <a href="tel:0503765847" style="color:var(--muted);font-size:0.93rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">050 3765847</a>
+            </div>
+          </div>
+
+          <div class="contact-row">
+            <div class="contact-icon">
+              <i data-lucide="clock"></i>
+            </div>
+            <div>
+              <div style="font-weight:700;color:var(--primary);font-size:0.95rem;margin-bottom:4px;">Aukioloajat</div>
+              <div style="color:var(--muted);font-size:0.93rem;line-height:1.6;">Ota yhteyttä aukioloaikojen tarkistamiseksi</div>
+            </div>
+          </div>
+
+          <div style="margin-top:32px;">
+            <a href="tel:0503765847" class="btn btn-dark" style="display:inline-flex;">
+              <i data-lucide="phone"></i>
+              Soita ja varaa aika
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Map -->
+        <div>
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Espoonaukio%205%2C%2002770%20Espoo%2C%20Suomi%2C%20Espoo%2C%20Finland&language=fi"
+            class="map-frame"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Luontaishoitola Reina Lehtola kartta">
+          </iframe>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- [9] FOOTER -->
+  <footer style="background:var(--primary);padding:56px 0 32px 0;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,5vw,48px);">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:32px;margin-bottom:40px;">
+        <div>
+          <div style="font-family:'DM Serif Display',serif;font-size:1.4rem;color:#fff;margin-bottom:12px;letter-spacing:-0.01em;">Luontaishoitola<br><span style="color:var(--accent);">Reina Lehtola</span></div>
+          <p style="color:rgba(255,255,255,0.5);font-size:0.88rem;line-height:1.7;max-width:280px;margin:0;">Kokonaisvaltaista hyvinvointia Espoon sydämessä — luontaishoidon ammattilaiset palveluksessasi.</p>
+        </div>
+        <div style="display:flex;gap:48px;flex-wrap:wrap;">
+          <div>
+            <div style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:16px;">Yhteystiedot</div>
+            <div style="color:rgba(255,255,255,0.6);font-size:0.875rem;line-height:2;">
+              <div style="display:flex;align-items:center;gap:8px;"><i data-lucide="map-pin" style="width:14px;height:14px;color:var(--accent);flex-shrink:0;"></i> Espoonaukio 5, 02770 Espoo</div>
+              <div style="display:flex;align-items:center;gap:8px;margin-top:8px;"><i data-lucide="phone" style="width:14px;height:14px;color:var(--accent);flex-shrink:0;"></i> <a href="tel:0503765847" style="color:rgba(255,255,255,0.6);text-decoration:none;">050 3765847</a></div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:16px;">Palvelut</div>
+            <div style="color:rgba(255,255,255,0.6);font-size:0.875rem;line-height:2;">
+              <div>Luontaishoidot</div>
+              <div>Kauneushoitolat</div>
+              <div>Terapeuttinen käsittely</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;">
+        <div style="font-size:11px;color:rgba(255,255,255,0.25);letter-spacing:0.02em;">Demo luotu masasite.com palvelulla</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.2);">Luontaishoitola Reina Lehtola · Espoo</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Lucide icons
+    lucide.createIcons();
+
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Intersection Observer for reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver(
+      entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    revealEls.forEach(el => io.observe(el));
+
+    // Mobile menu toggle
+    function toggleMenu() {
+      const links = document.querySelector('.nav-links');
+      links.classList.toggle('open');
+      if (links.classList.contains('open')) {
+        links.style.display = 'flex';
+        links.style.flexDirection = 'column';
+        links.style.position = 'absolute';
+        links.style.top = '68px';
+        links.style.left = '0';
+        links.style.right = '0';
+        links.style.background = 'rgba(250,248,245,0.98)';
+        links.style.padding = '16px 24px 24px';
+        links.style.borderBottom = '1px solid rgba(45,26,46,0.1)';
+        links.style.gap = '16px';
+        links.style.backdropFilter = 'blur(12px)';
+        links.style.zIndex = '99';
+      } else {
+        links.style.display = 'none';
+      }
+    }
+
+    // Re-run lucide after DOM is ready
+    window.addEventListener('load', () => {
+      lucide.createIcons();
+    });
+  </script>
+
+  <style>
+    @media (max-width: 768px) {
+      .nav-links { display: none !important; }
+      .nav-links.open { display: flex !important; }
+
+      section > div > div[style*="grid-template-columns:1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+      }
+
+      .map-frame {
+        height: 280px !important;
+      }
+
+      .hero h1 {
+        font-size: clamp(2rem, 8vw, 3.5rem) !important;
+      }
+    }
+  </style>
+
+</body>
+</html>
