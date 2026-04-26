@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ToDay Spa – Kauneusterapia Tampere</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #2d1a2e;
+    --accent: #c9a96e;
+    --bg: #faf8f5;
+    --surface: #ffffff;
+    --text: #1a1014;
+    --muted: #7a6b7c;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    padding-top: 40px;
+    font-family: 'DM Sans', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 1rem;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'DM Serif Display', serif;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  /* Demo Banner */
+  .demo-banner {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    height: 40px;
+    background: rgba(201, 169, 110, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: #fff;
+    letter-spacing: 0.02em;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .demo-banner a {
+    color: #fff;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    margin-left: 4px;
+  }
+  .demo-banner a:hover { opacity: 0.8; }
+
+  /* Nav */
+  .nav {
+    position: sticky;
+    top: 40px;
+    z-index: 100;
+    background: rgba(250, 248, 245, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(45, 26, 46, 0.08);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+  .nav.scrolled {
+    background: rgba(250, 248, 245, 0.96);
+    box-shadow: 0 2px 24px rgba(45, 26, 46, 0.08);
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 100svh;
+    background-image:
+      linear-gradient(to bottom, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.65) 100%),
+      url('assets/today-spa-ca39bb1c/photo1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: clamp(64px, 10vw, 120px) clamp(16px, 5vw, 48px);
+  }
+
+  @keyframes heroFadeUp {
+    from { opacity: 0; transform: translateY(48px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-content {
+    animation: heroFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+    max-width: 840px;
+    width: 100%;
+  }
+
+  .eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.4rem, 6vw, 5rem);
+    color: #fff;
+    font-family: 'DM Serif Display', serif;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+
+  .hero p {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: rgba(255,255,255,0.82);
+    max-width: 600px;
+    margin: 0 auto 32px;
+    line-height: 1.7;
+  }
+
+  /* Stars */
+  .star-icon {
+    color: #f59e0b;
+    fill: #f59e0b;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 14px 32px;
+    border-radius: 100px;
+    text-decoration: none;
+    border: 2px solid var(--accent);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(201, 169, 110, 0.38);
+    background: #b8935a;
+    border-color: #b8935a;
+  }
+  .btn-primary:active { transform: translateY(-1px); }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 14px 32px;
+    border-radius: 100px;
+    text-decoration: none;
+    border: 2px solid rgba(255,255,255,0.45);
+    backdrop-filter: blur(8px);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-ghost:hover {
+    transform: translateY(-3px);
+    background: rgba(255,255,255,0.22);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  }
+  .btn-ghost:active { transform: translateY(-1px); }
+
+  /* Reveal animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Service Cards */
+  .service-card {
+    background: var(--surface);
+    border-radius: 20px;
+    padding: 36px 32px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+    border: 1px solid rgba(45, 26, 46, 0.06);
+  }
+  .service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 32px rgba(45, 26, 46, 0.12);
+  }
+
+  .icon-wrap {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: var(--accent);
+  }
+
+  /* Why us */
+  .why-card {
+    text-align: center;
+    padding: 40px 32px;
+  }
+
+  /* Review cards */
+  .review-card {
+    background: var(--surface);
+    border-radius: 20px;
+    padding: 32px 28px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 20px rgba(0,0,0,0.05);
+    border: 1px solid rgba(45, 26, 46, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Hours */
+  .hours-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(45, 26, 46, 0.07);
+    font-size: 0.95rem;
+  }
+  .hours-row:last-child { border-bottom: none; }
+  .hours-row .day { color: var(--muted); font-weight: 500; }
+  .hours-row .time { color: var(--text); font-weight: 600; }
+  .hours-row .closed { color: #c0a0b0; font-weight: 500; }
+
+  /* Section title */
+  .section-title {
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    font-family: 'DM Serif Display', serif;
+    color: var(--primary);
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  /* Contact info item */
+  .contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .contact-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--accent);
+  }
+
+  /* Footer */
+  .footer {
+    background: var(--primary);
+  }
+
+  /* Mobile nav */
+  .mobile-cta {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .mobile-cta { display: flex; }
+    .hero h1 { font-size: clamp(2rem, 7vw, 3rem); }
+    .btn-primary, .btn-ghost { padding: 12px 22px; font-size: 0.875rem; }
+    .why-card { padding: 28px 16px; }
+  }
+
+  /* Stagger utility */
+  .stagger-1 { transition-delay: 80ms; }
+  .stagger-2 { transition-delay: 160ms; }
+  .stagger-3 { transition-delay: 240ms; }
+
+  /* Verified badge */
+  .verified-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.7rem;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    padding: 2px 8px;
+    border-radius: 100px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ DEMO BANNER ═══════════════════════════════ -->
+<div class="demo-banner">
+  <span>ToDay Spa — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman? <a href="mailto:team@masasite.com">Ota yhteyttä →</a></span>
+</div>
+
+<!-- ═══════════════════════════════ NAV ═══════════════════════════════ -->
+<nav class="nav" id="main-nav">
+  <div style="max-width:1200px; margin:0 auto; padding: 0 clamp(16px, 5vw, 48px); height:72px; display:flex; align-items:center; justify-content:space-between; gap:24px;">
+    <!-- Logo -->
+    <a href="#" style="flex-shrink:0;">
+      <img src="https://todayspa.fi/wp-content/uploads/2020/05/logo_musta.jpg" alt="ToDay Spa logo" style="height:38px; width:auto; object-fit:contain; display:block;">
+    </a>
+
+    <!-- Nav links -->
+    <div class="nav-links" style="display:flex; align-items:center; gap:36px;">
+      <a href="#palvelut" style="font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:500; color:var(--primary); text-decoration:none; letter-spacing:0.01em; opacity:0.85; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">Palvelut</a>
+      <a href="#aukioloajat" style="font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:500; color:var(--primary); text-decoration:none; letter-spacing:0.01em; opacity:0.85; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">Aukioloajat</a>
+      <a href="#yhteystiedot" style="font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:500; color:var(--primary); text-decoration:none; letter-spacing:0.01em; opacity:0.85; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">Yhteystiedot</a>
+    </div>
+
+    <!-- CTA -->
+    <div style="display:flex; align-items:center; gap:16px;">
+      <a href="tel:0401272080" class="mobile-cta" style="align-items:center; gap:6px; color:var(--primary); font-weight:600; font-size:0.85rem; text-decoration:none; font-family:'DM Sans',sans-serif;">
+        <i data-lucide="phone" style="width:16px;height:16px;"></i>
+      </a>
+      <a href="#yhteystiedot" class="btn-primary" style="background:var(--primary); border-color:var(--primary); font-size:0.85rem; padding:11px 24px;">
+        Varaa aika
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <span class="eyebrow">Kauneusterapia · Tampere</span>
+    <h1>Sinulla on vain yksi iho.<br>Hoida sitä ammattilaisesti.</h1>
+    <p>ToDay Spa on Tampereen huippuarvostelujen kauneusterapia, jossa neljässä hoitohuoneessa toteutetaan huolella valittuja, tutkittuja hoitoja. Ammattilaisemme käyttävät alansa parhaita tuotteita ja menetelmiä ihosi ja kehosi tarpeisiin sopiviin hoitoihin.</p>
+
+    <!-- Rating -->
+    <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:36px;">
+      <div style="display:flex; gap:3px;">
+        <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+        <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+        <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+        <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+        <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+      </div>
+      <span style="color:rgba(255,255,255,0.9); font-size:0.9rem; font-weight:500; font-family:'DM Sans',sans-serif;">4.9/5 · 185 Google-arvostelua</span>
+    </div>
+
+    <!-- CTAs -->
+    <div style="display:flex; flex-wrap:wrap; gap:14px; align-items:center; justify-content:center;">
+      <a href="http://www.todayspa.fi/" target="_blank" class="btn-primary">
+        <i data-lucide="calendar" style="width:16px;height:16px;"></i>
+        Varaa hoitoaika nyt
+      </a>
+      <a href="#palvelut" class="btn-ghost">
+        Tutustu palveluihin
+        <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ SERVICES ═══════════════════════════════ -->
+<section id="palvelut" style="background:#faf8f5; padding: clamp(64px, 10vw, 120px) 0;">
+  <div style="max-width:1200px; margin:0 auto; padding-inline: clamp(16px, 5vw, 48px);">
+    <!-- Section header -->
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <span class="section-label">Palvelumme</span>
+      <h2 class="section-title">Kaikki ihonhoidon tarpeisiisi</h2>
+      <p style="color:var(--muted); max-width:520px; margin:0 auto; font-size:1rem; line-height:1.7;">Tarjoamme laajan valikoiman ammattitasoisesti toteutettuja hoitoja jokaisen ihonhoidon tarpeeseen.</p>
+    </div>
+
+    <!-- Cards grid -->
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:24px;">
+
+      <div class="service-card reveal stagger-1">
+        <div class="icon-wrap">
+          <i data-lucide="sparkles" style="width:28px;height:28px;"></i>
+        </div>
+        <h3 style="font-family:'DM Serif Display',serif; font-size:1.25rem; color:var(--primary); margin-bottom:10px; font-weight:400;">Kasvohoitot</h3>
+        <p style="color:var(--muted); font-size:0.92rem; line-height:1.7;">Ammattilaisten tekemät kasvohoidot ihosi tyypin ja tarpeiden mukaisesti.</p>
+      </div>
+
+      <div class="service-card reveal stagger-2">
+        <div class="icon-wrap">
+          <i data-lucide="heart" style="width:28px;height:28px;"></i>
+        </div>
+        <h3 style="font-family:'DM Serif Display',serif; font-size:1.25rem; color:var(--primary); margin-bottom:10px; font-weight:400;">Ruumiinhoitot</h3>
+        <p style="color:var(--muted); font-size:0.92rem; line-height:1.7;">Rentouttavat ja kunnostavat ruumiin hoitokuurit kehosi hyvinvointiin.</p>
+      </div>
+
+      <div class="service-card reveal stagger-3">
+        <div class="icon-wrap">
+          <i data-lucide="scissors" style="width:28px;height:28px;"></i>
+        </div>
+        <h3 style="font-family:'DM Serif Display',serif; font-size:1.25rem; color:var(--primary); margin-bottom:10px; font-weight:400;">Kynsi- ja meikki-palvelut</h3>
+        <p style="color:var(--muted); font-size:0.92rem; line-height:1.7;">Laadukkaiden kynsien hoito ja ammattimeikki huolella ja taidolla.</p>
+      </div>
+
+      <div class="service-card reveal" style="transition-delay:320ms;">
+        <div class="icon-wrap">
+          <i data-lucide="shopping-bag" style="width:28px;height:28px;"></i>
+        </div>
+        <h3 style="font-family:'DM Serif Display',serif; font-size:1.25rem; color:var(--primary); margin-bottom:10px; font-weight:400;">Kosmetiikkatuotteet</h3>
+        <p style="color:var(--muted); font-size:0.92rem; line-height:1.7;">Professionaalisten brändien kotihoitotuotteet suoraan hoitolasta.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ GALLERY STRIP ═══════════════════════════════ -->
+<div style="display:grid; grid-template-columns: 1fr 1fr; height: clamp(240px, 40vw, 480px); overflow:hidden;">
+  <div style="background-image:url('assets/today-spa-ca39bb1c/photo2.jpg'); background-size:cover; background-position:center;"></div>
+  <div style="background-image:url('assets/today-spa-ca39bb1c/photo3.jpg'); background-size:cover; background-position:center;"></div>
+</div>
+
+<!-- ═══════════════════════════════ WHY CHOOSE US ═══════════════════════════════ -->
+<section style="background:var(--surface); padding: clamp(64px, 10vw, 120px) 0;">
+  <div style="max-width:1200px; margin:0 auto; padding-inline: clamp(16px, 5vw, 48px);">
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <span class="section-label">Miksi valita meidät</span>
+      <h2 class="section-title">Enemmän kuin tavallinen spa</h2>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:8px;">
+
+      <div class="why-card reveal stagger-1">
+        <div style="width:64px; height:64px; border-radius:20px; background:color-mix(in srgb, var(--accent) 12%, transparent); display:flex; align-items:center; justify-content:center; margin:0 auto 24px; color:var(--accent);">
+          <i data-lucide="layout-grid" style="width:32px;height:32px;"></i>
+        </div>
+        <h3 style="font-family:'DM Serif Display',serif; font-size:1.2rem; color:var(--primary); margin-bottom:12px; font-weight:400;">Neljä hoitohuonetta</h3>
+        <p style="color:var(--muted); font-size:0.9rem; line-height:1.7; max-width:280px; margin:0 auto;">Neljä hoitohuonetta mahdollistaa nopeamman ajanvaraamisen ilman pitkiä odotusaikoja.</p>
+      </div>
+
+      <div class="why-card reveal stagger-2">
+        <div style="width:64px; height:64px; border-radius:20px; background:color-mix(in srgb, var(--accent) 12%, transparent); display:flex; align-items:center; justify-content:center; margin:0 auto 24px; color:var(--accent);">
+          <i data-lucide="award" style="width:32px;height:32px;"></i>
+        </div>
+        <h3 style="font-family:'DM Serif Display',serif; font-size:1.2rem; color:var(--primary); margin-bottom:12px; font-weight:400;">Luksustason puitteet</h3>
+        <p style="color:var(--muted); font-size:0.9rem; line-height:1.7; max-width:280px; margin:0 auto;">Luksusvälineistetty spa-tila suihkuineen ja ylellisinä välineinä täydellisen kokemuksen takaamiseksi.</p>
+      </div>
+
+      <div class="why-card reveal stagger-3">
+        <div style="width:64px; height:64px; border-radius:20px; background:color-mix(in srgb, var(--accent) 12%, transparent); display:flex; align-items:center; justify-content:center; margin:0 auto 24px; color:var(--accent);">
+          <i data-lucide="map-pin" style="width:32px;height:32px;"></i>
+        </div>
+        <h3 style="font-family:'DM Serif Display',serif; font-size:1.2rem; color:var(--primary); margin-bottom:12px; font-weight:400;">Helppo saavuttaa</h3>
+        <p style="color:var(--muted); font-size:0.9rem; line-height:1.7; max-width:280px; margin:0 auto;">Esteetön pääsy ja hyvät pysäköintivaihtoehdot Finlaysonin historiallisella alueella.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ REVIEWS ═══════════════════════════════ -->
+<section style="background:#faf8f5; padding: clamp(64px, 10vw, 120px) 0;">
+  <div style="max-width:1200px; margin:0 auto; padding-inline: clamp(16px, 5vw, 48px);">
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <span class="section-label">Asiakaskokemukset</span>
+      <h2 class="section-title">Mitä asiakkaamme sanovat</h2>
+      <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-top:16px;">
+        <div style="display:flex; gap:3px;">
+          <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+        </div>
+        <span style="color:var(--muted); font-size:0.9rem; font-weight:500;">4.9/5 · 185 arvostelua Googlessa</span>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:24px;">
+
+      <!-- Review 1 -->
+      <div class="review-card reveal stagger-1">
+        <div style="display:flex; gap:3px;">
+          <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+        </div>
+        <p style="font-style:italic; color:var(--muted); font-size:0.92rem; line-height:1.72; flex:1;">"I enjoyed the hot stone massage, it was so relaxing"</p>
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <div>
+            <p style="font-weight:700; font-size:0.87rem; color:var(--primary);">Mutale Chilufya</p>
+            <p style="font-size:0.75rem; color:var(--muted);">Google-arvostelu</p>
+          </div>
+          <span class="verified-badge">
+            <i data-lucide="check-circle" style="width:10px;height:10px;"></i>
+            Vahvistettu
+          </span>
+        </div>
+      </div>
+
+      <!-- Review 2 -->
+      <div class="review-card reveal stagger-2">
+        <div style="display:flex; gap:3px;">
+          <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+        </div>
+        <p style="font-style:italic; color:var(--muted); font-size:0.92rem; line-height:1.72; flex:1;">"Great service with super professional staff and high quality products."</p>
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <div>
+            <p style="font-weight:700; font-size:0.87rem; color:var(--primary);">Afrooz Darooeizadeh</p>
+            <p style="font-size:0.75rem; color:var(--muted);">Google-arvostelu</p>
+          </div>
+          <span class="verified-badge">
+            <i data-lucide="check-circle" style="width:10px;height:10px;"></i>
+            Vahvistettu
+          </span>
+        </div>
+      </div>
+
+      <!-- Review 3 -->
+      <div class="review-card reveal stagger-3">
+        <div style="display:flex; gap:3px;">
+          <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+        </div>
+        <p style="font-style:italic; color:var(--muted); font-size:0.92rem; line-height:1.72; flex:1;">"Best spa-experience in town!"</p>
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <div>
+            <p style="font-weight:700; font-size:0.87rem; color:var(--primary);">Salomaa Tommi</p>
+            <p style="font-size:0.75rem; color:var(--muted);">Google-arvostelu</p>
+          </div>
+          <span class="verified-badge">
+            <i data-lucide="check-circle" style="width:10px;height:10px;"></i>
+            Vahvistettu
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ OPENING HOURS ═══════════════════════════════ -->
+<section id="aukioloajat" style="background:var(--surface); padding: clamp(64px, 10vw, 120px) 0;">
+  <div style="max-width:1200px; margin:0 auto; padding-inline: clamp(16px, 5vw, 48px);">
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:64px; align-items:center;">
+
+      <!-- Text side -->
+      <div class="reveal">
+        <span class="section-label">Aukioloajat</span>
+        <h2 class="section-title" style="margin-bottom:12px;">Milloin olemme<br>paikalla sinulle?</h2>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.72; margin-bottom:32px;">Otamme sinut vastaan arkisin — varaa aika etukäteen varmistaaksesi haluamasi ajankohdan.</p>
+        <a href="http://www.todayspa.fi/" target="_blank" class="btn-primary" style="background:var(--primary); border-color:var(--primary);">
+          <i data-lucide="calendar" style="width:16px;height:16px;"></i>
+          Varaa hoitoaika
+        </a>
+      </div>
+
+      <!-- Hours card -->
+      <div class="reveal stagger-1">
+        <div style="background:#faf8f5; border-radius:20px; padding:36px 40px; border:1px solid rgba(45,26,46,0.07);">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:24px;">
+            <div style="color:var(--accent);">
+              <i data-lucide="clock" style="width:20px;height:20px;"></i>
+            </div>
+            <span style="font-weight:700; font-size:0.9rem; color:var(--primary); letter-spacing:0.04em; text-transform:uppercase; font-family:'DM Sans',sans-serif;">Aukioloajat</span>
+          </div>
+
+          <div class="hours-row">
+            <span class="day">Maanantai</span>
+            <span class="time">10:00 – 18:00</span>
+          </div>
+          <div class="hours-row">
+            <span class="day">Tiistai</span>
+            <span class="time">10:00 – 18:00</span>
+          </div>
+          <div class="hours-row">
+            <span class="day">Keskiviikko</span>
+            <span class="time">10:00 – 18:00</span>
+          </div>
+          <div class="hours-row">
+            <span class="day">Torstai</span>
+            <span class="time">10:00 – 18:00</span>
+          </div>
+          <div class="hours-row">
+            <span class="day">Perjantai</span>
+            <span class="time">10:00 – 18:00</span>
+          </div>
+          <div class="hours-row">
+            <span class="day">Lauantai</span>
+            <span class="closed">Suljettu</span>
+          </div>
+          <div class="hours-row">
+            <span class="day">Sunnuntai</span>
+            <span class="closed">Suljettu</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ CONTACT ═══════════════════════════════ -->
+<section id="yhteystiedot" style="background:#faf8f5; padding: clamp(64px, 10vw, 120px) 0;">
+  <div style="max-width:1200px; margin:0 auto; padding-inline: clamp(16px, 5vw, 48px);">
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <span class="section-label">Yhteystiedot</span>
+      <h2 class="section-title">Löydä meidät Tampereelta</h2>
+    </div>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:48px; align-items:start;">
+
+      <!-- Contact info -->
+      <div class="reveal">
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i data-lucide="map-pin" style="width:20px;height:20px;"></i>
+          </div>
+          <div>
+            <p style="font-weight:700; font-size:0.9rem; color:var(--primary); margin-bottom:4px;">Osoite</p>
+            <p style="color:var(--muted); font-size:0.9rem; line-height:1.6;">Kuninkaankatu 5<br>33210 Tampere, Suomi<br><em style="font-size:0.82rem;">Finlaysonin alue</em></p>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i data-lucide="phone" style="width:20px;height:20px;"></i>
+          </div>
+          <div>
+            <p style="font-weight:700; font-size:0.9rem; color:var(--primary); margin-bottom:4px;">Puhelin</p>
+            <a href="tel:0401272080" style="color:var(--muted); font-size:0.9rem; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">040 1272080</a>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i data-lucide="globe" style="width:20px;height:20px;"></i>
+          </div>
+          <div>
+            <p style="font-weight:700; font-size:0.9rem; color:var(--primary); margin-bottom:4px;">Verkkosivu</p>
+            <a href="http://www.todayspa.fi/" target="_blank" style="color:var(--muted); font-size:0.9rem; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">www.todayspa.fi</a>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i data-lucide="clock" style="width:20px;height:20px;"></i>
+          </div>
+          <div>
+            <p style="font-weight:700; font-size:0.9rem; color:var(--primary); margin-bottom:4px;">Aukioloajat</p>
+            <p style="color:var(--muted); font-size:0.9rem; line-height:1.6;">Ma–Pe: 10:00–18:00<br>La–Su: Suljettu</p>
+          </div>
+        </div>
+
+        <div style="margin-top:8px;">
+          <a href="http://www.todayspa.fi/" target="_blank" class="btn-primary" style="background:var(--primary); border-color:var(--primary);">
+            <i data-lucide="calendar" style="width:16px;height:16px;"></i>
+            Varaa hoitoaika nyt
+          </a>
+        </div>
+      </div>
+
+      <!-- Map -->
+      <div class="reveal stagger-1">
+        <iframe
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Kuninkaankatu%205%2C%2033210%20Tampere%2C%20Suomi%2C%20Tampere%2C%20Finland&language=fi"
+          width="100%"
+          height="380"
+          style="border:0; border-radius:20px; display:block; box-shadow:0 4px 24px rgba(45,26,46,0.1);"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
+<footer class="footer" style="padding: 56px 0 32px;">
+  <div style="max-width:1200px; margin:0 auto; padding-inline: clamp(16px, 5vw, 48px);">
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:40px; margin-bottom:40px; align-items:start;">
+
+      <!-- Brand -->
+      <div>
+        <img src="https://todayspa.fi/wp-content/uploads/2020/05/logo_musta.jpg" alt="ToDay Spa" style="height:36px; width:auto; object-fit:contain; margin-bottom:16px; filter:brightness(0) invert(1) opacity(0.9);">
+        <p style="color:rgba(255,255,255,0.55); font-size:0.88rem; line-height:1.7; max-width:300px;">Tampereen huippuarvostelujen kauneusterapia. Neljä hoitohuonetta, ammattitaitoiset terapeutit.</p>
+      </div>
+
+      <!-- Info -->
+      <div style="text-align:right;">
+        <p style="color:rgba(255,255,255,0.85); font-size:0.9rem; font-weight:600; margin-bottom:8px;">ToDay Spa</p>
+        <p style="color:rgba(255,255,255,0.5); font-size:0.85rem; line-height:1.8;">
+          Kuninkaankatu 5, 33210 Tampere<br>
+          <a href="tel:0401272080" style="color:rgba(255,255,255,0.5); text-decoration:none;">040 1272080</a><br>
+          <a href="http://www.todayspa.fi/" target="_blank" style="color:rgba(255,255,255,0.5); text-decoration:none;">www.todayspa.fi</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Bottom -->
+    <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:24px; display:flex; align-items:center; justify-content:center;">
+      <p style="font-size:11px; color:rgba(255,255,255,0.25); letter-spacing:0.04em; font-family:'DM Sans',sans-serif;">Demo luotu masasite.com palvelulla</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════ SCRIPTS ═══════════════════════════════ -->
+<script>
+  // Lucide icons
+  lucide.createIcons();
+
+  // Nav scroll effect
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }, { passive: true });
+
+  // Reveal on scroll
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    }),
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Mobile responsive: stack grid to single column
+  function checkMobile() {
+    const isMobile = window.innerWidth < 768;
+    document.querySelectorAll('[data-mobile-stack]').forEach(el => {
+      if (isMobile) {
+        el.style.gridTemplateColumns = '1fr';
+      } else {
+        el.style.gridTemplateColumns = '';
+      }
+    });
+  }
+
+  // Hours section responsive
+  const hoursGrid = document.querySelector('#aukioloajat > div > div');
+  const contactGrid = document.querySelector('#yhteystiedot > div > div:last-child');
+
+  function handleResize() {
+    const isMobile = window.innerWidth < 768;
+    if (hoursGrid) {
+      hoursGrid.style.gridTemplateColumns = isMobile ? '1fr' : '1fr 1fr';
+    }
+    if (contactGrid) {
+      contactGrid.style.gridTemplateColumns = isMobile ? '1fr' : '1fr 1fr';
+    }
+    // Footer
+    const footerGrid = document.querySelector('.footer > div > div:first-child');
+    if (footerGrid) {
+      footerGrid.style.gridTemplateColumns = isMobile ? '1fr' : '1fr 1fr';
+      footerGrid.style.textAlign = isMobile ? 'center' : '';
+    }
+  }
+
+  handleResize();
+  window.addEventListener('resize', handleResize, { passive: true });
+
+  // Re-init icons after dynamic changes
+  setTimeout(() => lucide.createIcons(), 100);
+</script>
+
+</body>
+</html>
