@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stage 11 Helsinki – Parturi-Kampaamo Helsingin Keskustassa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1c1208;
+      --accent: #b8860b;
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --text: #1c1208;
+      --muted: #7a6a55;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      padding-top: 40px;
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, .font-headline {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    /* DEMO BANNER */
+    #demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(184, 134, 11, 0.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #demo-banner p {
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.02em;
+      text-align: center;
+    }
+
+    #demo-banner a {
+      color: #fff;
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* NAV */
+    #main-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250, 250, 249, 0.96);
+      border-bottom: 1px solid rgba(184,134,11,0.15);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    #main-nav.scrolled {
+      background: rgba(250, 250, 249, 0.92);
+      box-shadow: 0 2px 20px rgba(28,18,8,0.08);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 48px);
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      opacity: 0.8;
+      transition: opacity 0.2s ease;
+    }
+
+    .nav-links a:hover { opacity: 1; }
+
+    .btn-nav {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 10px 22px;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-nav:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(184,134,11,0.35);
+    }
+
+    /* HERO */
+    #hero {
+      min-height: 100svh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-image: url('assets/stage-11-helsinki-c7d354b5/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.65) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 820px;
+      padding: 0 clamp(16px, 5vw, 48px);
+      animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .hero-h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 6.5vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      margin-bottom: 24px;
+    }
+
+    .hero-sub {
+      font-size: 1.125rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.82);
+      max-width: 580px;
+      margin: 0 auto 32px;
+    }
+
+    .hero-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 36px;
+    }
+
+    .hero-rating .stars {
+      display: flex;
+      gap: 3px;
+    }
+
+    .hero-rating .stars i {
+      width: 18px;
+      height: 18px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+
+    .hero-rating span {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.85);
+      font-weight: 500;
+    }
+
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      padding: 15px 32px;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(184,134,11,0.45);
+    }
+
+    .btn-primary:active { transform: translateY(-1px); }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      padding: 15px 32px;
+      border-radius: 9999px;
+      border: 1.5px solid rgba(255,255,255,0.4);
+      cursor: pointer;
+      text-decoration: none;
+      backdrop-filter: blur(8px);
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.22);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+    }
+
+    /* SECTIONS */
+    .section-pad {
+      padding-block: clamp(64px, 10vw, 112px);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+
+    .section-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.015em;
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    /* SERVICE CARDS */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .service-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1);
+      border: 1px solid rgba(184,134,11,0.08);
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(28,18,8,0.12);
+    }
+
+    .icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--accent) 13%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .icon-wrap i {
+      width: 28px;
+      height: 28px;
+      color: var(--accent);
+    }
+
+    .service-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+
+    .service-card p {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      line-height: 1.68;
+    }
+
+    /* WHY US */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 40px;
+    }
+
+    .why-item {
+      text-align: center;
+      padding: 16px;
+    }
+
+    .why-icon {
+      width: 48px;
+      height: 48px;
+      color: var(--accent);
+      margin: 0 auto 20px;
+    }
+
+    .why-item h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .why-item p {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      line-height: 1.68;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
+    /* REVIEWS */
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .review-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);
+      border: 1px solid rgba(184,134,11,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .review-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(28,18,8,0.1);
+    }
+
+    .review-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 16px;
+    }
+
+    .review-stars i {
+      width: 16px;
+      height: 16px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+
+    .review-quote {
+      font-size: 0.9rem;
+      font-style: italic;
+      color: #4a3f30;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .review-author {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .review-badge {
+      font-size: 0.7rem;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    /* HOURS */
+    .hours-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 48px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);
+      border: 1px solid rgba(184,134,11,0.1);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(184,134,11,0.1);
+    }
+
+    .hours-row:last-child { border-bottom: none; }
+
+    .hours-day {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--primary);
+    }
+
+    .hours-time {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .hours-time.closed {
+      color: #b45309;
+      font-weight: 500;
+    }
+
+    /* CONTACT */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+
+    .contact-info h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.9rem, 4vw, 2.75rem);
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 32px;
+      line-height: 1.15;
+      letter-spacing: -0.015em;
+    }
+
+    .contact-line {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .contact-line i {
+      width: 20px;
+      height: 20px;
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .contact-line span {
+      font-size: 0.9375rem;
+      color: #3d3126;
+      line-height: 1.6;
+    }
+
+    .contact-line a {
+      color: #3d3126;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .contact-line a:hover { color: var(--accent); }
+
+    /* FOOTER */
+    #footer {
+      background: var(--primary);
+      padding: 56px 0 32px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #f5e6c8;
+      margin-bottom: 12px;
+    }
+
+    .footer-detail {
+      font-size: 0.875rem;
+      color: rgba(245,230,200,0.6);
+      line-height: 1.7;
+      margin-bottom: 4px;
+    }
+
+    .footer-divider {
+      border: none;
+      border-top: 1px solid rgba(245,230,200,0.1);
+      margin: 40px 0 24px;
+    }
+
+    .footer-credit {
+      font-size: 11px;
+      color: rgba(245,230,200,0.35);
+      letter-spacing: 0.04em;
+    }
+
+    .footer-credit a {
+      color: rgba(245,230,200,0.5);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* ANIMATIONS */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* NAV MOBILE */
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+    }
+
+    /* PHOTOS STRIP */
+    .photo-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 56px;
+    }
+
+    .photo-strip img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+
+    .photo-strip img:first-child {
+      grid-column: 1 / -1;
+      height: 360px;
+    }
+
+    @media (max-width: 640px) {
+      .photo-strip img { height: 200px; }
+      .photo-strip img:first-child { height: 240px; }
+      .hours-card { padding: 28px 20px; }
+    }
+
+    .bg-surface { background-color: #f5f1eb; }
+    .bg-white-custom { background-color: #ffffff; }
+    .bg-offwhite { background-color: var(--bg); }
+  </style>
+</head>
+<body>
+
+  <!-- DEMO BANNER -->
+  <div id="demo-banner">
+    <p>Stage 11 Helsinki — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman? <a href="mailto:team@masasite.com">Ota yhteyttä →</a></p>
+  </div>
+
+  <!-- STICKY NAV -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <a href="#hero">
+        <img src="http://www.stage11.fi/files/theme/images/stage_11_logo.png" alt="Stage 11 Helsinki" style="height:40px; object-fit:contain;">
+      </a>
+      <div class="nav-links" style="display:flex; gap:32px;">
+        <a href="#services">Palvelut</a>
+        <a href="#hours">Aukioloajat</a>
+        <a href="#contact">Yhteystiedot</a>
+      </div>
+      <a href="tel:09673739" class="btn-nav">Varaa aika</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Parturi-Kampaamo · Helsinki</span>
+      <h1 class="hero-h1">Uudet hiukset,<br>uusi sinä Helsingissä</h1>
+      <p class="hero-sub">Stage 11 on asiantunteva parturi-kampaamo Helsingin keskustassa, joka tarjoaa ammattilaisten tekemiä leikkauksia, väripalveluita ja hiuspidennyksiä. Meillä jokainen asiakas saa persoonallisen palvelun ja näkemyksen omista hiuksistaan.</p>
+      <div class="hero-rating">
+        <div class="stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <span>4.9/5 (292 arvostelua)</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="tel:09673739" class="btn-primary">
+          <i data-lucide="phone" style="width:16px;height:16px;"></i>
+          Varaa aika nyt
+        </a>
+        <a href="#services" class="btn-ghost">
+          Tutustu palveluihin
+          <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="section-pad bg-surface">
+    <div class="container">
+      <span class="section-eyebrow reveal">Palvelumme</span>
+      <h2 class="section-title reveal">Ammattitaitoiset<br>hiuspalvelut</h2>
+      <div class="services-grid">
+        <div class="service-card reveal" style="--i:0;">
+          <div class="icon-wrap">
+            <i data-lucide="scissors"></i>
+          </div>
+          <h3>Hiusleikkaukset</h3>
+          <p>Ammattitaitoinen muotoilu, joka sopii juuri sinun kasvonpiirteisiin. Luomme sinulle täydellisen leikkauksen, joka kunnioittaa hiustesi luonnollisia ominaisuuksia.</p>
+        </div>
+        <div class="service-card reveal" style="--i:1;">
+          <div class="icon-wrap">
+            <i data-lucide="sparkles"></i>
+          </div>
+          <h3>Väripalvelut</h3>
+          <p>Trendikat värit ja kestävät väritykset asiantuntevilla käsillä. Meillä saat haluamasi sävyn — olipa kyse hienovaraisesta korostuksesta tai rohkeasta muutoksesta.</p>
+        </div>
+        <div class="service-card reveal" style="--i:2;">
+          <div class="icon-wrap">
+            <i data-lucide="zap"></i>
+          </div>
+          <h3>Hiuspidennykset ja tuuhennokset</h3>
+          <p>Kauniit pidennykset ja tiheät hiukset ammattilaisittain. Tarjoamme laadukkaat hiuspidennykset, jotka sulautuvat omiin hiuksiisi saumattomasti.</p>
+        </div>
+      </div>
+
+      <!-- PHOTO STRIP -->
+      <div class="photo-strip reveal">
+        <img src="assets/stage-11-helsinki-c7d354b5/photo2.jpg" alt="Stage 11 Helsinki kampaamo" loading="lazy">
+        <img src="assets/stage-11-helsinki-c7d354b5/photo3.jpg" alt="Stage 11 Helsinki sisustus" loading="lazy">
+        <img src="assets/stage-11-helsinki-c7d354b5/photo1.jpg" alt="Stage 11 Helsinki palvelut" loading="lazy" style="display:none;">
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section class="section-pad bg-white-custom">
+    <div class="container">
+      <span class="section-eyebrow reveal">Miksi Stage 11?</span>
+      <h2 class="section-title reveal">Kokemus, josta<br>jää hyvä fiilis</h2>
+      <div class="why-grid">
+        <div class="why-item reveal" style="--i:0;">
+          <i data-lucide="award" class="why-icon"></i>
+          <h3>Erinomainen arvosana</h3>
+          <p>4.9/5 arvosana 292 asiakasarvostelusta kertoo laadusta, joka puhuu puolestaan.</p>
+        </div>
+        <div class="why-item reveal" style="--i:1;">
+          <i data-lucide="heart" class="why-icon"></i>
+          <h3>Henkilökohtainen näkemys</h3>
+          <p>Kokenut tiimi, joka näkee sinun henkilökohtaisen visiosi ja toteuttaa sen taidolla.</p>
+        </div>
+        <div class="why-item reveal" style="--i:2;">
+          <i data-lucide="map-pin" class="why-icon"></i>
+          <h3>Keskustasijainti</h3>
+          <p>Keskeinen sijainti ja pitkät aukioloajat tekevät varauksen tekemisestä helpoksi.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="section-pad bg-offwhite">
+    <div class="container">
+      <span class="section-eyebrow reveal">Asiakasarvostelut</span>
+      <h2 class="section-title reveal">Mitä asiakkaamme<br>sanovat</h2>
+      <div class="reviews-grid">
+        <div class="review-card reveal" style="--i:0;">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"Katja had a refreshingly clear vision with my curly, dry (and somewhat tricky) hair and she executed it with great care and skill. I'll happily become a regular here, thank you Katja."</p>
+          <div class="review-author">
+            Anu Liisanantti
+            <span class="review-badge">Verified</span>
+          </div>
+        </div>
+        <div class="review-card reveal" style="--i:1;">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"I needed a haircut over 9000km from home and I'm very happy with my results! Precision cut. I love it!"</p>
+          <div class="review-author">
+            Diana Connolly
+            <span class="review-badge">Verified</span>
+          </div>
+        </div>
+        <div class="review-card reveal" style="--i:2;">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"Went to get a new style after many years of very long hair. Katja made me feel at ease and listened to all my wishes. She was calm, skillful, and very detailed in her work, explaining her process along the way. Very satisfied, will return!"</p>
+          <div class="review-author">
+            Megan
+            <span class="review-badge">Verified</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPENING HOURS -->
+  <section id="hours" class="section-pad bg-white-custom">
+    <div class="container">
+      <span class="section-eyebrow reveal">Aukioloajat</span>
+      <h2 class="section-title reveal">Olemme auki<br>sinua varten</h2>
+      <div class="hours-card reveal">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:32px;">
+          <i data-lucide="clock" style="width:22px;height:22px;color:var(--accent);"></i>
+          <span style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--primary);">Stage 11 Helsinki</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Maanantai</span>
+          <span class="hours-time">9:00 – 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Tiistai</span>
+          <span class="hours-time">9:00 – 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Keskiviikko</span>
+          <span class="hours-time">9:00 – 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Torstai</span>
+          <span class="hours-time">9:00 – 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Perjantai</span>
+          <span class="hours-time">9:00 – 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Lauantai</span>
+          <span class="hours-time">9:00 – 15:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Sunnuntai</span>
+          <span class="hours-time closed">Suljettu</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section-pad bg-surface">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <span style="font-size:0.7rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:12px;">Yhteystiedot</span>
+          <h2>Löydät meidät<br>Helsingin ytimestä</h2>
+          <div class="contact-line">
+            <i data-lucide="map-pin"></i>
+            <span>Annankatu 19, 00120 Helsinki, Suomi</span>
+          </div>
+          <div class="contact-line">
+            <i data-lucide="phone"></i>
+            <span><a href="tel:09673739">09 673739</a></span>
+          </div>
+          <div class="contact-line">
+            <i data-lucide="clock"></i>
+            <span>Ma–Pe 9–20 &nbsp;|&nbsp; La 9–15 &nbsp;|&nbsp; Su suljettu</span>
+          </div>
+          <div style="margin-top:32px;">
+            <a href="tel:09673739" class="btn-primary" style="display:inline-flex;">
+              <i data-lucide="phone" style="width:16px;height:16px;"></i>
+              Soita ja varaa aika
+            </a>
+          </div>
+        </div>
+        <div class="reveal" style="--i:1;">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Annankatu%2019%2C%2000120%20Helsinki%2C%20Suomi%2C%20Helsinki%2C%20Finland&language=fi"
+            width="100%"
+            height="380"
+            style="border:0; border-radius:20px; box-shadow: 0 4px 24px rgba(28,18,8,0.1);"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Stage 11 Helsinki sijainti">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="footer-inner">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
+        <img src="http://www.stage11.fi/files/theme/images/stage_11_logo.png" alt="Stage 11 Helsinki" style="height:36px;object-fit:contain;filter:brightness(0) invert(1);opacity:0.8;">
+      </div>
+      <p class="footer-name">Stage 11 Helsinki</p>
+      <p class="footer-detail">Annankatu 19, 00120 Helsinki, Suomi</p>
+      <p class="footer-detail">09 673739</p>
+      <p class="footer-detail">Helsinki, Finland</p>
+      <hr class="footer-divider">
+      <p class="footer-credit">Demo luotu <a href="https://masasite.com" target="_blank">masasite.com</a> palvelulla</p>
+    </div>
+  </footer>
+
+  <script>
+    // Lucide icons
+    lucide.createIcons();
+
+    // NAV scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // IntersectionObserver for reveal animations
+    const revealEls = document.querySelectorAll('.reveal');
+    revealEls.forEach((el, i) => {
+      if (el.style.getPropertyValue('--i') === '') {
+        el.style.setProperty('--i', i);
+      }
+    });
+
+    const io = new IntersectionObserver(
+      entries => {
+        entries.forEach((e, idx) => {
+          if (e.isIntersecting) {
+            const i = parseInt(e.target.style.getPropertyValue('--i')) || 0;
+            setTimeout(() => {
+              e.target.classList.add('visible');
+            }, i * 80);
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    revealEls.forEach(el => io.observe(el));
+
+    // Stagger cards
+    document.querySelectorAll('.service-card, .review-card, .why-item').forEach((card, i) => {
+      card.style.setProperty('--i', i);
+    });
+
+    // Re-init icons after DOM updates
+    lucide.createIcons();
+  </script>
+</body>
+</html>
