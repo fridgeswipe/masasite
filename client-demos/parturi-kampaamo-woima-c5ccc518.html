@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parturi-Kampaamo Woima – Hiusmuotoilu Helsingissä</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: #1c1208;
+      --accent: #b8860b;
+      --accent-light: #d4a017;
+      --bg: #fafaf7;
+      --surface: #ffffff;
+      --text: #1a1208;
+      --muted: #7a6a55;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      padding-top: 40px;
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    /* DEMO BANNER */
+    .demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(184, 134, 11, 0.88);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .demo-banner span {
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.03em;
+    }
+    .demo-banner a {
+      color: #fff;
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* NAV */
+    .nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(250, 250, 247, 0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(28,18,8,0.08);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    .nav.scrolled {
+      background: rgba(250, 250, 247, 0.97);
+      box-shadow: 0 2px 20px rgba(28,18,8,0.07);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 48px);
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+    .nav-logo span {
+      color: var(--accent);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      letter-spacing: 0.01em;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-cta {
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      white-space: nowrap;
+    }
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(184,134,11,0.35);
+      background: #c9960e;
+    }
+    .hamburger { display: none; cursor: pointer; }
+
+    /* HERO */
+    .hero {
+      min-height: 100svh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.65) 100%),
+        url('assets/parturi-kampaamo-woima-c5ccc518/photo1.jpg') center/cover no-repeat;
+      overflow: hidden;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 820px;
+      padding: clamp(24px, 6vw, 64px) clamp(16px, 5vw, 48px);
+      animation: heroFadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 24px;
+      line-height: 1.1;
+    }
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255,255,255,0.82);
+      max-width: 600px;
+      margin: 0 auto 28px;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+    .hero-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 36px;
+    }
+    .hero-rating .stars {
+      display: flex;
+      gap: 3px;
+    }
+    .hero-rating i {
+      width: 18px;
+      height: 18px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+    .hero-rating-text {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.85);
+      font-weight: 500;
+    }
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 15px 32px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(184,134,11,0.45);
+      background: #c9960e;
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+    .btn-ghost {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 15px 32px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.35);
+      transition: transform 0.2s ease, background 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-ghost:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.25);
+    }
+
+    /* SECTION SHARED */
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .section-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+    .section-subtitle {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: clamp(40px, 6vw, 64px);
+    }
+    .section-header .section-subtitle {
+      margin: 0 auto;
+    }
+
+    /* SERVICES */
+    .services-section {
+      padding-block: clamp(64px, 10vw, 112px);
+      background: #f2ede6;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(268px, 1fr));
+      gap: 24px;
+    }
+    .service-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(28,18,8,0.05), 0 4px 16px rgba(28,18,8,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1);
+      cursor: default;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 40px rgba(28,18,8,0.13);
+    }
+    .service-icon-wrap {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--accent) 14%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 22px;
+    }
+    .service-icon-wrap i {
+      width: 28px; height: 28px;
+      color: var(--accent);
+    }
+    .service-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: -0.01em;
+    }
+    .service-card p {
+      font-size: 0.93rem;
+      color: var(--muted);
+      line-height: 1.68;
+    }
+
+    /* WHY US */
+    .whyus-section {
+      padding-block: clamp(64px, 10vw, 112px);
+      background: var(--surface);
+    }
+    .whyus-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 40px;
+      text-align: center;
+    }
+    .whyus-item i {
+      width: 44px; height: 44px;
+      color: var(--accent);
+      margin: 0 auto 20px;
+      display: block;
+    }
+    .whyus-item h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .whyus-item p {
+      font-size: 0.91rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
+    /* REVIEWS */
+    .reviews-section {
+      padding-block: clamp(64px, 10vw, 112px);
+      background: #faf6ef;
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
+      gap: 24px;
+    }
+    .review-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(28,18,8,0.05), 0 4px 16px rgba(28,18,8,0.04);
+    }
+    .review-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 16px;
+    }
+    .review-stars i {
+      width: 16px; height: 16px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+    .review-stars i.empty {
+      color: #d1c4ae;
+      fill: #d1c4ae;
+    }
+    .review-quote {
+      font-size: 0.92rem;
+      color: #5a4a38;
+      line-height: 1.7;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+    .review-author {
+      font-weight: 600;
+      font-size: 0.87rem;
+      color: var(--primary);
+    }
+    .review-verified {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.72rem;
+      color: #4caf50;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      margin-top: 4px;
+    }
+    .review-verified i { width: 12px; height: 12px; color: #4caf50; }
+
+    /* PHOTO SECTION */
+    .photo-section {
+      padding-block: clamp(48px, 8vw, 88px);
+      background: var(--surface);
+    }
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .photo-grid img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      border-radius: 20px;
+      display: block;
+    }
+
+    /* CONTACT */
+    .contact-section {
+      padding-block: clamp(64px, 10vw, 112px);
+      background: #f0ebe2;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .contact-info h2 {
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .contact-info .lead {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+    .contact-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .contact-detail .icon-wrap {
+      width: 42px; height: 42px;
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--accent) 14%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-detail .icon-wrap i {
+      width: 20px; height: 20px;
+      color: var(--accent);
+    }
+    .contact-detail-text {
+      padding-top: 2px;
+    }
+    .contact-detail-text .label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .contact-detail-text .value {
+      font-size: 0.97rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+    .contact-detail-text a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .contact-detail-text a:hover { color: var(--accent); }
+    .contact-map iframe {
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(28,18,8,0.1);
+    }
+
+    /* FOOTER */
+    .footer {
+      background: var(--primary);
+      padding-block: 48px 32px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #f5e9cc;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+    .footer-detail {
+      font-size: 0.88rem;
+      color: rgba(245,233,204,0.55);
+      line-height: 1.8;
+    }
+    .footer-divider {
+      border: none;
+      border-top: 1px solid rgba(245,233,204,0.1);
+      margin: 28px 0 20px;
+    }
+    .footer-bottom {
+      font-size: 11px;
+      color: rgba(245,233,204,0.3);
+      letter-spacing: 0.04em;
+    }
+    .footer-bottom a {
+      color: rgba(245,233,204,0.45);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* ANIMATIONS */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .photo-grid { grid-template-columns: 1fr; }
+      .photo-grid img { height: 240px; }
+      .whyus-grid { grid-template-columns: 1fr; gap: 32px; }
+      .btn-primary, .btn-ghost { padding: 13px 24px; font-size: 0.93rem; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-ctas { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-ghost { width: 100%; justify-content: center; max-width: 300px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- DEMO BANNER -->
+  <div class="demo-banner">
+    <span>Parturi-Kampaamo Woima — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman? <a href="mailto:team@masasite.com">Ota yhteyttä →</a></span>
+  </div>
+
+  <!-- STICKY NAV -->
+  <nav class="nav" id="main-nav">
+    <div class="nav-inner">
+      <div class="nav-logo">Parturi-Kampaamo <span>Woima</span></div>
+      <ul class="nav-links">
+        <li><a href="#palvelut">Palvelut</a></li>
+        <li><a href="#miksi-me">Miksi me</a></li>
+        <li><a href="#arvostelut">Arvostelut</a></li>
+        <li><a href="#yhteystiedot">Yhteystiedot</a></li>
+      </ul>
+      <a href="tel:0969439004" class="nav-cta">
+        <i data-lucide="phone" style="width:15px;height:15px;display:inline;vertical-align:middle;margin-right:5px;"></i>Soita meille
+      </a>
+      <button class="hamburger" aria-label="Menu" onclick="document.querySelector('.nav-links').style.display = document.querySelector('.nav-links').style.display === 'flex' ? 'none' : 'flex'">
+        <i data-lucide="menu" style="width:24px;height:24px;color:var(--primary);"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="etusivu">
+    <div class="hero-content">
+      <p class="hero-eyebrow">Annankatu 31 · Helsinki</p>
+      <h1>Ammattitaitoinen hiusmuotoilu Helsingin sydämessä</h1>
+      <p class="hero-subtitle">Parturi-Kampaamo Woima tarjoaa laadukkaat hiuspalvelut kokeneiden hiusmuotoilijoiden käsin. Käytämme maailmanluokan L'Oréal, Kérastase ja Redken -tuotteita.</p>
+      <div class="hero-rating">
+        <div class="stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <span class="hero-rating-text">4,9/5 — 53 asiakasarvostelua</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="tel:0969439004" class="btn-primary">
+          <i data-lucide="phone" style="width:18px;height:18px;"></i>Varaa aika nyt
+        </a>
+        <a href="#palvelut" class="btn-ghost">
+          <i data-lucide="scissors" style="width:18px;height:18px;"></i>Katso palvelut
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services-section" id="palvelut">
+    <div class="section-container">
+      <div class="section-header reveal">
+        <p class="section-eyebrow">Palvelumme</p>
+        <h2 class="section-title">Kaikki hiustarpeet yhdestä paikasta</h2>
+        <p class="section-subtitle">Vuosien kilpailu- ja koulutustausta takaa modernit leikkaukset ja värit – jokaiselle asiakkaalle henkilökohtainen lopputulos.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal" style="--i:0">
+          <div class="service-icon-wrap">
+            <i data-lucide="scissors"></i>
+          </div>
+          <h3>Leikkaukset ja värit</h3>
+          <p>Ammattitaitoisia leikkauksia ja värityöntä alkaen 110 eurosta. Jokainen leikkaus räätälöidään sinulle sopivaksi.</p>
+        </div>
+        <div class="service-card reveal" style="--i:1">
+          <div class="service-icon-wrap">
+            <i data-lucide="sparkles"></i>
+          </div>
+          <h3>Erikoishoidot</h3>
+          <p>Permanentit, kiharankäsittelyt ja raidat huipputuotteilla. Kérastase ja Redken -sarjan erikoishoidot täydentävät palvelun.</p>
+        </div>
+        <div class="service-card reveal" style="--i:2">
+          <div class="service-icon-wrap">
+            <i data-lucide="star"></i>
+          </div>
+          <h3>Juhlakampaukset</h3>
+          <p>Näytöskokemusta omaavia ammattilaisia hää- ja juhlatapahtumiin. Päivästäsi tulee täydellinen muistomme avustuksella.</p>
+        </div>
+        <div class="service-card reveal" style="--i:3">
+          <div class="service-icon-wrap">
+            <i data-lucide="eye"></i>
+          </div>
+          <h3>Ripset ja kulmat</h3>
+          <p>Ripsien ja kulmajen muotoilu ja väritys alkaen 30 eurosta. Viimeistelty katse joka tilanteeseen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section class="whyus-section" id="miksi-me">
+    <div class="section-container">
+      <div class="section-header reveal">
+        <p class="section-eyebrow">Miksi Woima?</p>
+        <h2 class="section-title">Parturi-Kampaamo Woiman lupaus</h2>
+      </div>
+      <div class="whyus-grid">
+        <div class="whyus-item reveal" style="--i:0">
+          <i data-lucide="award"></i>
+          <h3>Kokeneet ammattilaiset</h3>
+          <p>Hiusmuotoilijamme osallistuvat säännöllisesti kansainvälisille kursseille ja kilpailuihin varmistaakseen viimeisimmät trendit.</p>
+        </div>
+        <div class="whyus-item reveal" style="--i:1">
+          <i data-lucide="zap"></i>
+          <h3>Maailmanluokan tuotteet</h3>
+          <p>Käytämme ainoastaan L'Oréal, Kérastase ja Redken -sarjan tuotteita – laatu, jota voi tuntea ja nähdä.</p>
+        </div>
+        <div class="whyus-item reveal" style="--i:2">
+          <i data-lucide="shield-check"></i>
+          <h3>Parhaat arvostelut</h3>
+          <p>4,9/5 arvosana 53 asiakkaalta tekee meistä yhden Helsingin parhaiten arvioitujen partureiden joukosta.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO SECTION -->
+  <section class="photo-section">
+    <div class="section-container">
+      <div class="section-header reveal">
+        <p class="section-eyebrow">Tilat ja tunnelma</p>
+        <h2 class="section-title">Tervetuloa Annankatu 31:een</h2>
+      </div>
+      <div class="photo-grid reveal">
+        <img src="assets/parturi-kampaamo-woima-c5ccc518/photo1.jpg" alt="Parturi-Kampaamo Woima sisätilat" loading="lazy" />
+        <img src="assets/parturi-kampaamo-woima-c5ccc518/photo2.jpg" alt="Parturi-Kampaamo Woima palvelut" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews-section" id="arvostelut">
+    <div class="section-container">
+      <div class="section-header reveal">
+        <p class="section-eyebrow">Asiakaskokemukset</p>
+        <h2 class="section-title">Mitä asiakkaamme sanovat</h2>
+        <p class="section-subtitle">Yli 53 tyytyväistä asiakasta on antanut meille huippuarvosanan Helsingissä.</p>
+      </div>
+      <div class="reviews-grid">
+
+        <div class="review-card reveal" style="--i:0">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"Great service, great location. Small and friendly local hairdresser/barbershop. You can get makeup, coiffure, shave or trim your beard. Want a new colour for your hair? They make it happen. My advice is to book Alex!"</p>
+          <div class="review-author">Antti L.</div>
+          <div class="review-verified"><i data-lucide="check-circle"></i> Vahvistettu asiakas</div>
+        </div>
+
+        <div class="review-card reveal" style="--i:1">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"Beautiful haircut! I am very happy with the result. The stylist listened carefully to what I wanted and delivered perfectly. I will definitely be back."</p>
+          <div class="review-author">Elisa T.</div>
+          <div class="review-verified"><i data-lucide="check-circle"></i> Vahvistettu asiakas</div>
+        </div>
+
+        <div class="review-card reveal" style="--i:2">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star" class="empty"></i>
+          </div>
+          <p class="review-quote">"Great haircuts. Professional and friendly staff in a cozy environment. Would recommend to anyone looking for quality haircutting in central Helsinki."</p>
+          <div class="review-author">Goblino</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="yhteystiedot">
+    <div class="section-container">
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <p class="section-eyebrow">Yhteystiedot</p>
+          <h2>Löydät meidät Helsingin sydämestä</h2>
+          <p class="lead">Tervetuloa Annankatu 31:een – voit varata ajan puhelimitse tai käydä paikan päällä.</p>
+
+          <div class="contact-detail">
+            <div class="icon-wrap"><i data-lucide="map-pin"></i></div>
+            <div class="contact-detail-text">
+              <div class="label">Osoite</div>
+              <div class="value">Annankatu 31, 00100 Helsinki</div>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="icon-wrap"><i data-lucide="phone"></i></div>
+            <div class="contact-detail-text">
+              <div class="label">Puhelin</div>
+              <div class="value"><a href="tel:0969439004">09 6943904</a></div>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="icon-wrap"><i data-lucide="clock"></i></div>
+            <div class="contact-detail-text">
+              <div class="label">Aukioloajat</div>
+              <div class="value">Ota yhteyttä ajanvarauksen yhteydessä</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 32px;">
+            <a href="tel:0969439004" class="btn-primary" style="display:inline-flex;">
+              <i data-lucide="phone" style="width:18px;height:18px;"></i>Soita ja varaa aika
+            </a>
+          </div>
+        </div>
+
+        <div class="contact-map reveal">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Annankatu%2031%2C%2000100%20Helsinki%2C%20Suomi%2C%20Helsinki%2C%20Finland&language=fi"
+            width="100%"
+            height="380"
+            style="border:0;border-radius:16px;display:block;min-height:280px;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Parturi-Kampaamo Woima sijainti kartalla">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-name">Parturi-Kampaamo Woima</div>
+      <div class="footer-detail">Annankatu 31, 00100 Helsinki<br>09 6943904</div>
+      <hr class="footer-divider" />
+      <div class="footer-bottom">Demo luotu <a href="https://masasite.com" target="_blank">masasite.com</a> palvelulla</div>
+    </div>
+  </footer>
+
+  <script>
+    // Lucide icons
+    lucide.createIcons();
+
+    // Fill hero stars
+    document.querySelectorAll('.hero-rating .stars i').forEach(el => {
+      el.style.fill = '#f59e0b';
+      el.style.color = '#f59e0b';
+    });
+
+    // Fill review stars
+    document.querySelectorAll('.review-stars i:not(.empty)').forEach(el => {
+      el.style.fill = '#f59e0b';
+      el.style.color = '#f59e0b';
+    });
+    document.querySelectorAll('.review-stars i.empty').forEach(el => {
+      el.style.fill = '#d1c4ae';
+      el.style.color = '#d1c4ae';
+    });
+
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Scroll reveal with stagger
+    const revealEls = document.querySelectorAll('.reveal');
+    revealEls.forEach((el, i) => {
+      if (el.style.getPropertyValue('--i') !== '') {
+        el.style.transitionDelay = `calc(${el.style.getPropertyValue('--i') || 0} * 90ms)`;
+      }
+    });
+
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    revealEls.forEach(el => io.observe(el));
+
+    // Stagger service cards and reviews
+    document.querySelectorAll('.service-card, .review-card, .whyus-item').forEach((card, i) => {
+      const idx = card.style.getPropertyValue('--i');
+      if (idx !== '') {
+        card.style.transitionDelay = `${parseInt(idx) * 90}ms`;
+      }
+    });
+  </script>
+</body>
+</html>
