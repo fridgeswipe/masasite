@@ -34,12 +34,15 @@ function Cursor() {
 
 function useReveal() {
   useEffect(() => {
+    const els = document.querySelectorAll('.wp-reveal')
     const io = new IntersectionObserver(
       entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible') }),
-      { threshold: 0.1 }
+      { threshold: 0.05 }
     )
-    document.querySelectorAll('.wp-reveal').forEach(el => io.observe(el))
-    return () => io.disconnect()
+    // Fallback: if observer never fires (e.g. back navigation), show all after 2.5s
+    const fallback = setTimeout(() => els.forEach(el => el.classList.add('visible')), 2500)
+    els.forEach(el => io.observe(el))
+    return () => { io.disconnect(); clearTimeout(fallback) }
   }, [])
 }
 

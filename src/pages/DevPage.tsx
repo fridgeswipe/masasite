@@ -37,12 +37,14 @@ function Cursor() {
 
 function useReveal(prefix = 'dp') {
   useEffect(() => {
+    const els = document.querySelectorAll(`.${prefix}-reveal`)
     const io = new IntersectionObserver(
       entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible') }),
-      { threshold: 0.1 }
+      { threshold: 0.05 }
     )
-    document.querySelectorAll(`.${prefix}-reveal`).forEach(el => io.observe(el))
-    return () => io.disconnect()
+    const fallback = setTimeout(() => els.forEach(el => el.classList.add('visible')), 2500)
+    els.forEach(el => io.observe(el))
+    return () => { io.disconnect(); clearTimeout(fallback) }
   }, [prefix])
 }
 
