@@ -3,134 +3,849 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ravintola Caverna — Maistuvaa ruokaa, lämmin tunnelma</title>
+  <title>Ravintola Caverna – Maailmankeittiö Helsingin Sydämessä</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Inter', sans-serif; }
-    h1, h2, h3 { font-family: 'Merriweather', serif; }
-    .hero-bg { background: linear-gradient(160deg, #7f1d1d 0%, #b91c1c 60%, #ef4444 100%); }
-    .btn-red { background: #b91c1c; }
-    .btn-red:hover { background: #991b1b; }
+    :root {
+      --primary: #ffffff;
+      --accent: #c0392b;
+      --bg: #0f0a00;
+      --surface: #1a1200;
+      --text: #f5e6c8;
+      --muted: rgba(245,230,200,0.6);
+      --gold: #d4a843;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      padding-top: 40px;
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      letter-spacing: -0.02em;
+    }
+
+    /* DEMO BANNER */
+    #demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(192, 57, 43, 0.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: 0.02em;
+    }
+    #demo-banner a {
+      color: #fff;
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      margin-left: 4px;
+    }
+    #demo-banner a:hover { opacity: 0.8; }
+
+    /* NAV */
+    #main-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      transition: background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
+      background: rgba(15, 10, 0, 0.6);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(245,230,200,0.1);
+    }
+    #main-nav.scrolled {
+      background: rgba(15, 10, 0, 0.92);
+      box-shadow: 0 2px 24px rgba(0,0,0,0.4);
+    }
+
+    /* HERO */
+    #hero {
+      min-height: 100svh;
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.68) 100%),
+        url('assets/ravintola-caverna-b94fa0af/photo1.jpg');
+      background-size: cover;
+      background-position: center center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content {
+      animation: heroFadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+
+    .hero-h1 {
+      font-size: clamp(2.5rem, 6vw, 5.5rem);
+      line-height: 1.1;
+      color: #fff;
+      font-family: 'Playfair Display', serif;
+      letter-spacing: -0.02em;
+      font-weight: 800;
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      line-height: 1.2;
+      font-family: 'Playfair Display', serif;
+      letter-spacing: -0.02em;
+    }
+
+    /* REVEAL ANIMATION */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* BUTTONS */
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 1rem;
+      font-family: 'DM Sans', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      cursor: pointer;
+      border: none;
+      white-space: nowrap;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(192,57,43,0.4);
+      background: #a93226;
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 1rem;
+      font-family: 'DM Sans', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      cursor: pointer;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      white-space: nowrap;
+    }
+    .btn-ghost:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.22);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+
+    /* SERVICE CARDS */
+    .service-card {
+      background: #1a1200;
+      border: 1px solid rgba(212,168,67,0.12);
+      border-radius: 20px;
+      padding: 36px 32px;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease, border-color 0.3s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 4px 16px rgba(0,0,0,0.15);
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+      border-color: rgba(212,168,67,0.3);
+    }
+
+    .icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: rgba(192,57,43,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .icon-wrap i {
+      color: var(--accent);
+      width: 28px;
+      height: 28px;
+    }
+
+    /* WHY US */
+    .why-card {
+      text-align: center;
+      padding: 40px 28px;
+    }
+    .why-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(212,168,67,0.12);
+      margin-bottom: 20px;
+    }
+    .why-icon i {
+      color: var(--gold);
+      width: 36px;
+      height: 36px;
+    }
+
+    /* REVIEW CARDS */
+    .review-card {
+      background: #1a1200;
+      border: 1px solid rgba(212,168,67,0.1);
+      border-radius: 20px;
+      padding: 32px 28px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .review-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+    }
+
+    .star-filled i {
+      color: #d4a843;
+      fill: #d4a843;
+      width: 16px;
+      height: 16px;
+    }
+    /* Force fill on star icons */
+    .star-filled [data-lucide="star"] {
+      fill: #d4a843 !important;
+    }
+
+    /* HOURS */
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(245,230,200,0.1);
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-row.today {
+      background: rgba(212,168,67,0.08);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin: 0 -16px;
+    }
+
+    /* MAPS */
+    .map-iframe {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    /* FOOTER */
+    footer {
+      background: #080500;
+      border-top: 1px solid rgba(245,230,200,0.08);
+    }
+
+    /* EYEBROW LABEL */
+    .eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    /* DIVIDER ACCENT */
+    .title-accent {
+      width: 48px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin: 16px auto 0;
+    }
+    .title-accent-left {
+      margin-left: 0;
+    }
+
+    /* SECTION PADDING */
+    .section-pad {
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+
+    /* CONTACT ICONS */
+    .contact-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 12px 0;
+    }
+    .contact-row i {
+      color: var(--accent);
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* NAV LINK HOVER */
+    .nav-link {
+      color: rgba(245,230,200,0.75);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s ease;
+      letter-spacing: 0.01em;
+    }
+    .nav-link:hover { color: var(--gold); }
+
+    /* STAGGER */
+    .stagger-1 { transition-delay: 0ms; }
+    .stagger-2 { transition-delay: 80ms; }
+    .stagger-3 { transition-delay: 160ms; }
+    .stagger-4 { transition-delay: 240ms; }
+
+    /* PHOTO SECTION */
+    .photo-grid img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px;
+      display: block;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0f0a00; }
+    ::-webkit-scrollbar-thumb { background: rgba(212,168,67,0.3); border-radius: 3px; }
+
+    @media (max-width: 768px) {
+      .hero-h1 { font-size: clamp(2.2rem, 8vw, 3.2rem); }
+      .cta-row { flex-direction: column; align-items: center; }
+    }
   </style>
 </head>
-<body class="bg-stone-50 text-gray-800">
+<body>
 
-  <!-- Demo banner -->
-  <div class="bg-red-900 text-white text-center py-2 text-sm font-medium">
-    ⚡ Tämä on ilmainen demo — masasite.fi loi tämän sivun teille automaattisesti
+  <!-- ════════ [1] DEMO BANNER ════════ -->
+  <div id="demo-banner">
+    <span>Ravintola Caverna — tämä esimerkkisivu on tehty juuri teille · Haluatko oman?
+      <a href="mailto:team@masasite.com">Ota yhteyttä →</a>
+    </span>
   </div>
 
-  <!-- Navigation -->
-  <nav class="bg-white border-b border-stone-200 sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-      <span class="text-2xl font-bold text-gray-900" style="font-family:'Merriweather',serif">Ravintola Caverna</span>
-      <div class="hidden md:flex gap-8 text-sm font-medium text-gray-600">
-        <a href="#menu" class="hover:text-red-700 transition">Menu</a>
-        <a href="#aukioloajat" class="hover:text-red-700 transition">Aukioloajat</a>
-        <a href="#yhteystiedot" class="hover:text-red-700 transition">Yhteystiedot</a>
+  <!-- ════════ [2] STICKY NAV ════════ -->
+  <nav id="main-nav">
+    <div class="container">
+      <div style="display:flex; align-items:center; justify-content:space-between; height:68px; gap:32px;">
+        <!-- Logo -->
+        <a href="#hero" style="display:flex; align-items:center; flex-shrink:0;">
+          <img src="http://www.caverna.fi/images/Stacked_TA_logo.png" alt="Caverna logo"
+            style="height:44px; object-fit:contain; filter: brightness(1.1);">
+        </a>
+        <!-- Nav links -->
+        <div style="display:flex; align-items:center; gap:28px;" class="hidden md:flex">
+          <a href="#services" class="nav-link">Palvelut</a>
+          <a href="#hours" class="nav-link">Aukioloajat</a>
+          <a href="#contact" class="nav-link">Yhteystiedot</a>
+        </div>
+        <!-- CTA -->
+        <a href="tel:0505559325" class="btn-primary" style="padding:10px 22px; font-size:0.875rem;">
+          <i data-lucide="phone" style="width:15px;height:15px;"></i>
+          <span class="hidden md:inline">Varaa pöytä</span>
+          <span class="inline md:hidden">050 555 9325</span>
+        </a>
       </div>
-      <a href="tel:050 5559325" class="btn-red text-white px-5 py-2 rounded-lg text-sm font-semibold transition">
-        Tilaa / Varaa pöytä
-      </a>
     </div>
   </nav>
 
-  <!-- Hero -->
-  <section class="hero-bg text-white py-28 px-4 text-center relative overflow-hidden">
-    <div class="absolute inset-0 opacity-10" style="background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍽️</text></svg>');background-size:200px;background-repeat:repeat"></div>
-    <div class="relative max-w-3xl mx-auto">
-      <p class="text-red-200 text-sm uppercase tracking-widest mb-4 font-medium">Maistuvaa ruokaa, lämmin tunnelma</p>
-      <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">Tervetuloa — Ravintola Caverna</h1>
-      
-      <div class="flex items-center justify-center gap-2 mb-8">
-        <div class="flex text-yellow-300 text-xl">★★★★☆</div>
-        <span class="text-red-200 text-sm">4.2/5 — asiakkaamme rakastavat meitä</span>
+  <!-- ════════ [3] HERO ════════ -->
+  <section id="hero">
+    <div class="container" style="text-align:center;">
+      <div class="hero-content" style="max-width:820px; margin:0 auto;">
+        <!-- Eyebrow -->
+        <span class="eyebrow">Helsinki, Yliopistonkatu 5</span>
+
+        <!-- Headline -->
+        <h1 class="hero-h1" style="margin-bottom:24px;">
+          Maailmankeittiö trooppisen<br>luolan tunnelmassa
+        </h1>
+
+        <!-- Subtitle -->
+        <p style="font-size:1.15rem; color:rgba(255,255,255,0.78); max-width:580px; margin:0 auto 28px; line-height:1.7;">
+          Tuhannen neliön luolaravintola Helsingin sydämessä — brasilialaisia lihavartaita, teppanyaki-kokkauksia ja runsasta buffetia.
+        </p>
+
+        <!-- Rating Row -->
+        <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:36px;">
+          <div style="display:flex; gap:3px;" class="star-filled">
+            <i data-lucide="star" style="width:18px;height:18px;color:#d4a843;fill:#d4a843;"></i>
+            <i data-lucide="star" style="width:18px;height:18px;color:#d4a843;fill:#d4a843;"></i>
+            <i data-lucide="star" style="width:18px;height:18px;color:#d4a843;fill:#d4a843;"></i>
+            <i data-lucide="star" style="width:18px;height:18px;color:#d4a843;fill:#d4a843;"></i>
+            <i data-lucide="star" style="width:18px;height:18px;color:rgba(255,255,255,0.3);fill:rgba(255,255,255,0.3);"></i>
+          </div>
+          <span style="color:rgba(255,255,255,0.7); font-size:0.9rem;">4.2/5 <span style="color:rgba(255,255,255,0.45);">(3 214 arvostelua)</span></span>
+        </div>
+
+        <!-- CTA Buttons -->
+        <div class="cta-row" style="display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap;">
+          <a href="tel:0505559325" class="btn-primary">
+            <i data-lucide="calendar" style="width:17px;height:17px;"></i>
+            Varaa pöytä nyt
+          </a>
+          <a href="#services" class="btn-ghost">
+            <i data-lucide="chevron-down" style="width:17px;height:17px;"></i>
+            Tutustu palveluihin
+          </a>
+        </div>
       </div>
-      
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="tel:050 5559325" class="bg-white text-red-700 px-8 py-4 rounded-lg font-bold text-lg hover:bg-red-50 transition shadow-lg">
-          📞 Varaa pöytä
-        </a>
-        <a href="#menu" class="border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white hover:text-red-700 transition">
-          Katso menu →
-        </a>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div style="position:absolute; bottom:32px; left:50%; transform:translateX(-50%); animation: heroFadeUp 1s ease 1.2s both;">
+      <i data-lucide="chevrons-down" style="color:rgba(255,255,255,0.4); width:24px; height:24px;"></i>
+    </div>
+  </section>
+
+  <!-- ════════ PHOTO STRIP ════════ -->
+  <section style="background:#0f0a00; padding:0 0 0 0;">
+    <div class="container" style="padding-block:clamp(32px,5vw,64px);">
+      <div class="photo-grid reveal" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; height:280px;">
+        <img src="assets/ravintola-caverna-b94fa0af/photo1.jpg" alt="Caverna ravintola" style="aspect-ratio:auto;">
+        <img src="assets/ravintola-caverna-b94fa0af/photo2.jpg" alt="Caverna ruoka" style="aspect-ratio:auto;">
+        <img src="assets/ravintola-caverna-b94fa0af/photo3.jpg" alt="Caverna sisätila" style="aspect-ratio:auto;">
       </div>
     </div>
   </section>
 
-  <!-- Menu -->
-  <section id="menu" class="py-20 px-4">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-4">Menu</h2>
-      <p class="text-center text-gray-500 mb-14">Tuoreita raaka-aineita, kotitekoista ruokaa</p>
+  <!-- ════════ [4] SERVICES ════════ -->
+  <section id="services" style="background:#0d0800;" class="section-pad">
+    <div class="container">
+      <!-- Section Header -->
+      <div style="text-align:center; margin-bottom:64px;" class="reveal">
+        <span class="eyebrow">Palvelumme</span>
+        <h2 class="section-title" style="color:var(--text);">Monipuolinen ruokamaailma</h2>
+        <div class="title-accent"></div>
+      </div>
 
-      <div class="grid md:grid-cols-3 gap-8">
-        <!-- Starters -->
-        <div class="bg-white rounded-2xl p-8 shadow-sm border border-stone-100">
-          <h3 class="text-xl font-bold text-red-800 mb-6 pb-3 border-b border-stone-100">🥗 Alkuruoat</h3>
-          <div class="space-y-4">
-            <div class="flex justify-between"><span class="text-gray-700">Päivän keitto</span><span class="font-semibold text-red-700">8 €</span></div>
-            <div class="flex justify-between"><span class="text-gray-700">Salaatti</span><span class="font-semibold text-red-700">12 €</span></div>
-            <div class="flex justify-between"><span class="text-gray-700">Bruschetta</span><span class="font-semibold text-red-700">10 €</span></div>
+      <!-- Cards Grid -->
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:24px;">
+
+        <div class="service-card reveal stagger-1">
+          <div class="icon-wrap">
+            <i data-lucide="utensils"></i>
           </div>
+          <h3 style="font-size:1.2rem; font-weight:700; color:var(--text); margin-bottom:10px; font-family:'Playfair Display',serif;">Lounasbuffet</h3>
+          <p style="color:var(--muted); font-size:0.92rem; line-height:1.7;">Monipuolinen lounasbuffet maanantaista perjantaihin klo 11–15 hintaan <strong style="color:var(--gold);">16,90 €</strong></p>
         </div>
-        <!-- Mains -->
-        <div class="bg-white rounded-2xl p-8 shadow-sm border border-stone-100">
-          <h3 class="text-xl font-bold text-red-800 mb-6 pb-3 border-b border-stone-100">🍖 Pääruoat</h3>
-          <div class="space-y-4">
-            
-            <div class="flex justify-between"><span class="text-gray-700">Päivän lounas</span><span class="font-semibold text-red-700">—</span></div>
-            
-            <div class="flex justify-between"><span class="text-gray-700">À la carte</span><span class="font-semibold text-red-700">—</span></div>
-            
-            <div class="flex justify-between"><span class="text-gray-700">Ryhmätilaukset</span><span class="font-semibold text-red-700">—</span></div>
-            
-            <div class="flex justify-between"><span class="text-gray-700">Catering</span><span class="font-semibold text-red-700">—</span></div>
-            
+
+        <div class="service-card reveal stagger-2">
+          <div class="icon-wrap">
+            <i data-lucide="flame"></i>
           </div>
+          <h3 style="font-size:1.2rem; font-weight:700; color:var(--text); margin-bottom:10px; font-family:'Playfair Display',serif;">Teppanyaki-kokkaus</h3>
+          <p style="color:var(--muted); font-size:0.92rem; line-height:1.7;">Japanilainen teppanyaki-kokkaus näyttävän grillisen äärellä</p>
         </div>
-        <!-- Desserts -->
-        <div class="bg-white rounded-2xl p-8 shadow-sm border border-stone-100">
-          <h3 class="text-xl font-bold text-red-800 mb-6 pb-3 border-b border-stone-100">🍰 Jälkiruoat</h3>
-          <div class="space-y-4">
-            <div class="flex justify-between"><span class="text-gray-700">Suklaamouss</span><span class="font-semibold text-red-700">9 €</span></div>
-            <div class="flex justify-between"><span class="text-gray-700">Crème brûlée</span><span class="font-semibold text-red-700">9 €</span></div>
-            <div class="flex justify-between"><span class="text-gray-700">Jäätelö</span><span class="font-semibold text-red-700">7 €</span></div>
+
+        <div class="service-card reveal stagger-3">
+          <div class="icon-wrap">
+            <i data-lucide="beef"></i>
           </div>
+          <h3 style="font-size:1.2rem; font-weight:700; color:var(--text); margin-bottom:10px; font-family:'Playfair Display',serif;">Brasilialainen lihavartaat</h3>
+          <p style="color:var(--muted); font-size:0.92rem; line-height:1.7;">Perinteiset brasilialaisen keittiön lihavartaat varrasgrilliltä</p>
         </div>
+
+        <div class="service-card reveal stagger-4">
+          <div class="icon-wrap">
+            <i data-lucide="party-popper"></i>
+          </div>
+          <h3 style="font-size:1.2rem; font-weight:700; color:var(--text); margin-bottom:10px; font-family:'Playfair Display',serif;">Juhlatilaisuudet</h3>
+          <p style="color:var(--muted); font-size:0.92rem; line-height:1.7;">Poikkeuksellinen tapahtumapaikka yritys- ja yksityisjuhlille</p>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- Opening hours + location -->
-  <section id="aukioloajat" class="bg-red-900 text-white py-20 px-4">
-    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
-      <div>
-        <h2 class="text-3xl font-bold mb-8">Aukioloajat</h2>
-        
-        <p class="text-red-100 text-lg">Ma–To 11–22, Pe–La 11–23, Su 12–21</p>
-        
-        <a href="tel:050 5559325" class="inline-block mt-8 bg-white text-red-700 px-8 py-4 rounded-lg font-bold hover:bg-red-50 transition">
-          📞 050 5559325
-        </a>
+  <!-- ════════ [5] WHY CHOOSE US ════════ -->
+  <section style="background:#13090000; background: linear-gradient(to bottom, #0d0800, #0f0a00);" class="section-pad">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:64px;" class="reveal">
+        <span class="eyebrow">Miksi Caverna</span>
+        <h2 class="section-title" style="color:var(--text);">Elämys, jota ei unohdeta</h2>
+        <div class="title-accent"></div>
       </div>
-      <div id="yhteystiedot">
-        <h2 class="text-3xl font-bold mb-8">Sijainti</h2>
-        <div class="space-y-4 text-red-100">
-          <p class="flex gap-3"><span>📍</span><span>Yliopistonkatu 5, 00100 Helsinki, Suomi</span></p>
-          <div class="bg-red-800 rounded-xl h-40 flex items-center justify-center text-red-300 text-sm mt-4">
-            🗺️ Kartta ladataan...
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:16px;">
+
+        <div class="why-card reveal stagger-1">
+          <div class="why-icon">
+            <i data-lucide="map" style="color:var(--gold);width:36px;height:36px;"></i>
           </div>
+          <h3 style="font-size:1.15rem; font-weight:700; color:var(--text); margin-bottom:12px; font-family:'Playfair Display',serif;">Ainutlaatuinen miljöö</h3>
+          <p style="color:var(--muted); font-size:0.92rem; line-height:1.7; max-width:320px; margin:0 auto;">Trooppinen luolasävyinen tunnelma Helsingin keskustassa — yli 1 000 m² tilaa elämyksille</p>
         </div>
+
+        <div class="why-card reveal stagger-2">
+          <div class="why-icon">
+            <i data-lucide="globe" style="color:var(--gold);width:36px;height:36px;"></i>
+          </div>
+          <h3 style="font-size:1.15rem; font-weight:700; color:var(--text); margin-bottom:12px; font-family:'Playfair Display',serif;">Maailmankeittiö</h3>
+          <p style="color:var(--muted); font-size:0.92rem; line-height:1.7; max-width:320px; margin:0 auto;">Teppanyaki, brasilialainen grillaus ja buffet yhdessä paikassa — makuja eri puolilta maailmaa</p>
+        </div>
+
+        <div class="why-card reveal stagger-3">
+          <div class="why-icon">
+            <i data-lucide="award" style="color:var(--gold);width:36px;height:36px;"></i>
+          </div>
+          <h3 style="font-size:1.15rem; font-weight:700; color:var(--text); margin-bottom:12px; font-family:'Playfair Display',serif;">Runsas lounas</h3>
+          <p style="color:var(--muted); font-size:0.92rem; line-height:1.7; max-width:320px; margin:0 auto;">Monipuolinen lounasbuffet edulliseen hintaan — täydellinen jokapäiväiseen ruokailuun</p>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <footer class="bg-gray-900 text-gray-400 text-center py-8 text-sm">
-    <p class="mb-1">Ravintola Caverna · Yliopistonkatu 5, 00100 Helsinki, Suomi</p>
-    <p>Sivun toteutus: <a href="https://masasite.fi" class="text-red-400 hover:underline">masasite.fi</a></p>
+  <!-- ════════ [6] REVIEWS ════════ -->
+  <section style="background:#100c02;" class="section-pad">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:64px;" class="reveal">
+        <span class="eyebrow">Asiakaskokemukset</span>
+        <h2 class="section-title" style="color:var(--text);">Mitä asiakkaamme sanovat</h2>
+        <div class="title-accent"></div>
+        <p style="color:var(--muted); margin-top:16px; font-size:0.95rem;">
+          <span style="display:inline-flex; align-items:center; gap:6px;">
+            <i data-lucide="star" style="color:#d4a843;fill:#d4a843;width:16px;height:16px;"></i>
+            4.2/5 perustuen 3 214 Google-arvosteluun
+          </span>
+        </p>
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:24px;">
+
+        <!-- Review 1 — 1 star -->
+        <div class="review-card reveal stagger-1">
+          <div style="display:flex; gap:3px; margin-bottom:16px;">
+            <i data-lucide="star" style="width:15px;height:15px;color:#d4a843;fill:#d4a843;"></i>
+            <i data-lucide="star" style="width:15px;height:15px;color:rgba(255,255,255,0.18);fill:rgba(255,255,255,0.18);"></i>
+            <i data-lucide="star" style="width:15px;height:15px;color:rgba(255,255,255,0.18);fill:rgba(255,255,255,0.18);"></i>
+            <i data-lucide="star" style="width:15px;height:15px;color:rgba(255,255,255,0.18);fill:rgba(255,255,255,0.18);"></i>
+            <i data-lucide="star" style="width:15px;height:15px;color:rgba(255,255,255,0.18);fill:rgba(255,255,255,0.18);"></i>
+          </div>
+          <p style="color:rgba(245,230,200,0.65); font-size:0.88rem; line-height:1.7; font-style:italic; margin-bottom:20px;">"Worst ever buffet that I have ever visited. We checked the menu online before our visit. Many dishes were not included and almost all dishes were empty. We mentioned it to the man at the reception and he said yes I am aware of it."</p>
+          <div style="display:flex; align-items:center; gap:10px; padding-top:16px; border-top:1px solid rgba(245,230,200,0.08);">
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(192,57,43,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="font-size:0.8rem;font-weight:700;color:var(--accent);">M</span>
+            </div>
+            <div>
+              <p style="font-weight:700; font-size:0.85rem; color:var(--text);">Maria Eleftheriou</p>
+              <p style="font-size:0.75rem; color:var(--muted);">Google-arvostelu</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2 — 5 stars -->
+        <div class="review-card reveal stagger-2">
+          <div style="display:flex; gap:3px; margin-bottom:16px;">
+            <i data-lucide="star" style="width:15px;height:15px;color:#d4a843;fill:#d4a843;"></i>
+            <i data-lucide="star" style="width:15px;height:15px;color:#d4a843;fill:#d4a843;"></i>
+            <i data-lucide="star" style="width:15px;height:15px;color:#d4a843;fill:#d4a843;"></i>
+            <i data-lucide="star" style="width:15px;height:15px;color:#d4a843;fill:#d4a843;"></i>
+            <i data-lucide="star" style="width:15px;height:15px;color:#d4a843;fill:#d4a843;"></i>
+          </div>
+          <p style="color:rgba(245,230,200,0.65); font-size:0.88rem; line-height:1.7; font-style:italic; margin-bottom:20px;">"We celebrated our advance Christmas party at Caverna Restaurant, and it was truly unforgettable. The warm, inviting atmosphere immediately made us feel at home. The variety of food was amazing — from fresh salads and hearty mains to delightful desserts, there was something for everyone."</p>
+          <div style="display:flex; align-items:center; gap:10px; padding-top:16px; border-top:1px solid rgba(245,230,200,0.08);">
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(212,168,67,0.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="font-size:0.8rem;font-weight:700;color:var(--gold);">M</span>
+            </div>
+            <div>
+              <p style="font-weight:700; font-size:0.85rem; color:var(--text);">Marilyn Gamboa</p>
+              <p style="font-size:0.75rem; color:var(--muted); display:flex; align-items:center; gap:4px;">
+                <i data-lucide="check-circle" style="width:11px;height:11px;color:#4ade80;"></i>
+                Vahvistettu arvostelu
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3 — 5 stars -->
+        <div class="review-card reveal stagger-3">
+          <div style="display:flex; gap:3px; margin-bottom:16px;">
+            <i data-lucide="star" style="width:15px;height:15px;color:#d4a843;fill:#d4a843;"></i>
+            <i data-lucide="star" style="width:15px;height:15px;color:#d4a843;fill:#d4a843;"></i>
+            <i data-lucide="star" style="width:15px;height:15px;color:#d4a843;fill:#d4a843;"></i>
+            <i data-lucide="star" style="width:15px;height:15px;color:#d4a843;fill:#d4a843;"></i>
+            <i data-lucide="star" style="width:15px;height:15px;color:#d4a843;fill:#d4a843;"></i>
+          </div>
+          <p style="color:rgba(245,230,200,0.65); font-size:0.88rem; line-height:1.7; font-style:italic; margin-bottom:20px;">"There are halal meat option. Brazilian meat, chicken are halal. You just need to ask to any restaurant staff they will help you. Highly recommended."</p>
+          <div style="display:flex; align-items:center; gap:10px; padding-top:16px; border-top:1px solid rgba(245,230,200,0.08);">
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(212,168,67,0.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="font-size:0.8rem;font-weight:700;color:var(--gold);">A</span>
+            </div>
+            <div>
+              <p style="font-weight:700; font-size:0.85rem; color:var(--text);">md. ashraful alam</p>
+              <p style="font-size:0.75rem; color:var(--muted); display:flex; align-items:center; gap:4px;">
+                <i data-lucide="check-circle" style="width:11px;height:11px;color:#4ade80;"></i>
+                Vahvistettu arvostelu
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ [7] OPENING HOURS ════════ -->
+  <section id="hours" style="background:#0d0800;" class="section-pad">
+    <div class="container">
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:64px; align-items:start;" class="md:grid-cols-2">
+
+        <div class="reveal">
+          <span class="eyebrow">Aukioloajat</span>
+          <h2 class="section-title" style="color:var(--text); margin-bottom:12px;">Milloin olemme<br>auki?</h2>
+          <div class="title-accent title-accent-left" style="margin-bottom:32px;"></div>
+          <p style="color:var(--muted); font-size:0.95rem; line-height:1.7; margin-bottom:32px;">Tervetuloa maistamaan maailmankeittiön makuja milloin sopii — lounaasta myöhäiseen illalliseen.</p>
+          <a href="tel:0505559325" class="btn-primary" style="display:inline-flex;">
+            <i data-lucide="phone" style="width:16px;height:16px;"></i>
+            050 555 9325
+          </a>
+        </div>
+
+        <div class="reveal stagger-2">
+          <div style="background:#1a1200; border:1px solid rgba(212,168,67,0.12); border-radius:20px; padding:32px; box-shadow:0 4px 24px rgba(0,0,0,0.2);">
+            <div class="hours-row">
+              <span style="font-weight:600; color:var(--text); font-size:0.92rem;">Maanantai</span>
+              <span style="color:var(--gold); font-size:0.9rem; font-weight:500;">11:00 – 16:00</span>
+            </div>
+            <div class="hours-row">
+              <span style="font-weight:600; color:var(--text); font-size:0.92rem;">Tiistai</span>
+              <span style="color:var(--gold); font-size:0.9rem; font-weight:500;">11:00 – 16:00</span>
+            </div>
+            <div class="hours-row">
+              <span style="font-weight:600; color:var(--text); font-size:0.92rem;">Keskiviikko</span>
+              <span style="color:var(--gold); font-size:0.9rem; font-weight:500;">11:00 – 22:00</span>
+            </div>
+            <div class="hours-row">
+              <span style="font-weight:600; color:var(--text); font-size:0.92rem;">Torstai</span>
+              <span style="color:var(--gold); font-size:0.9rem; font-weight:500;">11:00 – 22:00</span>
+            </div>
+            <div class="hours-row">
+              <span style="font-weight:600; color:var(--text); font-size:0.92rem;">Perjantai</span>
+              <span style="color:var(--gold); font-size:0.9rem; font-weight:500;">11:00 – 00:00</span>
+            </div>
+            <div class="hours-row">
+              <span style="font-weight:600; color:var(--text); font-size:0.92rem;">Lauantai</span>
+              <span style="color:var(--gold); font-size:0.9rem; font-weight:500;">12:00 – 00:00</span>
+            </div>
+            <div class="hours-row" style="border-bottom:none;">
+              <span style="font-weight:600; color:var(--text); font-size:0.92rem;">Sunnuntai</span>
+              <span style="color:var(--gold); font-size:0.9rem; font-weight:500;">13:00 – 20:00</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ [8] CONTACT ════════ -->
+  <section id="contact" style="background:#100c02;" class="section-pad">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:64px;" class="reveal">
+        <span class="eyebrow">Yhteystiedot</span>
+        <h2 class="section-title" style="color:var(--text);">Löydä meidät</h2>
+        <div class="title-accent"></div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1.5fr; gap:48px; align-items:start;">
+
+        <!-- Left: Contact info -->
+        <div class="reveal">
+          <div style="background:#1a1200; border:1px solid rgba(212,168,67,0.12); border-radius:20px; padding:36px; box-shadow:0 4px 24px rgba(0,0,0,0.2); margin-bottom:24px;">
+            <h3 style="font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--text); margin-bottom:24px; font-weight:700;">Ravintola Caverna</h3>
+
+            <div class="contact-row">
+              <i data-lucide="map-pin"></i>
+              <div>
+                <p style="color:var(--text); font-size:0.92rem; font-weight:500;">Yliopistonkatu 5</p>
+                <p style="color:var(--muted); font-size:0.88rem;">00100 Helsinki, Suomi</p>
+              </div>
+            </div>
+
+            <div class="contact-row">
+              <i data-lucide="phone"></i>
+              <div>
+                <a href="tel:0505559325" style="color:var(--text); font-size:0.92rem; font-weight:500; text-decoration:none;">050 555 9325</a>
+                <p style="color:var(--muted); font-size:0.88rem;">Varaukset ja tiedustelut</p>
+              </div>
+            </div>
+
+            <div class="contact-row">
+              <i data-lucide="globe"></i>
+              <div>
+                <a href="http://www.caverna.fi/" target="_blank" rel="noopener" style="color:var(--accent); font-size:0.92rem; font-weight:500; text-decoration:none;">www.caverna.fi</a>
+                <p style="color:var(--muted); font-size:0.88rem;">Verkkosivut</p>
+              </div>
+            </div>
+
+            <div class="contact-row">
+              <i data-lucide="clock"></i>
+              <div>
+                <p style="color:var(--text); font-size:0.92rem; font-weight:500;">Lounasaika: ma–pe 11–15</p>
+                <p style="color:var(--muted); font-size:0.88rem;">Buffet 16,90 € / henkilö</p>
+              </div>
+            </div>
+          </div>
+
+          <a href="tel:0505559325" class="btn-primary" style="width:100%; justify-content:center;">
+            <i data-lucide="calendar" style="width:17px;height:17px;"></i>
+            Varaa pöytä nyt
+          </a>
+        </div>
+
+        <!-- Right: Map -->
+        <div class="reveal stagger-2" class="map-iframe">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Yliopistonkatu%205%2C%2000100%20Helsinki%2C%20Suomi%2C%20Helsinki%2C%20Finland&language=fi"
+            width="100%"
+            height="420"
+            style="border:0; border-radius:16px; display:block; box-shadow:0 8px 32px rgba(0,0,0,0.35);"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Ravintola Caverna sijainti kartalla">
+          </iframe>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ [9] FOOTER ════════ -->
+  <footer style="background:#080500; padding:48px 0 32px;">
+    <div class="container">
+      <div style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:16px; margin-bottom:32px;">
+        <img src="http://www.caverna.fi/images/Stacked_TA_logo.png" alt="Caverna logo"
+          style="height:48px; object-fit:contain; filter:brightness(0.85); opacity:0.8;">
+        <h3 style="font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--text); font-weight:700;">Ravintola Caverna</h3>
+        <p style="color:var(--muted); font-size:0.88rem;">Yliopistonkatu 5 · 00100 Helsinki · Suomi</p>
+        <a href="tel:0505559325" style="color:var(--muted); font-size:0.88rem; text-decoration:none;">050 555 9325</a>
+      </div>
+      <div style="border-top:1px solid rgba(245,230,200,0.06); padding-top:20px; text-align:center;">
+        <p style="font-size:11px; color:rgba(245,230,200,0.2); letter-spacing:0.04em;">Demo luotu <a href="https://masasite.com" style="color:rgba(245,230,200,0.3);text-decoration:none;">masasite.com</a> palvelulla</p>
+      </div>
+    </div>
   </footer>
 
-</body>
+  <!-- ════════ SCRIPTS ════════ -->
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // NAV scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // IntersectionObserver for reveal animations
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    // Re-init icons after DOM is fully rendered
+    window.addEventListener('load', () => {
+      lucide.createIcons();
+    });
+  </script>
+
+  <style>
+    /* Force grid to be single column on mobile */
+    @media (max-width: 768px) {
+      #contact .container > div:last-child,
+      section .container > div[style*="grid-template-columns: 1fr 1fr"],
+      section .container > div[style*="grid-template-columns: 1fr 1.5fr"] {
+        grid-template-columns: 1fr !important;
+      }
+      .photo-grid {
+        grid-template-columns: 1fr !important;
+        height: auto !important;
+      }
+      .photo-grid img {
+        aspect-ratio: 16/9;
+        height: 200px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .section-title { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+    }
+  </style>
+
 </html>
