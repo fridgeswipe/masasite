@@ -229,7 +229,7 @@ function Split() {
         <div className="hp-sp-number">01 // Websites</div>
         <div className="hp-sp-title">Done-for-you<br />websites.</div>
         <div className="hp-sp-desc">Fast, professional, affordable. For restaurants, shops, trades, services — any small business that deserves a great online presence.</div>
-        <div className="hp-sp-from">Starting from €499 · Delivered in 7 days</div>
+        <div className="hp-sp-from">Starting from €149 · Delivered in 7 days</div>
         <div className="hp-sp-cta">Explore websites</div>
       </Link>
 
@@ -278,8 +278,13 @@ function WorkGrid() {
       </div>
 
       <div className="hp-work-grid">
-        {/* Item 1 — restaurant website */}
-        <div className="hp-work-item hp-reveal">
+        {/* Item 1 — restaurant website demo */}
+        <a
+          href="https://masasite.com/client-demos/lappi-ravintola-c1357e50.html"
+          target="_blank" rel="noopener noreferrer"
+          className="hp-work-item hp-reveal"
+          style={{ textDecoration:'none', color:'inherit', cursor:'none' }}
+        >
           <div className="hp-work-thumb">
             <div className="hp-wt1">
               <div className="hp-wt1-nav">
@@ -300,14 +305,19 @@ function WorkGrid() {
           </div>
           <div className="hp-work-overlay">
             <div className="hp-work-meta">
-              <h4>Helsinki Grillhaus</h4>
-              <p>Restaurant · Landing page</p>
+              <h4>Lappi Ravintola</h4>
+              <p>Restaurant · Website demo ↗</p>
             </div>
           </div>
-        </div>
+        </a>
 
-        {/* Item 2 — dashboard */}
-        <div className="hp-work-item hp-reveal hp-rd1">
+        {/* Item 2 — MKX Group */}
+        <a
+          href="https://mkxgroup.co"
+          target="_blank" rel="noopener noreferrer"
+          className="hp-work-item hp-reveal hp-rd1"
+          style={{ textDecoration:'none', color:'inherit', cursor:'none' }}
+        >
           <div className="hp-work-thumb">
             <div className="hp-wt2">
               <div className="hp-wt2-kpis">
@@ -333,14 +343,18 @@ function WorkGrid() {
           </div>
           <div className="hp-work-overlay">
             <div className="hp-work-meta">
-              <h4>MKX Group Dashboard</h4>
-              <p>Web app · Analytics platform</p>
+              <h4>MKX Group</h4>
+              <p>AI automation platform · Full-stack build ↗</p>
             </div>
           </div>
-        </div>
+        </a>
 
-        {/* Item 3 — code */}
-        <div className="hp-work-item hp-reveal hp-rd2">
+        {/* Item 3 — Dev services */}
+        <Link
+          to="/dev"
+          className="hp-work-item hp-reveal hp-rd2"
+          style={{ textDecoration:'none', color:'inherit', cursor:'none' }}
+        >
           <div className="hp-work-thumb">
             <div className="hp-wt3">
               <div className="hp-wt3-header">
@@ -361,10 +375,10 @@ function WorkGrid() {
           <div className="hp-work-overlay">
             <div className="hp-work-meta">
               <h4>AI Automation Pipeline</h4>
-              <p>Backend · OpenAI integration</p>
+              <p>Backend · OpenAI integration ↗</p>
             </div>
           </div>
-        </div>
+        </Link>
       </div>
     </section>
   )
