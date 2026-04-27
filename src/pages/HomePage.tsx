@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './HomePage.css'
 import { LoadingScreen } from '../components/LoadingScreen'
+import { DemoModal } from '../components/DemoModal'
 
 // ── Custom cursor ────────────────────────────────────────────────────────────
 
@@ -59,7 +60,7 @@ function Nav() {
 
   return (
     <nav className={`hp-nav${scrolled ? ' scrolled' : ''}`}>
-      <Link to="/" className="hp-nav-logo">Masa<span>sites</span></Link>
+      <Link to="/" className="hp-nav-logo">Masa<span>site</span></Link>
       <div className="hp-nav-links">
         <Link to="/websites">Websites</Link>
         <Link to="/dev">Dev</Link>
@@ -270,7 +271,13 @@ function Split() {
 // ── Work grid ────────────────────────────────────────────────────────────────
 
 function WorkGrid() {
+  const [activeDemo, setActiveDemo] = useState<{ url: string; title: string } | null>(null)
+
   return (
+    <>
+    {activeDemo && (
+      <DemoModal url={activeDemo.url} title={activeDemo.title} onClose={() => setActiveDemo(null)} />
+    )}
     <section className="hp-work" id="hp-work">
       <div className="hp-work-header hp-reveal">
         <div>
@@ -282,11 +289,13 @@ function WorkGrid() {
 
       <div className="hp-work-grid">
         {/* Item 1 — restaurant website demo */}
-        <a
-          href="https://masasite.com/client-demos/lappi-ravintola-c1357e50.html"
-          target="_blank" rel="noopener noreferrer"
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={() => setActiveDemo({ url: 'https://masasite.com/client-demos/lappi-ravintola-c1357e50.html', title: 'Lappi Ravintola' })}
+          onKeyDown={e => e.key === 'Enter' && setActiveDemo({ url: 'https://masasite.com/client-demos/lappi-ravintola-c1357e50.html', title: 'Lappi Ravintola' })}
           className="hp-work-item hp-reveal"
-          style={{ textDecoration:'none', color:'inherit', cursor:'none' }}
+          style={{ color:'inherit', cursor:'none' }}
         >
           <div className="hp-work-thumb">
             <div className="hp-wt1">
@@ -309,10 +318,10 @@ function WorkGrid() {
           <div className="hp-work-overlay">
             <div className="hp-work-meta">
               <h4>Lappi Ravintola</h4>
-              <p>Restaurant · Website demo ↗</p>
+              <p>Restaurant · Website demo</p>
             </div>
           </div>
-        </a>
+        </div>
 
         {/* Item 2 — MKX Group */}
         <a
@@ -384,6 +393,7 @@ function WorkGrid() {
         </Link>
       </div>
     </section>
+    </>
   )
 }
 
@@ -446,7 +456,7 @@ function Footer() {
     <footer className="hp-footer">
       <div className="hp-footer-top">
         <div>
-          <div className="hp-footer-logo">Masa<span>sites</span></div>
+          <div className="hp-footer-logo">Masa<span>site</span></div>
           <p className="hp-footer-tagline">Finnish digital agency. Websites and software, built to last.</p>
         </div>
         <div className="hp-footer-cols">
@@ -469,7 +479,7 @@ function Footer() {
         </div>
       </div>
       <div className="hp-footer-bottom">
-        <span>© 2026 Masasites. Helsinki, Finland.</span>
+        <span>© 2026 Masasite. Helsinki, Finland.</span>
         <div className="hp-fi-flag">
           <svg width="20" height="14" viewBox="0 0 20 14" fill="none">
             <rect width="20" height="14" fill="white" />
@@ -542,8 +552,8 @@ export default function HomePage() {
       {/* Marquee */}
       <div className="hp-marquee-wrap">
         <div className="hp-marquee-track">
-          {['Masasites','Helsinki, Finland','Est. 2022','Websites','Web Apps','Mobile Apps','AI Integrations','7-Day Delivery',
-            'Masasites','Helsinki, Finland','Est. 2022','Websites','Web Apps','Mobile Apps','AI Integrations','7-Day Delivery']
+          {['Masasite','Helsinki, Finland','Est. 2022','Websites','Web Apps','Mobile Apps','AI Integrations','7-Day Delivery',
+            'Masasite','Helsinki, Finland','Est. 2022','Websites','Web Apps','Mobile Apps','AI Integrations','7-Day Delivery']
             .map((item, i) => (
               <span key={i} className="hp-marquee-item">{item}</span>
             ))}

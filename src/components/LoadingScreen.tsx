@@ -19,7 +19,7 @@ export function LoadingScreen({ onDone }: Props) {
         }
       }}
     >
-      <span className="ls-logo">Masa<em>sites</em></span>
+      <span className="ls-logo">Masa<em>site</em></span>
     </div>
   )
 }

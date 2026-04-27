@@ -67,7 +67,7 @@ export default function DevPage() {
 
       {/* Nav */}
       <nav className={`dp-nav${scrolled ? ' scrolled' : ''}`}>
-        <Link to="/" className="dp-nav-logo">Masa<span>sites</span></Link>
+        <Link to="/" className="dp-nav-logo">Masa<span>site</span></Link>
         <div className="dp-nav-links">
           <Link to="/">Home</Link>
           <Link to="/websites">Websites</Link>
@@ -325,7 +325,7 @@ export default function DevPage() {
       <footer className="dp-footer">
         <div className="dp-footer-top">
           <div>
-            <div className="dp-footer-logo">Masa<span>sites</span></div>
+            <div className="dp-footer-logo">Masa<span>site</span></div>
             <p className="dp-footer-tagline">Finnish digital agency. Websites and software, built to last.</p>
           </div>
           <div className="dp-footer-cols">
@@ -346,7 +346,7 @@ export default function DevPage() {
           </div>
         </div>
         <div className="dp-footer-bottom">
-          <span>© 2026 Masasites. Helsinki, Finland.</span>
+          <span>© 2026 Masasite. Helsinki, Finland.</span>
           <div className="dp-fi-flag">
             <svg width="20" height="14" viewBox="0 0 20 14" fill="none">
               <rect width="20" height="14" fill="white" />

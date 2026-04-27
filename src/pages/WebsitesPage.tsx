@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import './HomePage.css'
 import './WebsitesPage.css'
 import { LoadingScreen } from '../components/LoadingScreen'
+import { DemoModal } from '../components/DemoModal'
 
 // Cursor — shared with HomePage
 function Cursor() {
@@ -111,6 +112,7 @@ function HeroMockup() {
 
 export default function WebsitesPage() {
   const [scrolled, setScrolled] = useState(false)
+  const [activeDemo, setActiveDemo] = useState<{ url: string; title: string } | null>(null)
   useReveal()
 
   useEffect(() => {
@@ -126,12 +128,15 @@ export default function WebsitesPage() {
 
   return (
     <div className="wp">
+      {activeDemo && (
+        <DemoModal url={activeDemo.url} title={activeDemo.title} onClose={() => setActiveDemo(null)} />
+      )}
       <LoadingScreen onDone={() => {}} />
       <Cursor />
 
       {/* Nav */}
       <nav className={`hp-nav${scrolled ? ' scrolled' : ''}`}>
-        <Link to="/" className="hp-nav-logo">Masa<span>sites</span></Link>
+        <Link to="/" className="hp-nav-logo">Masa<span>site</span></Link>
         <div className="hp-nav-links">
           <Link to="/">Home</Link>
           <a href="#wp-cta" onClick={scrollToCta}>Pricing</a>
@@ -228,10 +233,12 @@ export default function WebsitesPage() {
 
         <div className="wp-examples-grid">
           {/* Beauty salon demo */}
-          <a
-            href="https://masasite.com/client-demos/beauty-angels-8488f0c9.html"
-            target="_blank" rel="noopener noreferrer"
+          <div
+            role="button" tabIndex={0}
+            onClick={() => setActiveDemo({ url: 'https://masasite.com/client-demos/beauty-angels-8488f0c9.html', title: 'Beauty Angels' })}
+            onKeyDown={e => e.key === 'Enter' && setActiveDemo({ url: 'https://masasite.com/client-demos/beauty-angels-8488f0c9.html', title: 'Beauty Angels' })}
             className="wp-example-item wp-reveal"
+            style={{ cursor: 'pointer' }}
           >
             <div className="wp-example-thumb">
               <div className="wp-et-salon">
@@ -261,13 +268,15 @@ export default function WebsitesPage() {
               </div>
               <span className="wp-example-arrow">↗</span>
             </div>
-          </a>
+          </div>
 
           {/* Restaurant demo */}
-          <a
-            href="https://masasite.com/client-demos/lappi-ravintola-c1357e50.html"
-            target="_blank" rel="noopener noreferrer"
+          <div
+            role="button" tabIndex={0}
+            onClick={() => setActiveDemo({ url: 'https://masasite.com/client-demos/lappi-ravintola-c1357e50.html', title: 'Lappi Ravintola' })}
+            onKeyDown={e => e.key === 'Enter' && setActiveDemo({ url: 'https://masasite.com/client-demos/lappi-ravintola-c1357e50.html', title: 'Lappi Ravintola' })}
             className="wp-example-item wp-reveal wp-rd1"
+            style={{ cursor: 'pointer' }}
           >
             <div className="wp-example-thumb">
               <div className="wp-et-rest">
@@ -297,13 +306,15 @@ export default function WebsitesPage() {
               </div>
               <span className="wp-example-arrow">↗</span>
             </div>
-          </a>
+          </div>
 
           {/* Trade/service demo */}
-          <a
-            href="https://masasite.com/client-demos/strindberg-7458db53.html"
-            target="_blank" rel="noopener noreferrer"
+          <div
+            role="button" tabIndex={0}
+            onClick={() => setActiveDemo({ url: 'https://masasite.com/client-demos/strindberg-7458db53.html', title: 'Strindberg' })}
+            onKeyDown={e => e.key === 'Enter' && setActiveDemo({ url: 'https://masasite.com/client-demos/strindberg-7458db53.html', title: 'Strindberg' })}
             className="wp-example-item wp-reveal wp-rd2"
+            style={{ cursor: 'pointer' }}
           >
             <div className="wp-example-thumb">
               <div className="wp-et-trade">
@@ -333,7 +344,7 @@ export default function WebsitesPage() {
               </div>
               <span className="wp-example-arrow">↗</span>
             </div>
-          </a>
+          </div>
         </div>
       </section>
 
@@ -408,7 +419,7 @@ export default function WebsitesPage() {
         </div>
       </section>
 
-      {/* ── CTA ── */}
+      {/* ── CTA / Contact form ── */}
       <section className="wp-cta" id="wp-cta">
         <div className="wp-cta-orb" />
         <div className="wp-cta-label wp-reveal">Let's get started</div>
@@ -416,21 +427,50 @@ export default function WebsitesPage() {
           Ready for your<br /><span style={{ color:'oklch(74% 0.22 140)' }}>new website?</span>
         </h2>
         <p className="wp-cta-sub wp-reveal">
-          Drop me a message and I'll get back to you within 4 hours. No lengthy forms, no waiting.
+          Fill in the form and I'll get back to you within 4 hours.
         </p>
-        <div className="wp-cta-actions wp-reveal">
-          <a href="mailto:team@masasite.com" className="wp-btn-primary">
-            Email me now →
-          </a>
-          <Link to="/" className="wp-btn-ghost">← Back to home</Link>
-        </div>
+
+        <form
+          className="wp-contact-form wp-reveal"
+          action="mailto:team@masasite.com"
+          method="post"
+          encType="text/plain"
+        >
+          <div className="wp-form-row">
+            <input
+              type="text"
+              name="Name"
+              placeholder="Your name"
+              required
+              className="wp-form-input"
+            />
+            <input
+              type="email"
+              name="Email"
+              placeholder="Your email"
+              required
+              className="wp-form-input"
+            />
+          </div>
+          <textarea
+            name="Message"
+            placeholder="Tell me about your project — what kind of site, your industry, any references..."
+            required
+            className="wp-form-textarea"
+            rows={4}
+          />
+          <div className="wp-form-footer">
+            <button type="submit" className="wp-form-submit">Send message →</button>
+            <span className="wp-form-note">Or email directly: <a href="mailto:team@masasite.com">team@masasite.com</a></span>
+          </div>
+        </form>
       </section>
 
       {/* ── Footer ── */}
       <footer className="wp-footer">
         <div className="wp-footer-top">
           <div>
-            <div className="wp-footer-logo">Masa<span>sites</span></div>
+            <div className="wp-footer-logo">Masa<span>site</span></div>
             <p className="wp-footer-tagline">Finnish digital agency. Websites and software, built to last.</p>
           </div>
           <div className="wp-footer-cols">
@@ -454,7 +494,7 @@ export default function WebsitesPage() {
           </div>
         </div>
         <div className="wp-footer-bottom">
-          <span>© 2026 Masasites. Helsinki, Finland.</span>
+          <span>© 2026 Masasite. Helsinki, Finland.</span>
           <div className="wp-fi-flag">
             <svg width="20" height="14" viewBox="0 0 20 14" fill="none">
               <rect width="20" height="14" fill="white" />
