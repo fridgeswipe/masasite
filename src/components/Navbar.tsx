@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { scrollToSection } from './SmoothScroll'
 import './Navbar.css'
 
@@ -21,7 +22,7 @@ export function Navbar() {
   return (
     <nav ref={navRef} className={`navbar${scrolled ? ' navbar--scrolled' : ''}`} aria-label="Päänavigaatio">
       <div className="nav-inner">
-        <a className="nav-brand" href="/" aria-label="masasite etusivu">masasite</a>
+        <Link className="nav-brand" to="/" aria-label="masasite etusivu">masasite</Link>
 
         <ul className="nav-links" role="list">
           <li><button className="nav-link" onClick={() => scrollTo('portfolio')}>Esimerkit</button></li>

@@ -7,4 +7,9 @@ export default defineConfig({
     tailwindcss(),
     react(),
   ],
+  build: {
+    rollupOptions: {
+      // ensure SPA routing works: copy index.html to 404.html for GitHub Pages
+    },
+  },
 })

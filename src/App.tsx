@@ -1,45 +1,22 @@
-import { useState } from 'react'
-import './lib/gsap'
-import { SmoothScroll } from './components/SmoothScroll'
-import { Navbar } from './components/Navbar'
+import { HashRouter as BrowserRouter, Routes, Route } from 'react-router-dom'
+import { lazy, Suspense } from 'react'
 import { LoadingScreen } from './components/LoadingScreen'
-import { CursorGlow, GrainOverlay } from './components/Ambient'
-import { Hero } from './sections/Hero'
-import { HowItWorks } from './sections/HowItWorks'
-import { Stats } from './sections/Stats'
-import { Works } from './sections/Works'
-import { Pricing } from './sections/Pricing'
-import { Contact } from './sections/Contact'
 
-function Divider() {
-  return <div className="section-glow-divider" aria-hidden />
-}
+const HomePage     = lazy(() => import('./pages/HomePage'))
+const WebsitesPage = lazy(() => import('./pages/WebsitesPage'))
+const DevPage      = lazy(() => import('./pages/DevPage'))
 
 export default function App() {
-  const [_loaded, setLoaded] = useState(false)
-
   return (
-    <>
-      <LoadingScreen onDone={() => setLoaded(true)} />
-      <GrainOverlay />
-      <CursorGlow />
-
-      <SmoothScroll>
-        <Navbar />
-        <main style={{ backgroundColor: 'var(--color-bg)' }}>
-          <Hero />
-          <Divider />
-          <HowItWorks />
-          <Divider />
-          <Stats />
-          <Divider />
-          <Works />
-          <Divider />
-          <Pricing />
-          <Divider />
-          <Contact />
-        </main>
-      </SmoothScroll>
-    </>
+    <BrowserRouter>
+      <Suspense fallback={<LoadingScreen onDone={() => {}} />}>
+        <Routes>
+          <Route path="/"         element={<HomePage />} />
+          <Route path="/websites" element={<WebsitesPage />} />
+          <Route path="/dev"      element={<DevPage />} />
+          <Route path="*"         element={<HomePage />} />
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
   )
 }
