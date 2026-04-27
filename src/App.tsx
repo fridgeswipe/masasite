@@ -1,15 +1,18 @@
 import { HashRouter as BrowserRouter, Routes, Route } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
-import { LoadingScreen } from './components/LoadingScreen'
 
 const HomePage     = lazy(() => import('./pages/HomePage'))
 const WebsitesPage = lazy(() => import('./pages/WebsitesPage'))
 const DevPage      = lazy(() => import('./pages/DevPage'))
 
+const SuspenseFallback = () => (
+  <div style={{ position: 'fixed', inset: 0, background: 'oklch(7% 0.015 250)' }} />
+)
+
 export default function App() {
   return (
     <BrowserRouter>
-      <Suspense fallback={<LoadingScreen onDone={() => {}} />}>
+      <Suspense fallback={<SuspenseFallback />}>
         <Routes>
           <Route path="/"         element={<HomePage />} />
           <Route path="/websites" element={<WebsitesPage />} />

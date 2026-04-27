@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './DevPage.css'
+import { LoadingScreen } from '../components/LoadingScreen'
 
 // Reuse cursor from HomePage
 function Cursor() {
@@ -59,6 +60,7 @@ export default function DevPage() {
 
   return (
     <div className="dp">
+      <LoadingScreen onDone={() => {}} />
       <Cursor />
 
       {/* Nav */}

@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import './HomePage.css'
 import './WebsitesPage.css'
+import { LoadingScreen } from '../components/LoadingScreen'
 
 // Cursor — shared with HomePage
 function Cursor() {
@@ -121,13 +123,14 @@ export default function WebsitesPage() {
 
   return (
     <div className="wp">
+      <LoadingScreen onDone={() => {}} />
       <Cursor />
 
-      {/* Nav — identical to homepage */}
+      {/* Nav */}
       <nav className={`hp-nav${scrolled ? ' scrolled' : ''}`}>
         <Link to="/" className="hp-nav-logo">Masa<span>sites</span></Link>
         <div className="hp-nav-links">
-          <Link to="/" className="hp-nav-links">Home</Link>
+          <Link to="/">Home</Link>
           <a href="#wp-cta" onClick={scrollToCta}>Pricing</a>
           <Link to="/dev">Dev</Link>
           <a href="#wp-cta" className="hp-nav-pill" onClick={scrollToCta}>

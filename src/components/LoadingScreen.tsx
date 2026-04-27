@@ -5,7 +5,8 @@ import './LoadingScreen.css'
 interface Props { onDone: () => void }
 
 export function LoadingScreen({ onDone }: Props) {
-  const ref = useRef<HTMLDivElement>(null!)
+  const ref     = useRef<HTMLDivElement>(null!)
+  const logoRef = useRef<HTMLSpanElement>(null!)
 
   useEffect(() => {
     const tl = gsap.timeline({
@@ -15,20 +16,20 @@ export function LoadingScreen({ onDone }: Props) {
       },
     })
 
-    tl.from('.ls-logo', {
+    tl.from(logoRef.current, {
       autoAlpha: 0,
       y: 18,
       duration: 0.55,
       ease: 'power3.out',
     })
-    .to('.ls-logo', {
+    .to(logoRef.current, {
       autoAlpha: 0,
       y: -12,
       duration: 0.4,
       ease: 'power2.in',
       delay: 0.35,
     })
-    .to('.ls-overlay', {
+    .to(ref.current, {
       yPercent: -100,
       duration: 0.7,
       ease: 'power4.inOut',
@@ -37,7 +38,9 @@ export function LoadingScreen({ onDone }: Props) {
 
   return (
     <div ref={ref} className="ls-overlay" aria-hidden>
-      <span className="ls-logo">masasite</span>
+      <span ref={logoRef} className="ls-logo">
+        Masa<em>sites</em>
+      </span>
     </div>
   )
 }

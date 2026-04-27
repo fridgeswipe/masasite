@@ -1,8 +1,8 @@
 .ls-overlay {
   position: fixed;
   inset: 0;
-  z-index: 1000;
-  background: var(--color-bg);
+  z-index: 10000;
+  background: oklch(7% 0.015 250);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,10 +10,16 @@
 }
 
 .ls-logo {
-  font-family: var(--font-mono);
-  font-size: clamp(1.5rem, 5vw, 2.5rem);
-  font-weight: 700;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.8rem, 6vw, 3rem);
   letter-spacing: -0.04em;
-  color: var(--color-accent);
-  text-shadow: 0 0 40px rgba(0,255,136,0.4);
+  color: oklch(96% 0.005 250);
+  text-decoration: none;
+  font-style: normal;
+}
+
+.ls-logo em {
+  color: oklch(74% 0.22 140);
+  font-style: normal;
 }

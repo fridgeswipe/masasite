@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './HomePage.css'
+import { LoadingScreen } from '../components/LoadingScreen'
 
 // ── Custom cursor ────────────────────────────────────────────────────────────
 
@@ -501,6 +502,7 @@ export default function HomePage() {
 
   return (
     <div className="hp">
+      <LoadingScreen onDone={() => {}} />
       <Cursor />
       <Nav />
 
