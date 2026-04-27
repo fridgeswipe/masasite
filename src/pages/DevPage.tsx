@@ -290,6 +290,39 @@ export default function DevPage() {
         </div>
       </section>
 
+      {/* Pricing */}
+      <section className="dp-pricing" id="pricing">
+        <div className="dp-reveal">
+          <div className="dp-section-label">Pricing</div>
+          <div className="dp-section-title">Transparent<br />starting points.</div>
+          <p className="dp-pricing-disclaimer">
+            Prices are estimates — we always quote per project based on your specific needs.
+          </p>
+        </div>
+
+        <div className="dp-price-grid">
+          {[
+            { icon: '⬡', name: 'Landing page / MVP UI',        price: '500',  suffix: '' },
+            { icon: '▦', name: 'Web app or dashboard',         price: '1,500', suffix: '' },
+            { icon: '◈', name: 'Mobile app (React Native)',    price: '1,200', suffix: '' },
+            { icon: '◉', name: 'AI integration / automation',  price: '800',  suffix: '' },
+            { icon: '↺', name: 'Monthly retainer',             price: '800',  suffix: '/mo' },
+          ].map((item, i) => (
+            <div key={item.name} className={`dp-price-item dp-reveal dp-rd${i % 2}`}>
+              <div className="dp-price-icon">{item.icon}</div>
+              <div className="dp-price-name">{item.name}</div>
+              <div className="dp-price-amount">
+                from €{item.price}{item.suffix}
+              </div>
+              <div className="dp-price-est">Prices are estimates — quoted per project.</div>
+              <a href="mailto:team@masasite.com?subject=Dev quote request" className="dp-price-cta">
+                Get a quote →
+              </a>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Fiverr CTA */}
       <section className="dp-fiverr">
         <div className="dp-fiverr-left dp-reveal">

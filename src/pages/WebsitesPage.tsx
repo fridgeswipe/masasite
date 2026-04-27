@@ -165,9 +165,11 @@ export default function WebsitesPage() {
             Professional, fast, and built for real businesses. No templates, no hidden costs — just a site that works and makes you look great.
           </p>
           <div className="wp-hero-price">
-            <span className="wp-price-eur">€</span>
-            <span className="wp-price-num">149</span>
-            <span className="wp-price-note">/ page · all in</span>
+            <span className="wp-price-note" style={{ fontSize: 14, letterSpacing: 1, textTransform: 'uppercase', color: 'var(--muted)' }}>Starting from</span>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, marginTop: 4 }}>
+              <span className="wp-price-eur">€</span>
+              <span className="wp-price-num">149</span>
+            </div>
           </div>
           <div className="wp-hero-actions">
             <a href="#wp-cta" className="wp-btn-primary" onClick={scrollToCta}>
@@ -350,71 +352,103 @@ export default function WebsitesPage() {
 
       {/* ── Pricing ── */}
       <section className="wp-pricing" id="wp-pricing">
-        <div className="wp-pricing-inner">
-          <div className="wp-pricing-left">
-            <div className="wp-reveal">
-              <div className="wp-section-label">Pricing</div>
-              <div className="wp-section-title" style={{ marginBottom: 40 }}>One price.<br />Everything in.</div>
-            </div>
-            <div className="wp-price-card wp-reveal wp-rd1">
-              <div className="wp-price-top">
-                <div className="wp-price-badge">Standard Package</div>
-                <div className="wp-price-row">
-                  <span className="wp-price-eur">€</span>
-                  <span className="wp-price-amount">149</span>
-                  <span className="wp-price-per">/ page</span>
-                </div>
-                <div className="wp-price-tagline">All included. No monthly fees. No surprises.</div>
-              </div>
-              <div className="wp-price-features">
-                <ul className="wp-feat-list">
-                  {[
-                    'Custom design — no templates',
-                    'Mobile-optimized and fast loading',
-                    'SEO-ready structure',
-                    'Domain and hosting setup included',
-                    'Full code ownership transferred to you',
-                    '2 rounds of revisions included',
-                    '30 days of free support after launch',
-                  ].map(f => (
-                    <li key={f} className="wp-feat-item">{f}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="wp-price-cta">
-                <a href="mailto:team@masasite.com" className="wp-price-cta-btn">
-                  Start your project →
-                </a>
-                <div className="wp-price-note">Typical delivery: 5–10 business days</div>
-              </div>
-            </div>
-          </div>
+        <div className="wp-reveal">
+          <div className="wp-section-label">Pricing</div>
+          <div className="wp-section-title">Choose your<br />package.</div>
+        </div>
 
-          <div className="wp-pricing-right wp-reveal wp-rd2">
-            <div className="wp-addons-label">Add-ons</div>
-            <div className="wp-addons-list">
-              {[
-                ['Extra page',           '+€49'],
-                ['E-commerce store',     'from +€199'],
-                ['Booking integration',  '+€79'],
-                ['Monthly maintenance',  '€19/mo'],
-                ['Copywriting',          'from +€99'],
-                ['Logo design',          'from +€149'],
-              ].map(([name, price]) => (
-                <div key={name} className="wp-addon">
-                  <span className="wp-addon-name">{name}</span>
-                  <span className="wp-addon-price">{price}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="wp-guarantee">
-              <div className="wp-guarantee-icon">✦</div>
-              <div className="wp-guarantee-title">Satisfaction guarantee</div>
-              <div className="wp-guarantee-desc">
-                If you're not happy with the first draft, I'll revise it until you are — or refund you in full. No questions asked.
+        <div className="wp-packages-grid">
+          {[
+            {
+              name: 'Starter',
+              price: '149',
+              per: '',
+              tag: 'Best for: solo businesses',
+              delivery: 'Delivered in 5 days',
+              features: [
+                'Single landing page',
+                'Mobile-friendly design',
+                'Custom design — no templates',
+                'Domain & hosting setup',
+                'Full code ownership',
+                '30 days free support',
+              ],
+              highlight: false,
+            },
+            {
+              name: 'Pro',
+              price: '349',
+              per: '',
+              tag: 'Most popular',
+              delivery: 'Delivered in 7 days',
+              features: [
+                'Up to 5 pages',
+                'Contact form included',
+                'Basic SEO setup',
+                'Mobile-friendly design',
+                'Custom design — no templates',
+                'Full code ownership',
+                '30 days free support',
+              ],
+              highlight: true,
+            },
+            {
+              name: 'Business',
+              price: '699',
+              per: '',
+              tag: 'Best for: growing companies',
+              delivery: 'Delivered in 14 days',
+              features: [
+                'Full multi-page site',
+                'Blog / news section',
+                'Google Analytics setup',
+                'Full SEO configuration',
+                'Contact form included',
+                'Custom design — no templates',
+                'Full code ownership',
+                '30 days free support',
+              ],
+              highlight: false,
+            },
+            {
+              name: 'Maintenance',
+              price: '29',
+              per: '/mo',
+              tag: 'Keep it running',
+              delivery: 'Ongoing',
+              features: [
+                'Monthly updates & backups',
+                'One content change per month',
+                'Security monitoring',
+                'Performance checks',
+              ],
+              highlight: false,
+            },
+          ].map((pkg, i) => (
+            <div key={pkg.name} className={`wp-pkg wp-reveal wp-rd${i % 3}${pkg.highlight ? ' wp-pkg-hi' : ''}`}>
+              {pkg.highlight && <div className="wp-pkg-popular">Most popular</div>}
+              <div className="wp-pkg-name">{pkg.name}</div>
+              <div className="wp-pkg-price-row">
+                <span className="wp-pkg-eur">€</span>
+                <span className="wp-pkg-amount">{pkg.price}</span>
+                {pkg.per && <span className="wp-pkg-per">{pkg.per}</span>}
               </div>
+              <div className="wp-pkg-delivery">{pkg.delivery}</div>
+              <ul className="wp-pkg-features">
+                {pkg.features.map(f => <li key={f}>{f}</li>)}
+              </ul>
+              <a href="mailto:team@masasite.com?subject=Website enquiry — {pkg.name} package" className="wp-pkg-cta">
+                Get started →
+              </a>
             </div>
+          ))}
+        </div>
+
+        <div className="wp-guarantee wp-reveal">
+          <div className="wp-guarantee-icon">✦</div>
+          <div className="wp-guarantee-title">Satisfaction guarantee</div>
+          <div className="wp-guarantee-desc">
+            Not happy with the first draft? I'll revise until you are — or refund you in full.
           </div>
         </div>
       </section>

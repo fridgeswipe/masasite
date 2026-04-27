@@ -428,8 +428,67 @@
 @keyframes dp-fadeup { to { opacity:1; transform:none; } }
 @keyframes dp-slideup { to { opacity:1; transform:none; } }
 
+/* ── Dev Pricing ─────────────────────────────────── */
+.dp-pricing {
+  padding: 120px 60px;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.dp-pricing-disclaimer {
+  font-size: 14px; color: var(--muted); margin-top: 12px; line-height: 1.7;
+  max-width: 480px;
+}
+.dp-price-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 60px;
+}
+.dp-price-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .25s;
+}
+.dp-price-item::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--border); transition: background .25s;
+}
+.dp-price-item:hover { border-color: oklch(74% 0.22 140 / .4); }
+.dp-price-item:hover::before { background: linear-gradient(90deg, var(--accent), oklch(74% 0.22 140 / .2)); }
+.dp-price-icon { font-size: 22px; margin-bottom: 4px; }
+.dp-price-name { font-family: var(--font-h); font-weight: 700; font-size: 16px; letter-spacing: -.3px; line-height: 1.3; }
+.dp-price-amount {
+  font-family: var(--font-h); font-weight: 800; font-size: 28px; letter-spacing: -.5px;
+  color: var(--accent); margin-top: 4px;
+}
+.dp-price-est {
+  font-size: 11px; color: var(--muted); line-height: 1.6; font-family: var(--font-m);
+  letter-spacing: .2px; margin-top: 2px; flex: 1;
+}
+.dp-price-cta {
+  display: inline-block; margin-top: 12px;
+  padding: 11px 20px;
+  background: oklch(74% 0.22 140 / .1);
+  border: 1px solid oklch(74% 0.22 140 / .3);
+  color: var(--accent);
+  font-family: var(--font-b); font-size: 13px; font-weight: 500;
+  text-decoration: none; border-radius: 4px;
+  transition: background .2s, border-color .2s;
+}
+.dp-price-cta:hover { background: oklch(74% 0.22 140 / .18); border-color: var(--accent); }
+
 /* ── Responsive ──────────────────────────────────── */
 @media (max-width: 900px) {
+  .dp-pricing { padding: 80px 24px; }
+  .dp-price-grid { grid-template-columns: 1fr 1fr; }
   .dp-nav { padding: 18px 24px; }
   .dp-nav.scrolled { padding: 12px 24px; }
   .dp-hero { grid-template-columns: 1fr; padding: 120px 24px 80px; }
