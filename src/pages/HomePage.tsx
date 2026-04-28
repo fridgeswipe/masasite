@@ -361,36 +361,90 @@ function WorkGrid() {
           </div>
         </a>
 
-        {/* Item 3 — Dev services */}
-        <Link
-          to="/dev"
+        {/* Item 3 — Ravintola Siipi landing page mockup */}
+        <div
+          role="button"
+          tabIndex={0}
           className="hp-work-item hp-reveal hp-rd2"
-          style={{ textDecoration:'none', color:'inherit', cursor:'none' }}
+          style={{ color:'inherit', cursor:'none' }}
         >
           <div className="hp-work-thumb">
-            <div className="hp-wt3">
+            <div className="hp-wt3" style={{ background:'linear-gradient(160deg,#1a0800 0%,#2d1000 100%)' }}>
               <div className="hp-wt3-header">
-                <div className="hp-wt3-dot" />
-                <div className="hp-wt3-title-bar" />
+                <div className="hp-wt3-dot" style={{ background:'#c0392b' }} />
+                <div className="hp-wt3-title-bar" style={{ background:'rgba(192,57,43,.3)' }} />
               </div>
-              <div className="hp-wt3-code">
-                <div><span className="hp-wt3-c2">const</span> <span className="hp-wt3-w">client</span> = <span className="hp-wt3-c2">await</span></div>
-                <div style={{ paddingLeft:14 }}><span className="hp-wt3-c2">new</span> <span className="hp-wt3-c1">MasaClient</span><span className="hp-wt3-c2">(</span></div>
-                <div style={{ paddingLeft:28 }}><span className="hp-wt3-c3">config.api_key</span></div>
-                <div className="hp-wt3-c2">);</div>
-                <div style={{ marginTop:6 }}><span className="hp-wt3-c2">const</span> <span className="hp-wt3-w">result</span> <span className="hp-wt3-c2">=</span> <span className="hp-wt3-c2">await</span></div>
-                <div style={{ paddingLeft:14 }}><span className="hp-wt3-c1">client</span><span className="hp-wt3-c2">.deploy(</span><span className="hp-wt3-c3">'prod'</span><span className="hp-wt3-c2">);</span></div>
-                <div style={{ marginTop:6, color:'oklch(74% 0.22 140 / .8)' }}>{'// ✓ deployed successfully'}</div>
+              {/* Restaurant nav */}
+              <div style={{ display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:10 }}>
+                <div style={{ height:8,width:56,background:'rgba(255,255,255,.9)',borderRadius:2 }} />
+                <div style={{ display:'flex',gap:6 }}>
+                  {[36,30,36].map((w,i) => <div key={i} style={{ height:5,width:w,background:'rgba(255,255,255,.25)',borderRadius:2 }} />)}
+                </div>
+              </div>
+              {/* Hero area */}
+              <div style={{ background:'rgba(192,57,43,.12)',border:'1px solid rgba(192,57,43,.2)',borderRadius:6,padding:'10px 10px 12px',marginBottom:8 }}>
+                <div style={{ height:10,width:'75%',background:'rgba(255,255,255,.85)',borderRadius:2,marginBottom:6 }} />
+                <div style={{ height:6,width:'55%',background:'rgba(255,255,255,.35)',borderRadius:2,marginBottom:10 }} />
+                <div style={{ height:20,width:72,background:'#c0392b',borderRadius:4 }} />
+              </div>
+              {/* Menu pills */}
+              <div style={{ display:'flex',gap:5 }}>
+                {['Lounas','À la carte','Juomat'].map((l,i) => (
+                  <div key={l} style={{ fontSize:7,padding:'3px 7px',background:i===0?'rgba(192,57,43,.5)':'rgba(255,255,255,.07)',border:'1px solid rgba(192,57,43,.2)',borderRadius:3,color:'rgba(255,255,255,.7)' }}>{l}</div>
+                ))}
               </div>
             </div>
           </div>
           <div className="hp-work-overlay">
             <div className="hp-work-meta">
-              <h4>AI Automation Pipeline</h4>
-              <p>Backend · OpenAI integration ↗</p>
+              <h4>Ravintola Siipi</h4>
+              <p>Restaurant · Landing page</p>
             </div>
           </div>
-        </Link>
+        </div>
+
+        {/* Item 4 — Virtanen LVI plumbing mockup */}
+        <div
+          role="button"
+          tabIndex={0}
+          className="hp-work-item hp-reveal hp-rd1"
+          style={{ color:'inherit', cursor:'none' }}
+        >
+          <div className="hp-work-thumb">
+            <div className="hp-wt3" style={{ background:'linear-gradient(160deg,#0d1b2a 0%,#0a2240 100%)' }}>
+              <div className="hp-wt3-header">
+                <div className="hp-wt3-dot" style={{ background:'#1e88e5' }} />
+                <div className="hp-wt3-title-bar" style={{ background:'rgba(30,136,229,.3)' }} />
+              </div>
+              {/* Plumbing nav */}
+              <div style={{ display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:10 }}>
+                <div style={{ height:8,width:64,background:'rgba(255,255,255,.9)',borderRadius:2 }} />
+                <div style={{ height:22,width:60,background:'#1e88e5',borderRadius:3 }} />
+              </div>
+              {/* Service cards */}
+              <div style={{ display:'grid',gridTemplateColumns:'1fr 1fr',gap:6,marginBottom:8 }}>
+                {[['Putkityöt','#1e88e5'],['Lämmitys','#0d47a1'],['Saneeraus','#0d47a1'],['24h päivystys','#1e88e5']].map(([l,c]) => (
+                  <div key={l} style={{ background:'rgba(30,136,229,.1)',border:`1px solid ${c}33`,borderRadius:5,padding:'7px 8px' }}>
+                    <div style={{ height:5,width:'70%',background:'rgba(255,255,255,.6)',borderRadius:2,marginBottom:4 }} />
+                    <div style={{ height:4,width:'45%',background:'rgba(255,255,255,.25)',borderRadius:2 }} />
+                  </div>
+                ))}
+              </div>
+              {/* Trust bar */}
+              <div style={{ display:'flex',gap:8,justifyContent:'center' }}>
+                {['20v kokemus','Helsinki','Takuu'].map(l => (
+                  <div key={l} style={{ fontSize:7,color:'rgba(255,255,255,.5)',padding:'2px 0' }}>{l}</div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="hp-work-overlay">
+            <div className="hp-work-meta">
+              <h4>Virtanen LVI</h4>
+              <p>Plumbing services · Business site</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
     </>
@@ -464,7 +518,7 @@ function Footer() {
             <h5>Products</h5>
             <Link to="/websites">Websites</Link>
             <Link to="/dev">Dev Services</Link>
-            <a href="https://www.fiverr.com/s/pD5d4l3" target="_blank" rel="noopener noreferrer">Fiverr ↗</a>
+            <a href="https://www.fiverr.com/s/kLPAbmo" target="_blank" rel="noopener noreferrer">Fiverr ↗</a>
           </div>
           <div className="hp-footer-col">
             <h5>Work</h5>

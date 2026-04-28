@@ -94,7 +94,7 @@ export default function DevPage() {
           <div className="dp-actions">
             <a href="mailto:team@masasite.com" className="dp-btn-primary">Start a project →</a>
             <a href="https://mkxgroup.co" target="_blank" rel="noopener noreferrer" className="dp-btn-ghost">View live work ↗</a>
-            <a href="https://www.fiverr.com/s/pD5d4l3" target="_blank" rel="noopener noreferrer" className="dp-btn-fiverr">
+            <a href="https://www.fiverr.com/s/kLPAbmo" target="_blank" rel="noopener noreferrer" className="dp-btn-fiverr">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23.004 15.588a.995.995 0 1 0 .002-1.99.995.995 0 0 0-.002 1.99zm-.996-3.987h-1.33C19.386 7.237 15.748 3.6 11.388 2.307V1.01A1.01 1.01 0 0 0 10.379 0H9.373a1.01 1.01 0 0 0-1.01 1.01v1.297C3.64 3.6 0 7.238-1.282 11.6h-1.33A1.39 1.39 0 0 0-4 12.99v3.985c0 .768.622 1.39 1.39 1.39h1.33C-.002 22.762 3.638 26.4 7.998 27.694V29c0 .557.452 1.01 1.01 1.01h1.006c.558 0 1.01-.453 1.01-1.01v-1.306c4.36-1.294 8-4.932 9.284-9.295h1.33c.768 0 1.39-.622 1.39-1.39v-3.985a1.39 1.39 0 0 0-1.39-1.39" /></svg>
               Fiverr gigs
             </a>
@@ -331,7 +331,7 @@ export default function DevPage() {
           <p className="dp-fiverr-desc">
             Fixed-scope, fixed-price gigs for common dev tasks. Fast turnaround, no meetings required.
           </p>
-          <a href="https://www.fiverr.com/s/pD5d4l3" target="_blank" rel="noopener noreferrer" className="dp-btn-fiverr">
+          <a href="https://www.fiverr.com/s/kLPAbmo" target="_blank" rel="noopener noreferrer" className="dp-btn-fiverr">
             View Fiverr profile ↗
           </a>
         </div>
@@ -339,18 +339,22 @@ export default function DevPage() {
         <div className="dp-fiverr-right dp-reveal dp-rd1">
           <div className="dp-gig-list">
             {[
-              ['Landing page in 3 days',     '€199'],
-              ['React component library',    '€299'],
-              ['REST API with Node.js',       '€349'],
-              ['OpenAI / Claude integration', '€399'],
-              ['Dashboard with charts',       '€449'],
+              ['Professional business website',       'from $120'],
+              ['React Native mobile app (iOS & Android)', 'from $299'],
+              ['Shopify store setup & customization', 'from $120'],
+              ['AI chatbot or Claude/OpenAI integration', 'from $150'],
+              ['Custom web app or dashboard',         'from $199'],
+              ['Automation script or workflow',       'from $80'],
             ].map(([name, price]) => (
               <div key={name} className="dp-gig">
                 <span className="dp-gig-name">{name}</span>
-                <span className="dp-gig-price">from {price}</span>
+                <span className="dp-gig-price">{price}</span>
               </div>
             ))}
           </div>
+          <p style={{ marginTop: 16, fontSize: 11, color: 'var(--dp-muted, oklch(60% 0.01 250))', lineHeight: 1.5 }}>
+            All prices are starting points — final quote depends on your requirements.
+          </p>
         </div>
       </section>
 
@@ -366,7 +370,7 @@ export default function DevPage() {
               <h5>Products</h5>
               <Link to="/websites">Websites</Link>
               <Link to="/dev">Dev Services</Link>
-              <a href="https://www.fiverr.com/s/pD5d4l3" target="_blank" rel="noopener noreferrer">Fiverr ↗</a>
+              <a href="https://www.fiverr.com/s/kLPAbmo" target="_blank" rel="noopener noreferrer">Fiverr ↗</a>
             </div>
             <div className="dp-footer-col">
               <h5>Work</h5>
