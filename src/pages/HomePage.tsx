@@ -288,48 +288,70 @@ function WorkGrid() {
       </div>
 
       <div className="hp-work-grid">
-        {/* Item 1 — restaurant website demo */}
+
+        {/* Card 1 — Ravintola Siipi premium restaurant demo */}
         <div
           role="button"
           tabIndex={0}
-          onClick={() => setActiveDemo({ url: 'https://masasite.com/client-demos/lappi-ravintola-c1357e50.html', title: 'Lappi Ravintola' })}
-          onKeyDown={e => e.key === 'Enter' && setActiveDemo({ url: 'https://masasite.com/client-demos/lappi-ravintola-c1357e50.html', title: 'Lappi Ravintola' })}
+          onClick={() => setActiveDemo({ url: 'https://masasite.com/client-demos/ravintola-siipi-portfolio.html', title: 'Ravintola Siipi' })}
+          onKeyDown={e => e.key === 'Enter' && setActiveDemo({ url: 'https://masasite.com/client-demos/ravintola-siipi-portfolio.html', title: 'Ravintola Siipi' })}
           className="hp-work-item hp-reveal"
           style={{ color:'inherit', cursor:'none' }}
         >
           <div className="hp-work-thumb">
-            <div className="hp-wt1">
-              <div className="hp-wt1-nav">
-                <div className="hp-wt1-logo" />
-                <div style={{ display:'flex', gap:8 }}>
-                  <span style={{ width:28, height:6, background:'rgba(200,134,42,.3)', borderRadius:2 }} />
-                  <span style={{ width:28, height:6, background:'rgba(200,134,42,.3)', borderRadius:2 }} />
+            {/* Restaurant site mockup — warm dark fine dining */}
+            <div style={{ width:'100%',height:'100%',background:'linear-gradient(175deg,#0d0d0d 0%,#1a0e00 60%,#2a1500 100%)',display:'flex',flexDirection:'column',padding:'14px 14px 10px',gap:8,overflow:'hidden' }}>
+              {/* Nav */}
+              <div style={{ display:'flex',justifyContent:'space-between',alignItems:'center' }}>
+                <div style={{ fontFamily:'serif',fontSize:13,fontWeight:700,color:'#f5f0e8',letterSpacing:2 }}>SIIPI</div>
+                <div style={{ display:'flex',gap:8 }}>
+                  {['Ruokalista','Varaa'].map((l,i) => <div key={l} style={{ fontSize:7,color:i===1?'#0d0d0d':'rgba(245,240,232,.5)',background:i===1?'#c8874a':'transparent',padding:'3px 8px',borderRadius:3,border:i===1?'none':'1px solid rgba(200,135,74,.2)' }}>{l}</div>)}
                 </div>
               </div>
-              <div className="hp-wt1-body">
-                <div className="hp-wt1-h" />
-                <div className="hp-wt1-h2" />
-                <div className="hp-wt1-p" />
-                <div className="hp-wt1-p" style={{ width:'70%' }} />
-                <div className="hp-wt1-btn" />
+              {/* Hero image area */}
+              <div style={{ flex:1,background:`url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80') center/cover`,borderRadius:6,position:'relative',minHeight:80,overflow:'hidden' }}>
+                <div style={{ position:'absolute',inset:0,background:'linear-gradient(to top,rgba(13,13,13,.9) 0%,rgba(13,13,13,.2) 60%)' }} />
+                <div style={{ position:'absolute',bottom:10,left:12,right:12 }}>
+                  <div style={{ fontSize:11,fontWeight:700,color:'#f5f0e8',fontFamily:'serif',lineHeight:1.2,marginBottom:4 }}>Pohjoinen maku,<br />moderni sielu.</div>
+                  <div style={{ height:20,width:80,background:'#c8874a',borderRadius:4,display:'flex',alignItems:'center',justifyContent:'center' }}>
+                    <div style={{ fontSize:7,color:'#0d0d0d',fontWeight:700 }}>Varaa pöytä</div>
+                  </div>
+                </div>
+              </div>
+              {/* Menu strip */}
+              <div style={{ display:'flex',gap:5 }}>
+                {['Alkupalat','Pääruoat','Jälkiruoat','Viinit'].map((l,i) => (
+                  <div key={l} style={{ flex:1,background:i===0?'rgba(200,135,74,.15)':'rgba(255,255,255,.04)',border:`1px solid ${i===0?'rgba(200,135,74,.4)':'rgba(255,255,255,.07)'}`,borderRadius:4,padding:'5px 4px',textAlign:'center' }}>
+                    <div style={{ fontSize:6,color:i===0?'#c8874a':'rgba(245,240,232,.4)',fontWeight:i===0?700:400 }}>{l}</div>
+                  </div>
+                ))}
+              </div>
+              {/* Rating */}
+              <div style={{ display:'flex',alignItems:'center',gap:4 }}>
+                <div style={{ fontSize:8,color:'#c8874a' }}>★★★★★</div>
+                <div style={{ fontSize:7,color:'rgba(245,240,232,.4)' }}>4.8 · 312 arvostelua</div>
               </div>
             </div>
           </div>
           <div className="hp-work-overlay">
             <div className="hp-work-meta">
-              <h4>Lappi Ravintola</h4>
-              <p>Restaurant · Website demo</p>
+              <h4>Ravintola Siipi</h4>
+              <p>Restaurant · Premium website</p>
             </div>
           </div>
         </div>
 
-        {/* Item 2 — MKX Group */}
+        {/* Card 2 — MKX Group (featured) */}
         <a
           href="https://mkxgroup.co"
           target="_blank" rel="noopener noreferrer"
           className="hp-work-item hp-reveal hp-rd1"
-          style={{ textDecoration:'none', color:'inherit', cursor:'none' }}
+          style={{ textDecoration:'none', color:'inherit', cursor:'none', position:'relative' }}
         >
+          {/* Featured badge */}
+          <div style={{ position:'absolute',top:14,right:14,zIndex:10,background:'oklch(74% 0.22 140)',color:'oklch(10% 0.015 250)',fontSize:9,fontWeight:700,letterSpacing:.04,padding:'4px 10px',borderRadius:20,fontFamily:'var(--font-m)',textTransform:'uppercase' }}>
+            Most proud of ✦
+          </div>
           <div className="hp-work-thumb">
             <div className="hp-wt2">
               <div className="hp-wt2-kpis">
@@ -361,87 +383,57 @@ function WorkGrid() {
           </div>
         </a>
 
-        {/* Item 3 — Ravintola Siipi landing page mockup */}
+        {/* Card 3 — Virtanen LVI premium trades demo */}
         <div
           role="button"
           tabIndex={0}
+          onClick={() => setActiveDemo({ url: 'https://masasite.com/client-demos/virtanen-lvi-portfolio.html', title: 'Virtanen LVI Oy' })}
+          onKeyDown={e => e.key === 'Enter' && setActiveDemo({ url: 'https://masasite.com/client-demos/virtanen-lvi-portfolio.html', title: 'Virtanen LVI Oy' })}
           className="hp-work-item hp-reveal hp-rd2"
           style={{ color:'inherit', cursor:'none' }}
         >
           <div className="hp-work-thumb">
-            <div className="hp-wt3" style={{ background:'linear-gradient(160deg,#1a0800 0%,#2d1000 100%)' }}>
-              <div className="hp-wt3-header">
-                <div className="hp-wt3-dot" style={{ background:'#c0392b' }} />
-                <div className="hp-wt3-title-bar" style={{ background:'rgba(192,57,43,.3)' }} />
+            {/* LVI/Trades site mockup — deep navy professional */}
+            <div style={{ width:'100%',height:'100%',background:'linear-gradient(175deg,#0d1b33 0%,#0a1628 100%)',display:'flex',flexDirection:'column',padding:'14px 14px 10px',gap:8,overflow:'hidden' }}>
+              {/* Nav */}
+              <div style={{ display:'flex',justifyContent:'space-between',alignItems:'center' }}>
+                <div style={{ fontSize:10,fontWeight:800,color:'#ffffff',letterSpacing:1 }}>VIRTANEN LVI</div>
+                <div style={{ fontSize:7,color:'#0d1b33',background:'#1e88e5',padding:'4px 10px',borderRadius:3,fontWeight:700 }}>Soita meille</div>
               </div>
-              {/* Restaurant nav */}
-              <div style={{ display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:10 }}>
-                <div style={{ height:8,width:56,background:'rgba(255,255,255,.9)',borderRadius:2 }} />
+              {/* Hero text block */}
+              <div style={{ background:'rgba(30,136,229,.06)',border:'1px solid rgba(30,136,229,.15)',borderRadius:6,padding:'10px 12px' }}>
+                <div style={{ fontSize:11,fontWeight:800,color:'#ffffff',lineHeight:1.2,marginBottom:4 }}>Luotettava LVI-kumppani<br />Tampereella.</div>
+                <div style={{ fontSize:7,color:'rgba(255,255,255,.45)',marginBottom:8 }}>20v kokemus · KVV-sertifioitu · 24/7 päivystys</div>
                 <div style={{ display:'flex',gap:6 }}>
-                  {[36,30,36].map((w,i) => <div key={i} style={{ height:5,width:w,background:'rgba(255,255,255,.25)',borderRadius:2 }} />)}
+                  <div style={{ height:20,width:80,background:'#1e88e5',borderRadius:4,display:'flex',alignItems:'center',justifyContent:'center' }}>
+                    <div style={{ fontSize:7,color:'#fff',fontWeight:700 }}>Pyydä tarjous</div>
+                  </div>
+                  <div style={{ height:20,width:60,background:'rgba(255,255,255,.06)',border:'1px solid rgba(255,255,255,.12)',borderRadius:4,display:'flex',alignItems:'center',justifyContent:'center' }}>
+                    <div style={{ fontSize:7,color:'rgba(255,255,255,.6)' }}>Soita nyt</div>
+                  </div>
                 </div>
               </div>
-              {/* Hero area */}
-              <div style={{ background:'rgba(192,57,43,.12)',border:'1px solid rgba(192,57,43,.2)',borderRadius:6,padding:'10px 10px 12px',marginBottom:8 }}>
-                <div style={{ height:10,width:'75%',background:'rgba(255,255,255,.85)',borderRadius:2,marginBottom:6 }} />
-                <div style={{ height:6,width:'55%',background:'rgba(255,255,255,.35)',borderRadius:2,marginBottom:10 }} />
-                <div style={{ height:20,width:72,background:'#c0392b',borderRadius:4 }} />
-              </div>
-              {/* Menu pills */}
-              <div style={{ display:'flex',gap:5 }}>
-                {['Lounas','À la carte','Juomat'].map((l,i) => (
-                  <div key={l} style={{ fontSize:7,padding:'3px 7px',background:i===0?'rgba(192,57,43,.5)':'rgba(255,255,255,.07)',border:'1px solid rgba(192,57,43,.2)',borderRadius:3,color:'rgba(255,255,255,.7)' }}>{l}</div>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="hp-work-overlay">
-            <div className="hp-work-meta">
-              <h4>Ravintola Siipi</h4>
-              <p>Restaurant · Landing page</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Item 4 — Virtanen LVI plumbing mockup */}
-        <div
-          role="button"
-          tabIndex={0}
-          className="hp-work-item hp-reveal hp-rd1"
-          style={{ color:'inherit', cursor:'none' }}
-        >
-          <div className="hp-work-thumb">
-            <div className="hp-wt3" style={{ background:'linear-gradient(160deg,#0d1b2a 0%,#0a2240 100%)' }}>
-              <div className="hp-wt3-header">
-                <div className="hp-wt3-dot" style={{ background:'#1e88e5' }} />
-                <div className="hp-wt3-title-bar" style={{ background:'rgba(30,136,229,.3)' }} />
-              </div>
-              {/* Plumbing nav */}
-              <div style={{ display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:10 }}>
-                <div style={{ height:8,width:64,background:'rgba(255,255,255,.9)',borderRadius:2 }} />
-                <div style={{ height:22,width:60,background:'#1e88e5',borderRadius:3 }} />
-              </div>
-              {/* Service cards */}
-              <div style={{ display:'grid',gridTemplateColumns:'1fr 1fr',gap:6,marginBottom:8 }}>
-                {[['Putkityöt','#1e88e5'],['Lämmitys','#0d47a1'],['Saneeraus','#0d47a1'],['24h päivystys','#1e88e5']].map(([l,c]) => (
-                  <div key={l} style={{ background:'rgba(30,136,229,.1)',border:`1px solid ${c}33`,borderRadius:5,padding:'7px 8px' }}>
-                    <div style={{ height:5,width:'70%',background:'rgba(255,255,255,.6)',borderRadius:2,marginBottom:4 }} />
-                    <div style={{ height:4,width:'45%',background:'rgba(255,255,255,.25)',borderRadius:2 }} />
+              {/* Service grid */}
+              <div style={{ display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:5 }}>
+                {[['Putkityöt','#1e88e5'],['Lämpöpumput','#0d47a1'],['Kylpyhuone','#1565c0'],['Ilmanvaihto','#0d47a1'],['Vesivahingot','#1e88e5'],['24h Päivystys','#ff8f00']].map(([l,c]) => (
+                  <div key={l} style={{ background:'rgba(30,136,229,.08)',border:`1px solid ${c}28`,borderRadius:4,padding:'6px 5px' }}>
+                    <div style={{ height:4,width:'60%',background:'rgba(255,255,255,.55)',borderRadius:2,marginBottom:3 }} />
+                    <div style={{ fontSize:6,color:c,fontWeight:600 }}>{l}</div>
                   </div>
                 ))}
               </div>
-              {/* Trust bar */}
-              <div style={{ display:'flex',gap:8,justifyContent:'center' }}>
-                {['20v kokemus','Helsinki','Takuu'].map(l => (
-                  <div key={l} style={{ fontSize:7,color:'rgba(255,255,255,.5)',padding:'2px 0' }}>{l}</div>
+              {/* Trust row */}
+              <div style={{ display:'flex',justifyContent:'space-between',paddingTop:2 }}>
+                {['500+ projektia','4.9 ★','KVV-sertifioitu'].map(l => (
+                  <div key={l} style={{ fontSize:6.5,color:'rgba(255,255,255,.4)',textAlign:'center' }}>{l}</div>
                 ))}
               </div>
             </div>
           </div>
           <div className="hp-work-overlay">
             <div className="hp-work-meta">
-              <h4>Virtanen LVI</h4>
-              <p>Plumbing services · Business site</p>
+              <h4>Virtanen LVI Oy</h4>
+              <p>Plumbing & HVAC · Premium website</p>
             </div>
           </div>
         </div>
