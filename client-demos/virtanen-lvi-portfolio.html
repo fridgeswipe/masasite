@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Virtanen LVI Oy – Luotettava LVI-kumppani Tampereella</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<style>
+  :root {
+    --navy: #0d1b33;
+    --navy-light: #132040;
+    --blue: #1e88e5;
+    --blue-dark: #1565c0;
+    --steel: #b0bec5;
+    --white: #ffffff;
+  }
+  * { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: #fff;
+    color: #0d1b33;
+    padding-top: 36px;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Barlow', sans-serif;
+  }
+  .blueprint-bg {
+    background-color: #0d1b33;
+    background-image:
+      linear-gradient(rgba(30,136,229,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(30,136,229,0.07) 1px, transparent 1px),
+      linear-gradient(rgba(30,136,229,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(30,136,229,0.04) 1px, transparent 1px);
+    background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+    background-position: -1px -1px, -1px -1px, -1px -1px, -1px -1px;
+  }
+  .glass-nav {
+    background: rgba(13,27,51,0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(30,136,229,0.15);
+  }
+  .demo-banner {
+    background: rgba(21,101,192,0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .service-card {
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    border-left: 3px solid transparent;
+  }
+  .service-card:hover {
+    transform: translateY(-4px);
+    border-left: 3px solid #1e88e5;
+    box-shadow: 0 20px 40px rgba(13,27,51,0.12);
+  }
+  .project-card {
+    transition: all 0.3s ease;
+    overflow: hidden;
+  }
+  .project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(13,27,51,0.12);
+  }
+  .project-card:hover .project-overlay {
+    opacity: 1;
+  }
+  .review-card {
+    transition: all 0.3s ease;
+  }
+  .review-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 32px rgba(13,27,51,0.1);
+  }
+  .step-line {
+    position: absolute;
+    top: 28px;
+    left: 60%;
+    width: 80%;
+    height: 2px;
+    background: linear-gradient(90deg, #1e88e5, rgba(30,136,229,0.2));
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: all 0.7s cubic-bezier(0.4,0,0.2,1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+  .reveal-delay-5 { transition-delay: 0.5s; }
+  .cta-gradient {
+    background: linear-gradient(135deg, #1565c0 0%, #1e88e5 50%, #42a5f5 100%);
+  }
+  .stat-divider {
+    width: 1px;
+    background: rgba(176,190,197,0.3);
+  }
+  .hero-badge {
+    background: rgba(30,136,229,0.15);
+    border: 1px solid rgba(30,136,229,0.3);
+  }
+  .nav-link {
+    position: relative;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: rgba(176,190,197,0.9);
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+    padding-bottom: 2px;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #1e88e5;
+    transition: width 0.3s ease;
+  }
+  .nav-link:hover {
+    color: #fff;
+  }
+  .nav-link:hover::after {
+    width: 100%;
+  }
+  .cert-badge {
+    background: rgba(30,136,229,0.1);
+    border: 1px solid rgba(30,136,229,0.25);
+    border-radius: 6px;
+    padding: 4px 14px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #90caf9;
+    letter-spacing: 0.05em;
+    font-family: 'Barlow', sans-serif;
+  }
+  .map-placeholder {
+    background: linear-gradient(135deg, #1a2a47 0%, #132040 100%);
+    border: 1px solid rgba(30,136,229,0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 320px;
+    color: rgba(176,190,197,0.7);
+  }
+  .pulse-dot {
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+  }
+  .star-filled { color: #fbbf24; }
+  .number-circle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1e88e5, #1565c0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: white;
+    box-shadow: 0 4px 16px rgba(30,136,229,0.4);
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+  }
+  .process-connector {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(30,136,229,0.6), rgba(30,136,229,0.1));
+    margin-top: -1px;
+  }
+  @media (max-width: 768px) {
+    .process-connector { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- DEMO BANNER -->
+<div class="demo-banner fixed top-0 left-0 right-0 z-50 h-9 flex items-center justify-center">
+  <p class="text-white text-xs font-medium tracking-wide text-center px-4" style="font-family:'DM Sans',sans-serif;">
+    Virtanen LVI — tämä esimerkkisivu on tehty Masasite-palvelulla&nbsp;·&nbsp;Haluatko oman?&nbsp;
+    <a href="mailto:team@masasite.com" class="underline font-semibold hover:text-blue-200 transition-colors">Ota yhteyttä →</a>
+  </p>
+</div>
+
+<!-- STICKY NAVIGATION -->
+<nav class="glass-nav fixed left-0 right-0 z-40" style="top:36px;">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 h-16 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#" class="flex items-center gap-2.5 group">
+      <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:linear-gradient(135deg,#1e88e5,#1565c0);">
+        <i data-lucide="wrench" class="text-white" style="width:16px;height:16px;"></i>
+      </div>
+      <div>
+        <span class="text-white font-extrabold tracking-tight text-base" style="font-family:'Barlow',sans-serif;letter-spacing:-0.01em;">VIRTANEN LVI</span>
+        <span class="block text-xs leading-none" style="color:#b0bec5;font-family:'DM Sans',sans-serif;font-weight:400;">Oy · Tampere</span>
+      </div>
+    </a>
+    <!-- Links -->
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#palvelut" class="nav-link">Palvelut</a>
+      <a href="#projektit" class="nav-link">Projektit</a>
+      <a href="#hinnasto" class="nav-link">Hinnasto</a>
+      <a href="#yhteystiedot" class="nav-link">Yhteystiedot</a>
+    </div>
+    <!-- CTA -->
+    <a href="tel:+358409876543" class="hidden md:flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold text-white transition-all" style="background:#1e88e5;font-family:'DM Sans',sans-serif;box-shadow:0 4px 14px rgba(30,136,229,0.4);" onmouseover="this.style.background='#1565c0'" onmouseout="this.style.background='#1e88e5'">
+      <i data-lucide="phone" style="width:14px;height:14px;"></i>
+      Soita meille
+    </a>
+    <!-- Mobile hamburger -->
+    <button class="md:hidden text-white" id="mobileMenuBtn">
+      <i data-lucide="menu" style="width:22px;height:22px;"></i>
+    </button>
+  </div>
+  <!-- Mobile menu -->
+  <div id="mobileMenu" class="hidden md:hidden border-t px-5 py-4 flex flex-col gap-4" style="border-color:rgba(30,136,229,0.15);background:rgba(13,27,51,0.98);">
+    <a href="#palvelut" class="nav-link" style="font-size:1rem;">Palvelut</a>
+    <a href="#projektit" class="nav-link" style="font-size:1rem;">Projektit</a>
+    <a href="#hinnasto" class="nav-link" style="font-size:1rem;">Hinnasto</a>
+    <a href="#yhteystiedot" class="nav-link" style="font-size:1rem;">Yhteystiedot</a>
+    <a href="tel:+358409876543" class="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-white w-fit mt-1" style="background:#1e88e5;font-family:'DM Sans',sans-serif;">
+      <i data-lucide="phone" style="width:14px;height:14px;"></i>
+      Soita meille
+    </a>
+  </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="blueprint-bg min-h-screen flex flex-col items-center justify-center relative overflow-hidden" id="hero" style="padding-top:100px;padding-bottom:60px;">
+  <!-- Decorative orbs -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute top-1/4 right-1/4 w-96 h-96 rounded-full blur-3xl opacity-10" style="background:radial-gradient(circle,#1e88e5,transparent);"></div>
+    <div class="absolute bottom-1/3 left-1/5 w-80 h-80 rounded-full blur-3xl opacity-8" style="background:radial-gradient(circle,#42a5f5,transparent);"></div>
+  </div>
+
+  <div class="max-w-5xl mx-auto px-5 lg:px-8 text-center relative z-10">
+    <!-- Badge -->
+    <div class="hero-badge inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-7 reveal">
+      <span class="w-2 h-2 rounded-full pulse-dot" style="background:#1e88e5;"></span>
+      <span class="text-xs font-semibold tracking-widest uppercase" style="color:#90caf9;font-family:'DM Sans',sans-serif;">Tampere · Perustettu 2004</span>
+    </div>
+
+    <!-- Headline -->
+    <h1 class="font-extrabold leading-none mb-6 reveal reveal-delay-1" style="font-family:'Barlow',sans-serif;font-weight:800;font-size:clamp(2.6rem,6vw,5rem);color:#ffffff;letter-spacing:-0.02em;line-height:1.05;">
+      Luotettava<br>
+      <span style="background:linear-gradient(90deg,#42a5f5,#1e88e5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">LVI-kumppani</span><br>
+      Tampereella.
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="text-lg mb-10 max-w-2xl mx-auto reveal reveal-delay-2" style="color:#b0bec5;font-family:'DM Sans',sans-serif;line-height:1.7;">
+      20 vuoden kokemus&nbsp;·&nbsp;KVV-sertifioitu&nbsp;·&nbsp;24/7 päivystys&nbsp;·&nbsp;Ilmainen arvio
+    </p>
+
+    <!-- CTAs -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center mb-14 reveal reveal-delay-3">
+      <a href="#yhteystiedot" class="flex items-center justify-center gap-2.5 px-8 py-4 rounded-full font-bold text-white text-base transition-all" style="background:linear-gradient(135deg,#1e88e5,#1565c0);box-shadow:0 8px 30px rgba(30,136,229,0.45);font-family:'Barlow',sans-serif;letter-spacing:0.02em;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 12px 40px rgba(30,136,229,0.55)'" onmouseout="this.style.transform='';this.style.boxShadow='0 8px 30px rgba(30,136,229,0.45)'">
+        <i data-lucide="send" style="width:16px;height:16px;"></i>
+        Pyydä tarjous
+      </a>
+      <a href="tel:+358409876543" class="flex items-center justify-center gap-2.5 px-8 py-4 rounded-full font-bold text-white text-base transition-all border" style="border-color:rgba(30,136,229,0.5);background:rgba(30,136,229,0.08);font-family:'Barlow',sans-serif;letter-spacing:0.02em;" onmouseover="this.style.background='rgba(30,136,229,0.18)';this.style.borderColor='rgba(30,136,229,0.8)'" onmouseout="this.style.background='rgba(30,136,229,0.08)';this.style.borderColor='rgba(30,136,229,0.5)'">
+        <i data-lucide="phone" style="width:16px;height:16px;"></i>
+        Soita nyt: +358 40 987 6543
+      </a>
+    </div>
+
+    <!-- Stats row -->
+    <div class="reveal reveal-delay-4">
+      <div class="inline-flex flex-wrap items-center justify-center gap-0 rounded-2xl overflow-hidden" style="background:rgba(255,255,255,0.04);border:1px solid rgba(176,190,197,0.12);">
+        <div class="flex flex-col items-center px-7 py-5">
+          <span class="font-extrabold text-2xl text-white" style="font-family:'Barlow',sans-serif;">500+</span>
+          <span class="text-xs mt-0.5" style="color:#b0bec5;font-family:'DM Sans',sans-serif;">projektia</span>
+        </div>
+        <div class="stat-divider self-stretch my-3"></div>
+        <div class="flex flex-col items-center px-7 py-5">
+          <span class="font-extrabold text-2xl flex items-center gap-1" style="font-family:'Barlow',sans-serif;color:#fbbf24;">4.9 <i data-lucide="star" style="width:18px;height:18px;fill:#fbbf24;"></i></span>
+          <span class="text-xs mt-0.5" style="color:#b0bec5;font-family:'DM Sans',sans-serif;">Google · 187 arv.</span>
+        </div>
+        <div class="stat-divider self-stretch my-3"></div>
+        <div class="flex flex-col items-center px-7 py-5">
+          <span class="font-extrabold text-2xl text-white" style="font-family:'Barlow',sans-serif;">24/7</span>
+          <span class="text-xs mt-0.5" style="color:#b0bec5;font-family:'DM Sans',sans-serif;">päivystys</span>
+        </div>
+        <div class="stat-divider self-stretch my-3"></div>
+        <div class="flex flex-col items-center px-7 py-5">
+          <span class="font-extrabold text-2xl text-white" style="font-family:'Barlow',sans-serif;">20v</span>
+          <span class="text-xs mt-0.5" style="color:#b0bec5;font-family:'DM Sans',sans-serif;">kokemus</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
+    <span class="text-xs tracking-widest uppercase" style="color:#b0bec5;font-family:'DM Sans',sans-serif;">Vieritä alas</span>
+    <i data-lucide="chevrons-down" style="width:20px;height:20px;color:#b0bec5;"></i>
+  </div>
+</section>
+
+<!-- SERVICES SECTION -->
+<section id="palvelut" class="bg-white py-24">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <!-- Header -->
+    <div class="text-center mb-14 reveal">
+      <span class="text-xs font-bold tracking-widest uppercase mb-3 block" style="color:#1e88e5;font-family:'DM Sans',sans-serif;">Palvelumme</span>
+      <h2 class="font-extrabold mb-4" style="font-family:'Barlow',sans-serif;font-size:clamp(2rem,4vw,2.75rem);color:#0d1b33;letter-spacing:-0.02em;">Mitä teemme</h2>
+      <p class="text-lg max-w-xl mx-auto" style="color:#546e7a;font-family:'DM Sans',sans-serif;">Kattavat LVI-palvelut koteihin ja yrityksiin Tampereen seudulla — yhdeltä luukkulta.</p>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Putkiasennukset -->
+      <div class="service-card bg-white border border-gray-100 rounded-2xl p-7 reveal reveal-delay-1" style="box-shadow:0 2px 16px rgba(13,27,51,0.05);">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background:rgba(30,136,229,0.1);">
+          <i data-lucide="pipe" style="width:22px;height:22px;color:#1e88e5;"></i>
+        </div>
+        <h3 class="font-bold text-lg mb-2" style="font-family:'Barlow',sans-serif;color:#0d1b33;">Putkiasennukset</h3>
+        <p style="color:#607d8b;font-family:'DM Sans',sans-serif;line-height:1.65;font-size:0.9rem;">Uudet vesi- ja viemäriputket, saneeraukset ja korjaukset. Käytämme laadukkaita materiaaleja ja takaamme huolellisen työn.</p>
+        <a href="#yhteystiedot" class="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold transition-colors" style="color:#1e88e5;font-family:'DM Sans',sans-serif;" onmouseover="this.style.color='#1565c0'" onmouseout="this.style.color='#1e88e5'">
+          Kysy lisää <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+        </a>
+      </div>
+
+      <!-- Lämpöpumput -->
+      <div class="service-card bg-white border border-gray-100 rounded-2xl p-7 reveal reveal-delay-2" style="box-shadow:0 2px 16px rgba(13,27,51,0.05);">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background:rgba(30,136,229,0.1);">
+          <i data-lucide="thermometer" style="width:22px;height:22px;color:#1e88e5;"></i>
+        </div>
+        <h3 class="font-bold text-lg mb-2" style="font-family:'Barlow',sans-serif;color:#0d1b33;">Lämpöpumput</h3>
+        <p style="color:#607d8b;font-family:'DM Sans',sans-serif;line-height:1.65;font-size:0.9rem;">GEO-sertifioitu maalämpö-, ilmalämpö- ja poistoilmalämpöpumppujen asennus ja huolto. Säästä energiakuluissa.</p>
+        <a href="#yhteystiedot" class="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold transition-colors" style="color:#1e88e5;font-family:'DM Sans',sans-serif;" onmouseover="this.style.color='#1565c0'" onmouseout="this.style.color='#1e88e5'">
+          Kysy lisää <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+        </a>
+      </div>
+
+      <!-- Vesivahingot -->
+      <div class="service-card bg-white border border-gray-100 rounded-2xl p-7 reveal reveal-delay-3" style="box-shadow:0 2px 16px rgba(13,27,51,0.05);">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background:rgba(30,136,229,0.1);">
+          <i data-lucide="droplets" style="width:22px;height:22px;color:#1e88e5;"></i>
+        </div>
+        <h3 class="font-bold text-lg mb-2" style="font-family:'Barlow',sans-serif;color:#0d1b33;">Vesivahingot</h3>
+        <p style="color:#607d8b;font-family:'DM Sans',sans-serif;line-height:1.65;font-size:0.9rem;">Nopea reagointi vesivahinkoihin, vuotojen paikannus ja korjaus. Yhteistyö vakuutusyhtiöiden kanssa.</p>
+        <a href="#yhteystiedot" class="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold transition-colors" style="color:#1e88e5;font-family:'DM Sans',sans-serif;" onmouseover="this.style.color='#1565c0'" onmouseout="this.style.color='#1e88e5'">
+          Kysy lisää <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+        </a>
+      </div>
+
+      <!-- Kylpyhuoneremontti -->
+      <div class="service-card bg-white border border-gray-100 rounded-2xl p-7 reveal reveal-delay-1" style="box-shadow:0 2px 16px rgba(13,27,51,0.05);">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background:rgba(30,136,229,0.1);">
+          <i data-lucide="bath" style="width:22px;height:22px;color:#1e88e5;"></i>
+        </div>
+        <h3 class="font-bold text-lg mb-2" style="font-family:'Barlow',sans-serif;color:#0d1b33;">Kylpyhuoneremontti</h3>
+        <p style="color:#607d8b;font-family:'DM Sans',sans-serif;line-height:1.65;font-size:0.9rem;">Täydelliset kylpyhuone- ja märkätilaremontit avaimet käteen. Suunnittelu, purku, vedeneristys ja putkityöt.</p>
+        <a href="#yhteystiedot" class="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold transition-colors" style="color:#1e88e5;font-family:'DM Sans',sans-serif;" onmouseover="this.style.color='#1565c0'" onmouseout="this.style.color='#1e88e5'">
+          Kysy lisää <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+        </a>
+      </div>
+
+      <!-- Ilmanvaihto -->
+      <div class="service-card bg-white border border-gray-100 rounded-2xl p-7 reveal reveal-delay-2" style="box-shadow:0 2px 16px rgba(13,27,51,0.05);">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background:rgba(30,136,229,0.1);">
+          <i data-lucide="wind" style="width:22px;height:22px;color:#1e88e5;"></i>
+        </div>
+        <h3 class="font-bold text-lg mb-2" style="font-family:'Barlow',sans-serif;color:#0d1b33;">Ilmanvaihto</h3>
+        <p style="color:#607d8b;font-family:'DM Sans',sans-serif;line-height:1.65;font-size:0.9rem;">IV-järjestelmien asennus, huolto ja saneeraus. Tasapainoitus ja puhdistus parempaan sisäilmanlaatuun.</p>
+        <a href="#yhteystiedot" class="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold transition-colors" style="color:#1e88e5;font-family:'DM Sans',sans-serif;" onmouseover="this.style.color='#1565c0'" onmouseout="this.style.color='#1e88e5'">
+          Kysy lisää <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+        </a>
+      </div>
+
+      <!-- 24h Hätäpäivystys -->
+      <div class="service-card rounded-2xl p-7 reveal reveal-delay-3" style="background:linear-gradient(135deg,#0d1b33,#1a2a47);border:2px solid rgba(251,191,36,0.3);box-shadow:0 4px 24px rgba(13,27,51,0.15);">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background:rgba(251,191,36,0.15);">
+          <i data-lucide="phone-call" style="width:22px;height:22px;color:#fbbf24;"></i>
+        </div>
+        <div class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 mb-3" style="background:rgba(251,191,36,0.15);">
+          <span class="w-2 h-2 rounded-full" style="background:#fbbf24;"></span>
+          <span class="text-xs font-bold" style="color:#fbbf24;font-family:'Barlow',sans-serif;letter-spacing:0.05em;">YMPÄRIVUOROKAUSI</span>
+        </div>
+        <h3 class="font-bold text-lg mb-2" style="font-family:'Barlow',sans-serif;color:#ffffff;">24h Hätäpäivystys</h3>
+        <p style="color:#90a4ae;font-family:'DM Sans',sans-serif;line-height:1.65;font-size:0.9rem;">Vuoto, tulva tai lämmityskatko? Olemme tavoitettavissa vuorokauden ympäri — myös viikonloppuisin ja juhlapyhinä.</p>
+        <a href="tel:+358409876543" class="inline-flex items-center gap-1.5 mt-5 text-sm font-bold transition-colors" style="color:#fbbf24;font-family:'DM Sans',sans-serif;">
+          Soita heti <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WHY US SECTION -->
+<section class="py-24" style="background:#0d1b33;">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="text-center mb-14 reveal">
+      <span class="text-xs font-bold tracking-widest uppercase mb-3 block" style="color:#42a5f5;font-family:'DM Sans',sans-serif;">Luottamus</span>
+      <h2 class="font-extrabold mb-4 text-white" style="font-family:'Barlow',sans-serif;font-size:clamp(2rem,4vw,2.75rem);letter-spacing:-0.02em;">Miksi Virtanen LVI?</h2>
+      <p class="text-lg max-w-xl mx-auto" style="color:#90a4ae;font-family:'DM Sans',sans-serif;">Olemme rakentaneet maineen rehellisellä työnteolla ja laadukkailla ratkaisuilla vuodesta 2004.</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <div class="rounded-2xl p-8 text-center reveal reveal-delay-1" style="background:rgba(255,255,255,0.04);border:1px solid rgba(30,136,229,0.2);">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5" style="background:rgba(30,136,229,0.15);">
+          <i data-lucide="shield-check" style="width:26px;height:26px;color:#42a5f5;"></i>
+        </div>
+        <h3 class="font-bold text-base mb-2 text-white" style="font-family:'Barlow',sans-serif;">Sertifioitu</h3>
+        <p class="text-sm" style="color:#78909c;font-family:'DM Sans',sans-serif;line-height:1.6;">KVV-työnjohtaja &amp; GEO-sertifioitu. Kaikki lupa-asiat kunnossa.</p>
+      </div>
+
+      <div class="rounded-2xl p-8 text-center reveal reveal-delay-2" style="background:rgba(255,255,255,0.04);border:1px solid rgba(30,136,229,0.2);">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5" style="background:rgba(30,136,229,0.15);">
+          <i data-lucide="badge-check" style="width:26px;height:26px;color:#42a5f5;"></i>
+        </div>
+        <h3 class="font-bold text-base mb-2 text-white" style="font-family:'Barlow',sans-serif;">Takuu 2 vuotta</h3>
+        <p class="text-sm" style="color:#78909c;font-family:'DM Sans',sans-serif;line-height:1.6;">Kaikilla töillä on 24 kuukauden työtakuu. Laatu on lupaus, ei slogan.</p>
+      </div>
+
+      <div class="rounded-2xl p-8 text-center reveal reveal-delay-3" style="background:rgba(255,255,255,0.04);border:1px solid rgba(30,136,229,0.2);">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5" style="background:rgba(30,136,229,0.15);">
+          <i data-lucide="calculator" style="width:26px;height:26px;color:#42a5f5;"></i>
+        </div>
+        <h3 class="font-bold text-base mb-2 text-white" style="font-family:'Barlow',sans-serif;">Ilmainen arvio</h3>
+        <p class="text-sm" style="color:#78909c;font-family:'DM Sans',sans-serif;line-height:1.6;">Käymme paikan päällä maksutta. Saat selkeän kustannusarvion ennen päätöstä.</p>
+      </div>
+
+      <div class="rounded-2xl p-8 text-center reveal reveal-delay-4" style="background:rgba(255,255,255,0.04);border:1px solid rgba(30,136,229,0.2);">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5" style="background:rgba(30,136,229,0.15);">
+          <i data-lucide="percent" style="width:26px;height:26px;color:#42a5f5;"></i>
+        </div>
+        <h3 class="font-bold text-base mb-2 text-white" style="font-family:'Barlow',sans-serif;">Kotitalousvähennys</h3>
+        <p class="text-sm" style="color:#78909c;font-family:'DM Sans',sans-serif;line-height:1.6;">Hyödynnä jopa 2 250 € verovähennys per henkilö kotitalousvähennyksellä.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS SECTION -->
+<section id="projektit" class="py-24" style="background:#f4f6f9;">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-14 gap-4 reveal">
+      <div>
+        <span class="text-xs font-bold tracking-widest uppercase mb-3 block" style="color:#1e88e5;font-family:'DM Sans',sans-serif;">Referenssit</span>
+        <h2 class="font-extrabold" style="font-family:'Barlow',sans-serif;font-size:clamp(2rem,4vw,2.75rem);color:#0d1b33;letter-spacing:-0.02em;">Viimeisimmät projektit</h2>
+      </div>
+      <p class="text-sm" style="color:#78909c;font-family:'DM Sans',sans-serif;max-width:300px;">500+ onnistunutta projektia Tampereen seudulla – katso muutama esimerkki.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- Project 1 -->
+      <div class="project-card bg-white rounded-2xl overflow-hidden reveal reveal-delay-1" style="box-shadow:0 2px 16px rgba(13,27,51,0.06);">
+        <div class="relative" style="height:200px;background:linear-gradient(135deg,#0d1b33 0%,#1e3a5f 100%);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <i data-lucide="bath" style="width:60px;height:60px;color:rgba(30,136,229,0.4);"></i>
+          </div>
+          <div class="absolute top-4 left-4">
+            <span class="text-xs font-bold px-3 py-1 rounded-full" style="background:rgba(30,136,229,0.9);color:white;font-family:'DM Sans',sans-serif;">Kylpyhuone</span>
+          </div>
+          <div class="absolute bottom-4 right-4">
+            <span class="text-xs font-semibold" style="color:rgba(176,190,197,0.7);font-family:'DM Sans',sans-serif;">2024</span>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="font-bold text-lg mb-2" style="font-family:'Barlow',sans-serif;color:#0d1b33;">Kylpyhuoneremontti</h3>
+          <p class="text-xs font-semibold mb-3 flex items-center gap-1" style="color:#1e88e5;font-family:'DM Sans',sans-serif;">
+            <i data-lucide="map-pin" style="width:12px;height:12px;"></i>
+            Tampere, Kaleva
+          </p>
+          <p style="color:#607d8b;font-family:'DM Sans',sans-serif;font-size:0.88rem;line-height:1.65;">Täydellinen kylpyhuonesaneeraus 8 m² tilaan. Uudet putket, vedeneristys, lattialämmitys ja kalusteet. Valmistui 12 päivässä.</p>
+          <a href="#yhteystiedot" class="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold transition-colors" style="color:#1e88e5;font-family:'DM Sans',sans-serif;" onmouseover="this.style.color='#1565c0'" onmouseout="this.style.color='#1e88e5'">
+            Lue lisää <i data-lucide="arrow-right" style="width:13px;height:13px;"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="project-card bg-white rounded-2xl overflow-hidden reveal reveal-delay-2" style="box-shadow:0 2px 16px rgba(13,27,51,0.06);">
+        <div class="relative" style="height:200px;background:linear-gradient(135deg,#132040 0%,#1a3050 100%);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <i data-lucide="thermometer" style="width:60px;height:60px;color:rgba(30,136,229,0.4);"></i>
+          </div>
+          <div class="absolute top-4 left-4">
+            <span class="text-xs font-bold px-3 py-1 rounded-full" style="background:rgba(30,136,229,0.9);color:white;font-family:'DM Sans',sans-serif;">Maalämpö</span>
+          </div>
+          <div class="absolute bottom-4 right-4">
+            <span class="text-xs font-semibold" style="color:rgba(176,190,197,0.7);font-family:'DM Sans',sans-serif;">2024</span>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="font-bold text-lg mb-2" style="font-family:'Barlow',sans-serif;color:#0d1b33;">Maalämpöpumppu asennus</h3>
+          <p class="text-xs font-semibold mb-3 flex items-center gap-1" style="color:#1e88e5;font-family:'DM Sans',sans-serif;">
+            <i data-lucide="map-pin" style="width:12px;height:12px;"></i>
+            Pirkkala
+          </p>
+          <p style="color:#607d8b;font-family:'DM Sans',sans-serif;font-size:0.88rem;line-height:1.65;">180 m² omakotitalon maalämpöjärjestelmä. 200 m porakaivo, NIBE F1245 -lämpöpumppu. Säästö 70% lämmityskuluissa.</p>
+          <a href="#yhteystiedot" class="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold transition-colors" style="color:#1e88e5;font-family:'DM Sans',sans-serif;" onmouseover="this.style.color='#1565c0'" onmouseout="this.style.color='#1e88e5'">
+            Lue lisää <i data-lucide="arrow-right" style="width:13px;height:13px;"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="project-card bg-white rounded-2xl overflow-hidden reveal reveal-delay-3" style="box-shadow:0 2px 16px rgba(13,27,51,0.06);">
+        <div class="relative" style="height:200px;background:linear-gradient(135deg,#0f2139 0%,#1c3455 100%);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <i data-lucide="droplets" style="width:60px;height:60px;color:rgba(30,136,229,0.4);"></i>
+          </div>
+          <div class="absolute top-4 left-4">
+            <span class="text-xs font-bold px-3 py-1 rounded-full" style="background:rgba(245,158,11,0.9);color:white;font-family:'DM Sans',sans-serif;">Vahinkokorjaus</span>
+          </div>
+          <div class="absolute bottom-4 right-4">
+            <span class="text-xs font-semibold" style="color:rgba(176,190,197,0.7);font-family:'DM Sans',sans-serif;">2023</span>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="font-bold text-lg mb-2" style="font-family:'Barlow',sans-serif;color:#0d1b33;">Vesivahingon korjaus</h3>
+          <p class="text-xs font-semibold mb-3 flex items-center gap-1" style="color:#1e88e5;font-family:'DM Sans',sans-serif;">
+            <i data-lucide="map-pin" style="width:12px;height:12px;"></i>
+            Nokia
+          </p>
+          <p style="color:#607d8b;font-family:'DM Sans',sans-serif;font-size:0.88rem;line-height:1.65;">Kerrostalon putkivuodon hätäkorjaus ja laajempi saneeraus. Vakuutusyhtiöyhteistyö hoidettu alusta loppuun saakka.</p>
+          <a href="#yhteystiedot" class="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold transition-colors" style="color:#1e88e5;font-family:'DM Sans',sans-serif;" onmouseover="this.style.color='#1565c0'" onmouseout="this.style.color='#1e88e5'">
+            Lue lisää <i data-lucide="arrow-right" style="width:13px;height:13px;"></i>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS SECTION -->
+<section class="bg-white py-24">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="text-center mb-14 reveal">
+      <span class="text-xs font-bold tracking-widest uppercase mb-3 block" style="color:#1e88e5;font-family:'DM Sans',sans-serif;">Asiakaspalaute</span>
+      <h2 class="font-extrabold mb-4" style="font-family:'Barlow',sans-serif;font-size:clamp(2rem,4vw,2.75rem);color:#0d1b33;letter-spacing:-0.02em;">Mitä asiakkaat sanovat</h2>
+      <div class="flex items-center justify-center gap-3">
+        <div class="flex gap-0.5">
+          <i data-lucide="star" class="star-filled" style="width:20px;height:20px;fill:#fbbf24;"></i>
+          <i data-lucide="star" class="star-filled" style="width:20px;height:20px;fill:#fbbf24;"></i>
+          <i data-lucide="star" class="star-filled" style="width:20px;height:20px;fill:#fbbf24;"></i>
+          <i data-lucide="star" class="star-filled" style="width:20px;height:20px;fill:#fbbf24;"></i>
+          <i data-lucide="star" class="star-filled" style="width:20px;height:20px;fill:#fbbf24;"></i>
+        </div>
+        <span class="font-bold text-lg" style="font-family:'Barlow',sans-serif;color:#0d1b33;">4.9/5</span>
+        <span style="color:#607d8b;font-family:'DM Sans',sans-serif;font-size:0.9rem;">· 187 Google-arvostelua</span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- Review 1 -->
+      <div class="review-card rounded-2xl p-7 reveal reveal-delay-1" style="background:#f8fafc;border:1px solid #e8ecf0;">
+        <div class="flex gap-0.5 mb-4">
+          <i data-lucide="star" style="width:16px;height:16px;fill:#fbbf24;color:#fbbf24;"></i>
+          <i data-lucide="star" style="width:16px;height:16px;fill:#fbbf24;color:#fbbf24;"></i>
+          <i data-lucide="star" style="width:16px;height:16px;fill:#fbbf24;color:#fbbf24;"></i>
+          <i data-lucide="star" style="width:16px;height:16px;fill:#fbbf24;color:#fbbf24;"></i>
+          <i data-lucide="star" style="width:16px;height:16px;fill:#fbbf24;color:#fbbf24;"></i>
+        </div>
+        <p class="mb-5 italic" style="color:#455a64;font-family:'DM Sans',sans-serif;line-height:1.7;font-size:0.95rem;">"Erinomainen palvelu! Kylpyhuoneremontti tehtiin täsmällisesti ja siististi. Virtasen tiimi oli ammattitaitoinen ja piti aikataulusta kiinni. Suosittelen lämpimästi!"</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm text-white" style="background:linear-gradient(135deg,#1e88e5,#1565c0);font-family:'Barlow',sans-serif;">M</div>
+          <div>
+            <p class="font-bold text-sm" style="font-family:'Barlow',sans-serif;color:#0d1b33;">Matti K.</p>
+            <p class="text-xs" style="color:#90a4ae;font-family:'DM Sans',sans-serif;">Tampere · Google-arvostelu</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Review 2 -->
+      <div class="review-card rounded-2xl p-7 reveal reveal-delay-2" style="background:#f8fafc;border:1px solid #e8ecf0;">
+        <div class="flex gap-0.5 mb-4">
+          <i data-lucide="star" style="width:16px;height:16px;fill:#fbbf24;color:#fbbf24;"></i>
+          <i data-lucide="star" style="width:16px;height:16px;fill:#fbbf24;color:#fbbf24;"></i>
+          <i data-lucide="star" style="width:16px;height:16px;fill:#fbbf24;color:#fbbf24;"></i>
+          <i data-lucide="star" style="width:16px;height:16px;fill:#fbbf24;color:#fbbf24;"></i>
+          <i data-lucide="star" style="width:16px;height:16px;fill:#fbbf24;color:#fbbf24;"></i>
+        </div>
+        <p class="mb-5 italic" style="color:#455a64;font-family:'DM Sans',sans-serif;line-height:1.7;font-size:0.95rem;">"Putkivuoto viikonloppuna – Virtanen tuli paikalle kahdessa tunnissa. Nopea, asiantunteva ja rehellinen hinnoittelu. Ei lisäkustannuksia. Tämä on se firma johon voi luottaa."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm text-white" style="background:linear-gradient(135deg,#1e88e5,#1565c0);font-family:'Barlow',sans-serif;">L</div>
+          <div>
+            <p class="font-bold text-sm" style="font-family:'Barlow',sans-serif;color:#0d1b33;">Laura P.</p>
+            <p class="text-xs" style="color:#90a4ae;font-family:'DM Sans',sans-serif;">Pirkkala · Google-arvostelu</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Review 3 -->
+      <div class="review-card rounded-2xl p-7 reveal reveal-delay-3" style="background:#f8fafc;border:1px solid #e8ecf0;">
+        <div class="flex gap-0.5 mb-4">
+          <i data-lucide="star" style="width:16px;height:16px;fill:#fbbf24;color:#fbbf24;"></i>
+          <i data-lucide="star" style="width:16px;height:16px;fill:#fbbf24;color:#fbbf24;"></i>
+          <i data-lucide="star" style="width:16px;height:16px;fill:#fbbf24;color:#fbbf24;"></i>
+          <i data-lucide="star" style="width:16px;height:16px;fill:#fbbf24;color:#fbbf24;"></i>
+          <i data-lucide="star" style="width:16px;height:16px;fill:#fbbf24;color:#fbbf24;"></i>
+        </div>
+        <p class="mb-5 italic" style="color:#455a64;font-family:'DM Sans',sans-serif;line-height:1.7;font-size:0.95rem;">"Maalämpöpumppu asennettiin täydellisesti. Saimme kattavan selityksen koko järjestelmästä. Kotitalousvähennyskin hoidettiin helposti. Lämmityslasku tippui selvästi!"</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm text-white" style="background:linear-gradient(135deg,#1e88e5,#1565c0);font-family:'Barlow',sans-serif;">J</div>
+          <div>
+            <p class="font-bold text-sm" style="font-family:'Barlow',sans-serif;color:#0d1b33;">Jukka H.</p>
+            <p class="text-xs" style="color:#90a4ae;font-family:'DM Sans',sans-serif;">Nokia · Google-arvostelu</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS SECTION -->
+<section class="py-24" style="background:#0d1b33;">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="text-center mb-16 reveal">
+      <span class="text-xs font-bold tracking-widest uppercase mb-3 block" style="color:#42a5f5;font-family:'DM Sans',sans-serif;">Työnkulku</span>
+      <h2 class="font-extrabold text-white mb-4" style="font-family:'Barlow',sans-serif;font-size:clamp(2rem,4vw,2.75rem);letter-spacing:-0.02em;">Näin prosessi toimii</h2>
+      <p style="color:#90a4ae;font-family:'DM Sans',sans-serif;max-width:480px;margin:0 auto;font-size:1rem;">Yksinkertainen, läpinäkyvä prosessi — tiedät aina missä mennään.</p>
+    </div>
+
+    <!-- Steps desktop -->
+    <div class="hidden md:grid grid-cols-4 gap-0 relative">
+
+      <div class="flex flex-col items-center text-center relative reveal reveal-delay-1 px-4">
+        <div class="flex items-center w-full mb-6">
+          <div class="number-circle mx-auto">1</div>
+          <div class="process-connector ml-0" style="margin-left:-28px;"></div>
+        </div>
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style="background:rgba(30,136,229,0.15);">
+          <i data-lucide="message-circle" style="width:22px;height:22px;color:#42a5f5;"></i>
+        </div>
+        <h3 class="font-bold text-white mb-2 text-base" style="font-family:'Barlow',sans-serif;">Yhteydenotto</h3>
+        <p class="text-sm" style="color:#78909c;font-family:'DM Sans',sans-serif;line-height:1.65;">Soita, lähetä sähköposti tai täytä lomake. Vastaamme saman päivän aikana.</p>
+      </div>
+
+      <div class="flex flex-col items-center text-center relative reveal reveal-delay-2 px-4">
+        <div class="flex items-center w-full mb-6">
+          <div class="number-circle mx-auto">2</div>
+          <div class="process-connector ml-0" style="margin-left:-28px;"></div>
+        </div>
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style="background:rgba(30,136,229,0.15);">
+          <i data-lucide="clipboard-list" style="width:22px;height:22px;color:#42a5f5;"></i>
+        </div>
+        <h3 class="font-bold text-white mb-2 text-base" style="font-family:'Barlow',sans-serif;">Ilmainen arvio</h3>
+        <p class="text-sm" style="color:#78909c;font-family:'DM Sans',sans-serif;line-height:1.65;">Tulemme paikan päälle ilmaiseksi. Saat kirjallisen tarjouksen 24h sisällä.</p>
+      </div>
+
+      <div class="flex flex-col items-center text-center relative reveal reveal-delay-3 px-4">
+        <div class="flex items-center w-full mb-6">
+          <div class="number-circle mx-auto">3</div>
+          <div class="process-connector ml-0" style="margin-left:-28px;"></div>
+        </div>
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style="background:rgba(30,136,229,0.15);">
+          <i data-lucide="hammer" style="width:22px;height:22px;color:#42a5f5;"></i>
+        </div>
+        <h3 class="font-bold text-white mb-2 text-base" style="font-family:'Barlow',sans-serif;">Työn aloitus</h3>
+        <p class="text-sm" style="color:#78909c;font-family:'DM Sans',sans-serif;line-height:1.65;">Ammattitaitoinen tiimi aloittaa sov
