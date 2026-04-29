@@ -520,15 +520,11 @@
     margin-top: 2px;
   }
 
-  /* Reveal animation */
+  /* Reveal animation — visible by default, animation opt-in via JS */
   .reveal {
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .reveal.visible {
     opacity: 1;
     transform: translateY(0);
+    transition: opacity 0.7s ease, transform 0.7s ease;
   }
   .reveal-delay-1 { transition-delay: 0.1s; }
   .reveal-delay-2 { transition-delay: 0.2s; }
@@ -1192,20 +1188,24 @@
 </footer>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  if (window.lucide) lucide.createIcons();
-  var observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
-  document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
-  // Fallback: reveal all after 400ms in case IO doesn't fire (e.g. iframe context)
-  setTimeout(function() {
+// Script is at end of body — DOM is ready, no need for DOMContentLoaded
+(function() {
+  function init() {
+    if (window.lucide) lucide.createIcons();
+    // Make all reveal elements visible immediately
     document.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('visible'); });
-  }, 400);
-  var btn = document.getElementById('mobile-menu-btn');
-  var nav = document.getElementById('mobile-nav');
-  if (btn && nav) btn.addEventListener('click', function() { nav.classList.toggle('open'); });
-});
+    var btn = document.getElementById('mobile-menu-btn');
+    var nav = document.getElementById('mobile-nav');
+    if (btn && nav) btn.addEventListener('click', function() { nav.classList.toggle('open'); });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+  // Extra safety: also fire on load in case of iframe timing quirks
+  window.addEventListener('load', init);
+})();
 </script>
 </body>
 </html>
