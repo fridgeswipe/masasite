@@ -354,6 +354,14 @@ function WorkGrid() {
           </div>
           <div className="hp-work-thumb">
             <div className="hp-wt2">
+              {/* MKX Group logo */}
+              <div style={{ display:'flex', justifyContent:'center', alignItems:'center', marginBottom:14, padding:'10px 0 4px' }}>
+                <img
+                  src="/mkxgroup-logo.png"
+                  alt="MKX Group"
+                  style={{ height:28, width:'auto', filter:'brightness(0) invert(1)', opacity:0.92 }}
+                />
+              </div>
               <div className="hp-wt2-kpis">
                 <div className="hp-wt2-k">
                   <div className="hp-wt2-kl" />
