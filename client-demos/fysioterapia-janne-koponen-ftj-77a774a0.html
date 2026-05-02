@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fysioterapia Janne Koponen FTJK — Helsinki</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #0f2518;
+      --accent: #4caf50;
+      --bg: #f8faff;
+      --surface: #ffffff;
+      --color-text: #0f1a10;
+      --color-muted: #5a6e5c;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--color-text);
+      padding-top: 40px;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+    h1, h2, h3, h4 {
+      font-family: 'EB Garamond', serif;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    /* Demo Banner */
+    .demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(76, 175, 80, 0.88);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.02em;
+      padding-inline: 16px;
+      text-align: center;
+    }
+    .demo-banner a { color: #fff; font-weight: 600; text-decoration: underline; }
+
+    /* Sticky Nav */
+    .site-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(15,37,24,0.08);
+      transition: box-shadow 0.3s ease;
+    }
+    .site-nav.scrolled { box-shadow: 0 2px 24px rgba(15,37,24,0.1); }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .nav-logo {
+      font-family: 'EB Garamond', serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--primary);
+      letter-spacing: -0.01em;
+      flex-shrink: 0;
+    }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--color-text);
+      text-decoration: none;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; }
+    .btn-nav {
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-nav:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(76,175,80,0.35); }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100svh;
+      background: url('assets/fysioterapia-janne-koponen-ftj-77a774a0/photo1.jpg') center center / cover no-repeat;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.68) 100%);
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+      padding-block: 80px;
+      animation: heroFadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #a8f0aa;
+      font-weight: 500;
+      margin-bottom: 20px;
+      font-family: 'Inter', sans-serif;
+    }
+    .hero h1 {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(2.5rem, 6vw, 5.5rem);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+      line-height: 1.08;
+      max-width: 780px;
+      margin-bottom: 24px;
+    }
+    .hero-subtitle {
+      font-size: 1.125rem;
+      color: rgba(255,255,255,0.82);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 32px;
+      font-family: 'Inter', sans-serif;
+    }
+    .hero-rating {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+    .hero-rating .stars { display: flex; gap: 3px; }
+    .hero-rating .stars i { width: 18px; height: 18px; color: #f59e0b; fill: #f59e0b; }
+    .hero-rating-text {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.85);
+      font-weight: 500;
+      font-family: 'Inter', sans-serif;
+    }
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 16px; }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(76,175,80,0.4); }
+    .btn-primary:active { transform: translateY(-1px); }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.35);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 14px 32px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: transform 0.2s ease, background 0.2s ease;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.28); transform: translateY(-2px); }
+
+    /* Section common */
+    .section-wrapper {
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .section-eyebrow {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 12px;
+      font-family: 'Inter', sans-serif;
+    }
+    .section-title {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    /* Services */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .service-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+      border: 1px solid rgba(15,37,24,0.05);
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(15,37,24,0.12);
+    }
+    .service-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--accent) 14%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .service-icon i { width: 28px; height: 28px; color: var(--accent); }
+    .service-card h3 {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+    .service-card p {
+      font-size: 0.9rem;
+      color: var(--color-muted);
+      line-height: 1.7;
+    }
+
+    /* Why Choose Us */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 40px;
+      margin-top: 56px;
+    }
+    .why-item { text-align: center; }
+    .why-icon-wrap {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .why-icon-wrap i { width: 36px; height: 36px; color: var(--accent); }
+    .why-item h3 {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    .why-item p { font-size: 0.9rem; color: var(--color-muted); max-width: 280px; margin: 0 auto; }
+
+    /* Reviews */
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .review-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      border: 1px solid rgba(15,37,24,0.05);
+    }
+    .review-stars { display: flex; gap: 3px; margin-bottom: 16px; }
+    .review-stars i { width: 16px; height: 16px; color: #f59e0b; fill: #f59e0b; }
+    .review-quote {
+      font-size: 0.93rem;
+      font-style: italic;
+      color: var(--color-muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .review-author {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      padding: 2px 8px;
+      border-radius: 9999px;
+      letter-spacing: 0.03em;
+    }
+    .verified-badge i { width: 12px; height: 12px; }
+
+    /* Contact */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .contact-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .contact-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon i { width: 20px; height: 20px; color: var(--accent); }
+    .contact-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+    .contact-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    /* Footer */
+    .site-footer {
+      background: var(--primary);
+      padding-block: 56px 32px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .footer-logo {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .footer-address {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.7;
+      margin-bottom: 4px;
+    }
+    .footer-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      margin-block: 32px;
+    }
+    .footer-bottom {
+      font-size: 11px;
+      color: rgba(255,255,255,0.28);
+      letter-spacing: 0.03em;
+    }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+  <!-- DEMO BANNER -->
+  <div class="demo-banner">
+    Fysioterapia Janne Koponen FTJK — tämä esimerkkisivu on tehty juuri teille&nbsp;·&nbsp;Haluatko oman?&nbsp;<a href="mailto:team@masasite.com">Ota yhteyttä →</a>
+  </div>
+
+  <!-- STICKY NAV -->
+  <nav class="site-nav" id="site-nav">
+    <div class="nav-inner">
+      <span class="nav-logo">FTJK Fysioterapia</span>
+      <div class="nav-links">
+        <a href="#palvelut">Palvelut</a>
+        <a href="#yhteystiedot">Yhteystiedot</a>
+      </div>
+      <a href="#yhteystiedot" class="btn-nav">Varaa aika</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="etusivu">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Helsinki · Fysioterapia</span>
+      <h1>Ammattimainen<br>fysioterapia<br>Helsingissä</h1>
+      <p class="hero-subtitle">Fysioterapia Janne Koponen tarjoaa yksilöllistä ja ammattitaitoista fysioterapiapalvelua Helsingissä. Räätälöityjen hoitosuunnitelmien avulla auttamme sinua saavuttamaan terveytesi tavoitteet.</p>
+      <div class="hero-rating">
+        <div class="stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <span class="hero-rating-text">5.0/5 · Google-arviot</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="#yhteystiedot" class="btn-primary">
+          <i data-lucide="calendar" style="width:18px;height:18px;"></i>
+          Varaa aika nyt
+        </a>
+        <a href="#palvelut" class="btn-ghost">
+          Katso palvelut
+          <i data-lucide="arrow-right" style="width:17px;height:17px;"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section-wrapper" id="palvelut" style="background: #f3f7f3;">
+    <div class="container">
+      <div class="reveal" style="text-align:center; max-width: 640px; margin: 0 auto 0;">
+        <span class="section-eyebrow">Palvelumme</span>
+        <h2 class="section-title">Kattavat fysioterapiapalvelut</h2>
+        <p style="margin-top:16px; color: var(--color-muted); font-size:0.95rem; max-width:520px; margin-left:auto; margin-right:auto; line-height:1.7;">Pitkäjänteisen kokemuksen tuella palautamme liikuntakyvyn ja vähennämme kipua — yksilölliset hoitosuunnitelmat jokaiselle asiakkaalle.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-icon">
+            <i data-lucide="heart-pulse"></i>
+          </div>
+          <h3>Yksilöllinen fysioterapia</h3>
+          <p>Henkilökohtaiset hoitosessiot, jotka räätälöidään asiakkaan tarpeisiin ja tavoitteisiin. Jokainen hoitosuunnitelma on uniikki.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">
+            <i data-lucide="dumbbell"></i>
+          </div>
+          <h3>Lihasvoiman ja kuntoutuksen ohjelmat</h3>
+          <p>Ohjatut harjoitusohjelmat vammojen jälkeen ja liikuntakyvyn parantamiseen. Turvallinen ja tehokas kuntoutuminen.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">
+            <i data-lucide="activity"></i>
+          </div>
+          <h3>Kiputerapia</h3>
+          <p>Ammattimainen lähestymistapa kroonisen ja akuutin kivun hoitoon. Tunnistetaan kivun syyt ja löydetään tehokkaat hoitomenetelmät.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section class="section-wrapper" id="miksi-me" style="background: #fff;">
+    <div class="container">
+      <div class="reveal" style="text-align:center;">
+        <span class="section-eyebrow">Miksi valita meidät</span>
+        <h2 class="section-title">Luotettavaa hoitoa ammattitaidolla</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-item reveal">
+          <div class="why-icon-wrap">
+            <i data-lucide="award"></i>
+          </div>
+          <h3>Erinomainen asiakaspalaute</h3>
+          <p>5/5 täyden arvioinnin ansainnut palvelu. Asiakastyytyväisyys on meille tärkein mittari.</p>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-icon-wrap">
+            <i data-lucide="user-check"></i>
+          </div>
+          <h3>Henkilökohtainen palvelu</h3>
+          <p>Janne Koposen henkilökohtainen ja ammattitaitoinen palvelu — tuttu kasvo joka käynnillä.</p>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-icon-wrap">
+            <i data-lucide="shield-check"></i>
+          </div>
+          <h3>Tuloksellinen kuntoutus</h3>
+          <p>Yksilöllistetyt hoitosuunnitelmat ja todistettavasti tuloksellinen kuntoutus jokaiselle asiakkaalle.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="section-wrapper" id="arvostelut" style="background: #f3f7f3;">
+    <div class="container">
+      <div class="reveal" style="text-align:center;">
+        <span class="section-eyebrow">Asiakasarvostelut</span>
+        <h2 class="section-title">Mitä asiakkaamme sanovat</h2>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card reveal">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"Really professional and warm physiotherapy, especially for foot and knee problems. I have been there many times and will continue to go there."</p>
+          <div class="review-author">
+            Eve Luhtala
+            <span class="verified-badge">
+              <i data-lucide="check-circle"></i>
+              Verified
+            </span>
+          </div>
+        </div>
+        <div class="review-card reveal" style="background: color-mix(in srgb, var(--accent) 6%, white); border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);">
+          <div style="margin-bottom: 16px;">
+            <div style="display:flex; gap:3px; margin-bottom:8px;">
+              <i data-lucide="star" style="width:20px;height:20px;color:#f59e0b;fill:#f59e0b;"></i>
+              <i data-lucide="star" style="width:20px;height:20px;color:#f59e0b;fill:#f59e0b;"></i>
+              <i data-lucide="star" style="width:20px;height:20px;color:#f59e0b;fill:#f59e0b;"></i>
+              <i data-lucide="star" style="width:20px;height:20px;color:#f59e0b;fill:#f59e0b;"></i>
+              <i data-lucide="star" style="width:20px;height:20px;color:#f59e0b;fill:#f59e0b;"></i>
+            </div>
+            <p style="font-size:2rem; font-family:'EB Garamond',serif; font-weight:800; color:var(--primary); letter-spacing:-0.02em;">5.0 / 5</p>
+          </div>
+          <p style="font-size:0.875rem; color: var(--color-muted); line-height:1.7;">Google-arvostelujen keskiarvo. Tavoitteemme on tarjota parasta mahdollista palvelua jokaiselle asiakkaalle.</p>
+          <div style="margin-top:20px; display:flex; align-items:center; gap:8px;">
+            <i data-lucide="map-pin" style="width:16px;height:16px;color:var(--accent);"></i>
+            <span style="font-size:0.8rem; font-weight:600; color:var(--primary);">Helsinki, Suomi</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section-wrapper" id="yhteystiedot" style="background: #fff;">
+    <div class="container">
+      <div class="reveal" style="text-align:center; margin-bottom: 56px;">
+        <span class="section-eyebrow">Yhteystiedot</span>
+        <h2 class="section-title">Ota yhteyttä tai varaa aika</h2>
+        <p style="margin-top:16px; color: var(--color-muted); font-size:0.95rem; max-width:480px; margin-left:auto; margin-right:auto; line-height:1.7;">Olemme täällä sinua varten. Ota yhteyttä ja aloitetaan yhdessä matkasi kohti parempaa terveyttä.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="reveal">
+          <div class="contact-info-item">
+            <div class="contact-icon">
+              <i data-lucide="map-pin"></i>
+            </div>
+            <div>
+              <p class="contact-label">Osoite</p>
+              <p class="contact-value">Yrjönkatu 36</p>
+              <p style="font-size:0.875rem; color: var(--color-muted);">00100 Helsinki, Suomi</p>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon">
+              <i data-lucide="phone"></i>
+            </div>
+            <div>
+              <p class="contact-label">Puhelin</p>
+              <p class="contact-value"><a href="tel:0504726225" style="color:var(--primary); text-decoration:none;">050 4726225</a></p>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon">
+              <i data-lucide="clock"></i>
+            </div>
+            <div>
+              <p class="contact-label">Aukioloajat</p>
+              <p class="contact-value">Sopimuksen mukaan</p>
+              <p style="font-size:0.875rem; color: var(--color-muted);">Ota yhteyttä ajanvarausta varten</p>
+            </div>
+          </div>
+          <div style="margin-top: 32px;">
+            <a href="tel:0504726225" class="btn-primary" style="display:inline-flex;">
+              <i data-lucide="phone" style="width:17px;height:17px;"></i>
+              Varaa aika nyt
+            </a>
+          </div>
+        </div>
+        <div class="reveal">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Yrj%C3%B6nkatu%2036%2C%2000100%20Helsinki%2C%20Suomi%2C%20Helsinki%2C%20Finland&language=fi"
+            width="100%"
+            height="380"
+            style="border:0; border-radius:16px; display:block; box-shadow: 0 4px 24px rgba(15,37,24,0.1);"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Fysioterapia Janne Koponen FTJK sijainti">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo">Fysioterapia Janne Koponen FTJK</div>
+      <p class="footer-address">Yrjönkatu 36, 00100 Helsinki, Suomi</p>
+      <p class="footer-address">050 4726225</p>
+      <hr class="footer-divider" />
+      <p class="footer-bottom">Demo luotu masasite.com palvelulla</p>
+    </div>
+  </footer>
+
+  <script>
+    // Lucide icons
+    lucide.createIcons();
+
+    // Fill hero stars
+    document.querySelectorAll('.hero-rating .stars i').forEach(el => {
+      el.style.fill = '#f59e0b';
+      el.style.color = '#f59e0b';
+    });
+
+    // Fill review stars
+    document.querySelectorAll('.review-stars i').forEach(el => {
+      el.style.fill = '#f59e0b';
+      el.style.color = '#f59e0b';
+    });
+
+    // Nav scroll effect
+    const nav = document.getElementById('site-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // IntersectionObserver for reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    revealEls.forEach((el, i) => {
+      // Stagger for grids
+      const parent = el.parentElement;
+      if (parent && (parent.classList.contains('services-grid') || parent.classList.contains('why-grid') || parent.classList.contains('reviews-grid'))) {
+        const siblings = parent.querySelectorAll('.reveal');
+        siblings.forEach((s, idx) => {
+          s.style.transitionDelay = `${idx * 80}ms`;
+        });
+      }
+    });
+
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    revealEls.forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
