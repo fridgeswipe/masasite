@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AAA Autokorjaamo Helsinki – Luotettava autokorjaamo Helsingissä</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1a1a1a;
+      --accent: #f59e0b;
+      --bg: #0d1117;
+      --surface: #161b22;
+      --text: #f0f6ff;
+      --muted: rgba(240,246,255,0.6);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: #0d1117;
+      color: var(--text);
+      padding-top: 40px;
+      line-height: 1.7;
+    }
+
+    h1, h2, h3, .font-headline {
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    /* Demo Banner */
+    #demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(245,158,11,0.92);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #demo-banner p {
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.02em;
+    }
+    #demo-banner a {
+      color: #fff;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* Nav */
+    #main-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(13,17,23,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(240,246,255,0.08);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    #main-nav.scrolled {
+      background: rgba(13,17,23,0.95);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+
+    /* Hero */
+    #hero {
+      min-height: 100svh;
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.7) 100%),
+        url('assets/aaa-autokorjaamo-helsinki-879093d0/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content {
+      animation: heroFadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+
+    /* Reveal animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Service Cards */
+    .service-card {
+      background: #161b22;
+      border: 1px solid rgba(240,246,255,0.07);
+      border-radius: 20px;
+      padding: 36px 32px;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease, border-color 0.3s ease;
+      cursor: default;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+      border-color: rgba(245,158,11,0.3);
+    }
+    .icon-container {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: rgba(245,158,11,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .icon-container i {
+      color: var(--accent);
+      width: 28px;
+      height: 28px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 9999px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      cursor: pointer;
+      border: none;
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0,0,0,0.3); }
+    .btn:active { transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--accent);
+      color: #0d1117;
+    }
+    .btn-primary:hover { background: #fbbf24; }
+    .btn-ghost {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.22); }
+
+    /* Star rating */
+    .star-filled {
+      color: #f59e0b;
+      fill: #f59e0b;
+      width: 18px;
+      height: 18px;
+    }
+    .star-filled-sm {
+      color: #f59e0b;
+      fill: #f59e0b;
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Hours table */
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(240,246,255,0.07);
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-today {
+      background: rgba(245,158,11,0.1);
+      border-radius: 8px;
+      padding: 12px 16px;
+      border-bottom: none;
+      margin: 0 -16px;
+    }
+
+    /* Review cards */
+    .review-card {
+      background: #161b22;
+      border: 1px solid rgba(240,246,255,0.07);
+      border-radius: 20px;
+      padding: 28px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .review-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+    }
+
+    /* Why us icons */
+    .why-icon i {
+      width: 40px;
+      height: 40px;
+      color: var(--accent);
+    }
+
+    /* Section styles */
+    .section-light {
+      background: #111318;
+    }
+    .section-dark {
+      background: #0d1117;
+    }
+
+    /* Maps iframe */
+    .maps-frame {
+      border: 0;
+      border-radius: 16px;
+      width: 100%;
+      min-height: 280px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    /* Mobile nav */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+    }
+
+    /* Stagger delay for cards */
+    .stagger-1 { transition-delay: 0ms; }
+    .stagger-2 { transition-delay: 80ms; }
+    .stagger-3 { transition-delay: 160ms; }
+    .stagger-4 { transition-delay: 240ms; }
+  </style>
+</head>
+<body>
+
+  <!-- [1] DEMO BANNER -->
+  <div id="demo-banner">
+    <p>AAA Autokorjaamo Helsinki — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman? <a href="mailto:team@masasite.com">Ota yhteyttä →</a></p>
+  </div>
+
+  <!-- [2] STICKY NAV -->
+  <nav id="main-nav">
+    <div style="max-width:1200px; margin:0 auto; padding:0 clamp(16px,5vw,48px);">
+      <div style="display:flex; align-items:center; justify-content:space-between; height:64px;">
+        <!-- Logo -->
+        <div style="display:flex; align-items:center; gap:12px;">
+          <img src="https://assets.jwwb.nl/assets/brand/webador/icon/favicon.png?bust=2299e1307cbb69076146" alt="AAA Autokorjaamo" style="height:36px; width:auto; object-fit:contain;">
+          <span style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1.15rem; letter-spacing:0.02em; color:#f0f6ff;">AAA Autokorjaamo</span>
+        </div>
+        <!-- Nav Links -->
+        <div class="nav-links" style="display:flex; align-items:center; gap:32px;">
+          <a href="#services" style="font-size:0.9rem; font-weight:500; color:rgba(240,246,255,0.75); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#f59e0b'" onmouseout="this.style.color='rgba(240,246,255,0.75)'">Palvelut</a>
+          <a href="#hours" style="font-size:0.9rem; font-weight:500; color:rgba(240,246,255,0.75); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#f59e0b'" onmouseout="this.style.color='rgba(240,246,255,0.75)'">Aukioloajat</a>
+          <a href="#contact" style="font-size:0.9rem; font-weight:500; color:rgba(240,246,255,0.75); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#f59e0b'" onmouseout="this.style.color='rgba(240,246,255,0.75)'">Yhteystiedot</a>
+        </div>
+        <!-- CTA -->
+        <a href="tel:0405735202" class="btn btn-primary" style="font-size:0.875rem; padding:10px 22px;">
+          <i data-lucide="phone" style="width:15px;height:15px;"></i>
+          040 5735202
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- [3] HERO -->
+  <section id="hero">
+    <div class="hero-content" style="max-width:780px; padding:clamp(32px,8vw,80px) clamp(16px,5vw,48px); display:flex; flex-direction:column; align-items:center;">
+      <!-- Eyebrow -->
+      <span style="font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:#f59e0b; font-weight:600; margin-bottom:20px; font-family:'DM Sans',sans-serif;">Helsinki · Perustettu 1995</span>
+      <!-- H1 -->
+      <h1 style="font-size:clamp(2.8rem,7vw,5.5rem); font-weight:900; line-height:1.05; color:#ffffff; text-align:center; margin-bottom:24px;">
+        Luotettava autonhoito<br>Helsingissä vuodesta 1995
+      </h1>
+      <!-- Subtitle -->
+      <p style="font-size:clamp(1rem,2.5vw,1.2rem); color:rgba(255,255,255,0.8); text-align:center; max-width:560px; line-height:1.7; margin-bottom:28px;">
+        AAA Autokorjaamo on vuonna 1995 perustettu asiantunteva autonhoitoliike, joka tarjoaa laadukasta ja edullista korjauspalvelua. Ammattitaitoinen henkilökuntamme huolehtii kaiken tyyppisistä auto-ongelmista nopeasti ja tehokkaasti.
+      </p>
+      <!-- Rating -->
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:36px;">
+        <div style="display:flex; gap:3px;">
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+        </div>
+        <span style="color:rgba(255,255,255,0.9); font-size:0.9rem; font-weight:600;">4.7/5</span>
+        <span style="color:rgba(255,255,255,0.55); font-size:0.875rem;">(244 arvostelua)</span>
+      </div>
+      <!-- CTAs -->
+      <div style="display:flex; gap:14px; flex-wrap:wrap; justify-content:center;">
+        <a href="#contact" class="btn btn-primary" style="font-size:1rem; padding:15px 32px;">
+          Varaa huolto nyt
+          <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+        </a>
+        <a href="tel:0405735202" class="btn btn-ghost" style="font-size:1rem; padding:15px 32px;">
+          <i data-lucide="phone" style="width:16px;height:16px;"></i>
+          Soita meille
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- [4] SERVICES GRID -->
+  <section id="services" class="section-light" style="padding-block: clamp(64px,10vw,120px);">
+    <div style="max-width:1200px; margin:0 auto; padding-inline: clamp(16px,5vw,48px);">
+      <!-- Section Header -->
+      <div class="reveal" style="text-align:center; margin-bottom:64px;">
+        <span style="font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:#f59e0b; font-weight:600; font-family:'DM Sans',sans-serif; display:block; margin-bottom:14px;">Palvelumme</span>
+        <h2 style="font-size:clamp(1.75rem,4vw,3rem); font-weight:800; line-height:1.1; color:#f0f6ff;">Kaikki autoilusi tarpeet<br>yhdestä paikasta</h2>
+      </div>
+      <!-- Cards Grid -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px;">
+        <!-- Card 1 -->
+        <div class="service-card reveal stagger-1">
+          <div class="icon-container">
+            <i data-lucide="circle" style="width:28px;height:28px;color:#f59e0b;"></i>
+          </div>
+          <h3 style="font-size:1.2rem; font-weight:700; color:#f0f6ff; margin-bottom:10px; font-family:'Barlow Condensed',sans-serif; letter-spacing:0.01em;">Renkaiden vaihto</h3>
+          <p style="font-size:0.95rem; color:rgba(240,246,255,0.6); line-height:1.7;">Ammattitaitoinen renkaiden vaihto- ja balansointipalvelu. Nopea ja huolellinen toteutus kaikille ajoneuvoille.</p>
+        </div>
+        <!-- Card 2 -->
+        <div class="service-card reveal stagger-2">
+          <div class="icon-container">
+            <i data-lucide="clipboard-check" style="width:28px;height:28px;color:#f59e0b;"></i>
+          </div>
+          <h3 style="font-size:1.2rem; font-weight:700; color:#f0f6ff; margin-bottom:10px; font-family:'Barlow Condensed',sans-serif; letter-spacing:0.01em;">Katsastushuolto</h3>
+          <p style="font-size:0.95rem; color:rgba(240,246,255,0.6); line-height:1.7;">Katsastukseen valmistava huolto ja katsastuspalvelut. Varmistamme, että autosi läpäisee katsastuksen.</p>
+        </div>
+        <!-- Card 3 -->
+        <div class="service-card reveal stagger-3">
+          <div class="icon-container">
+            <i data-lucide="zap" style="width:28px;height:28px;color:#f59e0b;"></i>
+          </div>
+          <h3 style="font-size:1.2rem; font-weight:700; color:#f0f6ff; margin-bottom:10px; font-family:'Barlow Condensed',sans-serif; letter-spacing:0.01em;">Pakoputken pikakorjaus</h3>
+          <p style="font-size:0.95rem; color:rgba(240,246,255,0.6); line-height:1.7;">Nopeat ja luotettavat pakoputkien korjauspalvelut. Pikakorjaus ilman pitkää odottelua.</p>
+        </div>
+        <!-- Card 4 -->
+        <div class="service-card reveal stagger-4">
+          <div class="icon-container">
+            <i data-lucide="wrench" style="width:28px;height:28px;color:#f59e0b;"></i>
+          </div>
+          <h3 style="font-size:1.2rem; font-weight:700; color:#f0f6ff; margin-bottom:10px; font-family:'Barlow Condensed',sans-serif; letter-spacing:0.01em;">Korityöt ja ruostevauriot</h3>
+          <p style="font-size:0.95rem; color:rgba(240,246,255,0.6); line-height:1.7;">Perinteisten korit sekä ruosteen ja vaurioiden korjaus. Autosi kuin uusi ammattikäsillä.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO BAND -->
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; height:260px; overflow:hidden;">
+    <img src="assets/aaa-autokorjaamo-helsinki-879093d0/photo1.jpg" alt="Autokorjaamo" style="width:100%;height:100%;object-fit:cover;">
+    <img src="assets/aaa-autokorjaamo-helsinki-879093d0/photo2.jpg" alt="Autokorjaamo" style="width:100%;height:100%;object-fit:cover;">
+    <img src="assets/aaa-autokorjaamo-helsinki-879093d0/photo3.jpg" alt="Autokorjaamo" style="width:100%;height:100%;object-fit:cover;">
+  </div>
+
+  <!-- [5] WHY CHOOSE US -->
+  <section class="section-dark" style="padding-block: clamp(64px,10vw,120px);">
+    <div style="max-width:1200px; margin:0 auto; padding-inline: clamp(16px,5vw,48px);">
+      <!-- Header -->
+      <div class="reveal" style="text-align:center; margin-bottom:64px;">
+        <span style="font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:#f59e0b; font-weight:600; font-family:'DM Sans',sans-serif; display:block; margin-bottom:14px;">Miksi valita meidät</span>
+        <h2 style="font-size:clamp(1.75rem,4vw,3rem); font-weight:800; line-height:1.1; color:#f0f6ff;">Kokemus ja luottamus<br>puhuvat puolestaan</h2>
+      </div>
+      <!-- 3-column grid -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:48px;">
+        <!-- Item 1 -->
+        <div class="reveal stagger-1" style="text-align:center;">
+          <div class="why-icon" style="display:flex; justify-content:center; margin-bottom:20px;">
+            <i data-lucide="award" style="width:44px;height:44px;color:#f59e0b;"></i>
+          </div>
+          <h3 style="font-size:1.15rem; font-weight:700; color:#f0f6ff; margin-bottom:10px; font-family:'Barlow Condensed',sans-serif; font-size:1.3rem;">Yli 25 vuoden kokemus</h3>
+          <p style="font-size:0.95rem; color:rgba(240,246,255,0.6); line-height:1.7; max-width:280px; margin:0 auto;">Autonhoitoalalla vuodesta 1995 — vankka kokemus takaa luotettavan ja ammattitaitoisen palvelun.</p>
+        </div>
+        <!-- Item 2 -->
+        <div class="reveal stagger-2" style="text-align:center;">
+          <div class="why-icon" style="display:flex; justify-content:center; margin-bottom:20px;">
+            <i data-lucide="star" style="width:44px;height:44px;color:#f59e0b;fill:#f59e0b;"></i>
+          </div>
+          <h3 style="font-size:1.15rem; font-weight:700; color:#f0f6ff; margin-bottom:10px; font-family:'Barlow Condensed',sans-serif; font-size:1.3rem;">4.7/5 asiakastyytyväisyys</h3>
+          <p style="font-size:0.95rem; color:rgba(240,246,255,0.6); line-height:1.7; max-width:280px; margin:0 auto;">Asiakkaat antaneet 4.7/5 arvosanan 244 arvostelussa — tulos kertoo aidosta laadusta.</p>
+        </div>
+        <!-- Item 3 -->
+        <div class="reveal stagger-3" style="text-align:center;">
+          <div class="why-icon" style="display:flex; justify-content:center; margin-bottom:20px;">
+            <i data-lucide="shield-check" style="width:44px;height:44px;color:#f59e0b;"></i>
+          </div>
+          <h3 style="font-size:1.15rem; font-weight:700; color:#f0f6ff; margin-bottom:10px; font-family:'Barlow Condensed',sans-serif; font-size:1.3rem;">Nopea ja kilpailukykyinen</h3>
+          <p style="font-size:0.95rem; color:rgba(240,246,255,0.6); line-height:1.7; max-width:280px; margin:0 auto;">Nopea palvelu, ammattitaitoinen henkilökunta ja kilpailukykyiset hinnat — kaikki yhdessä paikassa.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [6] REVIEWS -->
+  <section class="section-light" style="padding-block: clamp(64px,10vw,120px);">
+    <div style="max-width:1200px; margin:0 auto; padding-inline: clamp(16px,5vw,48px);">
+      <!-- Header -->
+      <div class="reveal" style="text-align:center; margin-bottom:64px;">
+        <span style="font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:#f59e0b; font-weight:600; font-family:'DM Sans',sans-serif; display:block; margin-bottom:14px;">Asiakasarvostelut</span>
+        <h2 style="font-size:clamp(1.75rem,4vw,3rem); font-weight:800; line-height:1.1; color:#f0f6ff;">Mitä asiakkaamme sanovat</h2>
+        <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-top:16px;">
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+          <span style="color:rgba(240,246,255,0.8); font-size:0.9rem; margin-left:4px; font-weight:600;">4.7 / 5 · 244 arvostelua Google Maps</span>
+        </div>
+      </div>
+      <!-- Reviews Grid -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px;">
+        <!-- Review 1 - Sameli -->
+        <div class="review-card reveal stagger-1">
+          <div style="display:flex; gap:3px; margin-bottom:14px;">
+            <i data-lucide="star" class="star-filled-sm"></i>
+            <i data-lucide="star" class="star-filled-sm"></i>
+            <i data-lucide="star" class="star-filled-sm"></i>
+            <i data-lucide="star" class="star-filled-sm"></i>
+            <i data-lucide="star" class="star-filled-sm"></i>
+          </div>
+          <p style="font-style:italic; font-size:0.9rem; color:rgba(240,246,255,0.75); line-height:1.7; margin-bottom:18px;">"Communication was a bit difficult in the beginning but the end result was really good, fast and affordable. I would take my car here again. Recommended, if you want to save some money."</p>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(245,158,11,0.2);display:flex;align-items:center;justify-content:center;">
+              <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f59e0b;font-size:1rem;">S</span>
+            </div>
+            <div>
+              <span style="font-weight:700; font-size:0.875rem; color:#f0f6ff; display:block;">Sameli Köykkä</span>
+              <span style="font-size:0.75rem; color:rgba(240,246,255,0.5);">Vahvistettu asiakas</span>
+            </div>
+          </div>
+        </div>
+        <!-- Review 2 - Tommi -->
+        <div class="review-card reveal stagger-2">
+          <div style="display:flex; gap:3px; margin-bottom:14px;">
+            <i data-lucide="star" class="star-filled-sm"></i>
+            <i data-lucide="star" class="star-filled-sm"></i>
+            <i data-lucide="star" class="star-filled-sm"></i>
+            <i data-lucide="star" class="star-filled-sm"></i>
+            <i data-lucide="star" class="star-filled-sm"></i>
+          </div>
+          <p style="font-style:italic; font-size:0.9rem; color:rgba(240,246,255,0.75); line-height:1.7; margin-bottom:18px;">"Very helpful service and will fix any problem in your vehicle and i can easily say that its best in whole uusimaa. 👍"</p>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(245,158,11,0.2);display:flex;align-items:center;justify-content:center;">
+              <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f59e0b;font-size:1rem;">T</span>
+            </div>
+            <div>
+              <span style="font-weight:700; font-size:0.875rem; color:#f0f6ff; display:block;">Tommi Karppinen</span>
+              <span style="font-size:0.75rem; color:rgba(240,246,255,0.5);">Vahvistettu asiakas</span>
+            </div>
+          </div>
+        </div>
+        <!-- Review 3 - AFM (1 star, show honestly) -->
+        <div class="review-card reveal stagger-3">
+          <div style="display:flex; gap:3px; margin-bottom:14px;">
+            <i data-lucide="star" class="star-filled-sm"></i>
+            <i data-lucide="star" style="width:14px;height:14px;color:rgba(240,246,255,0.25);"></i>
+            <i data-lucide="star" style="width:14px;height:14px;color:rgba(240,246,255,0.25);"></i>
+            <i data-lucide="star" style="width:14px;height:14px;color:rgba(240,246,255,0.25);"></i>
+            <i data-lucide="star" style="width:14px;height:14px;color:rgba(240,246,255,0.25);"></i>
+          </div>
+          <p style="font-style:italic; font-size:0.9rem; color:rgba(240,246,255,0.75); line-height:1.7; margin-bottom:18px;">"I had a bad experience here. Because their behavior is not good as well as they are not professional also. They doesn't know how to behave with the customer."</p>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(240,246,255,0.08);display:flex;align-items:center;justify-content:center;">
+              <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:rgba(240,246,255,0.5);font-size:1rem;">A</span>
+            </div>
+            <div>
+              <span style="font-weight:700; font-size:0.875rem; color:#f0f6ff; display:block;">A F M Marufur Rahman</span>
+              <span style="font-size:0.75rem; color:rgba(240,246,255,0.5);">Google-arvostelu</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [7] OPENING HOURS -->
+  <section id="hours" class="section-dark" style="padding-block: clamp(64px,10vw,120px);">
+    <div style="max-width:680px; margin:0 auto; padding-inline: clamp(16px,5vw,48px);">
+      <div class="reveal" style="text-align:center; margin-bottom:48px;">
+        <span style="font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:#f59e0b; font-weight:600; font-family:'DM Sans',sans-serif; display:block; margin-bottom:14px;">Aukioloajat</span>
+        <h2 style="font-size:clamp(1.75rem,4vw,3rem); font-weight:800; line-height:1.1; color:#f0f6ff;">Milloin olemme paikalla</h2>
+      </div>
+      <div class="reveal" style="background:#161b22; border:1px solid rgba(240,246,255,0.07); border-radius:20px; padding:32px; max-width:480px; margin:0 auto;">
+        <div class="hours-row">
+          <span style="font-weight:600; color:#f0f6ff; font-size:0.95rem;">Maanantai</span>
+          <span style="color:rgba(240,246,255,0.7); font-size:0.95rem;">9:00 – 18:00</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:600; color:#f0f6ff; font-size:0.95rem;">Tiistai</span>
+          <span style="color:rgba(240,246,255,0.7); font-size:0.95rem;">9:00 – 18:00</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:600; color:#f0f6ff; font-size:0.95rem;">Keskiviikko</span>
+          <span style="color:rgba(240,246,255,0.7); font-size:0.95rem;">9:00 – 18:00</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:600; color:#f0f6ff; font-size:0.95rem;">Torstai</span>
+          <span style="color:rgba(240,246,255,0.7); font-size:0.95rem;">9:00 – 18:00</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:600; color:#f0f6ff; font-size:0.95rem;">Perjantai</span>
+          <span style="color:rgba(240,246,255,0.7); font-size:0.95rem;">9:00 – 18:00</span>
+        </div>
+        <div class="hours-row" style="opacity:0.55;">
+          <span style="font-weight:600; color:#f0f6ff; font-size:0.95rem;">Lauantai</span>
+          <span style="color:rgba(240,246,255,0.5); font-size:0.95rem;">Suljettu</span>
+        </div>
+        <div class="hours-row" style="opacity:0.55; border-bottom:none;">
+          <span style="font-weight:600; color:#f0f6ff; font-size:0.95rem;">Sunnuntai</span>
+          <span style="color:rgba(240,246,255,0.5); font-size:0.95rem;">Suljettu</span>
+        </div>
+      </div>
+      <div class="reveal" style="text-align:center; margin-top:28px;">
+        <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.25); border-radius:9999px; padding:8px 18px;">
+          <i data-lucide="clock" style="width:15px;height:15px;color:#f59e0b;"></i>
+          <span style="font-size:0.85rem; color:rgba(240,246,255,0.8);">Auki ma–pe klo 9–18</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [8] CONTACT -->
+  <section id="contact" class="section-light" style="padding-block: clamp(64px,10vw,120px);">
+    <div style="max-width:1200px; margin:0 auto; padding-inline: clamp(16px,5vw,48px);">
+      <!-- Header -->
+      <div class="reveal" style="text-align:center; margin-bottom:64px;">
+        <span style="font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:#f59e0b; font-weight:600; font-family:'DM Sans',sans-serif; display:block; margin-bottom:14px;">Yhteystiedot</span>
+        <h2 style="font-size:clamp(1.75rem,4vw,3rem); font-weight:800; line-height:1.1; color:#f0f6ff;">Löydä meidät Helsingistä</h2>
+      </div>
+      <!-- Two columns -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:48px; align-items:start;">
+        <!-- Left: Contact info -->
+        <div class="reveal">
+          <div style="margin-bottom:36px;">
+            <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:1.6rem; font-weight:700; color:#f0f6ff; margin-bottom:24px; letter-spacing:0.01em;">Ota yhteyttä</h3>
+            <!-- Address -->
+            <div style="display:flex; align-items:flex-start; gap:14px; margin-bottom:20px;">
+              <div style="width:40px;height:40px;border-radius:10px;background:rgba(245,158,11,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i data-lucide="map-pin" style="width:18px;height:18px;color:#f59e0b;"></i>
+              </div>
+              <div>
+                <span style="font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(240,246,255,0.45); display:block; margin-bottom:3px;">Osoite</span>
+                <span style="font-size:0.95rem; color:rgba(240,246,255,0.85); font-weight:500;">Jäähdytintie 8, 00770 Helsinki</span>
+              </div>
+            </div>
+            <!-- Phone -->
+            <div style="display:flex; align-items:flex-start; gap:14px; margin-bottom:20px;">
+              <div style="width:40px;height:40px;border-radius:10px;background:rgba(245,158,11,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i data-lucide="phone" style="width:18px;height:18px;color:#f59e0b;"></i>
+              </div>
+              <div>
+                <span style="font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(240,246,255,0.45); display:block; margin-bottom:3px;">Puhelin</span>
+                <a href="tel:0405735202" style="font-size:0.95rem; color:rgba(240,246,255,0.85); font-weight:500; text-decoration:none;" onmouseover="this.style.color='#f59e0b'" onmouseout="this.style.color='rgba(240,246,255,0.85)'">040 5735202</a>
+              </div>
+            </div>
+            <!-- Hours brief -->
+            <div style="display:flex; align-items:flex-start; gap:14px; margin-bottom:36px;">
+              <div style="width:40px;height:40px;border-radius:10px;background:rgba(245,158,11,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i data-lucide="clock" style="width:18px;height:18px;color:#f59e0b;"></i>
+              </div>
+              <div>
+                <span style="font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(240,246,255,0.45); display:block; margin-bottom:3px;">Aukioloajat</span>
+                <span style="font-size:0.95rem; color:rgba(240,246,255,0.85); font-weight:500;">Ma–Pe: 9:00 – 18:00</span>
+              </div>
+            </div>
+          </div>
+          <!-- CTA -->
+          <a href="tel:0405735202" class="btn btn-primary" style="font-size:1rem; padding:15px 32px;">
+            <i data-lucide="phone" style="width:16px;height:16px;"></i>
+            Soita ja varaa aika
+          </a>
+        </div>
+        <!-- Right: Map -->
+        <div class="reveal stagger-2">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=J%C3%A4%C3%A4hdytintie%208%2C%2000770%20Helsinki%2C%20Suomi%2C%20Helsinki%2C%20Finland&language=fi"
+            width="100%"
+            height="380"
+            class="maps-frame"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="AAA Autokorjaamo Helsinki sijainti kartalla"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [9] FOOTER -->
+  <footer style="background:#0a0c0f; border-top:1px solid rgba(240,246,255,0.06); padding:48px clamp(16px,5vw,48px) 32px;">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:40px; margin-bottom:40px;">
+        <!-- Brand -->
+        <div>
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+            <img src="https://assets.jwwb.nl/assets/brand/webador/icon/favicon.png?bust=2299e1307cbb69076146" alt="AAA Autokorjaamo" style="height:32px;object-fit:contain;">
+            <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.1rem;color:#f0f6ff;">AAA Autokorjaamo</span>
+          </div>
+          <p style="font-size:0.875rem; color:rgba(240,246,255,0.4); line-height:1.7; max-width:260px;">Luotettavaa autonhoitoa Helsingissä vuodesta 1995.</p>
+        </div>
+        <!-- Contact -->
+        <div>
+          <h4 style="font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:700; color:#f0f6ff; letter-spacing:0.05em; text-transform:uppercase; margin-bottom:16px;">Yhteystiedot</h4>
+          <div style="font-size:0.875rem; color:rgba(240,246,255,0.5); line-height:2;">
+            <div style="display:flex;align-items:center;gap:8px;"><i data-lucide="map-pin" style="width:14px;height:14px;color:#f59e0b;flex-shrink:0;"></i> Jäähdytintie 8, 00770 Helsinki</div>
+            <div style="display:flex;align-items:center;gap:8px;margin-top:6px;"><i data-lucide="phone" style="width:14px;height:14px;color:#f59e0b;flex-shrink:0;"></i> 040 5735202</div>
+          </div>
+        </div>
+        <!-- Hours short -->
+        <div>
+          <h4 style="font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:700; color:#f0f6ff; letter-spacing:0.05em; text-transform:uppercase; margin-bottom:16px;">Aukioloajat</h4>
+          <div style="font-size:0.875rem; color:rgba(240,246,255,0.5); line-height:2;">
+            <div>Ma–Pe: 9:00 – 18:00</div>
+            <div>La–Su: Suljettu</div>
+          </div>
+        </div>
+      </div>
+      <!-- Bottom bar -->
+      <div style="border-top:1px solid rgba(240,246,255,0.06); padding-top:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <p style="font-size:11px; color:rgba(240,246,255,0.25); letter-spacing:0.03em;">AAA Autokorjaamo Helsinki · Jäähdytintie 8, 00770 Helsinki</p>
+        <p style="font-size:11px; color:rgba(240,246,255,0.2); letter-spacing:0.03em;">Demo luotu <span style="color:rgba(245,158,11,0.5);">masasite.com</span> palvelulla</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Intersection Observer for reveal animations
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    document.querySelectorAll('.reveal').forEach((el) => {
+      revealObserver.observe(el);
+    });
+
+    // Re-initialize Lucide after potential DOM changes
+    lucide.createIcons();
+  </script>
+</body>
+</html>
