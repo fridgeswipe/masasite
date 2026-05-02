@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LVI Rooba Oy – Luotettava putkiasiantuntija Helsingissä</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #0d1b2a;
+    --accent: #1e88e5;
+    --bg: #f8faff;
+    --surface: #ffffff;
+    --text: #0f172a;
+    --muted: #64748b;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    padding-top: 40px;
+    font-size: 1rem;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, .headline-font {
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: -0.02em;
+  }
+  /* Demo Banner */
+  #demo-banner {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    height: 40px;
+    background: rgba(30, 136, 229, 0.88);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #demo-banner p {
+    font-size: 11px;
+    color: #fff;
+    text-align: center;
+    letter-spacing: 0.02em;
+  }
+  #demo-banner a {
+    color: #fff;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  /* Nav */
+  #main-nav {
+    position: sticky;
+    top: 40px;
+    z-index: 100;
+    background: rgba(255,255,255,0.96);
+    border-bottom: 1px solid rgba(13,27,42,0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: box-shadow 0.3s ease;
+  }
+  #main-nav.scrolled {
+    box-shadow: 0 2px 24px rgba(13,27,42,0.10);
+  }
+  .nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(16px, 5vw, 48px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+  }
+  .nav-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1.35rem;
+    color: var(--primary);
+    letter-spacing: -0.01em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .btn-nav {
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 10px 22px;
+    border-radius: 9999px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-nav:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(30,136,229,0.35);
+    background: #1a7ccc;
+  }
+  .btn-nav:active { transform: translateY(-1px); }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+  }
+  /* Hero */
+  #hero {
+    min-height: 100svh;
+    background:
+      linear-gradient(to bottom, rgba(13,27,42,0.50) 0%, rgba(13,27,42,0.72) 100%),
+      url('https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=1400&q=85') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-content {
+    text-align: center;
+    color: #fff;
+    max-width: 860px;
+    padding: 48px clamp(16px, 5vw, 48px);
+    animation: heroFadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+  }
+  @keyframes heroFadeUp {
+    from { opacity: 0; transform: translateY(48px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 20px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: rgba(255,255,255,0.4);
+  }
+  .hero-h1 {
+    font-size: clamp(2.6rem, 6.5vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: #fff;
+    margin-bottom: 24px;
+  }
+  .hero-h1 span { color: #64b5f6; }
+  .hero-subtitle {
+    font-size: clamp(1rem, 2.2vw, 1.2rem);
+    line-height: 1.7;
+    color: rgba(255,255,255,0.80);
+    max-width: 580px;
+    margin: 0 auto 32px;
+  }
+  .hero-rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 36px;
+  }
+  .hero-rating .stars { display: flex; gap: 3px; }
+  .hero-rating .stars i {
+    width: 18px; height: 18px;
+    color: #f59e0b;
+    fill: #f59e0b;
+  }
+  .hero-rating span {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.85);
+    font-weight: 500;
+  }
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 16px 32px;
+    border-radius: 9999px;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    cursor: pointer;
+    min-height: 44px;
+  }
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(30,136,229,0.45);
+    background: #1a7ccc;
+  }
+  .btn-primary:active { transform: translateY(-1px); }
+  .btn-ghost {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 16px 32px;
+    border-radius: 9999px;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.30);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+  }
+  .btn-ghost:hover {
+    transform: translateY(-3px);
+    background: rgba(255,255,255,0.25);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+  }
+  .btn-ghost:active { transform: translateY(-1px); }
+  /* Sections */
+  .section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-inline: clamp(16px, 5vw, 48px);
+  }
+  .section-eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .section-title {
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  /* Services */
+  #services { background: #f0f6ff; padding-block: clamp(64px, 10vw, 120px); }
+  .services-header { text-align: center; margin-bottom: 64px; }
+  .services-header p { color: var(--muted); max-width: 500px; margin: 16px auto 0; font-size: 1rem; }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .service-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 36px 32px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
+    transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 40px rgba(30,136,229,0.14), 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .service-card:hover::after { opacity: 1; }
+  .service-icon-wrap {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  .service-icon-wrap i { width: 28px; height: 28px; color: var(--accent); }
+  .service-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .service-card p { color: var(--muted); font-size: 0.925rem; line-height: 1.65; }
+  /* Why Us */
+  #why-us { background: #fff; padding-block: clamp(64px, 10vw, 120px); }
+  .why-header { text-align: center; margin-bottom: 64px; }
+  .why-header p { color: var(--muted); max-width: 500px; margin: 16px auto 0; }
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 32px;
+  }
+  .why-card {
+    text-align: center;
+    padding: 40px 28px;
+    border-radius: 20px;
+    background: #f8faff;
+    border: 1px solid rgba(30,136,229,0.10);
+    transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+  }
+  .why-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(30,136,229,0.10);
+  }
+  .why-card .icon-main {
+    width: 48px; height: 48px;
+    color: var(--accent);
+    margin: 0 auto 20px;
+    display: block;
+  }
+  .why-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .why-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.65; }
+  /* Reviews */
+  #reviews { background: #f0f6ff; padding-block: clamp(64px, 10vw, 120px); }
+  .reviews-header { text-align: center; margin-bottom: 64px; }
+  .reviews-header p { color: var(--muted); max-width: 460px; margin: 16px auto 0; }
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  .review-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .review-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+  }
+  .review-stars { display: flex; gap: 4px; }
+  .review-stars i {
+    width: 16px; height: 16px;
+    color: #f59e0b;
+    fill: #f59e0b;
+  }
+  .review-quote {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    flex: 1;
+  }
+  .review-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .review-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+  .review-author-name {
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--text);
+  }
+  .review-verified {
+    font-size: 0.7rem;
+    color: #22c55e;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .review-verified i { width: 11px; height: 11px; }
+  /* Contact */
+  #contact { background: #f0f6ff; padding-block: clamp(64px, 10vw, 120px); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  @media (max-width: 768px) {
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+  .contact-info h2 { margin-bottom: 16px; }
+  .contact-info p { color: var(--muted); margin-bottom: 32px; font-size: 0.975rem; }
+  .contact-list { list-style: none; display: flex; flex-direction: column; gap: 20px; margin-bottom: 36px; }
+  .contact-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    font-size: 0.95rem;
+    color: var(--text);
+  }
+  .contact-list li .contact-icon-wrap {
+    width: 40px; height: 40px; flex-shrink: 0;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .contact-list li .contact-icon-wrap i { width: 18px; height: 18px; color: var(--accent); }
+  .contact-list li div { display: flex; flex-direction: column; }
+  .contact-list li .label {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .contact-list li .value { font-weight: 600; color: var(--primary); font-size: 0.975rem; }
+  .map-wrap {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 32px rgba(13,27,42,0.12);
+  }
+  .map-wrap iframe {
+    width: 100%;
+    height: 380px;
+    border: 0;
+    display: block;
+  }
+  @media (max-width: 768px) {
+    .map-wrap iframe { height: 280px; }
+  }
+  /* Footer */
+  #footer {
+    background: var(--primary);
+    padding-block: 56px 32px;
+    color: rgba(255,255,255,0.8);
+  }
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-inline: clamp(16px, 5vw, 48px);
+  }
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 32px;
+    margin-bottom: 48px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .footer-brand .footer-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: #fff;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+  }
+  .footer-brand .footer-logo span { color: #64b5f6; }
+  .footer-brand p { font-size: 0.875rem; max-width: 280px; line-height: 1.65; }
+  .footer-contact { display: flex; flex-direction: column; gap: 10px; }
+  .footer-contact-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.75);
+  }
+  .footer-contact-item i { width: 15px; height: 15px; color: var(--accent); flex-shrink: 0; }
+  .footer-bottom {
+    text-align: center;
+    font-size: 11px;
+    color: rgba(255,255,255,0.30);
+    letter-spacing: 0.04em;
+  }
+  .footer-bottom a { color: rgba(255,255,255,0.45); text-decoration: none; }
+  .footer-bottom a:hover { color: rgba(255,255,255,0.7); }
+  /* Reveal animations */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+  /* Stagger */
+  [data-stagger] .stagger-item {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    transition-delay: calc(var(--i, 0) * 80ms);
+  }
+  [data-stagger].visible .stagger-item { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- [1] DEMO BANNER -->
+<div id="demo-banner">
+  <p>LVI Rooba Oy — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman? <a href="mailto:team@masasite.com">Ota yhteyttä →</a></p>
+</div>
+
+<!-- [2] STICKY NAV -->
+<nav id="main-nav">
+  <div class="nav-container">
+    <a href="#" class="nav-logo">LVI Rooba<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#services">Palvelut</a></li>
+      <li><a href="#reviews">Arvostelut</a></li>
+      <li><a href="#contact">Yhteystiedot</a></li>
+    </ul>
+    <a href="#contact" class="btn-nav">
+      <i data-lucide="phone" style="width:15px;height:15px;"></i>
+      Ota yhteyttä
+    </a>
+  </div>
+</nav>
+
+<!-- [3] HERO -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Ammattitaitoinen LVI-palvelu — Helsinki</div>
+    <h1 class="hero-h1">Luotettava<br><span>putkiasiantuntija</span><br>Helsinkiin</h1>
+    <p class="hero-subtitle">LVI Rooba Oy on Helsinki-pohjainen putkialan yritys, joka tarjoaa ammattitaitoisia ratkaisuja koti- ja liikekiinteistöjen putkityöihin. Pitkän kokemuksen ja asiakastyytyväisyyden avulla olemme vakiinnuttaneet asemamme luotettavana putkialan palveluntarjoajana.</p>
+    <div class="hero-rating">
+      <div class="stars">
+        <i data-lucide="star"></i>
+        <i data-lucide="star"></i>
+        <i data-lucide="star"></i>
+        <i data-lucide="star"></i>
+        <i data-lucide="star"></i>
+      </div>
+      <span>5.0/5 &mdash; Google-arvostelut</span>
+    </div>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary">
+        <i data-lucide="phone" style="width:17px;height:17px;"></i>
+        Ota yhteyttä nyt
+      </a>
+      <a href="#services" class="btn-ghost">
+        <i data-lucide="chevron-down" style="width:17px;height:17px;"></i>
+        Palvelumme
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- [4] SERVICES -->
+<section id="services">
+  <div class="section-container">
+    <div class="services-header reveal">
+      <span class="section-eyebrow">Mitä teemme</span>
+      <h2 class="section-title">Ammattitaitoiset<br>putkipalvelut</h2>
+      <p>Kattavat LVI-palvelut kotitalouksille ja yrityksille Helsingissä. Nopea ja laadukas työ joka kerta.</p>
+    </div>
+    <div class="services-grid" data-stagger>
+      <div class="service-card stagger-item">
+        <div class="service-icon-wrap">
+          <i data-lucide="wrench"></i>
+        </div>
+        <h3>Putkiasennukset</h3>
+        <p>Kaikki putkijärjestelmien asennus- ja korjaustyöt ammattilaisille. Laadukkaat materiaalit ja kokeneet asentajat takuulla.</p>
+      </div>
+      <div class="service-card stagger-item">
+        <div class="service-icon-wrap">
+          <i data-lucide="droplets"></i>
+        </div>
+        <h3>Viemäritöiden korjaus</h3>
+        <p>Tukkeutuneiden ja vaurioituneiden viemärien professionaalinen hoito. Nopea diagnoosi ja tehokas ratkaisu viemäriongelmiin.</p>
+      </div>
+      <div class="service-card stagger-item">
+        <div class="service-icon-wrap">
+          <i data-lucide="waves"></i>
+        </div>
+        <h3>Vesijohtojen huolto</h3>
+        <p>Vesijohtojärjestelmien asennus, korjaus ja kunnossapito. Varmistamme moitteettoman vedenjakelun kiinteistössäsi.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- [5] WHY CHOOSE US -->
+<section id="why-us">
+  <div class="section-container">
+    <div class="why-header reveal">
+      <span class="section-eyebrow">Miksi valita meidät</span>
+      <h2 class="section-title">Laatu ja luotettavuus<br>ennen kaikkea</h2>
+      <p>LVI Rooba Oy on Helsingin luotetuin putkialan kumppani — tässä syyt.</p>
+    </div>
+    <div class="why-grid" data-stagger>
+      <div class="why-card stagger-item reveal">
+        <i data-lucide="award" class="icon-main"></i>
+        <h3>Täydellinen asiakaspalaute</h3>
+        <p>Täydellinen 5/5 asiakaspalaute ja vahva luottamus. Jokainen työ tehdään huolella ja asiakkaan tyytyväisyys on meille tärkeintä.</p>
+      </div>
+      <div class="why-card stagger-item reveal">
+        <i data-lucide="zap" class="icon-main"></i>
+        <h3>Nopea saatavuus</h3>
+        <p>Nopea saatavuus ja ammattitaitoinen palvelu Helsingissä. Reagoimme nopeasti kiireellisiin tilanteisiin ja tarjoamme joustavia aikatauluja.</p>
+      </div>
+      <div class="why-card stagger-item reveal">
+        <i data-lucide="shield-check" class="icon-main"></i>
+        <h3>Kokemus ja varmuus</h3>
+        <p>Pitkän kokemuksen tuoma varmuus haastavissakin töissä. Osaamisemme kattaa kaikki putkialan haasteet yksinkertaisista korjauksista vaativiin asennuksiin.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- [6] REVIEWS -->
+<section id="reviews">
+  <div class="section-container">
+    <div class="reviews-header reveal">
+      <span class="section-eyebrow">Asiakasarvostelut</span>
+      <h2 class="section-title">Mitä asiakkaamme<br>sanovat</h2>
+      <p>Oikeiden asiakkaiden kokemuksia palvelustamme.</p>
+    </div>
+    <div class="reviews-grid" data-stagger>
+      <div class="review-card stagger-item">
+        <div class="review-stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <p class="review-quote">"The barbecue dishes with friends are abundant and taste very good. It is super satisfying to eat with beer. I will come again next time. Highly recommended!"</p>
+        <div class="review-author">
+          <div class="review-avatar">JC</div>
+          <div>
+            <div class="review-author-name">Jialong Chen</div>
+            <div class="review-verified">
+              <i data-lucide="check-circle"></i>
+              Vahvistettu asiakas
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card stagger-item" style="background: linear-gradient(135deg, #f0f6ff 0%, #fff 100%); border: 1px solid rgba(30,136,229,0.10);">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px;">
+          <div style="width:48px;height:48px;border-radius:12px;background:color-mix(in srgb, var(--accent) 12%, transparent);display:flex;align-items:center;justify-content:center;">
+            <i data-lucide="star" style="width:24px;height:24px;color:#f59e0b;fill:#f59e0b;"></i>
+          </div>
+          <div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:800;color:var(--primary);line-height:1;">5.0</div>
+            <div style="font-size:0.75rem;color:var(--muted);font-weight:500;letter-spacing:0.05em;text-transform:uppercase;">Google-arvosana</div>
+          </div>
+        </div>
+        <div class="review-stars" style="margin-top:8px;">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <p class="review-quote" style="font-style:normal;color:var(--text);font-size:0.95rem;margin-top:8px;">"Olemme ylpeitä täydellisestä arvosanastamme Googlessa. Asiakkaidemme tyytyväisyys on meille kaikkein tärkeintä — ja se näkyy tuloksissa."</p>
+        <div style="font-size:0.8rem;color:var(--muted);margin-top:4px;display:flex;align-items:center;gap:6px;">
+          <i data-lucide="map-pin" style="width:13px;height:13px;color:var(--accent);"></i>
+          Helsinki, Suomi
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- [8] CONTACT -->
+<section id="contact">
+  <div class="section-container">
+    <div class="reveal" style="text-align:center;margin-bottom:64px;">
+      <span class="section-eyebrow">Yhteystiedot</span>
+      <h2 class="section-title">Otetaan yhteyttä</h2>
+      <p style="color:var(--muted);max-width:480px;margin:16px auto 0;">Tarvitsetko putkialan ammattilaisen? Ota yhteyttä niin sovimme aikataulun.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h2 class="section-title" style="font-size:clamp(1.5rem,3vw,2.2rem);margin-bottom:14px;">LVI Rooba Oy</h2>
+        <p>Ammattitaitoista putkipalvelua Helsingissä. Reagoimme nopeasti — ota yhteyttä jo tänään.</p>
+        <ul class="contact-list">
+          <li>
+            <div class="contact-icon-wrap">
+              <i data-lucide="map-pin"></i>
+            </div>
+            <div>
+              <span class="label">Osoite</span>
+              <span class="value">Sibeliuksenkatu 1, 00260 Helsinki</span>
+            </div>
+          </li>
+          <li>
+            <div class="contact-icon-wrap">
+              <i data-lucide="phone"></i>
+            </div>
+            <div>
+              <span class="label">Puhelin</span>
+              <span class="value"><a href="tel:0401968638" style="color:var(--primary);text-decoration:none;">040 1968638</a></span>
+            </div>
+          </li>
+          <li>
+            <div class="contact-icon-wrap">
+              <i data-lucide="map-pin"></i>
+            </div>
+            <div>
+              <span class="label">Kaupunki</span>
+              <span class="value">Helsinki, Suomi</span>
+            </div>
+          </li>
+        </ul>
+        <a href="tel:0401968638" class="btn-primary" style="display:inline-flex;">
+          <i data-lucide="phone" style="width:17px;height:17px;"></i>
+          Soita nyt: 040 1968638
+        </a>
+      </div>
+      <div class="map-wrap reveal">
+        <iframe
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Sibeliuksenkatu%201%2C%2000260%20Helsinki%2C%20Suomi%2C%20Helsinki%2C%20Finland&language=fi"
+          width="100%"
+          height="380"
+          style="border:0;display:block;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="LVI Rooba Oy sijainti kartalla">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- [9] FOOTER -->
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">LVI Rooba<span>.</span></div>
+        <p>Luotettava putkialan ammattilainen Helsingissä. Laadukkaat LVI-palvelut kotitalouksille ja yrityksille.</p>
+      </div>
+      <div class="footer-contact">
+        <div class="footer-contact-item">
+          <i data-lucide="map-pin"></i>
+          Sibeliuksenkatu 1, 00260 Helsinki
+        </div>
+        <div class="footer-contact-item">
+          <i data-lucide="phone"></i>
+          040 1968638
+        </div>
+        <div class="footer-contact-item">
+          <i data-lucide="map-pin"></i>
+          Helsinki, Suomi
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      Demo luotu <a href="https://masasite.com" target="_blank" rel="noopener">masasite.com</a> palvelulla
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Lucide icons
+  lucide.createIcons();
+
+  // Nav scroll effect
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }, { passive: true });
+
+  // Scroll reveal (single elements)
+  const revealObserver = new IntersectionObserver(
+    entries => entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObserver.unobserve(e.target);
+      }
+    }),
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // Stagger groups
+  const staggerObserver = new IntersectionObserver(
+    entries => entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        const items = e.target.querySelectorAll('.stagger-item');
+        items.forEach((item, i) => {
+          item.style.setProperty('--i', i);
+        });
+        staggerObserver.unobserve(e.target);
+      }
+    }),
+    { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+  );
+  document.querySelectorAll('[data-stagger]').forEach(el => staggerObserver.observe(el));
+
+  // Re-run lucide after DOM updates (for dynamically added icons if any)
+  setTimeout(() => { lucide.createIcons(); }, 100);
+</script>
+</body>
+</html>
