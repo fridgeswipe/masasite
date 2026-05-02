@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kenkä-Pekka Ay — Naisten kengät Helsingissä</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: #0d1117;
+      --accent: #0ba37f;
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --text: #1a1a2e;
+      --muted: #6b7280;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding-top: 40px;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    /* Demo Banner */
+    #demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(11, 163, 127, 0.88);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: white;
+      letter-spacing: 0.01em;
+      text-align: center;
+      padding: 0 16px;
+    }
+    #demo-banner a {
+      color: white;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      margin-left: 4px;
+      font-weight: 600;
+    }
+    #demo-banner a:hover { opacity: 0.85; }
+
+    /* Nav */
+    #main-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(250, 250, 249, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      transition: box-shadow 0.3s ease;
+    }
+    #main-nav.scrolled {
+      box-shadow: 0 2px 20px rgba(0,0,0,0.09);
+    }
+
+    /* Hero */
+    #hero {
+      min-height: 100svh;
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.48) 0%, rgba(0,0,0,0.62) 100%),
+        url('assets/kenkä-pekka-ay-796977fb/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content {
+      animation: heroFadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Stagger */
+    .stagger-item {
+      transition-delay: calc(var(--i, 0) * 80ms);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 9999px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      text-decoration: none;
+      border: none;
+    }
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+    }
+    .btn:active { transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+    .btn-primary:hover { background: #09b88f; }
+    .btn-ghost {
+      background: rgba(255,255,255,0.18);
+      color: white;
+      border: 1.5px solid rgba(255,255,255,0.45);
+      backdrop-filter: blur(8px);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.28); }
+    .btn-outline-accent {
+      background: transparent;
+      color: var(--accent);
+      border: 2px solid var(--accent);
+    }
+    .btn-outline-accent:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    /* Service cards */
+    .service-card {
+      background: white;
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+    .icon-box {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, #0ba37f 14%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .icon-box i { width: 28px; height: 28px; }
+
+    /* Review cards */
+    .review-card {
+      background: white;
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .star-filled {
+      color: #f59e0b;
+      fill: #f59e0b;
+      width: 16px;
+      height: 16px;
+    }
+    .star-empty {
+      color: #d1d5db;
+      fill: #d1d5db;
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Hours table */
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid #f0f0ef;
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-row.today {
+      background: color-mix(in srgb, #0ba37f 8%, transparent);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 0 -16px;
+    }
+    .hours-row.closed .hours-value { color: #9ca3af; }
+
+    /* Section label */
+    .section-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    /* Section title */
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    /* Contact icon row */
+    .contact-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .contact-row i {
+      width: 20px;
+      height: 20px;
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Footer */
+    #footer {
+      background: var(--primary);
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* Why us icon */
+    .why-icon {
+      width: 48px;
+      height: 48px;
+      color: var(--accent);
+      margin: 0 auto 16px;
+    }
+
+    /* Photo section */
+    .photo-thumb {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .btn { padding: 12px 22px; font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- [1] DEMO BANNER -->
+<div id="demo-banner">
+  Kenkä-Pekka Ay — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman?
+  <a href="mailto:team@masasite.com">Ota yhteyttä →</a>
+</div>
+
+<!-- [2] STICKY NAV -->
+<nav id="main-nav">
+  <div style="max-width:1200px; margin:0 auto; padding:0 clamp(16px,5vw,48px); display:flex; align-items:center; justify-content:space-between; height:64px;">
+    <a href="#" style="text-decoration:none;">
+      <span style="font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1.25rem; color:var(--primary); letter-spacing:-0.01em;">Kenkä-Pekka Ay</span>
+    </a>
+    <div style="display:flex; align-items:center; gap:32px;">
+      <div style="display:flex; gap:24px;" class="hidden md:flex">
+        <a href="#palvelut" style="font-size:0.9rem; font-weight:500; color:var(--text); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#0ba37f'" onmouseout="this.style.color='#1a1a2e'">Palvelut</a>
+        <a href="#aukioloajat" style="font-size:0.9rem; font-weight:500; color:var(--text); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#0ba37f'" onmouseout="this.style.color='#1a1a2e'">Aukioloajat</a>
+        <a href="#yhteystiedot" style="font-size:0.9rem; font-weight:500; color:var(--text); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#0ba37f'" onmouseout="this.style.color='#1a1a2e'">Yhteystiedot</a>
+      </div>
+      <a href="#yhteystiedot" class="btn btn-primary" style="padding:10px 22px; font-size:0.85rem;">Käy kaupassamme</a>
+    </div>
+  </div>
+</nav>
+
+<!-- [3] HERO -->
+<section id="hero">
+  <div class="hero-content" style="text-align:center; padding: clamp(32px,8vw,80px) clamp(16px,5vw,48px); max-width:760px;">
+    <p class="section-label" style="color:rgba(255,255,255,0.75); margin-bottom:16px;">Helsinki · Fredrikinkatu 37</p>
+    <h1 style="font-size:clamp(2.5rem,6vw,5.5rem); font-weight:700; color:white; letter-spacing:-0.02em; line-height:1.1; margin-bottom:24px;">
+      Helsingin suosituimmat naisten kengät
+    </h1>
+    <p style="font-size:1.2rem; color:rgba(255,255,255,0.82); line-height:1.7; max-width:540px; margin:0 auto 28px;">
+      Kenkä-Pekka on vuodesta 1965 toiminut perinteikäs kenkäkauppa Fredrikinkadulla. Tarjoamme laajaa valikoimaa naisten kengistä laadukkaiden brändien kuten ECCO, Rieker ja Tamaris valikoimalla.
+    </p>
+
+    <!-- Rating row -->
+    <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:36px;">
+      <div style="display:flex; gap:3px;">
+        <i data-lucide="star" class="star-filled"></i>
+        <i data-lucide="star" class="star-filled"></i>
+        <i data-lucide="star" class="star-filled"></i>
+        <i data-lucide="star" class="star-filled"></i>
+        <i data-lucide="star" style="color:#f59e0b; fill:#f59e0b; width:16px; height:16px;"></i>
+      </div>
+      <span style="color:rgba(255,255,255,0.85); font-size:0.9rem; font-weight:500;">4.6/5 (54 arvostelua)</span>
+    </div>
+
+    <!-- CTAs -->
+    <div style="display:flex; flex-wrap:wrap; gap:14px; justify-content:center;">
+      <a href="#yhteystiedot" class="btn btn-primary">
+        <i data-lucide="map-pin" style="width:18px;height:18px;"></i>
+        Käy kaupassamme tänään
+      </a>
+      <a href="#palvelut" class="btn btn-ghost">
+        <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
+        Tutustu valikoimaan
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- [4] SERVICES GRID -->
+<section id="palvelut" style="background:#f4f4f2; padding:clamp(64px,10vw,120px) 0;">
+  <div style="max-width:1200px; margin:0 auto; padding:0 clamp(16px,5vw,48px);">
+
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <p class="section-label">Valikoima</p>
+      <h2 class="section-title">Palvelumme ja tuotteemme</h2>
+      <p style="color:var(--muted); font-size:1rem; line-height:1.7; max-width:520px; margin:16px auto 0;">Löydät meiltä kengät kaikkiin tilanteisiin — laadulla, joka kestää.</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:24px;">
+
+      <div class="service-card reveal stagger-item">
+        <div class="icon-box">
+          <i data-lucide="sparkles"></i>
+        </div>
+        <h3 style="font-size:1.2rem; font-weight:700; color:var(--primary); margin-bottom:10px; font-family:'Cormorant Garamond',serif; letter-spacing:-0.01em;">Naisten kesä- ja kevätkengät</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7;">Uusimmat trendit kesä- ja kevätkauden kengissä eri tuotemerkeiltä</p>
+      </div>
+
+      <div class="service-card reveal stagger-item">
+        <div class="icon-box">
+          <i data-lucide="shield-check"></i>
+        </div>
+        <h3 style="font-size:1.2rem; font-weight:700; color:var(--primary); margin-bottom:10px; font-family:'Cormorant Garamond',serif; letter-spacing:-0.01em;">Gore-Tex talvikengät</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7;">Vedenpitävät ja kestävät talvikengät Gore-Tex teknologialla</p>
+      </div>
+
+      <div class="service-card reveal stagger-item">
+        <div class="icon-box">
+          <i data-lucide="heart"></i>
+        </div>
+        <h3 style="font-size:1.2rem; font-weight:700; color:var(--primary); margin-bottom:10px; font-family:'Cormorant Garamond',serif; letter-spacing:-0.01em;">Kävelykengät ja loaferit</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7;">Mukavat päivittäiseen käyttöön sopivat kengät</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Photo strip -->
+<section style="background:#ffffff; padding:clamp(48px,7vw,80px) 0;">
+  <div style="max-width:1200px; margin:0 auto; padding:0 clamp(16px,5vw,48px);">
+    <div class="reveal" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px;">
+      <img src="assets/kenkä-pekka-ay-796977fb/photo1.jpg" alt="Kenkä-Pekka myymälä" class="photo-thumb" />
+      <img src="assets/kenkä-pekka-ay-796977fb/photo2.jpg" alt="Kenkävalikoima" class="photo-thumb" />
+      <img src="assets/kenkä-pekka-ay-796977fb/photo3.jpg" alt="Naisten kengät" class="photo-thumb" />
+    </div>
+  </div>
+</section>
+
+<!-- [5] WHY CHOOSE US -->
+<section style="background:var(--primary); padding:clamp(64px,10vw,120px) 0;">
+  <div style="max-width:1200px; margin:0 auto; padding:0 clamp(16px,5vw,48px);">
+
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <p class="section-label" style="color:rgba(255,255,255,0.55);">Miksi valita meidät</p>
+      <h2 class="section-title" style="color:white;">Luotettavuus vuodesta 1965</h2>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:40px;">
+
+      <div class="reveal stagger-item" style="text-align:center;">
+        <i data-lucide="award" class="why-icon"></i>
+        <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:700; color:white; margin-bottom:10px;">Yli 55 vuoden kokemus</h3>
+        <p style="color:rgba(255,255,255,0.58); font-size:0.93rem; line-height:1.7;">Kenkäkaupasta Helsingissä — tunnemme asiakkaamme ja heidän tarpeensa.</p>
+      </div>
+
+      <div class="reveal stagger-item" style="text-align:center;">
+        <i data-lucide="zap" class="why-icon"></i>
+        <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:700; color:white; margin-bottom:10px;">Laaja brändivalikoima</h3>
+        <p style="color:rgba(255,255,255,0.58); font-size:0.93rem; line-height:1.7;">Tunnetut kansainväliset brändit kuten ECCO, Rieker ja Tamaris.</p>
+      </div>
+
+      <div class="reveal stagger-item" style="text-align:center;">
+        <i data-lucide="star" class="why-icon"></i>
+        <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:700; color:white; margin-bottom:10px;">4.6/5 tähteä</h3>
+        <p style="color:rgba(255,255,255,0.58); font-size:0.93rem; line-height:1.7;">Erinomainen arvio asiakkaiden suosituksista. Tyytyväiset asiakkaat puhuvat puolestaan.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- [6] REVIEWS -->
+<section style="background:#f8f8f6; padding:clamp(64px,10vw,120px) 0;">
+  <div style="max-width:1200px; margin:0 auto; padding:0 clamp(16px,5vw,48px);">
+
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <p class="section-label">Asiakaskokemukset</p>
+      <h2 class="section-title">Mitä asiakkaamme sanovat</h2>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:24px;">
+
+      <!-- Review 1 -->
+      <div class="review-card reveal stagger-item">
+        <div style="display:flex; gap:3px; margin-bottom:16px;">
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+        </div>
+        <p style="font-style:italic; color:#4b5563; font-size:0.93rem; line-height:1.7; margin-bottom:20px;">"Nice place, cozy atmosphere, good shoes and very helpful and professional owners!"</p>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:36px; height:36px; border-radius:50%; background:color-mix(in srgb,#0ba37f 18%,white); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.85rem; color:var(--accent);">CC</div>
+          <div>
+            <p style="font-weight:700; font-size:0.87rem; color:var(--primary);">Cristina Costea</p>
+            <p style="font-size:0.75rem; color:var(--muted); letter-spacing:0.05em; text-transform:uppercase;">Google-arvostelu</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Review 2 -->
+      <div class="review-card reveal stagger-item">
+        <div style="display:flex; gap:3px; margin-bottom:16px;">
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+        </div>
+        <p style="font-style:italic; color:#4b5563; font-size:0.93rem; line-height:1.7; margin-bottom:20px;">"A Good unique shoe store, good services."</p>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:36px; height:36px; border-radius:50%; background:color-mix(in srgb,#0ba37f 18%,white); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.85rem; color:var(--accent);">RR</div>
+          <div>
+            <p style="font-weight:700; font-size:0.87rem; color:var(--primary);">Rose Ronoh</p>
+            <p style="font-size:0.75rem; color:var(--muted); letter-spacing:0.05em; text-transform:uppercase;">Google-arvostelu</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Review 3 -->
+      <div class="review-card reveal stagger-item">
+        <div style="display:flex; gap:3px; margin-bottom:16px;">
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-empty"></i>
+        </div>
+        <p style="font-style:italic; color:#4b5563; font-size:0.93rem; line-height:1.7; margin-bottom:20px;">"Really nice place and friendly service. Wide selection and they help you choose the right shoe — highly recommended for women's shoes!"</p>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:36px; height:36px; border-radius:50%; background:color-mix(in srgb,#0ba37f 18%,white); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.85rem; color:var(--accent);">ML</div>
+          <div>
+            <p style="font-weight:700; font-size:0.87rem; color:var(--primary);">Mika Laitinen</p>
+            <p style="font-size:0.75rem; color:var(--muted); letter-spacing:0.05em; text-transform:uppercase;">Google-arvostelu</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- [7] OPENING HOURS -->
+<section id="aukioloajat" style="background:white; padding:clamp(64px,10vw,120px) 0;">
+  <div style="max-width:1200px; margin:0 auto; padding:0 clamp(16px,5vw,48px);">
+
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <p class="section-label">Milloin olemme auki</p>
+      <h2 class="section-title">Aukioloajat</h2>
+    </div>
+
+    <div class="reveal" style="max-width:520px; margin:0 auto;">
+      <div style="background:#fafaf9; border-radius:20px; padding:32px 36px; box-shadow:0 1px 3px rgba(0,0,0,0.05),0 4px 16px rgba(0,0,0,0.04);">
+
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:24px;">
+          <i data-lucide="clock" style="width:20px;height:20px;color:var(--accent);"></i>
+          <span style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:700; color:var(--primary);">Viikkoaikataulu</span>
+        </div>
+
+        <div class="hours-row">
+          <span style="font-weight:500; font-size:0.95rem; color:var(--text);">Maanantai</span>
+          <span class="hours-value" style="font-size:0.95rem; color:var(--muted);">10:00 – 17:30</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:500; font-size:0.95rem; color:var(--text);">Tiistai</span>
+          <span class="hours-value" style="font-size:0.95rem; color:var(--muted);">10:00 – 17:30</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:500; font-size:0.95rem; color:var(--text);">Keskiviikko</span>
+          <span class="hours-value" style="font-size:0.95rem; color:var(--muted);">10:00 – 17:30</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:500; font-size:0.95rem; color:var(--text);">Torstai</span>
+          <span class="hours-value" style="font-size:0.95rem; color:var(--muted);">10:00 – 17:30</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:500; font-size:0.95rem; color:var(--text);">Perjantai</span>
+          <span class="hours-value" style="font-size:0.95rem; color:var(--muted);">10:00 – 17:30</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:500; font-size:0.95rem; color:var(--text);">Lauantai</span>
+          <span class="hours-value" style="font-size:0.95rem; color:var(--muted);">11:00 – 14:00</span>
+        </div>
+        <div class="hours-row closed">
+          <span style="font-weight:500; font-size:0.95rem; color:var(--muted);">Sunnuntai</span>
+          <span class="hours-value" style="font-size:0.95rem; color:#9ca3af;">Suljettu</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- [8] CONTACT -->
+<section id="yhteystiedot" style="background:#f4f4f2; padding:clamp(64px,10vw,120px) 0;">
+  <div style="max-width:1200px; margin:0 auto; padding:0 clamp(16px,5vw,48px);">
+
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <p class="section-label">Löydä meidät</p>
+      <h2 class="section-title">Yhteystiedot</h2>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:48px; align-items:start;">
+
+      <!-- Left: contact info -->
+      <div class="reveal">
+        <div class="contact-row">
+          <i data-lucide="map-pin"></i>
+          <div>
+            <p style="font-weight:600; font-size:0.95rem; color:var(--primary); margin-bottom:2px;">Osoite</p>
+            <p style="color:var(--muted); font-size:0.93rem; line-height:1.6;">Fredrikinkatu 37<br>00120 Helsinki, Suomi</p>
+          </div>
+        </div>
+        <div class="contact-row">
+          <i data-lucide="phone"></i>
+          <div>
+            <p style="font-weight:600; font-size:0.95rem; color:var(--primary); margin-bottom:2px;">Puhelin</p>
+            <a href="tel:09601662" style="color:var(--muted); font-size:0.93rem; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#0ba37f'" onmouseout="this.style.color='#6b7280'">09 601662</a>
+          </div>
+        </div>
+        <div class="contact-row">
+          <i data-lucide="clock"></i>
+          <div>
+            <p style="font-weight:600; font-size:0.95rem; color:var(--primary); margin-bottom:2px;">Aukioloajat</p>
+            <p style="color:var(--muted); font-size:0.93rem; line-height:1.6;">Ma–Pe: 10:00–17:30<br>La: 11:00–14:00 · Su: Suljettu</p>
+          </div>
+        </div>
+
+        <div style="margin-top:32px;">
+          <a href="http://www.kenkapekka.fi/" target="_blank" rel="noopener" class="btn btn-primary">
+            <i data-lucide="arrow-right" style="width:18px;height:18px;"></i>
+            Käy kaupassamme tänään
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Google Maps -->
+      <div class="reveal">
+        <iframe
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Fredrikinkatu%2037%2C%2000120%20Helsinki%2C%20Suomi%2C%20Helsinki%2C%20Finland&language=fi"
+          width="100%"
+          height="380"
+          style="border:0; border-radius:16px; box-shadow:0 4px 24px rgba(0,0,0,0.1);"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Kenkä-Pekka Ay sijainti kartalla">
+        </iframe>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- [9] FOOTER -->
+<footer id="footer" style="padding:48px 0 32px;">
+  <div style="max-width:1200px; margin:0 auto; padding:0 clamp(16px,5vw,48px);">
+    <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:32px; padding-bottom:32px; border-bottom:1px solid rgba(255,255,255,0.08);">
+      <div>
+        <p style="font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:700; color:white; margin-bottom:10px;">Kenkä-Pekka Ay</p>
+        <p style="color:rgba(255,255,255,0.5); font-size:0.88rem; line-height:1.7;">Fredrikinkatu 37, 00120 Helsinki<br>Suomi · 09 601662</p>
+      </div>
+      <div>
+        <p style="font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:12px;">Palvelut</p>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <a href="#palvelut" style="color:rgba(255,255,255,0.5); font-size:0.88rem; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Kesä- ja kevätkengät</a>
+          <a href="#palvelut" style="color:rgba(255,255,255,0.5); font-size:0.88rem; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Gore-Tex talvikengät</a>
+          <a href="#palvelut" style="color:rgba(255,255,255,0.5); font-size:0.88rem; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Kävelykengät ja loaferit</a>
+        </div>
+      </div>
+    </div>
+    <div style="padding-top:24px; text-align:center;">
+      <p style="font-size:11px; color:rgba(255,255,255,0.22);">Demo luotu masasite.com palvelulla</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Init Lucide icons
+  lucide.createIcons();
+
+  // Set star styles for review cards (fill gold)
+  document.querySelectorAll('.star-filled').forEach(el => {
+    el.style.color = '#f59e0b';
+    el.style.fill = '#f59e0b';
+    el.style.width = '16px';
+    el.style.height = '16px';
+  });
+  document.querySelectorAll('.star-empty').forEach(el => {
+    el.style.color = '#d1d5db';
+    el.style.fill = '#d1d5db';
+    el.style.width = '16px';
+    el.style.height = '16px';
+  });
+  document.querySelectorAll('.why-icon').forEach(el => {
+    el.style.width = '48px';
+    el.style.height = '48px';
+    el.style.color = '#0ba37f';
+  });
+
+  // Nav scroll effect
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  });
+
+  // Scroll reveal with IntersectionObserver
+  const revealItems = document.querySelectorAll('.reveal');
+  revealItems.forEach((el, i) => {
+    if (el.classList.contains('stagger-item')) {
+      // find siblings
+    }
+  });
+
+  // Stagger siblings within same parent
+  document.querySelectorAll('.service-card.stagger-item, .review-card.stagger-item, [style*="text-align:center"].stagger-item, div.stagger-item').forEach((el) => {
+    const parent = el.parentElement;
+    const siblings = Array.from(parent.children).filter(c => c.classList.contains('stagger-item'));
+    const idx = siblings.indexOf(el);
+    el.style.setProperty('--i', idx);
+  });
+
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    }),
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</html>
