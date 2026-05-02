@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Autohuolto Helsinki | Autokorjaamo & Autopeltikorjaamo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #1a1a1a;
+      --accent: #f59e0b;
+      --bg: #0d1117;
+      --surface: #161b22;
+      --text: #f0f6ff;
+      --muted: rgba(240,246,255,0.55);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      padding-top: 40px;
+      font-family: 'Barlow', sans-serif;
+      background: #fafaf9;
+      color: #1a1a1a;
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    h1, h2, h3, .headline-font {
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    /* Demo Banner */
+    .demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(245, 158, 11, 0.92);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      text-align: center;
+      padding: 0 16px;
+      letter-spacing: 0.02em;
+    }
+    .demo-banner a {
+      color: #fff;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .demo-banner a:hover { opacity: 0.85; }
+
+    /* Nav */
+    .site-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(13, 17, 23, 0.97);
+      border-bottom: 1px solid rgba(245,158,11,0.15);
+      transition: backdrop-filter 0.3s ease, background 0.3s ease;
+    }
+    .site-nav.scrolled {
+      backdrop-filter: blur(12px);
+      background: rgba(13, 17, 23, 0.88);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 48px);
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .nav-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: #f0f6ff;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .nav-logo span {
+      color: var(--accent);
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: rgba(240,246,255,0.75);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .btn-nav {
+      background: var(--accent);
+      color: #0d1117;
+      font-family: 'Barlow', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 10px 22px;
+      border-radius: 9999px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-nav:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(245,158,11,0.35);
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100svh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.50) 0%, rgba(0,0,0,0.68) 100%),
+        url('assets/autohuolto-helsinki--autokorja-76ca9dc2/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      text-align: center;
+      padding: clamp(64px, 10vw, 120px) clamp(16px, 5vw, 48px);
+    }
+
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content {
+      animation: heroFadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+      max-width: 820px;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(245,158,11,0.12);
+      border: 1px solid rgba(245,158,11,0.3);
+      padding: 6px 16px;
+      border-radius: 9999px;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 5.5rem);
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero-sub {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.8);
+      max-width: 580px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+    .hero-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+    .hero-rating .stars {
+      display: flex;
+      gap: 3px;
+    }
+    .hero-rating .stars i {
+      width: 18px; height: 18px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+    .hero-rating-text {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.75);
+      font-weight: 500;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #0d1117;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 16px 32px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(245,158,11,0.4);
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+    .btn-ghost {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 16px 32px;
+      border-radius: 9999px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.25);
+      transition: transform 0.2s ease, background 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-ghost:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.22);
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Section styles */
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+      display: block;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: #1a1a1a;
+    }
+    .section-title.light { color: #f0f6ff; }
+
+    /* Services */
+    .services-section {
+      background: #f3f4f6;
+      padding: clamp(64px, 10vw, 120px) clamp(16px, 5vw, 48px);
+    }
+    .services-container { max-width: 1200px; margin: 0 auto; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .service-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+    .service-icon-wrap {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      background: rgba(245,158,11,0.12);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 24px;
+    }
+    .service-icon-wrap i {
+      width: 28px; height: 28px;
+      color: var(--accent);
+    }
+    .service-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 10px;
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: 0.01em;
+    }
+    .service-card p {
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.65;
+    }
+
+    /* Why us */
+    .why-section {
+      background: #fff;
+      padding: clamp(64px, 10vw, 120px) clamp(16px, 5vw, 48px);
+    }
+    .why-container { max-width: 1200px; margin: 0 auto; }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 40px;
+      margin-top: 56px;
+    }
+    .why-item {
+      text-align: center;
+      padding: 8px;
+    }
+    .why-icon {
+      width: 64px; height: 64px;
+      margin: 0 auto 20px;
+      color: var(--accent);
+    }
+    .why-icon i { width: 40px; height: 40px; }
+    .why-item h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 10px;
+      font-family: 'Barlow Condensed', sans-serif;
+    }
+    .why-item p {
+      font-size: 0.9rem;
+      color: #555;
+      max-width: 280px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* Reviews */
+    .reviews-section {
+      background: #fafaf9;
+      padding: clamp(64px, 10vw, 120px) clamp(16px, 5vw, 48px);
+    }
+    .reviews-container { max-width: 1200px; margin: 0 auto; }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .review-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .review-stars {
+      display: flex; gap: 3px; margin-bottom: 16px;
+    }
+    .review-stars i {
+      width: 16px; height: 16px;
+      color: #f59e0b; fill: #f59e0b;
+    }
+    .review-stars i.empty {
+      color: #d1d5db; fill: #d1d5db;
+    }
+    .review-text {
+      font-size: 0.925rem;
+      color: #444;
+      font-style: italic;
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
+    .review-author {
+      font-weight: 700;
+      font-size: 0.875rem;
+      color: #1a1a1a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .review-verified {
+      font-size: 0.72rem;
+      background: rgba(245,158,11,0.12);
+      color: #b45309;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-style: normal;
+    }
+
+    /* Hours */
+    .hours-section {
+      background: #0d1117;
+      padding: clamp(64px, 10vw, 120px) clamp(16px, 5vw, 48px);
+    }
+    .hours-container { max-width: 800px; margin: 0 auto; }
+    .hours-card {
+      background: #161b22;
+      border-radius: 20px;
+      border: 1px solid rgba(245,158,11,0.12);
+      overflow: hidden;
+      margin-top: 56px;
+    }
+    .hours-header {
+      background: rgba(245,158,11,0.08);
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid rgba(245,158,11,0.1);
+    }
+    .hours-header i { color: var(--accent); width: 20px; height: 20px; }
+    .hours-header span {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #f0f6ff;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .hours-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: background 0.15s ease;
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-row:hover { background: rgba(255,255,255,0.02); }
+    .hours-day {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: rgba(240,246,255,0.8);
+    }
+    .hours-time {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--accent);
+    }
+    .hours-time.closed {
+      color: rgba(240,246,255,0.3);
+    }
+    .hours-today {
+      background: rgba(245,158,11,0.05);
+    }
+
+    /* Photo strip */
+    .photo-strip {
+      background: #1a1a1a;
+      overflow: hidden;
+    }
+    .photo-strip-inner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      height: 280px;
+    }
+    .photo-strip-inner img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(0.85);
+      transition: filter 0.3s ease;
+    }
+    .photo-strip-inner img:hover { filter: brightness(1); }
+
+    @media (max-width: 640px) {
+      .photo-strip-inner { grid-template-columns: 1fr; height: 200px; }
+      .photo-strip-inner img:not(:first-child) { display: none; }
+    }
+
+    /* Contact */
+    .contact-section {
+      background: #f3f4f6;
+      padding: clamp(64px, 10vw, 120px) clamp(16px, 5vw, 48px);
+    }
+    .contact-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 56px;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .contact-container { grid-template-columns: 1fr; }
+    }
+    .contact-info h2 {
+      margin-bottom: 32px;
+    }
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .contact-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: rgba(245,158,11,0.1);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon i {
+      width: 18px; height: 18px;
+      color: var(--accent);
+    }
+    .contact-item-text {
+      flex: 1;
+    }
+    .contact-item-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 3px;
+    }
+    .contact-item-value {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+    .contact-item-value a {
+      color: #1a1a1a;
+      text-decoration: none;
+    }
+    .contact-item-value a:hover { color: var(--accent); }
+    .contact-cta {
+      margin-top: 36px;
+    }
+    .btn-accent {
+      background: var(--accent);
+      color: #0d1117;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 16px 32px;
+      border-radius: 9999px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-accent:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(245,158,11,0.35);
+    }
+    .map-wrap {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+    }
+    .map-wrap iframe {
+      display: block;
+      width: 100%;
+      height: 380px;
+      border: none;
+    }
+    @media (max-width: 640px) {
+      .map-wrap iframe { height: 280px; }
+    }
+
+    /* Footer */
+    .site-footer {
+      background: #0d1117;
+      padding: 48px clamp(16px, 5vw, 48px) 32px;
+      border-top: 1px solid rgba(245,158,11,0.1);
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: #f0f6ff;
+      margin-bottom: 12px;
+    }
+    .footer-logo span { color: var(--accent); }
+    .footer-address {
+      font-size: 0.875rem;
+      color: rgba(240,246,255,0.45);
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 20px;
+      font-size: 11px;
+      color: rgba(240,246,255,0.25);
+      text-align: center;
+    }
+    .footer-bottom a {
+      color: rgba(240,246,255,0.4);
+      text-decoration: none;
+    }
+    .footer-bottom a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <!-- [1] DEMO BANNER -->
+  <div class="demo-banner">
+    Autohuolto Helsinki &mdash; tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman?&nbsp; <a href="mailto:team@masasite.com">Ota yhteyttä →</a>
+  </div>
+
+  <!-- [2] STICKY NAV -->
+  <nav class="site-nav" id="main-nav">
+    <div class="nav-inner">
+      <div class="nav-logo">Autohuolto <span>Helsinki</span></div>
+      <ul class="nav-links">
+        <li><a href="#services">Palvelut</a></li>
+        <li><a href="#hours">Aukioloajat</a></li>
+        <li><a href="#contact">Yhteystiedot</a></li>
+      </ul>
+      <a href="tel:09626412" class="btn-nav">
+        Soita: 09 626412
+      </a>
+    </div>
+  </nav>
+
+  <!-- [3] HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <div class="hero-eyebrow">Helsinki · Autohuolto & Korjaus</div>
+      <h1>Helsingin luotettava autohuollon ja <span>korjaamisen</span> spesialisti</h1>
+      <p class="hero-sub">Autohuolto Helsinki tarjoaa ammattitaitoista auto- ja peltikorjausta sekä huoltopalveluita. Kokeneet teknikot hoitavat ajoneuvosi kunnossapidon ja vaurioiden korjauksen huolellisesti ja luotettavasti.</p>
+      <div class="hero-rating">
+        <div class="stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <span class="hero-rating-text">4.5/5 Google-arvostelut</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn-primary">
+          <i data-lucide="calendar" style="width:18px;height:18px;"></i>
+          Ota yhteys ja varaa aika
+        </a>
+        <a href="#services" class="btn-ghost">
+          <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
+          Katso palvelut
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- [4] SERVICES GRID -->
+  <section class="services-section" id="services">
+    <div class="services-container">
+      <div class="reveal" style="text-align:center;">
+        <span class="section-label">Mitä teemme</span>
+        <h2 class="section-title">Ammattitaitoiset autopalvelut</h2>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-icon-wrap">
+            <i data-lucide="settings"></i>
+          </div>
+          <h3>Autohuolto</h3>
+          <p>Säännöllinen huolto ja määräaikaiskatsastukset. Pidämme ajoneuvosi kunnossa ja varmistat turvallisen ajamisen.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon-wrap">
+            <i data-lucide="wrench"></i>
+          </div>
+          <h3>Autokorjaus</h3>
+          <p>Moottori-, jarru- ja muiden järjestelmien korjauspalvelut. Diagnosointi ja ammattimainen korjaus kaikille automerkeille.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon-wrap">
+            <i data-lucide="shield"></i>
+          </div>
+          <h3>Autopeltikorjaus</h3>
+          <p>Kaaria ja vaurioiden peltitöiden ammattitaitoinen korjaus. Auton korin ennallistaminen alkuperäiseen kuntoon.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Photo Strip -->
+  <div class="photo-strip">
+    <div class="photo-strip-inner">
+      <img src="assets/autohuolto-helsinki--autokorja-76ca9dc2/photo1.jpg" alt="Autohuolto Helsinki korjaamo" />
+      <img src="assets/autohuolto-helsinki--autokorja-76ca9dc2/photo2.jpg" alt="Autokorjaus Helsinki" />
+      <img src="assets/autohuolto-helsinki--autokorja-76ca9dc2/photo3.jpg" alt="Autopeltikorjaamo Helsinki" />
+    </div>
+  </div>
+
+  <!-- [5] WHY CHOOSE US -->
+  <section class="why-section">
+    <div class="why-container">
+      <div class="reveal" style="text-align:center;">
+        <span class="section-label">Miksi me?</span>
+        <h2 class="section-title">Luotettava valinta ajoneuvoosi</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-item reveal">
+          <div class="why-icon" style="display:flex;align-items:center;justify-content:center;">
+            <i data-lucide="award"></i>
+          </div>
+          <h3>Kokeneet ammattilaiset</h3>
+          <p>Kokeneet teknikot ja korkea Google-arvio. Vuosia kokemusta kaikenlaisten ajoneuvojen huollosta ja korjauksesta.</p>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-icon" style="display:flex;align-items:center;justify-content:center;">
+            <i data-lucide="zap"></i>
+          </div>
+          <h3>Nopeat palvelut</h3>
+          <p>Avoimet arkisin 7–17. Tehokas palvelu ja nopeat toimitusajat — saat autosi takaisin mahdollisimman nopeasti.</p>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-icon" style="display:flex;align-items:center;justify-content:center;">
+            <i data-lucide="shield-check"></i>
+          </div>
+          <h3>Luotettava kumppani</h3>
+          <p>Luotettava kumppani ajoneuvosi hoitoon ja korjauksiin. Selkeä hinnoittelu ja rehellinen palvelu aina.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [6] REVIEWS -->
+  <section class="reviews-section" id="reviews">
+    <div class="reviews-container">
+      <div class="reveal" style="text-align:center;">
+        <span class="section-label">Asiakkaat sanovat</span>
+        <h2 class="section-title">Asiakasarvostelut</h2>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card reveal">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-text">"Good value for money for basic auto repair services. I recommend!"</p>
+          <div class="review-author">
+            Hannu Vaisto
+            <span class="review-verified">✓ Vahvistettu</span>
+          </div>
+        </div>
+        <div class="review-card reveal">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star" class="empty"></i>
+          </div>
+          <p class="review-text">"Asiakkaana olen ollut tyytyväinen palveluun. Ammattitaitoinen henkilökunta ja nopea palvelu."</p>
+          <div class="review-author">
+            Danny Jorissen
+            <span class="review-verified">✓ Vahvistettu</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [7] OPENING HOURS -->
+  <section class="hours-section" id="hours">
+    <div class="hours-container">
+      <div class="reveal" style="text-align:center;">
+        <span class="section-label" style="color:var(--accent);">Aukioloajat</span>
+        <h2 class="section-title light">Milloin olemme paikalla</h2>
+      </div>
+      <div class="hours-card reveal">
+        <div class="hours-header">
+          <i data-lucide="clock"></i>
+          <span>Aukioloajat</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Maanantai</span>
+          <span class="hours-time">7:00 – 17:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Tiistai</span>
+          <span class="hours-time">7:00 – 17:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Keskiviikko</span>
+          <span class="hours-time">7:00 – 17:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Torstai</span>
+          <span class="hours-time">7:00 – 17:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Perjantai</span>
+          <span class="hours-time">7:00 – 17:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Lauantai</span>
+          <span class="hours-time closed">Suljettu</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Sunnuntai</span>
+          <span class="hours-time closed">Suljettu</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [8] CONTACT -->
+  <section class="contact-section" id="contact">
+    <div class="contact-container">
+      <div class="reveal">
+        <span class="section-label">Ota yhteyttä</span>
+        <h2 class="section-title" style="margin-bottom:32px;">Varaa aikasi tänään</h2>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i data-lucide="map-pin"></i>
+          </div>
+          <div class="contact-item-text">
+            <div class="contact-item-label">Osoite</div>
+            <div class="contact-item-value">Henry Fordin katu 5, 00150 Helsinki</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i data-lucide="phone"></i>
+          </div>
+          <div class="contact-item-text">
+            <div class="contact-item-label">Puhelin</div>
+            <div class="contact-item-value"><a href="tel:09626412">09 626412</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i data-lucide="clock"></i>
+          </div>
+          <div class="contact-item-text">
+            <div class="contact-item-label">Aukioloajat</div>
+            <div class="contact-item-value">Ma–Pe: 7:00–17:00</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i data-lucide="map"></i>
+          </div>
+          <div class="contact-item-text">
+            <div class="contact-item-label">Kaupunki</div>
+            <div class="contact-item-value">Helsinki, Suomi</div>
+          </div>
+        </div>
+        <div class="contact-cta">
+          <a href="tel:09626412" class="btn-accent">
+            <i data-lucide="phone" style="width:18px;height:18px;"></i>
+            Soita meille nyt
+          </a>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="map-wrap">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Henry%20Fordin%20katu%205%2C%2000150%20Helsinki%2C%20Suomi%2C%20Helsinki%2C%20Finland&language=fi"
+            width="100%"
+            height="380"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Autohuolto Helsinki sijainti kartalla">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [9] FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo">Autohuolto <span>Helsinki</span></div>
+      <div class="footer-address">
+        Henry Fordin katu 5, 00150 Helsinki, Suomi<br />
+        Puh: 09 626412 &nbsp;·&nbsp; Ma–Pe 7:00–17:00
+      </div>
+      <div class="footer-bottom">
+        Demo luotu <a href="https://masasite.com" target="_blank" rel="noopener">masasite.com</a> palvelulla
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Lucide icons
+    lucide.createIcons();
+
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    revealEls.forEach((el, i) => {
+      // Stagger cards in grids
+      const parent = el.parentElement;
+      if (parent && (parent.classList.contains('services-grid') || parent.classList.contains('reviews-grid') || parent.classList.contains('why-grid'))) {
+        const siblings = Array.from(parent.querySelectorAll('.reveal'));
+        const idx = siblings.indexOf(el);
+        el.style.transitionDelay = (idx * 80) + 'ms';
+      }
+    });
+
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    revealEls.forEach(el => io.observe(el));
+
+    // Fill hero stars
+    document.querySelectorAll('.hero-rating .stars i').forEach(star => {
+      star.style.fill = '#f59e0b';
+      star.style.color = '#f59e0b';
+    });
+
+    // Fill review stars
+    document.querySelectorAll('.review-stars i:not(.empty)').forEach(star => {
+      star.style.fill = '#f59e0b';
+      star.style.color = '#f59e0b';
+    });
+  </script>
+</body>
+</html>
