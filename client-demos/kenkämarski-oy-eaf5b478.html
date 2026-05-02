@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kenkämarski Oy – Laadukkaita kenkiä Helsinkiin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #0d1117;
+      --accent: #0ba37f;
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --text: #0f0f0f;
+      --muted: #6b7280;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      padding-top: 40px;
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Syne', sans-serif;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    /* Demo Banner */
+    #demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(11, 163, 127, 0.88);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.02em;
+      padding: 0 16px;
+      text-align: center;
+    }
+    #demo-banner a {
+      color: #fff;
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      margin-left: 4px;
+    }
+    #demo-banner a:hover { opacity: 0.8; }
+
+    /* Nav */
+    #main-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      transition: box-shadow 0.3s ease;
+    }
+    #main-nav.scrolled {
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+    }
+
+    /* Hero */
+    #hero {
+      min-height: 100svh;
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.65) 100%),
+        url('assets/kenkämarski-oy-eaf5b478/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content {
+      animation: heroFadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Service Cards */
+    .service-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+
+    .icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--accent) 14%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .icon-wrap i {
+      color: var(--accent);
+      width: 28px;
+      height: 28px;
+    }
+
+    /* Why cards */
+    .why-item i {
+      color: var(--accent);
+      width: 40px;
+      height: 40px;
+    }
+
+    /* Review cards */
+    .review-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .star-icon {
+      color: #f59e0b;
+      fill: #f59e0b;
+      width: 16px;
+      height: 16px;
+    }
+    .star-icon-empty {
+      color: #d1d5db;
+      fill: #d1d5db;
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Hours table */
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid #f0f0ef;
+      font-size: 0.95rem;
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-row .day { font-weight: 600; color: var(--text); }
+    .hours-row .time { color: var(--muted); }
+    .hours-closed { color: #e63946 !important; font-weight: 500 !important; }
+
+    /* Buttons */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 14px 28px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-decoration: none;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(11, 163, 127, 0.35);
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 14px 28px;
+      border-radius: 999px;
+      border: 1.5px solid rgba(255,255,255,0.4);
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+      text-decoration: none;
+    }
+    .btn-ghost:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.25);
+    }
+
+    .btn-accent-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--accent);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 13px 26px;
+      border-radius: 999px;
+      border: 2px solid var(--accent);
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+      text-decoration: none;
+    }
+    .btn-accent-outline:hover {
+      transform: translateY(-3px);
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* Nav CTA */
+    .nav-cta {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.875rem;
+      padding: 10px 22px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(11, 163, 127, 0.3);
+    }
+
+    /* Section heading */
+    .section-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 12px;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* Maps */
+    #contact iframe {
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--primary);
+      color: rgba(255,255,255,0.85);
+    }
+
+    /* Stagger */
+    .stagger-card { transition-delay: calc(var(--i, 0) * 80ms); }
+
+    /* Mobile nav */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- [1] DEMO BANNER -->
+  <div id="demo-banner">
+    Kenkämarski Oy — tämä esimerkkisivu on tehty juuri teille · Haluatko oman?
+    <a href="mailto:team@masasite.com">Ota yhteyttä →</a>
+  </div>
+
+  <!-- [2] STICKY NAV -->
+  <nav id="main-nav">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,5vw,48px);">
+      <div style="display:flex;align-items:center;justify-content:space-between;height:68px;gap:32px;">
+        <a href="#" style="text-decoration:none;">
+          <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:var(--primary);letter-spacing:-0.01em;">
+            Kenkämarski
+            <span style="color:var(--accent);">Oy</span>
+          </span>
+        </a>
+        <div class="nav-links" style="display:flex;align-items:center;gap:32px;">
+          <a href="#palvelut" style="font-size:0.9rem;font-weight:500;color:#374151;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#0ba37f'" onmouseout="this.style.color='#374151'">Palvelut</a>
+          <a href="#aukioloajat" style="font-size:0.9rem;font-weight:500;color:#374151;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#0ba37f'" onmouseout="this.style.color='#374151'">Aukioloajat</a>
+          <a href="#yhteystiedot" style="font-size:0.9rem;font-weight:500;color:#374151;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#0ba37f'" onmouseout="this.style.color='#374151'">Yhteystiedot</a>
+        </div>
+        <a href="#yhteystiedot" class="nav-cta">Käy kaupassa →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- [3] HERO -->
+  <section id="hero">
+    <div class="hero-content" style="padding:clamp(16px,5vw,48px);max-width:860px;">
+      <p class="section-eyebrow" style="color:rgba(255,255,255,0.75);margin-bottom:16px;">Helsinki · Mannerheimintie 8</p>
+      <h1 style="font-size:clamp(2.5rem,6vw,5.5rem);font-weight:800;color:#fff;margin:0 0 24px;letter-spacing:-0.02em;line-height:1.1;">
+        Laadukkaita kenkiä<br/>Helsinkiin
+      </h1>
+      <p style="font-size:clamp(1rem,2vw,1.25rem);color:rgba(255,255,255,0.82);max-width:560px;margin:0 auto 32px;line-height:1.7;">
+        Kenkämarski Oy on Helsingin luotettava kenkäkauppa, joka tarjoaa monipuolisen valikoiman jalkineita jokaiseen tilanteeseen. Ammattitaitoinen henkilökunta auttaa sinua löytämään sopivat kengät, joissa on sekä tyyli että mukavuus.
+      </p>
+      <!-- Rating -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:36px;">
+        <i data-lucide="star" style="color:#f59e0b;fill:#f59e0b;width:18px;height:18px;"></i>
+        <i data-lucide="star" style="color:#f59e0b;fill:#f59e0b;width:18px;height:18px;"></i>
+        <i data-lucide="star" style="color:#f59e0b;fill:#f59e0b;width:18px;height:18px;"></i>
+        <i data-lucide="star" style="color:#d1d5db;fill:#d1d5db;width:18px;height:18px;"></i>
+        <i data-lucide="star" style="color:#d1d5db;fill:#d1d5db;width:18px;height:18px;"></i>
+        <span style="color:rgba(255,255,255,0.8);font-size:0.9rem;margin-left:6px;">3.7/5 <span style="opacity:0.65;">(6 arvostelua)</span></span>
+      </div>
+      <!-- CTAs -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;">
+        <a href="#yhteystiedot" class="btn-primary">
+          <i data-lucide="map-pin" style="width:16px;height:16px;"></i>
+          Käy kaupassa tänään
+        </a>
+        <a href="#palvelut" class="btn-ghost">
+          Tutustu palveluihin
+          <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- [4] SERVICES GRID -->
+  <section id="palvelut" style="background:#f4f5f0;padding:clamp(64px,10vw,120px) 0;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,5vw,48px);">
+      <div class="reveal" style="text-align:center;margin-bottom:56px;">
+        <p class="section-eyebrow">Palvelumme</p>
+        <h2 style="font-size:clamp(1.75rem,4vw,3rem);font-weight:800;color:var(--primary);">Mitä tarjoamme?</h2>
+        <p style="color:var(--muted);max-width:520px;margin:16px auto 0;font-size:1rem;">Kattavat kenkäpalvelut yhdestä paikasta – löydä täydellinen pari ja pidä ne kunnossa.</p>
+      </div>
+
+      <div id="services-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
+
+        <div class="service-card reveal stagger-card">
+          <div class="icon-wrap">
+            <i data-lucide="shopping-bag"></i>
+          </div>
+          <h3 style="font-size:1.175rem;font-weight:700;color:var(--primary);margin:0 0 10px;">Kenkien myynti</h3>
+          <p style="color:var(--muted);font-size:0.95rem;line-height:1.7;margin:0;">Laaja valikoima miesten, naisten ja lasten kenkiä trendeistä klassisiin malleihin</p>
+        </div>
+
+        <div class="service-card reveal stagger-card">
+          <div class="icon-wrap">
+            <i data-lucide="users"></i>
+          </div>
+          <h3 style="font-size:1.175rem;font-weight:700;color:var(--primary);margin:0 0 10px;">Kenkien neuvonta</h3>
+          <p style="color:var(--muted);font-size:0.95rem;line-height:1.7;margin:0;">Asiantunteva apua oikean kengän valintaan ja mitoitukseen</p>
+        </div>
+
+        <div class="service-card reveal stagger-card">
+          <div class="icon-wrap">
+            <i data-lucide="sparkles"></i>
+          </div>
+          <h3 style="font-size:1.175rem;font-weight:700;color:var(--primary);margin:0 0 10px;">Kenkien hoito</h3>
+          <p style="color:var(--muted);font-size:0.95rem;line-height:1.7;margin:0;">Neuvoja kenkien puhdistukseen ja kunnossapitoon</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO STRIP -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;max-height:320px;overflow:hidden;">
+    <img src="assets/kenkämarski-oy-eaf5b478/photo1.jpg" alt="Kenkämarski myymälä" style="width:100%;height:320px;object-fit:cover;" />
+    <img src="assets/kenkämarski-oy-eaf5b478/photo2.jpg" alt="Kenkävalikoima" style="width:100%;height:320px;object-fit:cover;" />
+    <img src="assets/kenkämarski-oy-eaf5b478/photo3.jpg" alt="Kenkäkauppa Helsinki" style="width:100%;height:320px;object-fit:cover;" />
+  </div>
+
+  <!-- [5] WHY CHOOSE US -->
+  <section style="background:#fff;padding:clamp(64px,10vw,120px) 0;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,5vw,48px);">
+      <div class="reveal" style="text-align:center;margin-bottom:56px;">
+        <p class="section-eyebrow">Miksi me?</p>
+        <h2 style="font-size:clamp(1.75rem,4vw,3rem);font-weight:800;color:var(--primary);">Kenkämarski — luotettava valinta</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:48px;">
+
+        <div class="why-item reveal" style="text-align:center;">
+          <div style="display:flex;justify-content:center;margin-bottom:20px;">
+            <i data-lucide="award"></i>
+          </div>
+          <h3 style="font-size:1.1rem;font-weight:700;color:var(--primary);margin:0 0 10px;">Kokenut henkilökunta</h3>
+          <p style="color:var(--muted);font-size:0.93rem;line-height:1.7;margin:0;">Kokenut henkilökunta auttaa löytämään täydellisen kengän</p>
+        </div>
+
+        <div class="why-item reveal" style="text-align:center;">
+          <div style="display:flex;justify-content:center;margin-bottom:20px;">
+            <i data-lucide="layers"></i>
+          </div>
+          <h3 style="font-size:1.1rem;font-weight:700;color:var(--primary);margin:0 0 10px;">Laaja valikoima</h3>
+          <p style="color:var(--muted);font-size:0.93rem;line-height:1.7;margin:0;">Monipuolinen valikoima kaikille makuille ja tarpeille</p>
+        </div>
+
+        <div class="why-item reveal" style="text-align:center;">
+          <div style="display:flex;justify-content:center;margin-bottom:20px;">
+            <i data-lucide="map-pin"></i>
+          </div>
+          <h3 style="font-size:1.1rem;font-weight:700;color:var(--primary);margin:0 0 10px;">Keskeinen sijainti</h3>
+          <p style="color:var(--muted);font-size:0.93rem;line-height:1.7;margin:0;">Helsingin keskustassa helposti saavutettava sijainti</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- [6] REVIEWS -->
+  <section style="background:#f9faf8;padding:clamp(64px,10vw,120px) 0;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,5vw,48px);">
+      <div class="reveal" style="text-align:center;margin-bottom:56px;">
+        <p class="section-eyebrow">Asiakasarvostelut</p>
+        <h2 style="font-size:clamp(1.75rem,4vw,3rem);font-weight:800;color:var(--primary);">Mitä asiakkaat sanovat</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
+
+        <!-- Review 1: 3 stars -->
+        <div class="review-card reveal stagger-card">
+          <div style="display:flex;gap:3px;margin-bottom:16px;">
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon-empty"></i>
+            <i data-lucide="star" class="star-icon-empty"></i>
+          </div>
+          <p style="font-style:italic;color:#4b5563;font-size:0.9rem;line-height:1.7;margin:0 0 20px;">"A bit like a flea market. The shoe selection was surprisingly wide though. I bought these beauties from there."</p>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:color-mix(in srgb,var(--accent) 18%,transparent);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;color:var(--accent);">LH</div>
+            <div>
+              <p style="font-weight:700;font-size:0.85rem;color:var(--primary);margin:0;">Lankinen Heidi</p>
+              <p style="font-size:0.75rem;color:var(--muted);margin:0;">Google-arvostelu</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2: 3 stars -->
+        <div class="review-card reveal stagger-card">
+          <div style="display:flex;gap:3px;margin-bottom:16px;">
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon-empty"></i>
+            <i data-lucide="star" class="star-icon-empty"></i>
+          </div>
+          <p style="font-style:italic;color:#4b5563;font-size:0.9rem;line-height:1.7;margin:0 0 20px;">"Asioin myymälässä ja löysin hyvän valikoiman kenkiä."</p>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:color-mix(in srgb,var(--accent) 18%,transparent);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;color:var(--accent);">IN</div>
+            <div>
+              <p style="font-weight:700;font-size:0.85rem;color:var(--primary);margin:0;">Ilse Nyqvist</p>
+              <p style="font-size:0.75rem;color:var(--muted);margin:0;">Google-arvostelu</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3: 4 stars -->
+        <div class="review-card reveal stagger-card">
+          <div style="display:flex;gap:3px;margin-bottom:16px;">
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon-empty"></i>
+          </div>
+          <p style="font-style:italic;color:#4b5563;font-size:0.9rem;line-height:1.7;margin:0 0 20px;">"Hyvä palvelu ja löysin sopivat kengät. Suosittelen tutustumaan valikoimaan."</p>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:color-mix(in srgb,var(--accent) 18%,transparent);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;color:var(--accent);">AM</div>
+            <div>
+              <p style="font-weight:700;font-size:0.85rem;color:var(--primary);margin:0;">Annika M</p>
+              <p style="font-size:0.75rem;color:var(--muted);margin:0;">Google-arvostelu</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- [7] OPENING HOURS -->
+  <section id="aukioloajat" style="background:#fff;padding:clamp(64px,10vw,120px) 0;">
+    <div style="max-width:640px;margin:0 auto;padding:0 clamp(16px,5vw,48px);">
+      <div class="reveal" style="text-align:center;margin-bottom:48px;">
+        <p class="section-eyebrow">Olemme avoinna</p>
+        <h2 style="font-size:clamp(1.75rem,4vw,3rem);font-weight:800;color:var(--primary);">Aukioloajat</h2>
+      </div>
+      <div class="reveal" style="background:#fff;border-radius:20px;box-shadow:0 1px 3px rgba(0,0,0,0.06),0 8px 32px rgba(0,0,0,0.07);padding:8px 32px 16px;border:1px solid rgba(0,0,0,0.05);">
+
+        <div style="padding:20px 0 8px;text-align:center;">
+          <div style="display:inline-flex;align-items:center;gap:8px;background:color-mix(in srgb,var(--accent) 12%,transparent);padding:8px 18px;border-radius:999px;">
+            <i data-lucide="clock" style="color:var(--accent);width:16px;height:16px;"></i>
+            <span style="font-size:0.8rem;font-weight:600;color:var(--accent);letter-spacing:0.05em;text-transform:uppercase;">Viikoittainen aikataulu</span>
+          </div>
+        </div>
+
+        <div class="hours-row">
+          <span class="day">Maanantai</span>
+          <span class="time">11:00 – 18:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="day">Tiistai</span>
+          <span class="time">11:00 – 18:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="day">Keskiviikko</span>
+          <span class="time">11:00 – 18:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="day">Torstai</span>
+          <span class="time">11:00 – 18:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="day">Perjantai</span>
+          <span class="time">11:00 – 18:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="day">Lauantai</span>
+          <span class="time hours-closed">Suljettu</span>
+        </div>
+        <div class="hours-row">
+          <span class="day">Sunnuntai</span>
+          <span class="time hours-closed">Suljettu</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [8] CONTACT -->
+  <section id="yhteystiedot" style="background:#f4f5f0;padding:clamp(64px,10vw,120px) 0;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,5vw,48px);">
+      <div class="reveal" style="text-align:center;margin-bottom:56px;">
+        <p class="section-eyebrow">Ota yhteyttä</p>
+        <h2 style="font-size:clamp(1.75rem,4vw,3rem);font-weight:800;color:var(--primary);">Löydä meidät</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px;align-items:start;">
+
+        <!-- Contact info -->
+        <div class="reveal">
+          <div style="display:flex;flex-direction:column;gap:24px;margin-bottom:36px;">
+            <div style="display:flex;align-items:flex-start;gap:16px;">
+              <div style="width:44px;height:44px;border-radius:12px;background:color-mix(in srgb,var(--accent) 14%,transparent);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i data-lucide="map-pin" style="color:var(--accent);width:20px;height:20px;"></i>
+              </div>
+              <div>
+                <p style="font-weight:700;font-size:0.85rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin:0 0 4px;">Osoite</p>
+                <p style="color:var(--text);font-size:0.97rem;margin:0;line-height:1.5;">Mannerheimintie 8<br/>00100 Helsinki, Suomi</p>
+              </div>
+            </div>
+
+            <div style="display:flex;align-items:flex-start;gap:16px;">
+              <div style="width:44px;height:44px;border-radius:12px;background:color-mix(in srgb,var(--accent) 14%,transparent);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i data-lucide="phone" style="color:var(--accent);width:20px;height:20px;"></i>
+              </div>
+              <div>
+                <p style="font-weight:700;font-size:0.85rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin:0 0 4px;">Puhelin</p>
+                <a href="tel:0106170860" style="color:var(--text);font-size:0.97rem;text-decoration:none;font-weight:500;">010 6170860</a>
+              </div>
+            </div>
+
+            <div style="display:flex;align-items:flex-start;gap:16px;">
+              <div style="width:44px;height:44px;border-radius:12px;background:color-mix(in srgb,var(--accent) 14%,transparent);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i data-lucide="clock" style="color:var(--accent);width:20px;height:20px;"></i>
+              </div>
+              <div>
+                <p style="font-weight:700;font-size:0.85rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin:0 0 4px;">Aukioloajat</p>
+                <p style="color:var(--text);font-size:0.97rem;margin:0;line-height:1.6;">Ma–Pe: 11:00 – 18:00<br/><span style="color:#e63946;font-size:0.87rem;">La–Su: Suljettu</span></p>
+              </div>
+            </div>
+          </div>
+
+          <a href="tel:0106170860" class="btn-primary">
+            <i data-lucide="phone" style="width:16px;height:16px;"></i>
+            Soita meille
+          </a>
+        </div>
+
+        <!-- Map -->
+        <div class="reveal">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Mannerheimintie%208%2C%2000100%20Helsinki%2C%20Suomi%2C%20Helsinki%2C%20Finland&language=fi"
+            width="100%"
+            height="380"
+            style="border:0;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.1);min-height:280px;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Kenkämarski Oy sijainti"
+          ></iframe>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- [9] FOOTER -->
+  <footer style="padding:48px clamp(16px,5vw,48px) 32px;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:24px;padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,0.08);">
+        <div>
+          <p style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;color:#fff;margin:0 0 10px;letter-spacing:-0.01em;">Kenkämarski <span style="color:var(--accent);">Oy</span></p>
+          <p style="color:rgba(255,255,255,0.5);font-size:0.875rem;margin:0;line-height:1.6;">
+            Mannerheimintie 8, 00100 Helsinki<br/>
+            <a href="tel:0106170860" style="color:rgba(255,255,255,0.5);text-decoration:none;">010 6170860</a>
+          </p>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+          <a href="#palvelut" style="font-size:0.85rem;color:rgba(255,255,255,0.45);text-decoration:none;" onmouseover="this.style.color='rgba(255,255,255,0.8)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">Palvelut</a>
+          <a href="#aukioloajat" style="font-size:0.85rem;color:rgba(255,255,255,0.45);text-decoration:none;" onmouseover="this.style.color='rgba(255,255,255,0.8)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">Aukioloajat</a>
+          <a href="#yhteystiedot" style="font-size:0.85rem;color:rgba(255,255,255,0.45);text-decoration:none;" onmouseover="this.style.color='rgba(255,255,255,0.8)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">Yhteystiedot</a>
+        </div>
+      </div>
+      <div style="padding-top:24px;text-align:center;">
+        <p style="font-size:11px;color:rgba(255,255,255,0.2);margin:0;letter-spacing:0.05em;">Demo luotu masasite.com palvelulla</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Init Lucide icons
+    lucide.createIcons();
+
+    // Set star icon styles after creation
+    document.querySelectorAll('.star-icon').forEach(el => {
+      el.style.color = '#f59e0b';
+      el.style.fill = '#f59e0b';
+      el.style.width = '16px';
+      el.style.height = '16px';
+    });
+    document.querySelectorAll('.star-icon-empty').forEach(el => {
+      el.style.color = '#d1d5db';
+      el.style.fill = '#d1d5db';
+      el.style.width = '16px';
+      el.style.height = '16px';
+    });
+    document.querySelectorAll('.why-item i').forEach(el => {
+      el.style.color = '#0ba37f';
+      el.style.width = '40px';
+      el.style.height = '40px';
+    });
+
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // Intersection Observer for reveal animations
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Stagger card delays
+    document.querySelectorAll('.stagger-card').forEach((card, i) => {
+      card.style.setProperty('--i', i);
+    });
+  </script>
+</body>
+</html>
