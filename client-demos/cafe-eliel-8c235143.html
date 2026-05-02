@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cafe Eliel – Helsinki</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #3b1f0e;
+      --accent: #c8874a;
+      --bg: #faf8f5;
+      --surface: #ffffff;
+      --text: #1a0f08;
+      --muted: #7a6a60;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      padding-top: 40px;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    /* Demo Banner */
+    #demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(200, 135, 74, 0.92);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #demo-banner p {
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.02em;
+    }
+    #demo-banner a {
+      color: #fff;
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* Nav */
+    #main-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(250, 248, 245, 0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(59,31,14,0.08);
+      transition: box-shadow 0.3s ease;
+    }
+    #main-nav.scrolled {
+      box-shadow: 0 2px 20px rgba(59,31,14,0.08);
+    }
+
+    /* Hero */
+    #hero {
+      min-height: 100svh;
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.65) 100%),
+        url('assets/cafe-eliel-8c235143/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content {
+      animation: heroFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+    }
+
+    .hero-h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+    }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Service Cards */
+    .service-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(59,31,14,0.12);
+    }
+
+    .icon-wrap {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    /* Why us */
+    .why-card {
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    /* Review cards */
+    .review-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);
+    }
+
+    /* Hours */
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(59,31,14,0.07);
+    }
+    .hours-row:last-child {
+      border-bottom: none;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 14px 28px;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      text-decoration: none;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(200,135,74,0.35);
+      background: #b8743c;
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 14px 28px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,0.35);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      text-decoration: none;
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.28);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+
+    .btn-accent-nav {
+      display: inline-flex;
+      align-items: center;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.875rem;
+      padding: 10px 22px;
+      border-radius: 9999px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-decoration: none;
+    }
+    .btn-accent-nav:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(200,135,74,0.3);
+    }
+
+    /* Stars */
+    .star-icon {
+      color: #f59e0b;
+      fill: #f59e0b;
+      width: 18px;
+      height: 18px;
+    }
+    .star-icon-sm {
+      color: #f59e0b;
+      fill: #f59e0b;
+      width: 15px;
+      height: 15px;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+
+    /* Section padding */
+    .section-pad {
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+
+    /* Photo grid */
+    .photo-grid img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+
+    /* Eyebrow */
+    .eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    /* Map */
+    .map-frame {
+      width: 100%;
+      height: 380px;
+      border: 0;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+    }
+
+    /* Footer */
+    #footer {
+      background: var(--primary);
+    }
+
+    /* Mobile nav */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ [1] DEMO BANNER ═══════════════════════════════ -->
+<div id="demo-banner">
+  <p>Cafe Eliel — tämä esimerkkisivu on tehty juuri teille · Haluatko oman? <a href="mailto:team@masasite.com">Ota yhteyttä →</a></p>
+</div>
+
+<!-- ═══════════════════════════════ [2] STICKY NAV ═══════════════════════════════ -->
+<nav id="main-nav">
+  <div class="container" style="display:flex; align-items:center; justify-content:space-between; height:64px;">
+    <a href="#hero" style="font-family:'Playfair Display',serif; font-weight:700; font-size:1.25rem; color:var(--primary); text-decoration:none; letter-spacing:-0.01em;">
+      Cafe Eliel
+    </a>
+    <div class="nav-links" style="display:flex; gap:32px; align-items:center;">
+      <a href="#services" style="font-size:0.9rem; font-weight:500; color:var(--text); text-decoration:none; opacity:0.8; transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">Palvelut</a>
+      <a href="#hours" style="font-size:0.9rem; font-weight:500; color:var(--text); text-decoration:none; opacity:0.8; transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">Aukioloajat</a>
+      <a href="#contact" style="font-size:0.9rem; font-weight:500; color:var(--text); text-decoration:none; opacity:0.8; transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">Yhteystiedot</a>
+    </div>
+    <a href="#contact" class="btn-accent-nav">Tule käymään</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════ [3] HERO ═══════════════════════════════ -->
+<section id="hero">
+  <div class="container" style="text-align:center; padding-block: 64px;">
+    <div class="hero-content" style="max-width:780px; margin:0 auto;">
+      <span class="eyebrow" style="color:rgba(255,255,255,0.75);">Helsingin sydämessä · Kaivokatu 1</span>
+      <h1 class="hero-h1" style="margin-bottom:24px;">
+        Helsingin suosikki kahvila, täydellinen päivän pausolle
+      </h1>
+      <p style="font-size:1.2rem; color:rgba(255,255,255,0.82); max-width:580px; margin:0 auto 32px; line-height:1.7;">
+        Cafe Eliel on Helsinki-rakkaiden suosikki, joka tarjoaa laadukasta kahvia ja rentoa kahvilaympäristöä. Asiakkaat arvostavat erityisesti paikan tunnelmaa ja palvelua.
+      </p>
+      <!-- Rating row -->
+      <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:40px;">
+        <div style="display:flex; gap:3px;">
+          <i data-lucide="star" class="star-icon"></i>
+          <i data-lucide="star" class="star-icon"></i>
+          <i data-lucide="star" class="star-icon"></i>
+          <i data-lucide="star" class="star-icon"></i>
+          <i data-lucide="star" style="color:#f59e0b; fill:#f59e0b; width:18px; height:18px; opacity:0.5;"></i>
+        </div>
+        <span style="color:rgba(255,255,255,0.88); font-size:0.9rem; font-weight:500;">4.3/5 &nbsp;·&nbsp; 466 arvostelua Googlessa</span>
+      </div>
+      <!-- CTA Buttons -->
+      <div style="display:flex; flex-wrap:wrap; gap:14px; justify-content:center;">
+        <a href="#contact" class="btn-primary">
+          <i data-lucide="coffee" style="width:18px;height:18px;"></i>
+          Tule kahvikupille tänään
+        </a>
+        <a href="#services" class="btn-ghost">
+          <i data-lucide="arrow-right" style="width:18px;height:18px;"></i>
+          Tutustu palveluihin
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ [4] SERVICES GRID ═══════════════════════════════ -->
+<section id="services" style="background: #f2ede7;">
+  <div class="container section-pad">
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <span class="eyebrow">Mitä tarjoamme</span>
+      <h2 class="section-title">Palvelumme</h2>
+      <p style="color:var(--muted); max-width:520px; margin: 16px auto 0; font-size:1rem;">
+        Laadukasta kahvikokemusta modernissa ympäristössä — jokaiselle hetkelle
+      </p>
+    </div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:24px;">
+
+      <div class="service-card reveal" style="--i:0;">
+        <div class="icon-wrap">
+          <i data-lucide="coffee" style="width:28px;height:28px;"></i>
+        </div>
+        <h3 style="font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700; color:var(--primary); margin-bottom:10px;">Specialty-kahvi</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7;">Ammattilaisesti valmistettu kahvi ja espressopohjaisia juomia — laadukkaat raaka-aineet ja taidokas valmistus joka kupissa.</p>
+      </div>
+
+      <div class="service-card reveal" style="--i:1;">
+        <div class="icon-wrap">
+          <i data-lucide="users" style="width:28px;height:28px;"></i>
+        </div>
+        <h3 style="font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700; color:var(--primary); margin-bottom:10px;">Kahvilan palvelut</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7;">Viihtyisä paikka työskennellä, tavata ystäviä tai lepähtää. Rauhallinen tunnelma ja lämmin sisustus odottavat sinua.</p>
+      </div>
+
+      <div class="service-card reveal" style="--i:2;">
+        <div class="icon-wrap">
+          <i data-lucide="clock" style="width:28px;height:28px;"></i>
+        </div>
+        <h3 style="font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700; color:var(--primary); margin-bottom:10px;">Pitkät aukioloajat</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7;">Auki varhain aamusta illalliseen saakka arkisin — sopii täydellisesti niin aamurutiiniin kuin iltapäivän tauolle.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ PHOTO STRIP ═══════════════════════════════ -->
+<section style="background: var(--bg);">
+  <div class="container" style="padding-block: clamp(32px, 5vw, 64px);">
+    <div class="photo-grid reveal" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:16px;">
+      <img src="assets/cafe-eliel-8c235143/photo2.jpg" alt="Cafe Eliel sisätilat" />
+      <img src="assets/cafe-eliel-8c235143/photo3.jpg" alt="Cafe Eliel kahvi" />
+      <img src="assets/cafe-eliel-8c235143/photo1.jpg" alt="Cafe Eliel tunnelma" style="object-position: center 30%;" />
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ [5] WHY CHOOSE US ═══════════════════════════════ -->
+<section id="why" style="background: var(--surface);">
+  <div class="container section-pad">
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <span class="eyebrow">Miksi valita meidät</span>
+      <h2 class="section-title">Cafe Eliel – luotettava valinta</h2>
+    </div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:32px;">
+
+      <div class="why-card reveal" style="--i:0;">
+        <div style="display:flex; justify-content:center; margin-bottom:20px;">
+          <i data-lucide="award" style="width:44px;height:44px; color:var(--accent);"></i>
+        </div>
+        <h3 style="font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:var(--primary); margin-bottom:10px;">Helsinkiläiset luottavat</h3>
+        <p style="color:var(--muted); font-size:0.93rem; line-height:1.7;">Yli 466 positiivista arvostelua kertoo siitä, että asiakkaat palaavat yhä uudelleen. Olet hyvässä seurassa.</p>
+      </div>
+
+      <div class="why-card reveal" style="--i:1;">
+        <div style="display:flex; justify-content:center; margin-bottom:20px;">
+          <i data-lucide="sparkles" style="width:44px;height:44px; color:var(--accent);"></i>
+        </div>
+        <h3 style="font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:var(--primary); margin-bottom:10px;">Laatu & tunnelma</h3>
+        <p style="color:var(--muted); font-size:0.93rem; line-height:1.7;">Laadukasta kahvia ja rentouttavaa tunnelmaa joka päivä. Jokainen yksityiskohta on mietitty viihtyvyyttäsi varten.</p>
+      </div>
+
+      <div class="why-card reveal" style="--i:2;">
+        <div style="display:flex; justify-content:center; margin-bottom:20px;">
+          <i data-lucide="map-pin" style="width:44px;height:44px; color:var(--accent);"></i>
+        </div>
+        <h3 style="font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:var(--primary); margin-bottom:10px;">Keskeinen sijainti</h3>
+        <p style="color:var(--muted); font-size:0.93rem; line-height:1.7;">Helppo löytää Helsingin keskustassa. Auki varhain aamusta iltaan — saat kuppisesi juuri kun tarvitset.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ [6] REVIEWS ═══════════════════════════════ -->
+<section id="reviews" style="background: #f7f3ee;">
+  <div class="container section-pad">
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <span class="eyebrow">Asiakkaiden kokemukset</span>
+      <h2 class="section-title">Mitä asiakkaamme sanovat</h2>
+      <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-top:16px;">
+        <div style="display:flex; gap:3px;">
+          <i data-lucide="star" class="star-icon"></i>
+          <i data-lucide="star" class="star-icon"></i>
+          <i data-lucide="star" class="star-icon"></i>
+          <i data-lucide="star" class="star-icon"></i>
+          <i data-lucide="star" style="color:#f59e0b; fill:#f59e0b; width:18px;height:18px; opacity:0.45;"></i>
+        </div>
+        <span style="color:var(--muted); font-size:0.9rem;">4.3/5 · 466 arvostelua Googlessa</span>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:24px;">
+
+      <div class="review-card reveal" style="--i:0;">
+        <div style="display:flex; gap:3px; margin-bottom:16px;">
+          <i data-lucide="star" class="star-icon-sm"></i>
+          <i data-lucide="star" class="star-icon-sm"></i>
+          <i data-lucide="star" class="star-icon-sm"></i>
+          <i data-lucide="star" class="star-icon-sm"></i>
+          <i data-lucide="star" class="star-icon-sm"></i>
+        </div>
+        <p style="font-style:italic; color:var(--muted); font-size:0.9rem; line-height:1.75; margin-bottom:20px;">
+          "Really great variety of coffees. I happened to order their Caramel Popcorn Cold Brew which was a nice chill beverage for the daily needed caffeine dose 🍿☕️🧊 The place itself is like a Helsinki's attraction, since they have preserved its historical structure and turned it into a modernized Finnish café."
+        </p>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:color-mix(in srgb, var(--accent) 20%, transparent); display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;color:var(--accent);">F</div>
+          <div>
+            <p style="font-weight:700; font-size:0.88rem; color:var(--text);">Fangda Chen</p>
+            <p style="font-size:0.78rem; color:var(--muted);">Varmennettu arvostelu</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card reveal" style="--i:1;">
+        <div style="display:flex; gap:3px; margin-bottom:16px;">
+          <i data-lucide="star" class="star-icon-sm"></i>
+          <i data-lucide="star" class="star-icon-sm"></i>
+          <i data-lucide="star" class="star-icon-sm"></i>
+          <i data-lucide="star" class="star-icon-sm"></i>
+          <i data-lucide="star" class="star-icon-sm"></i>
+        </div>
+        <p style="font-style:italic; color:var(--muted); font-size:0.9rem; line-height:1.75; margin-bottom:20px;">
+          "Cozy Helsinki café with warm Nordic vibes, excellent coffee, and fresh pastries. The salmon soup is quite generous and tasty. Friendly staff and calm atmosphere make it perfect for a break or relaxed afternoon. Worth a stop."
+        </p>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:color-mix(in srgb, var(--accent) 20%, transparent); display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;color:var(--accent);">H</div>
+          <div>
+            <p style="font-weight:700; font-size:0.88rem; color:var(--text);">Hershey</p>
+            <p style="font-size:0.78rem; color:var(--muted);">Varmennettu arvostelu</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card reveal" style="--i:2;">
+        <div style="display:flex; gap:3px; margin-bottom:16px;">
+          <i data-lucide="star" class="star-icon-sm"></i>
+          <i data-lucide="star" class="star-icon-sm"></i>
+          <i data-lucide="star" class="star-icon-sm"></i>
+          <i data-lucide="star" class="star-icon-sm"></i>
+          <i data-lucide="star" class="star-icon-sm"></i>
+        </div>
+        <p style="font-style:italic; color:var(--muted); font-size:0.9rem; line-height:1.75; margin-bottom:20px;">
+          "Friendly staff, booths, decent wifi, I liked the smoothie and the almond pie. Hot chocolate with whipped cream was good too."
+        </p>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:color-mix(in srgb, var(--accent) 20%, transparent); display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;color:var(--accent);">G</div>
+          <div>
+            <p style="font-weight:700; font-size:0.88rem; color:var(--text);">Gill Balcaen</p>
+            <p style="font-size:0.78rem; color:var(--muted);">Varmennettu arvostelu</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ [7] OPENING HOURS ═══════════════════════════════ -->
+<section id="hours" style="background: var(--surface);">
+  <div class="container section-pad">
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:80px; align-items:center;">
+
+      <div class="reveal">
+        <span class="eyebrow">Milloin olemme auki</span>
+        <h2 class="section-title" style="margin-bottom:12px;">Aukioloajat</h2>
+        <p style="color:var(--muted); font-size:0.95rem; margin-bottom:40px;">Tervetuloa aamukahville tai iltapäivän tauolle — olemme auki laajasti viikon jokaisena päivänä.</p>
+        <div style="background: #faf8f5; border-radius:16px; padding:8px 24px;">
+          <div class="hours-row">
+            <span style="font-weight:600; color:var(--text); font-size:0.95rem;">Maanantai</span>
+            <span style="color:var(--muted); font-size:0.92rem;">7:00 – 20:00</span>
+          </div>
+          <div class="hours-row">
+            <span style="font-weight:600; color:var(--text); font-size:0.95rem;">Tiistai</span>
+            <span style="color:var(--muted); font-size:0.92rem;">7:00 – 20:00</span>
+          </div>
+          <div class="hours-row">
+            <span style="font-weight:600; color:var(--text); font-size:0.95rem;">Keskiviikko</span>
+            <span style="color:var(--muted); font-size:0.92rem;">7:00 – 20:00</span>
+          </div>
+          <div class="hours-row">
+            <span style="font-weight:600; color:var(--text); font-size:0.95rem;">Torstai</span>
+            <span style="color:var(--accent); font-size:0.92rem; font-weight:600;">7:00 – 21:00</span>
+          </div>
+          <div class="hours-row">
+            <span style="font-weight:600; color:var(--text); font-size:0.95rem;">Perjantai</span>
+            <span style="color:var(--accent); font-size:0.92rem; font-weight:600;">7:00 – 21:00</span>
+          </div>
+          <div class="hours-row">
+            <span style="font-weight:600; color:var(--text); font-size:0.95rem;">Lauantai</span>
+            <span style="color:var(--accent); font-size:0.92rem; font-weight:600;">7:00 – 21:00</span>
+          </div>
+          <div class="hours-row">
+            <span style="font-weight:600; color:var(--text); font-size:0.95rem;">Sunnuntai</span>
+            <span style="color:var(--muted); font-size:0.92rem;">8:00 – 18:30</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal" style="--i:1;">
+        <img src="assets/cafe-eliel-8c235143/photo2.jpg" alt="Cafe Eliel sisätilat" style="width:100%; height:420px; object-fit:cover; border-radius:20px; box-shadow: 0 8px 40px rgba(59,31,14,0.15);" />
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ [8] CONTACT ═══════════════════════════════ -->
+<section id="contact" style="background: #f2ede7;">
+  <div class="container section-pad">
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <span class="eyebrow">Löydä meidät</span>
+      <h2 class="section-title">Yhteystiedot</h2>
+    </div>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:48px; align-items:start;">
+
+      <div class="reveal">
+        <div style="background:#fff; border-radius:20px; padding:40px; box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);">
+          <h3 style="font-family:'Playfair Display',serif; font-size:1.35rem; font-weight:700; color:var(--primary); margin-bottom:28px;">Cafe Eliel</h3>
+
+          <div style="display:flex; flex-direction:column; gap:20px; margin-bottom:36px;">
+            <div style="display:flex; gap:14px; align-items:flex-start;">
+              <div style="color:var(--accent); margin-top:2px; flex-shrink:0;">
+                <i data-lucide="map-pin" style="width:20px;height:20px;"></i>
+              </div>
+              <div>
+                <p style="font-size:0.78rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); margin-bottom:2px;">Osoite</p>
+                <p style="color:var(--text); font-size:0.95rem;">Kaivokatu 1, 00100 Helsinki, Suomi</p>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:14px; align-items:flex-start;">
+              <div style="color:var(--accent); margin-top:2px; flex-shrink:0;">
+                <i data-lucide="phone" style="width:20px;height:20px;"></i>
+              </div>
+              <div>
+                <p style="font-size:0.78rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); margin-bottom:2px;">Puhelin</p>
+                <a href="tel:0505566278" style="color:var(--text); font-size:0.95rem; text-decoration:none; font-weight:500;">050 5566278</a>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:14px; align-items:flex-start;">
+              <div style="color:var(--accent); margin-top:2px; flex-shrink:0;">
+                <i data-lucide="clock" style="width:20px;height:20px;"></i>
+              </div>
+              <div>
+                <p style="font-size:0.78rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); margin-bottom:2px;">Tänään</p>
+                <p style="color:var(--text); font-size:0.95rem;">Auki 7:00 – 20:00</p>
+              </div>
+            </div>
+          </div>
+
+          <a href="tel:0505566278" class="btn-primary" style="width:100%; justify-content:center;">
+            <i data-lucide="phone" style="width:17px;height:17px;"></i>
+            Soita meille
+          </a>
+        </div>
+      </div>
+
+      <div class="reveal" style="--i:1;">
+        <iframe
+          class="map-frame"
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Kaivokatu%201%2C%2000100%20Helsinki%2C%20Suomi%2C%20Helsinki%2C%20Finland&language=fi"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ [9] FOOTER ═══════════════════════════════ -->
+<footer id="footer">
+  <div class="container" style="padding-block: 48px;">
+    <div style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:12px;">
+      <span style="font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; color:#f5ede0; letter-spacing:-0.01em;">Cafe Eliel</span>
+      <p style="color:rgba(245,237,224,0.6); font-size:0.9rem;">Kaivokatu 1, 00100 Helsinki</p>
+      <p style="color:rgba(245,237,224,0.6); font-size:0.9rem;">
+        <a href="tel:0505566278" style="color:rgba(245,237,224,0.6); text-decoration:none;">050 5566278</a>
+      </p>
+      <div style="width:40px; height:1px; background:rgba(245,237,224,0.2); margin:8px 0;"></div>
+      <p style="font-size:11px; color:rgba(245,237,224,0.3); letter-spacing:0.04em;">Demo luotu masasite.com palvelulla</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Lucide icons
+  lucide.createIcons();
+
+  // Sticky nav scroll effect
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  });
+
+  // Reveal animation with stagger
+  const revealEls = document.querySelectorAll('.reveal');
+  revealEls.forEach((el, i) => {
+    const customI = el.style.getPropertyValue('--i');
+    if (!customI) el.style.setProperty('--i', i % 4);
+    el.style.transitionDelay = `calc(var(--i, 0) * 80ms)`;
+  });
+
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    }),
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+
+  revealEls.forEach(el => io.observe(el));
+
+  // Responsive: fix hours + contact grid on mobile
+  function handleResize() {
+    const w = window.innerWidth;
+    const hoursGrid = document.querySelector('#hours .container > div[style*="grid-template-columns: 1fr 1fr"]');
+    const contactGrid = document.querySelector('#contact .container > div[style*="grid-template-columns: 1fr 1fr"]');
+    if (w < 768) {
+      if (hoursGrid) hoursGrid.style.gridTemplateColumns = '1fr';
+      if (contactGrid) contactGrid.style.gridTemplateColumns = '1fr';
+    } else {
+      if (hoursGrid) hoursGrid.style.gridTemplateColumns = '1fr 1fr';
+      if (contactGrid) contactGrid.style.gridTemplateColumns = '1fr 1fr';
+    }
+  }
+  handleResize();
+  window.addEventListener('resize', handleResize);
+</script>
+
+</body>
+</html>
