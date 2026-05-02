@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sähkö Jeesi Oy – Ammattitaitoinen sähköasennus Helsingissä</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #1a1200;
+      --accent: #f59e0b;
+      --bg: #0d1117;
+      --surface: #161b22;
+      --text: #f0f6ff;
+      --muted: rgba(240,246,255,0.55);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      padding-top: 40px;
+      font-family: 'Barlow', sans-serif;
+      font-size: 1rem;
+      line-height: 1.7;
+      background-color: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    /* Demo banner */
+    #demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(245,158,11,0.92);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #demo-banner p {
+      font-size: 11px;
+      color: #fff;
+      text-align: center;
+      font-family: 'Barlow', sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+    #demo-banner a {
+      color: #fff;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* Nav */
+    #main-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(13,17,23,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(245,158,11,0.15);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    #main-nav.scrolled {
+      background: rgba(13,17,23,0.97);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    }
+
+    /* Hero */
+    #hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: 
+        linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.72) 100%),
+        url('assets/sähkö-jeesi-oy-1215fd5f/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content {
+      animation: heroFadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Service cards */
+    .service-card {
+      background: var(--surface);
+      border: 1px solid rgba(245,158,11,0.10);
+      border-radius: 20px;
+      padding: 36px 32px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 4px 16px rgba(0,0,0,0.15);
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+      border-color: rgba(245,158,11,0.35);
+    }
+
+    .icon-box {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .icon-box i { width: 28px; height: 28px; }
+
+    /* Why us */
+    .why-card {
+      text-align: center;
+      padding: 40px 28px;
+      border-radius: 20px;
+      background: var(--surface);
+      border: 1px solid rgba(245,158,11,0.08);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .why-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    /* Review cards */
+    .review-card {
+      background: var(--surface);
+      border: 1px solid rgba(245,158,11,0.08);
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15), 0 4px 16px rgba(0,0,0,0.1);
+    }
+    .star-filled {
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+    .star-empty {
+      color: rgba(245,158,11,0.3);
+      fill: rgba(245,158,11,0.3);
+    }
+
+    /* CTA Buttons */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #1a1200;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+      padding: 14px 32px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      box-shadow: 0 4px 16px rgba(245,158,11,0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(245,158,11,0.45);
+      background: #fbbf24;
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+      padding: 14px 32px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.3);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    .btn-secondary:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.22);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+    }
+    .btn-secondary:active { transform: translateY(-1px); }
+
+    /* Nav CTA */
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent);
+      color: #1a1200;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      padding: 10px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+    }
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(245,158,11,0.4);
+    }
+
+    /* Hours table */
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(245,158,11,0.08);
+    }
+    .hours-row:last-child { border-bottom: none; }
+
+    /* Contact */
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .contact-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* Section label */
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: rgba(245,158,11,0.4); border-radius: 3px; }
+
+    /* Mobile nav */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- [1] DEMO BANNER -->
+<!-- ═══════════════════════════════════════ -->
+<div id="demo-banner">
+  <p>Sähkö Jeesi Oy — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman? <a href="mailto:team@masasite.com">Ota yhteyttä →</a></p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- [2] STICKY NAV -->
+<!-- ═══════════════════════════════════════ -->
+<nav id="main-nav">
+  <div style="max-width:1200px;margin:0 auto;padding-inline:clamp(16px,5vw,48px);">
+    <div style="display:flex;align-items:center;justify-content:space-between;height:68px;gap:24px;">
+      <!-- Logo -->
+      <a href="#" style="display:flex;align-items:center;gap:12px;text-decoration:none;flex-shrink:0;">
+        <img src="http://www.sahkojeesi.fi/wp-content/themes/sahkojeesi/img/suomen-vahvimmat-logo.png" 
+             alt="Sähkö Jeesi Oy" 
+             style="height:36px;object-fit:contain;"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <span style="display:none;align-items:center;gap:8px;">
+          <span style="background:var(--accent);color:#1a1200;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.1rem;padding:4px 12px;border-radius:6px;letter-spacing:0.05em;">SJ</span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.1rem;color:var(--text);letter-spacing:0.02em;">Sähkö Jeesi</span>
+        </span>
+      </a>
+
+      <!-- Nav links (desktop) -->
+      <div class="nav-links" style="display:flex;align-items:center;gap:32px;">
+        <a href="#palvelut" style="color:var(--muted);font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:0.95rem;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Palvelut</a>
+        <a href="#yhteystiedot" style="color:var(--muted);font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:0.95rem;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Yhteystiedot</a>
+        <a href="#arvostelut" style="color:var(--muted);font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:0.95rem;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Arvostelut</a>
+      </div>
+
+      <!-- CTA -->
+      <a href="tel:0458859141" class="nav-cta">
+        <i data-lucide="phone" style="width:15px;height:15px;"></i>
+        045 8859141
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- [3] HERO -->
+<!-- ═══════════════════════════════════════ -->
+<section id="hero">
+  <div style="position:relative;z-index:2;max-width:800px;margin:0 auto;padding:clamp(48px,10vw,96px) clamp(16px,5vw,48px);text-align:center;">
+    <div class="hero-content">
+      <!-- Eyebrow -->
+      <span class="section-label" style="color:var(--accent);font-size:0.78rem;letter-spacing:0.18em;">
+        Helsinki &amp; Pääkaupunkiseutu
+      </span>
+
+      <!-- H1 -->
+      <h1 style="font-size:clamp(2.5rem,7vw,5.5rem);font-weight:800;color:#ffffff;letter-spacing:-0.02em;line-height:1.05;margin-bottom:24px;text-shadow:0 2px 20px rgba(0,0,0,0.4);">
+        Ammattitaitoinen<br/>
+        <span style="color:var(--accent);">sähköasennus</span><br/>
+        pääkaupunkiseudulla
+      </h1>
+
+      <!-- Subtitle -->
+      <p style="font-size:clamp(1rem,2vw,1.2rem);color:rgba(255,255,255,0.80);max-width:580px;margin:0 auto 32px;line-height:1.7;">
+        Sähkö Jeesi Oy on kokenut sähköalan yritys, joka toteuttaa ammattimaisesti asennus- ja huoltotöitä pääkaupunkiseudulla. Pienistä huoneistokorjauksista suuriin urakkiin – palvelemme sekä yksityisiä asiakkaita että liikekiinteistöjä.
+      </p>
+
+      <!-- Rating -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:36px;">
+        <i data-lucide="star" style="width:18px;height:18px;color:#f59e0b;fill:#f59e0b;"></i>
+        <i data-lucide="star" style="width:18px;height:18px;color:#f59e0b;fill:#f59e0b;"></i>
+        <i data-lucide="star" style="width:18px;height:18px;color:#f59e0b;fill:#f59e0b;"></i>
+        <i data-lucide="star" style="width:18px;height:18px;color:#f59e0b;fill:#f59e0b;"></i>
+        <i data-lucide="star" style="width:18px;height:18px;color:rgba(245,158,11,0.3);fill:rgba(245,158,11,0.3);"></i>
+        <span style="color:rgba(255,255,255,0.7);font-size:0.88rem;margin-left:6px;font-family:'Barlow',sans-serif;">4.0/5 · Google-arvostelut</span>
+      </div>
+
+      <!-- CTAs -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;">
+        <a href="#yhteystiedot" class="btn-primary">
+          <i data-lucide="zap" style="width:17px;height:17px;"></i>
+          Pyydä tarjous sähköistä
+        </a>
+        <a href="tel:0458859141" class="btn-secondary">
+          <i data-lucide="phone" style="width:17px;height:17px;"></i>
+          Soita meille
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div style="position:absolute;bottom:36px;left:50%;transform:translateX(-50%);z-index:2;animation:bounce 2s infinite;">
+    <i data-lucide="chevron-down" style="width:28px;height:28px;color:rgba(255,255,255,0.5);"></i>
+  </div>
+
+  <style>
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
+  </style>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- [4] SERVICES GRID -->
+<!-- ═══════════════════════════════════════ -->
+<section id="palvelut" style="background:var(--surface);padding-block:clamp(64px,10vw,120px);">
+  <div style="max-width:1200px;margin:0 auto;padding-inline:clamp(16px,5vw,48px);">
+    <!-- Heading -->
+    <div class="reveal" style="text-align:center;margin-bottom:64px;">
+      <span class="section-label">Mitä teemme</span>
+      <h2 style="font-size:clamp(1.75rem,4vw,3rem);font-weight:800;color:var(--text);letter-spacing:-0.02em;max-width:600px;margin:0 auto 16px;">
+        Kattavat sähköpalvelut yrityksille ja kotitalouksille
+      </h2>
+      <p style="color:var(--muted);font-size:1rem;max-width:540px;margin:0 auto;line-height:1.7;">
+        Laaja palveluvalikoimme kattaa sähkötyöt turva- ja merkkivalaistuksesta varavoimajärjestelmiin saakka.
+      </p>
+    </div>
+
+    <!-- Cards grid -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
+
+      <div class="service-card reveal" style="--i:0;">
+        <div class="icon-box">
+          <i data-lucide="zap"></i>
+        </div>
+        <h3 style="font-size:1.2rem;font-weight:700;color:var(--text);margin-bottom:10px;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.01em;">Sähköasennukset</h3>
+        <p style="color:var(--muted);font-size:0.94rem;line-height:1.7;margin:0;">Sähkö- ja teleasennukset sekä sähkökeskuksiin liittyvät työt</p>
+      </div>
+
+      <div class="service-card reveal" style="--i:1;">
+        <div class="icon-box">
+          <i data-lucide="shield-check"></i>
+        </div>
+        <h3 style="font-size:1.2rem;font-weight:700;color:var(--text);margin-bottom:10px;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.01em;">Turva- ja merkkivalaistusjärjestelmät</h3>
+        <p style="color:var(--muted);font-size:0.94rem;line-height:1.7;margin:0;">Kiinteistöjen turvallisuus- ja valaistusjärjestelmien asennus ja huolto</p>
+      </div>
+
+      <div class="service-card reveal" style="--i:2;">
+        <div class="icon-box">
+          <i data-lucide="battery-charging"></i>
+        </div>
+        <h3 style="font-size:1.2rem;font-weight:700;color:var(--text);margin-bottom:10px;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.01em;">Varavoimajärjestelmät</h3>
+        <p style="color:var(--muted);font-size:0.94rem;line-height:1.7;margin:0;">UPS-varmennetut sähkönsyötöt ja varavoimajärjestelmien toteutus</p>
+      </div>
+
+      <div class="service-card reveal" style="--i:3;">
+        <div class="icon-box">
+          <i data-lucide="bell-ring"></i>
+        </div>
+        <h3 style="font-size:1.2rem;font-weight:700;color:var(--text);margin-bottom:10px;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.01em;">Palo- ja rikosilmoitinjärjestelmät</h3>
+        <p style="color:var(--muted);font-size:0.94rem;line-height:1.7;margin:0;">Palo- ja rikosilmoitinjärjestelmien asennus ja konfigurointi</p>
+      </div>
+
+      <div class="service-card reveal" style="--i:4;">
+        <div class="icon-box">
+          <i data-lucide="network"></i>
+        </div>
+        <h3 style="font-size:1.2rem;font-weight:700;color:var(--text);margin-bottom:10px;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.01em;">ATK- ja puhelinverkot</h3>
+        <p style="color:var(--muted);font-size:0.94rem;line-height:1.7;margin:0;">Tietoverkon ja puhelinverkon asennus sekä ylläpito</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- [5] WHY CHOOSE US -->
+<!-- ═══════════════════════════════════════ -->
+<section style="background:var(--bg);padding-block:clamp(64px,10vw,120px);">
+  <div style="max-width:1200px;margin:0 auto;padding-inline:clamp(16px,5vw,48px);">
+    <!-- Heading -->
+    <div class="reveal" style="text-align:center;margin-bottom:64px;">
+      <span class="section-label">Miksi valita meidät</span>
+      <h2 style="font-size:clamp(1.75rem,4vw,3rem);font-weight:800;color:var(--text);letter-spacing:-0.02em;">
+        Luotettava kumppani sähkötöihin
+      </h2>
+    </div>
+
+    <!-- 3-col grid -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;">
+
+      <div class="why-card reveal" style="--i:0;">
+        <div style="display:flex;justify-content:center;margin-bottom:20px;">
+          <i data-lucide="users" style="width:44px;height:44px;color:var(--accent);stroke-width:1.5;"></i>
+        </div>
+        <h3 style="font-size:1.25rem;font-weight:700;color:var(--text);margin-bottom:10px;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.01em;">Kokenut tiimi</h3>
+        <p style="color:var(--muted);font-size:0.94rem;line-height:1.7;margin:0;">Kolmen kokeneen ammattilaisen tiimi takaa laadukkaat työt ja luotettavan lopputuloksen joka kerta.</p>
+      </div>
+
+      <div class="why-card reveal" style="--i:1;">
+        <div style="display:flex;justify-content:center;margin-bottom:20px;">
+          <i data-lucide="trending-up" style="width:44px;height:44px;color:var(--accent);stroke-width:1.5;"></i>
+        </div>
+        <h3 style="font-size:1.25rem;font-weight:700;color:var(--text);margin-bottom:10px;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.01em;">Joustavat hinnoitteluvaihtoehdot</h3>
+        <p style="color:var(--muted);font-size:0.94rem;line-height:1.7;margin:0;">Joustavat hinnoitteluvaihtoehdot – laskutöistä kiinteään hintaan. Selkeät kustannukset, ei yllätyksiä.</p>
+      </div>
+
+      <div class="why-card reveal" style="--i:2;">
+        <div style="display:flex;justify-content:center;margin-bottom:20px;">
+          <i data-lucide="award" style="width:44px;height:44px;color:var(--accent);stroke-width:1.5;"></i>
+        </div>
+        <h3 style="font-size:1.25rem;font-weight:700;color:var(--text);margin-bottom:10px;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.01em;">Laaja palveluvalikoima</h3>
+        <p style="color:var(--muted);font-size:0.94rem;line-height:1.7;margin:0;">Laaja palveluvalikoimme: sähköstä turva- ja merkkijärjestelmiin – yksi kumppani kaikille tarpeille.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- [6] REVIEWS -->
+<!-- ═══════════════════════════════════════ -->
+<section id="arvostelut" style="background:var(--surface);padding-block:clamp(64px,10vw,120px);">
+  <div style="max-width:1200px;margin:0 auto;padding-inline:clamp(16px,5vw,48px);">
+    <!-- Heading -->
+    <div class="reveal" style="text-align:center;margin-bottom:64px;">
+      <span class="section-label">Google-arvostelut</span>
+      <h2 style="font-size:clamp(1.75rem,4vw,3rem);font-weight:800;color:var(--text);letter-spacing:-0.02em;margin-bottom:12px;">
+        Mitä asiakkaamme sanovat
+      </h2>
+      <div style="display:flex;align-items:center;justify-content:center;gap:6px;">
+        <i data-lucide="star" style="width:20px;height:20px;color:#f59e0b;fill:#f59e0b;"></i>
+        <i data-lucide="star" style="width:20px;height:20px;color:#f59e0b;fill:#f59e0b;"></i>
+        <i data-lucide="star" style="width:20px;height:20px;color:#f59e0b;fill:#f59e0b;"></i>
+        <i data-lucide="star" style="width:20px;height:20px;color:#f59e0b;fill:#f59e0b;"></i>
+        <i data-lucide="star" style="width:20px;height:20px;color:rgba(245,158,11,0.3);fill:rgba(245,158,11,0.3);"></i>
+        <span style="color:var(--muted);font-size:0.9rem;margin-left:8px;">4.0/5 · 4 arvostelua</span>
+      </div>
+    </div>
+
+    <!-- Review cards -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
+
+      <!-- Review 1: Uuze 1/5 -->
+      <div class="review-card reveal" style="--i:0;">
+        <div style="display:flex;gap:3px;margin-bottom:14px;">
+          <i data-lucide="star" class="star-filled" style="width:15px;height:15px;"></i>
+          <i data-lucide="star" class="star-empty" style="width:15px;height:15px;"></i>
+          <i data-lucide="star" class="star-empty" style="width:15px;height:15px;"></i>
+          <i data-lucide="star" class="star-empty" style="width:15px;height:15px;"></i>
+          <i data-lucide="star" class="star-empty" style="width:15px;height:15px;"></i>
+        </div>
+        <p style="color:var(--muted);font-size:0.88rem;line-height:1.7;font-style:italic;margin:0 0 18px;">"The owner was dangerously speeding on the highway in an old BMW. He was hanging on the back and waving his middle finger when passing."</p>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:color-mix(in srgb, var(--accent) 20%, transparent);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;color:var(--accent);font-size:0.9rem;">U</div>
+          <div>
+            <div style="font-weight:700;font-size:0.88rem;color:var(--text);">Uuze</div>
+            <div style="font-size:0.75rem;color:var(--muted);">Google-arvostelu</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Review 2: Senni 5/5 -->
+      <div class="review-card reveal" style="--i:1;">
+        <div style="display:flex;gap:3px;margin-bottom:14px;">
+          <i data-lucide="star" class="star-filled" style="width:15px;height:15px;"></i>
+          <i data-lucide="star" class="star-filled" style="width:15px;height:15px;"></i>
+          <i data-lucide="star" class="star-filled" style="width:15px;height:15px;"></i>
+          <i data-lucide="star" class="star-filled" style="width:15px;height:15px;"></i>
+          <i data-lucide="star" class="star-filled" style="width:15px;height:15px;"></i>
+        </div>
+        <p style="color:var(--muted);font-size:0.88rem;line-height:1.7;font-style:italic;margin:0 0 18px;">"Erittäin tyytyväinen palveluun! Ammattitaitoista ja huolellista työtä alusta loppuun."</p>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:color-mix(in srgb, var(--accent) 20%, transparent);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;color:var(--accent);font-size:0.9rem;">SJ</div>
+          <div>
+            <div style="font-weight:700;font-size:0.88rem;color:var(--text);">Senni Järvinen</div>
+            <div style="font-size:0.75rem;color:var(--muted);">Google-arvostelu &nbsp;·&nbsp; ✓ Vahvistettu</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Review 3: Joni 5/5 -->
+      <div class="review-card reveal" style="--i:2;">
+        <div style="display:flex;gap:3px;margin-bottom:14px;">
+          <i data-lucide="star" class="star-filled" style="width:15px;height:15px;"></i>
+          <i data-lucide="star" class="star-filled" style="width:15px;height:15px;"></i>
+          <i data-lucide="star" class="star-filled" style="width:15px;height:15px;"></i>
+          <i data-lucide="star" class="star-filled" style="width:15px;height:15px;"></i>
+          <i data-lucide="star" class="star-filled" style="width:15px;height:15px;"></i>
+        </div>
+        <p style="color:var(--muted);font-size:0.88rem;line-height:1.7;font-style:italic;margin:0 0 18px;">"Nopea ja luotettava palvelu. Sähkötyöt hoidettiin siististi ja aikataulussa. Suosittelen lämpimästi!"</p>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:color-mix(in srgb, var(--accent) 20%, transparent);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;color:var(--accent);font-size:0.9rem;">JP</div>
+          <div>
+            <div style="font-weight:700;font-size:0.88rem;color:var(--text);">joni pykäläniemi</div>
+            <div style="font-size:0.75rem;color:var(--muted);">Google-arvostelu &nbsp;·&nbsp; ✓ Vahvistettu</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- [8] CONTACT -->
+<!-- ═══════════════════════════════════════ -->
+<section id="yhteystiedot" style="background:var(--bg);padding-block:clamp(64px,10vw,120px);">
+  <div style="max-width:1200px;margin:0 auto;padding-inline:clamp(16px,5vw,48px);">
+    <!-- Heading -->
+    <div class="reveal" style="text-align:center;margin-bottom:64px;">
+      <span class="section-label">Ota yhteyttä</span>
+      <h2 style="font-size:clamp(1.75rem,4vw,3rem);font-weight:800;color:var(--text);letter-spacing:-0.02em;">
+        Pyydä tarjous tai varaa aika
+      </h2>
+    </div>
+
+    <!-- Two columns -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;">
+
+      <!-- Left: contact info -->
+      <div class="reveal" style="--i:0;">
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i data-lucide="map-pin" style="width:20px;height:20px;"></i>
+          </div>
+          <div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Osoite</div>
+            <div style="color:var(--text);font-size:0.96rem;line-height:1.5;">Vellamonkatu 30 A<br/>00550 Helsinki, Suomi</div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i data-lucide="phone" style="width:20px;height:20px;"></i>
+          </div>
+          <div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Puhelin</div>
+            <a href="tel:0458859141" style="color:var(--accent);font-size:1.05rem;font-weight:600;text-decoration:none;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.03em;">045 8859141</a>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i data-lucide="globe" style="width:20px;height:20px;"></i>
+          </div>
+          <div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Verkkosivut</div>
+            <a href="http://www.sahkojeesi.fi/" target="_blank" rel="noopener" style="color:var(--accent);font-size:0.96rem;text-decoration:none;">www.sahkojeesi.fi</a>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i data-lucide="clock" style="width:20px;height:20px;"></i>
+          </div>
+          <div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Aukioloajat</div>
+            <div style="color:var(--text);font-size:0.96rem;line-height:1.5;">Ota yhteyttä sopimuksen mukaan</div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div style="margin-top:32px;">
+          <a href="tel:0458859141" class="btn-primary" style="display:inline-flex;">
+            <i data-lucide="phone" style="width:17px;height:17px;"></i>
+            Soita ja pyydä tarjous
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Google Maps -->
+      <div class="reveal" style="--i:1;">
+        <iframe 
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Vellamonkatu%2030%20A%2C%2000550%20Helsinki%2C%20Suomi%2C%20Helsinki%2C%20Finland&language=fi"
+          width="100%"
+          height="380"
+          style="border:0;border-radius:16px;display:block;box-shadow:0 4px 32px rgba(0,0,0,0.4);min-height:280px;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- [9] FOOTER -->
+<!-- ═══════════════════════════════════════ -->
+<footer style="background:#0a0800;border-top:1px solid rgba(245,158,11,0.12);padding-block:48px 32px;">
+  <div style="max-width:1200px;margin:0 auto;padding-inline:clamp(16px,5vw,48px);">
+
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:32px;align-items:flex-start;margin-bottom:40px;">
+
+      <!-- Brand -->
+      <div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:800;color:var(--text);letter-spacing:0.02em;margin-bottom:8px;">
+          Sähkö Jeesi Oy
+        </div>
+        <div style="color:var(--muted);font-size:0.88rem;line-height:1.7;">
+          Vellamonkatu 30 A<br/>
+          00550 Helsinki, Suomi<br/>
+          <a href="tel:0458859141" style="color:var(--accent);text-decoration:none;margin-top:4px;display:inline-block;">045 8859141</a>
+        </div>
+      </div>
+
+      <!-- Quick links -->
+      <div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:600;">Navigointi</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="#palvelut" style="color:var(--muted);font-size:0.9rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Palvelut</a>
+          <a href="#arvostelut" style="color:var(--muted);font-size:0.9rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Arvostelut</a>
+          <a href="#yhteystiedot" style="color:var(--muted);font-size:0.9rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Yhteystiedot</a>
+        </div>
+      </div>
+
+      <!-- CTA block -->
+      <div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:600;">Ota yhteyttä</div>
+        <a href="tel:0458859141" class="btn-primary" style="display:inline-flex;font-size:0.9rem;padding:12px 24px;">
+          <i data-lucide="phone" style="width:15px;height:15px;"></i>
+          045 8859141
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Bottom -->
+    <div style="border-top:1px solid rgba(245,158,11,0.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <div style="font-size:11px;color:rgba(240,246,255,0.25);letter-spacing:0.03em;">
+        Demo luotu <a href="https://masasite.com" style="color:rgba(245,158,11,0.4);text-decoration:none;" target="_blank">masasite.com</a> palvelulla
+      </div>
+      <div style="font-size:11px;color:rgba(240,246,255,0.2);">
+        Sähkö Jeesi Oy · Helsinki
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- JAVASCRIPT -->
+<!-- ═══════════════════════════════════════ -->
+<script>
+  // Initialize Lucide icons
+  lucide.createIcons();
+
+  // Nav scroll effect
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }, { passive: true });
+
+  // Stagger delay for grid items
+  document.querySelectorAll('[style*="--i:"]').forEach(el => {
+    const match = el.getAttribute('style').match(/--i:(\d+)/);
+    if (match) {
+      const i = parseInt(match[1]);
+      el.style.setProperty('--i', i);
+      el.style.transitionDelay = `${i * 80}ms`;
+    }
+  });
+
+  // Reveal on scroll (IntersectionObserver)
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    }),
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Responsive: fix two-col contact on mobile
+  function handleResize() {
+    const contactGrid = document.querySelector('#yhteystiedot > div > div:last-of-type');
+    if (contactGrid) {
+      if (window.innerWidth < 768) {
+        contactGrid.style.gridTemplateColumns = '1fr';
+      } else {
+        contactGrid.style.gridTemplateColumns = '1fr 1fr';
+      }
+    }
+  }
+  window.addEventListener('resize', handleResize);
+  handleResize();
+</script>
+
+</html>
