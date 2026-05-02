@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lykke Helsinki – Specialty-kahvila Helsingissä</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #3b1f0e;
+      --accent: #c8874a;
+      --bg: #fdf9f5;
+      --surface: #fff;
+      --text: #1a0f08;
+      --muted: #7a6150;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      padding-top: 40px;
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    h1, h2, h3, .font-headline {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* REVEAL ANIMATIONS */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    .hero-content {
+      animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+
+    /* DEMO BANNER */
+    .demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(200, 135, 74, 0.92);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.01em;
+    }
+    .demo-banner a {
+      color: #fff;
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      margin-left: 4px;
+    }
+
+    /* NAV */
+    .site-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(253,249,245,0.9);
+      border-bottom: 1px solid rgba(59,31,14,0.08);
+      backdrop-filter: blur(12px);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    .site-nav.scrolled {
+      background: rgba(253,249,245,0.95);
+      box-shadow: 0 2px 20px rgba(59,31,14,0.08);
+    }
+
+    /* HERO */
+    .hero-section {
+      min-height: 100svh;
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.50) 0%, rgba(0,0,0,0.62) 100%),
+        url('assets/lykke-helsinki-e1c84aa3/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: clamp(64px, 10vw, 120px) clamp(16px, 5vw, 48px);
+    }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #c8874a;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .hero-h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 6vw, 5.2rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: #fff;
+      max-width: 820px;
+      margin: 0 auto 24px;
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.82);
+      max-width: 560px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+
+    .rating-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+    .rating-row .stars {
+      display: flex; gap: 3px;
+    }
+    .rating-row .stars i {
+      width: 18px; height: 18px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+    .rating-text {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.85);
+      font-weight: 500;
+    }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      border: none;
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0,0,0,0.2); }
+    .btn:active { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: #b5733a; }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+      backdrop-filter: blur(8px);
+      border: 1.5px solid rgba(255,255,255,0.35);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.28); }
+
+    .btn-dark {
+      background: var(--primary);
+      color: #fff;
+    }
+    .btn-dark:hover { background: #2a1508; }
+
+    /* SECTION TITLES */
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--primary);
+    }
+
+    /* SERVICE CARDS */
+    .service-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(59,31,14,0.12);
+    }
+
+    .icon-wrap {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      background: rgba(200,135,74,0.13);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .icon-wrap i {
+      width: 28px; height: 28px;
+      color: var(--accent);
+    }
+
+    /* WHY US */
+    .why-icon i {
+      width: 40px; height: 40px;
+      color: var(--accent);
+    }
+
+    /* REVIEW CARDS */
+    .review-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .review-stars i {
+      width: 16px; height: 16px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+
+    /* HOURS */
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(59,31,14,0.07);
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-row.closed .hours-val { color: #b05a5a; }
+
+    /* PHOTOS GRID */
+    .photo-grid-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+
+    /* FOOTER */
+    .site-footer {
+      background: var(--primary);
+      color: rgba(255,255,255,0.85);
+    }
+
+    /* NAV MOBILE */
+    .nav-links-mobile { display: none; }
+
+    @media (max-width: 767px) {
+      .nav-links-desktop { display: none; }
+    }
+    @media (min-width: 768px) {
+      .nav-links-mobile { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- DEMO BANNER -->
+  <div class="demo-banner">
+    Lykke Helsinki — tämä esimerkkisivu on tehty juuri teille · Haluatko oman?
+    <a href="mailto:team@masasite.com">Ota yhteyttä →</a>
+  </div>
+
+  <!-- STICKY NAV -->
+  <nav class="site-nav" id="mainNav">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,5vw,48px);">
+      <div style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+        <!-- Logo -->
+        <a href="#" style="text-decoration:none;display:flex;align-items:center;gap:8px;">
+          <span style="font-family:'Playfair Display',serif;font-weight:800;font-size:1.3rem;color:var(--primary);letter-spacing:-0.01em;">Lykke</span>
+          <span style="font-family:'DM Sans',sans-serif;font-weight:400;font-size:1rem;color:var(--muted);letter-spacing:0.05em;">Helsinki</span>
+        </a>
+
+        <!-- Nav Links Desktop -->
+        <div class="nav-links-desktop" style="display:flex;align-items:center;gap:32px;">
+          <a href="#palvelut" style="font-size:0.9rem;font-weight:500;color:var(--text);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text)'">Palvelut</a>
+          <a href="#aukioloajat" style="font-size:0.9rem;font-weight:500;color:var(--text);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text)'">Aukioloajat</a>
+          <a href="#yhteystiedot" style="font-size:0.9rem;font-weight:500;color:var(--text);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text)'">Yhteystiedot</a>
+          <a href="#yhteystiedot" class="btn btn-primary" style="padding:10px 24px;font-size:0.875rem;">Tule käymään</a>
+        </div>
+
+        <!-- Mobile CTA only -->
+        <a href="#yhteystiedot" class="btn btn-primary" style="padding:10px 20px;font-size:0.85rem;display:none;" id="mobileCta">Tule käymään</a>
+      </div>
+    </div>
+  </nav>
+
+  <script>
+    // Show mobile CTA
+    const mobileCta = document.getElementById('mobileCta');
+    if (window.innerWidth < 768) mobileCta.style.display = 'inline-flex';
+    window.addEventListener('resize', () => {
+      if (window.innerWidth < 768) mobileCta.style.display = 'inline-flex';
+      else mobileCta.style.display = 'none';
+    });
+
+    // Nav scroll effect
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    });
+  </script>
+
+  <!-- HERO -->
+  <section class="hero-section">
+    <div class="hero-content" style="max-width:860px;width:100%;">
+      <p class="hero-eyebrow">Specialty-kahvila · Helsinki</p>
+      <h1 class="hero-h1">Helsingin paras kahvila. Lykke Helsinki.</h1>
+      <p class="hero-sub">Lykke Helsinki on viihtyisä kahvila Helsingissä, joka tunnetaan laadukkaista kahveista ja lämpimästä palvelusta. Loistava paikka rentoutua tai tavata ystäviä keskellä kaupunkia.</p>
+
+      <!-- Rating Row -->
+      <div class="rating-row">
+        <div class="stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <span class="rating-text">4.8/5 (125 arvostelua)</span>
+      </div>
+
+      <!-- CTAs -->
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <a href="#yhteystiedot" class="btn btn-primary">
+          <i data-lucide="coffee" style="width:18px;height:18px;"></i>
+          Tule kokemaan Lykke!
+        </a>
+        <a href="#palvelut" class="btn btn-ghost">
+          Tutustu palveluihin
+          <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES GRID -->
+  <section id="palvelut" style="background:#fdf9f5;padding:clamp(64px,10vw,120px) clamp(16px,5vw,48px);">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="text-align:center;margin-bottom:64px;">
+        <p class="section-label">Mitä tarjoamme</p>
+        <h2 class="section-title">Palvelumme</h2>
+        <p style="color:var(--muted);font-size:1rem;max-width:520px;margin:16px auto 0;">Kaikki mitä tarvitset täydelliseen kahvilakokemukseen — yhdessä paikassa.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
+        <!-- Card 1 -->
+        <div class="service-card reveal" style="--i:0;">
+          <div class="icon-wrap">
+            <i data-lucide="coffee"></i>
+          </div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--primary);margin-bottom:10px;">Specialty-kahvit</h3>
+          <p style="color:var(--muted);font-size:0.95rem;line-height:1.7;">Ammattitaitoisesti valmistetut kahvijuomat parhaista pavuista. Kahvit paahdetaan Kuopiossa, Suomessa.</p>
+        </div>
+        <!-- Card 2 -->
+        <div class="service-card reveal" style="--i:1;">
+          <div class="icon-wrap">
+            <i data-lucide="home"></i>
+          </div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--primary);margin-bottom:10px;">Kahvilan tunnelma</h3>
+          <p style="color:var(--muted);font-size:0.95rem;line-height:1.7;">Rento ja viihtyisä ympäristö, täydellinen tapaamispaikka. Tule viihtymään ja jäämään pidemmäksi aikaa.</p>
+        </div>
+        <!-- Card 3 -->
+        <div class="service-card reveal" style="--i:2;">
+          <div class="icon-wrap">
+            <i data-lucide="heart"></i>
+          </div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--primary);margin-bottom:10px;">Palvelu</h3>
+          <p style="color:var(--muted);font-size:0.95rem;line-height:1.7;">Ystävällinen ja huolellinen asiakaspalvelu joka päivä. Meillä jokainen vieras tuntee olonsa tervetulleeksi.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO GALLERY -->
+  <section style="background:#fff;padding:clamp(64px,8vw,96px) clamp(16px,5vw,48px);">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="text-align:center;margin-bottom:48px;">
+        <p class="section-label">Kuvagalleria</p>
+        <h2 class="section-title">Lykke tunnelmassa</h2>
+      </div>
+      <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;">
+        <img src="assets/lykke-helsinki-e1c84aa3/photo1.jpg" alt="Lykke Helsinki kahvila" class="photo-grid-img" />
+        <img src="assets/lykke-helsinki-e1c84aa3/photo2.jpg" alt="Lykke Helsinki tunnelma" class="photo-grid-img" />
+        <img src="assets/lykke-helsinki-e1c84aa3/photo3.jpg" alt="Lykke Helsinki kahvi" class="photo-grid-img" />
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section style="background:#fdf9f5;padding:clamp(64px,10vw,120px) clamp(16px,5vw,48px);">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="text-align:center;margin-bottom:64px;">
+        <p class="section-label">Miksi Lykke?</p>
+        <h2 class="section-title">Miksi valita meidät</h2>
+        <p style="color:var(--muted);font-size:1rem;max-width:500px;margin:16px auto 0;">Olemme ylpeitä siitä, mitä teemme. Tässä kolme syytä, miksi asiakkaamme palaavat yhä uudelleen.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:40px;">
+        <!-- Why 1 -->
+        <div class="reveal" style="text-align:center;--i:0;">
+          <div class="why-icon" style="display:flex;justify-content:center;margin-bottom:20px;">
+            <i data-lucide="award"></i>
+          </div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--primary);margin-bottom:10px;">125+ tyytyväistä asiakasta</h3>
+          <p style="color:var(--muted);font-size:0.92rem;line-height:1.7;max-width:280px;margin:0 auto;">4.8/5 arvosanalla yli 125 tyytyväisen asiakkaan luottamus. Asiakkaiden ääni puhuu puolestamme.</p>
+        </div>
+        <!-- Why 2 -->
+        <div class="reveal" style="text-align:center;--i:1;">
+          <div class="why-icon" style="display:flex;justify-content:center;margin-bottom:20px;">
+            <i data-lucide="zap"></i>
+          </div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--primary);margin-bottom:10px;">Huipputason kahvi</h3>
+          <p style="color:var(--muted);font-size:0.92rem;line-height:1.7;max-width:280px;margin:0 auto;">Huoliteltu kahvin laatu ja ammattimainen valmistus. Suomalaiset pavut, täydellinen tulos joka kerta.</p>
+        </div>
+        <!-- Why 3 -->
+        <div class="reveal" style="text-align:center;--i:2;">
+          <div class="why-icon" style="display:flex;justify-content:center;margin-bottom:20px;">
+            <i data-lucide="shield-check"></i>
+          </div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--primary);margin-bottom:10px;">Kutsuvat tilat</h3>
+          <p style="color:var(--muted);font-size:0.92rem;line-height:1.7;max-width:280px;margin:0 auto;">Lämmin ja kutsuvat tilat — ihana paikka jäädä pidemmäksi aikaa. Täydellinen kaupungin sydämessä.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section style="background:#fff;padding:clamp(64px,10vw,120px) clamp(16px,5vw,48px);">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="text-align:center;margin-bottom:64px;">
+        <p class="section-label">Asiakaspalautteet</p>
+        <h2 class="section-title">Mitä asiakkaamme sanovat</h2>
+        <p style="color:var(--muted);font-size:1rem;max-width:480px;margin:16px auto 0;">Oikeiden ihmisten kokemus Lykke Helsingistä — suoraan Google-arvosteluista.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
+        <!-- Review 1 -->
+        <div class="review-card reveal" style="--i:0;">
+          <div class="review-stars" style="display:flex;gap:3px;margin-bottom:16px;">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p style="font-style:italic;font-size:0.9rem;color:#5a4030;line-height:1.7;margin-bottom:20px;">"Quality coffee drinks and cool atmosphere. Bonus points for giving 1 EUR discount on take away coffees, when bringing one's own cup instead of using single use ones. Nice to know: Lykke is originally from Sweden, but the coffees they sell here in Helsinki are roasted in Kuopio, Finland."</p>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(200,135,74,0.15);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;color:var(--accent);">KE</div>
+            <div>
+              <p style="font-weight:700;font-size:0.85rem;color:var(--primary);">Kati Explores</p>
+              <p style="font-size:0.75rem;color:var(--muted);">Google-arvostelu · 5/5</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="review-card reveal" style="--i:1;">
+          <div class="review-stars" style="display:flex;gap:3px;margin-bottom:16px;">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p style="font-style:italic;font-size:0.9rem;color:#5a4030;line-height:1.7;margin-bottom:20px;">"What a great place! Love Lykke nails the whole experience — cozy space, lovely people, and excellent coffee. Attending the Morning Rave by Morning Club Helsinki here made my morning so much better. Amazing vibes and such a positive crowd."</p>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(200,135,74,0.15);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;color:var(--accent);">YA</div>
+            <div>
+              <p style="font-weight:700;font-size:0.85rem;color:var(--primary);">Yulie Anggraeni</p>
+              <p style="font-size:0.75rem;color:var(--muted);">Google-arvostelu · 5/5</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="review-card reveal" style="--i:2;">
+          <div class="review-stars" style="display:flex;gap:3px;margin-bottom:16px;">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p style="font-style:italic;font-size:0.9rem;color:#5a4030;line-height:1.7;margin-bottom:20px;">"Amazing cafe experience! Cozy atmosphere and great coffee. I had my favorite cookie and a pumpkin spice latte. Superb! 🍁✨💕"</p>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(200,135,74,0.15);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;color:var(--accent);">AG</div>
+            <div>
+              <p style="font-weight:700;font-size:0.85rem;color:var(--primary);">Anne Grankvist</p>
+              <p style="font-size:0.75rem;color:var(--muted);">Google-arvostelu · 5/5</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overall rating badge -->
+      <div class="reveal" style="text-align:center;margin-top:48px;">
+        <div style="display:inline-flex;align-items:center;gap:12px;background:#fff;border:1.5px solid rgba(200,135,74,0.25);border-radius:999px;padding:12px 28px;box-shadow:0 2px 12px rgba(59,31,14,0.07);">
+          <div style="display:flex;gap:3px;">
+            <i data-lucide="star" style="width:18px;height:18px;color:#f59e0b;fill:#f59e0b;"></i>
+            <i data-lucide="star" style="width:18px;height:18px;color:#f59e0b;fill:#f59e0b;"></i>
+            <i data-lucide="star" style="width:18px;height:18px;color:#f59e0b;fill:#f59e0b;"></i>
+            <i data-lucide="star" style="width:18px;height:18px;color:#f59e0b;fill:#f59e0b;"></i>
+            <i data-lucide="star" style="width:18px;height:18px;color:#f59e0b;fill:#f59e0b;"></i>
+          </div>
+          <span style="font-weight:700;font-size:0.95rem;color:var(--primary);">4.8/5</span>
+          <span style="color:var(--muted);font-size:0.85rem;">125 Google-arvostelua</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPENING HOURS -->
+  <section id="aukioloajat" style="background:#fdf9f5;padding:clamp(64px,10vw,120px) clamp(16px,5vw,48px);">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;" class="reveal" id="hoursGrid">
+        <!-- Left: heading + note -->
+        <div>
+          <p class="section-label">Milloin olemme auki</p>
+          <h2 class="section-title" style="margin-bottom:24px;">Aukioloajat</h2>
+          <p style="color:var(--muted);font-size:0.95rem;line-height:1.7;margin-bottom:32px;">Löydät meidät Pohjoinen Rautatiekatu 21a:sta. Tervetuloa kahvitauolle tai pidemmälle vierailulle!</p>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+            <i data-lucide="map-pin" style="width:18px;height:18px;color:var(--accent);flex-shrink:0;"></i>
+            <span style="font-size:0.9rem;color:var(--text);">Pohjoinen Rautatiekatu 21a, 00100 Helsinki</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <i data-lucide="phone" style="width:18px;height:18px;color:var(--accent);flex-shrink:0;"></i>
+            <a href="tel:0504091756" style="font-size:0.9rem;color:var(--text);text-decoration:none;">050 4091756</a>
+          </div>
+        </div>
+
+        <!-- Right: Hours table -->
+        <div style="background:#fff;border-radius:20px;padding:32px;box-shadow:0 1px 3px rgba(0,0,0,0.06),0 4px 16px rgba(0,0,0,0.04);">
+          <div class="hours-row closed">
+            <span style="font-weight:600;font-size:0.9rem;color:var(--primary);">Maanantai</span>
+            <span class="hours-val" style="font-size:0.88rem;font-weight:500;">Suljettu</span>
+          </div>
+          <div class="hours-row">
+            <span style="font-weight:600;font-size:0.9rem;color:var(--primary);">Tiistai</span>
+            <span class="hours-val" style="font-size:0.88rem;color:var(--muted);">9:00 – 18:00</span>
+          </div>
+          <div class="hours-row">
+            <span style="font-weight:600;font-size:0.9rem;color:var(--primary);">Keskiviikko</span>
+            <span class="hours-val" style="font-size:0.88rem;color:var(--muted);">9:00 – 18:00</span>
+          </div>
+          <div class="hours-row">
+            <span style="font-weight:600;font-size:0.9rem;color:var(--primary);">Torstai</span>
+            <span class="hours-val" style="font-size:0.88rem;color:var(--muted);">9:00 – 18:00</span>
+          </div>
+          <div class="hours-row">
+            <span style="font-weight:600;font-size:0.9rem;color:var(--primary);">Perjantai</span>
+            <span class="hours-val" style="font-size:0.88rem;color:var(--muted);">9:00 – 18:00</span>
+          </div>
+          <div class="hours-row">
+            <span style="font-weight:600;font-size:0.9rem;color:var(--primary);">Lauantai</span>
+            <span class="hours-val" style="font-size:0.88rem;color:var(--muted);">11:00 – 20:00</span>
+          </div>
+          <div class="hours-row">
+            <span style="font-weight:600;font-size:0.9rem;color:var(--primary);">Sunnuntai</span>
+            <span class="hours-val" style="font-size:0.88rem;color:var(--muted);">11:00 – 16:00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    @media (max-width: 767px) {
+      #hoursGrid {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+      }
+    }
+  </style>
+
+  <!-- CONTACT + MAP -->
+  <section id="yhteystiedot" style="background:#fff;padding:clamp(64px,10vw,120px) clamp(16px,5vw,48px);">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="text-align:center;margin-bottom:64px;">
+        <p class="section-label">Tule käymään</p>
+        <h2 class="section-title">Löydät meidät täältä</h2>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:48px;align-items:start;" id="contactGrid">
+        <!-- Left: contact info -->
+        <div class="reveal">
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--primary);margin-bottom:28px;">Yhteystiedot</h3>
+
+          <div style="display:flex;flex-direction:column;gap:20px;margin-bottom:36px;">
+            <div style="display:flex;gap:14px;align-items:flex-start;">
+              <div style="width:40px;height:40px;border-radius:10px;background:rgba(200,135,74,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i data-lucide="map-pin" style="width:20px;height:20px;color:var(--accent);"></i>
+              </div>
+              <div>
+                <p style="font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Osoite</p>
+                <p style="font-size:0.95rem;color:var(--text);font-weight:500;">Pohjoinen Rautatiekatu 21a<br/>00100 Helsinki, Suomi</p>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:14px;align-items:flex-start;">
+              <div style="width:40px;height:40px;border-radius:10px;background:rgba(200,135,74,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i data-lucide="phone" style="width:20px;height:20px;color:var(--accent);"></i>
+              </div>
+              <div>
+                <p style="font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Puhelin</p>
+                <a href="tel:0504091756" style="font-size:0.95rem;color:var(--text);font-weight:500;text-decoration:none;">050 4091756</a>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:14px;align-items:flex-start;">
+              <div style="width:40px;height:40px;border-radius:10px;background:rgba(200,135,74,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i data-lucide="clock" style="width:20px;height:20px;color:var(--accent);"></i>
+              </div>
+              <div>
+                <p style="font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Aukioloajat</p>
+                <p style="font-size:0.95rem;color:var(--text);font-weight:500;">Ti–Pe: 9:00–18:00<br/>La: 11:00–20:00 · Su: 11:00–16:00</p>
+              </div>
+            </div>
+          </div>
+
+          <a href="tel:0504091756" class="btn btn-dark" style="width:100%;justify-content:center;">
+            <i data-lucide="phone" style="width:16px;height:16px;"></i>
+            Soita meille
+          </a>
+        </div>
+
+        <!-- Right: Maps -->
+        <div class="reveal">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Pohjoinen%20Rautatiekatu%2021a%2C%2000100%20Helsinki%2C%20Suomi%2C%20Helsinki%2C%20Finland&language=fi"
+            width="100%"
+            height="380"
+            style="border:0;border-radius:16px;box-shadow:0 4px 24px rgba(59,31,14,0.1);"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Lykke Helsinki sijainti kartalla">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    @media (max-width: 767px) {
+      #contactGrid {
+        grid-template-columns: 1fr !important;
+        gap: 32px !important;
+      }
+      #contactGrid iframe {
+        min-height: 280px;
+        height: 280px !important;
+      }
+    }
+  </style>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" style="padding:clamp(40px,6vw,72px) clamp(16px,5vw,48px) 24px;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:32px;margin-bottom:40px;">
+        <div>
+          <div style="margin-bottom:12px;">
+            <span style="font-family:'Playfair Display',serif;font-weight:800;font-size:1.5rem;color:#fff;letter-spacing:-0.01em;">Lykke</span>
+            <span style="font-family:'DM Sans',sans-serif;font-weight:400;font-size:1.1rem;color:rgba(255,255,255,0.5);letter-spacing:0.04em;margin-left:6px;">Helsinki</span>
+          </div>
+          <p style="color:rgba(255,255,255,0.55);font-size:0.88rem;line-height:1.6;max-width:280px;">Viihtyisä specialty-kahvila Helsingin sydämessä. Laadukasta kahvia ja lämmintä palvelua joka päivä.</p>
+        </div>
+
+        <div>
+          <p style="font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:14px;">Yhteystiedot</p>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <i data-lucide="map-pin" style="width:14px;height:14px;color:var(--accent);flex-shrink:0;"></i>
+              <span style="font-size:0.85rem;color:rgba(255,255,255,0.65);">Pohjoinen Rautatiekatu 21a, 00100 Helsinki</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <i data-lucide="phone" style="width:14px;height:14px;color:var(--accent);flex-shrink:0;"></i>
+              <a href="tel:0504091756" style="font-size:0.85rem;color:rgba(255,255,255,0.65);text-decoration:none;">050 4091756</a>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <i data-lucide="clock" style="width:14px;height:14px;color:var(--accent);flex-shrink:0;"></i>
+              <span style="font-size:0.85rem;color:rgba(255,255,255,0.65);">Ti–Pe 9–18 · La 11–20 · Su 11–16</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:20px;display:flex;justify-content:center;">
+        <p style="font-size:11px;color:rgba(255,255,255,0.25);text-align:center;">Demo luotu masasite.com palvelulla</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Intersection Observer for reveal animations
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    document.querySelectorAll('.reveal').forEach((el, i) => {
+      if (el.style.getPropertyValue('--i') !== '') {
+        el.style.transitionDelay = `calc(${el.style.getPropertyValue('--i') || 0} * 80ms)`;
+      }
+      io.observe(el);
+    });
+
+    // Stagger cards
+    document.querySelectorAll('[style*="--i:"]').forEach(el => {
+      const match = el.getAttribute('style').match(/--i:(\d+)/);
+      if (match) {
+        el.style.transitionDelay = `${parseInt(match[1]) * 80}ms`;
+      }
+    });
+
+    // Init Lucide icons
+    lucide.createIcons();
+  </script>
+
+</body>
+</html>
