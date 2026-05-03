@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kilon Grilli-Kahvila – Espoo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #3b1f0e;
+      --accent: #c8874a;
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --text: #1a1008;
+      --muted: #7a6555;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding-top: 40px;
+    }
+
+    h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+    /* Demo Banner */
+    .demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(200, 135, 74, 0.92);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .demo-banner span {
+      font-size: 11px;
+      color: #fff;
+      text-align: center;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .demo-banner a {
+      color: #fff;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* Nav */
+    .nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(255,255,255,0.97);
+      border-bottom: 1px solid rgba(59,31,14,0.08);
+      transition: box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+    }
+    .nav.scrolled {
+      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.88);
+      box-shadow: 0 2px 20px rgba(59,31,14,0.08);
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100svh;
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.65) 100%),
+        url('assets/kilon-grilli-kahvila-b5d6b5f9/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content {
+      animation: heroFadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 9999px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      border: none;
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0,0,0,0.22); }
+    .btn:active { transform: translateY(-1px); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-ghost {
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.35);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.28); }
+    .btn-outline {
+      background: transparent;
+      color: var(--accent);
+      border: 2px solid var(--accent);
+    }
+    .btn-outline:hover { background: var(--accent); color: #fff; }
+
+    /* Service Cards */
+    .service-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(59,31,14,0.14);
+    }
+
+    .icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .icon-wrap i { color: var(--accent); width: 28px; height: 28px; }
+
+    /* Star icons gold */
+    .star-icon { color: #f59e0b; fill: #f59e0b; }
+
+    /* Why us items */
+    .why-item { text-align: center; padding: 32px 24px; }
+    .why-item i { width: 40px; height: 40px; color: var(--accent); margin: 0 auto 16px; display: block; }
+
+    /* Hours table */
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(59,31,14,0.07);
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-day { font-weight: 600; color: var(--text); }
+    .hours-time { color: var(--muted); font-size: 0.9rem; }
+
+    /* Review cards */
+    .review-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    }
+
+    /* Section labels */
+    .eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* Maps iframe */
+    .maps-frame {
+      width: 100%;
+      height: 360px;
+      border-radius: 16px;
+      border: none;
+      box-shadow: 0 4px 24px rgba(59,31,14,0.12);
+    }
+
+    /* Footer */
+    .footer { background: var(--primary); }
+
+    /* Contact info items */
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .contact-item i { color: var(--accent); width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px; }
+    .contact-item p { font-size: 0.95rem; line-height: 1.5; color: var(--text); }
+
+    /* Photo gallery */
+    .gallery-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+
+    /* Mobile hamburger hidden content — simple show/hide */
+    @media (max-width: 767px) {
+      .nav-links { display: none; }
+    }
+
+    /* Stagger transition for cards */
+    .stagger-card { transition-delay: calc(var(--i, 0) * 80ms); }
+  </style>
+</head>
+<body>
+
+<!-- ═══════ DEMO BANNER ═══════ -->
+<div class="demo-banner">
+  <span>Kilon Grilli-Kahvila — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman? <a href="mailto:team@masasite.com">Ota yhteyttä →</a></span>
+</div>
+
+<!-- ═══════ STICKY NAV ═══════ -->
+<nav class="nav" id="mainNav">
+  <div style="max-width:1200px; margin:0 auto; padding: 0 clamp(16px, 5vw, 48px);">
+    <div style="display:flex; align-items:center; justify-content:space-between; height:64px;">
+      <a href="#" style="text-decoration:none;">
+        <span style="font-family:'Playfair Display',serif; font-weight:800; font-size:1.15rem; color:var(--primary); letter-spacing:-0.01em;">Kilon Grilli-Kahvila</span>
+      </a>
+      <div class="nav-links" style="display:flex; gap:32px; align-items:center;">
+        <a href="#palvelut" style="font-size:0.9rem; font-weight:500; color:var(--text); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text)'">Palvelut</a>
+        <a href="#aukioloajat" style="font-size:0.9rem; font-weight:500; color:var(--text); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text)'">Aukioloajat</a>
+        <a href="#yhteystiedot" style="font-size:0.9rem; font-weight:500; color:var(--text); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text)'">Yhteystiedot</a>
+      </div>
+      <a href="tel:0408184245" class="btn btn-primary" style="padding:10px 22px; font-size:0.875rem;">
+        <i data-lucide="phone" style="width:15px; height:15px;"></i>
+        040 818 4245
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<section class="hero" id="hero">
+  <div class="hero-content" style="text-align:center; padding: 0 clamp(16px,5vw,48px); max-width:860px;">
+    <p class="eyebrow" style="color:rgba(255,255,255,0.75); margin-bottom:20px;">Espoo · Grillikahvila</p>
+    <h1 style="font-size:clamp(2.4rem, 6vw, 5rem); font-weight:900; color:#fff; line-height:1.1; letter-spacing:-0.02em; margin-bottom:24px;">
+      Espoon suosituin grillikahvila, asiakkaiden rakastama
+    </h1>
+    <p style="font-size:clamp(1rem, 2vw, 1.2rem); color:rgba(255,255,255,0.82); line-height:1.7; max-width:580px; margin:0 auto 32px;">
+      Kilon Grilli-Kahvila on Espoon neljän tähden kahvila, joka yhdistää laadukkaan kahvin ja grillin herkkujen tarjoamiseen. Paikallisten suosikki tunnetaan lämpimästä palvelusta ja herkullisista ruoka-annoksista.
+    </p>
+    <div style="display:flex; align-items:center; justify-content:center; gap:6px; margin-bottom:36px;">
+      <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+      <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+      <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+      <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+      <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+      <span style="color:rgba(255,255,255,0.85); font-size:0.9rem; margin-left:8px; font-weight:500;">4.8/5 (67 arvostelua)</span>
+    </div>
+    <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+      <a href="#yhteystiedot" class="btn btn-primary">
+        Käy nauttimassa nyt
+        <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+      </a>
+      <a href="#palvelut" class="btn btn-ghost">
+        Katso palvelut
+        <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SERVICES ═══════ -->
+<section id="palvelut" style="background:#f5f0eb; padding: clamp(64px,10vw,112px) 0;">
+  <div style="max-width:1200px; margin:0 auto; padding:0 clamp(16px,5vw,48px);">
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <p class="eyebrow" style="margin-bottom:12px;">Mitä tarjoamme</p>
+      <h2 style="font-size:clamp(1.75rem, 4vw, 3rem); font-weight:800; color:var(--primary); letter-spacing:-0.02em; line-height:1.2;">
+        Palvelumme
+      </h2>
+      <p style="margin-top:16px; color:var(--muted); font-size:1rem; line-height:1.7; max-width:520px; margin-left:auto; margin-right:auto;">
+        Laadukasta kahvila-arjen nautintoa aamusta iltaan — tuoreet raaka-aineet ja sydämellinen palvelu.
+      </p>
+    </div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:24px;">
+
+      <div class="service-card reveal stagger-card">
+        <div class="icon-wrap">
+          <i data-lucide="coffee"></i>
+        </div>
+        <h3 style="font-size:1.2rem; font-weight:700; color:var(--primary); margin-bottom:10px;">Kahvipalvelut</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7;">Laadukasta kahvia ja kahvijuomia aamusta illalliseen</p>
+      </div>
+
+      <div class="service-card reveal stagger-card">
+        <div class="icon-wrap">
+          <i data-lucide="flame"></i>
+        </div>
+        <h3 style="font-size:1.2rem; font-weight:700; color:var(--primary); margin-bottom:10px;">Grillannokset</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7;">Tuoreita ja maukkaita grilliherkkuja jokapäiväiseen nautintoon</p>
+      </div>
+
+      <div class="service-card reveal stagger-card">
+        <div class="icon-wrap">
+          <i data-lucide="utensils"></i>
+        </div>
+        <h3 style="font-size:1.2rem; font-weight:700; color:var(--primary); margin-bottom:10px;">Kahvila-ateria</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7;">Leivonnaiset, voileivät ja ateriat paikallaan syötäväksi tai mukaan</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PHOTO GALLERY ═══════ -->
+<section style="background:#fff; padding: clamp(64px,10vw,96px) 0;">
+  <div style="max-width:1200px; margin:0 auto; padding:0 clamp(16px,5vw,48px);">
+    <div class="reveal" style="text-align:center; margin-bottom:48px;">
+      <p class="eyebrow" style="margin-bottom:12px;">Tunnelmaa</p>
+      <h2 style="font-size:clamp(1.75rem, 4vw, 2.8rem); font-weight:800; color:var(--primary); letter-spacing:-0.02em; line-height:1.2;">
+        Kuvagalleria
+      </h2>
+    </div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
+      <div class="reveal stagger-card">
+        <img src="assets/kilon-grilli-kahvila-b5d6b5f9/photo1.jpg" alt="Kilon Grilli-Kahvila" class="gallery-img" />
+      </div>
+      <div class="reveal stagger-card">
+        <img src="assets/kilon-grilli-kahvila-b5d6b5f9/photo2.jpg" alt="Kilon Grilli-Kahvila ruoka" class="gallery-img" />
+      </div>
+      <div class="reveal stagger-card">
+        <img src="assets/kilon-grilli-kahvila-b5d6b5f9/photo3.jpg" alt="Kilon Grilli-Kahvila tunnelma" class="gallery-img" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ WHY CHOOSE US ═══════ -->
+<section style="background:#faf5ef; padding: clamp(64px,10vw,112px) 0;">
+  <div style="max-width:1200px; margin:0 auto; padding:0 clamp(16px,5vw,48px);">
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <p class="eyebrow" style="margin-bottom:12px;">Miksi valita meidät</p>
+      <h2 style="font-size:clamp(1.75rem, 4vw, 3rem); font-weight:800; color:var(--primary); letter-spacing:-0.02em; line-height:1.2;">
+        Espoon sydämessä, sinua varten
+      </h2>
+    </div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:32px;">
+
+      <div class="why-item reveal stagger-card">
+        <i data-lucide="award" style="width:44px; height:44px; color:var(--accent); margin:0 auto 20px; display:block;"></i>
+        <h3 style="font-size:1.15rem; font-weight:700; color:var(--primary); margin-bottom:10px;">4.8/5 arvostelulla Espoon luotetuimpia</h3>
+        <p style="color:var(--muted); font-size:0.9rem; line-height:1.7;">Asiakkaat palaavat yhä uudelleen — mahtavat arvostelut puhuvat puolestaan.</p>
+      </div>
+
+      <div class="why-item reveal stagger-card">
+        <i data-lucide="flame" style="width:44px; height:44px; color:var(--accent); margin:0 auto 20px; display:block;"></i>
+        <h3 style="font-size:1.15rem; font-weight:700; color:var(--primary); margin-bottom:10px;">Herkullinen grilliruoka kahvilan lämmössä</h3>
+        <p style="color:var(--muted); font-size:0.9rem; line-height:1.7;">Tuoreet grilliherkut yhdistettynä kahvilan rentouttavaan ilmapiiriin.</p>
+      </div>
+
+      <div class="why-item reveal stagger-card">
+        <i data-lucide="heart" style="width:44px; height:44px; color:var(--accent); margin:0 auto 20px; display:block;"></i>
+        <h3 style="font-size:1.15rem; font-weight:700; color:var(--primary); margin-bottom:10px;">Kodikas ilmapiiri ja palveleva henkilökunta</h3>
+        <p style="color:var(--muted); font-size:0.9rem; line-height:1.7;">Jokainen vierailu tuntuu kotoisalta — sydämellinen palvelu on lupauksemme.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ REVIEWS ═══════ -->
+<section style="background:#fff; padding: clamp(64px,10vw,112px) 0;">
+  <div style="max-width:1200px; margin:0 auto; padding:0 clamp(16px,5vw,48px);">
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <p class="eyebrow" style="margin-bottom:12px;">Mitä asiakkaat sanovat</p>
+      <h2 style="font-size:clamp(1.75rem, 4vw, 3rem); font-weight:800; color:var(--primary); letter-spacing:-0.02em; line-height:1.2;">
+        Asiakasarvostelut
+      </h2>
+      <div style="display:flex; align-items:center; justify-content:center; gap:6px; margin-top:16px;">
+        <i data-lucide="star" style="width:20px;height:20px;" class="star-icon"></i>
+        <i data-lucide="star" style="width:20px;height:20px;" class="star-icon"></i>
+        <i data-lucide="star" style="width:20px;height:20px;" class="star-icon"></i>
+        <i data-lucide="star" style="width:20px;height:20px;" class="star-icon"></i>
+        <i data-lucide="star" style="width:20px;height:20px;" class="star-icon"></i>
+        <span style="color:var(--muted); font-size:0.9rem; margin-left:8px;">4.8/5 · 67 Google-arvostelua</span>
+      </div>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:24px;">
+
+      <div class="review-card reveal stagger-card">
+        <div style="display:flex; gap:4px; margin-bottom:16px;">
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+        </div>
+        <p style="font-style:italic; color:var(--muted); font-size:0.9rem; line-height:1.7; margin-bottom:20px;">
+          "Really nice tiny pizza/kebab kiosk. The owner is always friendly and nice. Valuable addition to the sleeping suburban neighbourhood"
+        </p>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:color-mix(in srgb, var(--accent) 20%, transparent);display:flex;align-items:center;justify-content:center;">
+            <span style="font-weight:700;font-size:0.85rem;color:var(--accent);">AK</span>
+          </div>
+          <div>
+            <p style="font-weight:700; font-size:0.85rem; color:var(--text);">Antti Kosonen</p>
+            <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
+              <i data-lucide="check-circle" style="width:12px;height:12px;color:#22c55e;"></i>
+              <span style="font-size:0.75rem;color:#22c55e;font-weight:500;">Verified</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card reveal stagger-card">
+        <div style="display:flex; gap:4px; margin-bottom:16px;">
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+        </div>
+        <p style="font-style:italic; color:var(--muted); font-size:0.9rem; line-height:1.7; margin-bottom:20px;">
+          "Great spot for pizza and kebab right next to the train station. Excellent service and friendly owner. Will be visiting again"
+        </p>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:color-mix(in srgb, var(--accent) 20%, transparent);display:flex;align-items:center;justify-content:center;">
+            <span style="font-weight:700;font-size:0.85rem;color:var(--accent);">EK</span>
+          </div>
+          <div>
+            <p style="font-weight:700; font-size:0.85rem; color:var(--text);">Evan Kaeding</p>
+            <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
+              <i data-lucide="check-circle" style="width:12px;height:12px;color:#22c55e;"></i>
+              <span style="font-size:0.75rem;color:#22c55e;font-weight:500;">Verified</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card reveal stagger-card" style="border-left: 3px solid #f59e0b;">
+        <div style="display:flex; gap:4px; margin-bottom:16px;">
+          <i data-lucide="star" style="width:16px;height:16px;color:#e5e7eb;fill:#e5e7eb;"></i>
+          <i data-lucide="star" style="width:16px;height:16px;color:#e5e7eb;fill:#e5e7eb;"></i>
+          <i data-lucide="star" style="width:16px;height:16px;color:#e5e7eb;fill:#e5e7eb;"></i>
+          <i data-lucide="star" style="width:16px;height:16px;color:#e5e7eb;fill:#e5e7eb;"></i>
+          <i data-lucide="star" style="width:16px;height:16px;color:#e5e7eb;fill:#e5e7eb;"></i>
+          <span style="font-size:0.75rem;color:var(--muted);margin-left:8px;align-self:center;">1/5</span>
+        </div>
+        <p style="font-style:italic; color:var(--muted); font-size:0.9rem; line-height:1.7; margin-bottom:20px;">
+          "Possibly the nastiest so called pizza I have ever eaten. Wet uncooked pizza dough with raw chunks of garlic..."
+        </p>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:#f3f4f6;display:flex;align-items:center;justify-content:center;">
+            <span style="font-weight:700;font-size:0.85rem;color:#9ca3af;">TR</span>
+          </div>
+          <div>
+            <p style="font-weight:700; font-size:0.85rem; color:var(--text);">T R</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ OPENING HOURS ═══════ -->
+<section id="aukioloajat" style="background:#faf5ef; padding: clamp(64px,10vw,112px) 0;">
+  <div style="max-width:1200px; margin:0 auto; padding:0 clamp(16px,5vw,48px);">
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <p class="eyebrow" style="margin-bottom:12px;">Milloin olemme auki</p>
+      <h2 style="font-size:clamp(1.75rem, 4vw, 3rem); font-weight:800; color:var(--primary); letter-spacing:-0.02em; line-height:1.2;">
+        Aukioloajat
+      </h2>
+    </div>
+    <div style="max-width:560px; margin:0 auto;" class="reveal">
+      <div style="background:#fff; border-radius:20px; padding:clamp(24px, 5vw, 40px); box-shadow:0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);">
+
+        <div class="hours-row">
+          <span class="hours-day" style="display:flex;align-items:center;gap:8px;">
+            <i data-lucide="clock" style="width:15px;height:15px;color:var(--accent);"></i>
+            Maanantai
+          </span>
+          <span class="hours-time">13:30 – 22:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Tiistai</span>
+          <span class="hours-time">11:00 – 22:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Keskiviikko</span>
+          <span class="hours-time">11:00 – 22:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Torstai</span>
+          <span class="hours-time">11:00 – 22:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Perjantai</span>
+          <span class="hours-time">11:00 – 22:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Lauantai</span>
+          <span class="hours-time">11:00 – 22:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Sunnuntai</span>
+          <span class="hours-time">11:00 – 22:00</span>
+        </div>
+
+        <div style="margin-top:24px; padding-top:20px; border-top:1px solid rgba(59,31,14,0.08); display:flex; align-items:center; gap:8px;">
+          <i data-lucide="map-pin" style="width:15px;height:15px;color:var(--accent);flex-shrink:0;"></i>
+          <span style="font-size:0.875rem; color:var(--muted);">Lansanpurontie 13, 02610 Espoo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CONTACT + MAP ═══════ -->
+<section id="yhteystiedot" style="background:#f0ebe4; padding: clamp(64px,10vw,112px) 0;">
+  <div style="max-width:1200px; margin:0 auto; padding:0 clamp(16px,5vw,48px);">
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <p class="eyebrow" style="margin-bottom:12px;">Löydä meidät</p>
+      <h2 style="font-size:clamp(1.75rem, 4vw, 3rem); font-weight:800; color:var(--primary); letter-spacing:-0.02em; line-height:1.2;">
+        Yhteystiedot
+      </h2>
+    </div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:48px; align-items:start;">
+
+      <!-- Left: Contact Info -->
+      <div class="reveal">
+        <div class="contact-item">
+          <i data-lucide="map-pin"></i>
+          <div>
+            <p style="font-weight:600; color:var(--primary); margin-bottom:2px;">Osoite</p>
+            <p>Lansanpurontie 13<br/>02610 Espoo, Suomi</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <i data-lucide="phone"></i>
+          <div>
+            <p style="font-weight:600; color:var(--primary); margin-bottom:2px;">Puhelin</p>
+            <a href="tel:0408184245" style="color:var(--text); text-decoration:none; font-size:0.95rem; transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text)'">040 818 4245</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <i data-lucide="clock"></i>
+          <div>
+            <p style="font-weight:600; color:var(--primary); margin-bottom:2px;">Aukioloajat</p>
+            <p>Ma: 13:30–22:00<br/>Ti–Su: 11:00–22:00</p>
+          </div>
+        </div>
+
+        <div style="margin-top:32px; display:flex; flex-direction:column; gap:12px;">
+          <a href="tel:0408184245" class="btn btn-primary" style="justify-content:center;">
+            <i data-lucide="phone" style="width:16px;height:16px;"></i>
+            Soita meille
+          </a>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=Lansanpurontie+13,+02610+Espoo" target="_blank" rel="noopener" class="btn btn-outline" style="justify-content:center;">
+            <i data-lucide="map-pin" style="width:16px;height:16px;"></i>
+            Hae reittiohjeet
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Map -->
+      <div class="reveal">
+        <iframe
+          class="maps-frame"
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Lansanpurontie%2013%2C%2002610%20Espoo%2C%20Suomi%2C%20Espoo%2C%20Finland&language=fi"
+          width="100%"
+          height="380"
+          style="border:0;border-radius:16px;box-shadow:0 4px 24px rgba(59,31,14,0.12);min-height:280px;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer class="footer" style="padding: clamp(40px,6vw,64px) 0 24px;">
+  <div style="max-width:1200px; margin:0 auto; padding:0 clamp(16px,5vw,48px);">
+    <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:32px; margin-bottom:40px;">
+      <div>
+        <h3 style="font-family:'Playfair Display',serif; font-weight:800; font-size:1.4rem; color:#f5e6c8; margin-bottom:12px; letter-spacing:-0.01em;">
+          Kilon Grilli-Kahvila
+        </h3>
+        <p style="color:rgba(245,230,200,0.6); font-size:0.875rem; line-height:1.7;">
+          Lansanpurontie 13<br/>
+          02610 Espoo, Suomi
+        </p>
+      </div>
+      <div>
+        <p style="color:rgba(245,230,200,0.5); font-size:0.875rem; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.1em; font-size:0.75rem;">Yhteystiedot</p>
+        <a href="tel:0408184245" style="display:flex; align-items:center; gap:8px; color:rgba(245,230,200,0.8); text-decoration:none; font-size:0.9rem; margin-bottom:8px; transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='rgba(245,230,200,0.8)'">
+          <i data-lucide="phone" style="width:14px;height:14px;"></i>
+          040 818 4245
+        </a>
+        <div style="display:flex; align-items:center; gap:8px; color:rgba(245,230,200,0.6); font-size:0.9rem;">
+          <i data-lucide="map-pin" style="width:14px;height:14px;"></i>
+          Espoo
+        </div>
+      </div>
+      <div>
+        <p style="color:rgba(245,230,200,0.5); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:8px;">Aukioloajat</p>
+        <p style="color:rgba(245,230,200,0.7); font-size:0.875rem; line-height:1.7;">
+          Ma: 13:30–22:00<br/>
+          Ti–Su: 11:00–22:00
+        </p>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(245,230,200,0.1); padding-top:20px; display:flex; align-items:center; justify-content:center;">
+      <p style="font-size:11px; color:rgba(245,230,200,0.3); text-align:center;">
+        Demo luotu <a href="https://masasite.com" style="color:rgba(245,230,200,0.45); text-decoration:none;">masasite.com</a> palvelulla
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Lucide icons
+  lucide.createIcons();
+
+  // Stagger index for cards
+  document.querySelectorAll('.stagger-card').forEach((card, i) => {
+    card.style.setProperty('--i', i);
+  });
+
+  // IntersectionObserver for reveal
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    }),
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Nav scroll effect
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }, { passive: true });
+</script>
+</body>
+</html>
