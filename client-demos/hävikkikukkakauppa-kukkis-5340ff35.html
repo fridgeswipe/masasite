@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hävikkikukkakauppa Kukkis – Helsinki</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #1a0a14;
+      --accent: #e91e8c;
+      --bg: #fdfaf8;
+      --surface: #fff;
+      --text: #1a0a14;
+      --muted: #7a6070;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding-top: 40px;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    h1, h2, h3, .font-headline {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    /* Demo banner */
+    #demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(233, 30, 140, 0.88);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #demo-banner p {
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.02em;
+      text-align: center;
+      padding: 0 12px;
+    }
+    #demo-banner a {
+      color: #fff;
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
+    /* Nav */
+    #main-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(253, 250, 248, 0.92);
+      border-bottom: 1px solid rgba(26,10,20,0.08);
+      backdrop-filter: blur(12px);
+      transition: box-shadow 0.3s ease;
+    }
+    #main-nav.scrolled {
+      box-shadow: 0 2px 24px rgba(26,10,20,0.09);
+    }
+
+    /* Hero */
+    #hero {
+      min-height: 100svh;
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.62) 100%),
+        url('assets/hävikkikukkakauppa-kukkis-5340ff35/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-content {
+      animation: heroFadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-h1 {
+      font-size: clamp(2.6rem, 6.5vw, 5.5rem);
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: #fff;
+    }
+
+    .section-title {
+      font-size: clamp(1.85rem, 4vw, 3rem);
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--primary);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      cursor: pointer;
+      text-decoration: none;
+      border: none;
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0,0,0,0.2); }
+    .btn:active { transform: translateY(-1px); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-ghost {
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      border: 1.5px solid rgba(255,255,255,0.55);
+      backdrop-filter: blur(8px);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--accent);
+      border: 2px solid var(--accent);
+    }
+    .btn-outline:hover { background: var(--accent); color: #fff; }
+    .btn-dark { background: var(--primary); color: #fff; }
+
+    /* Cards */
+    .service-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(233,30,140,0.12), 0 2px 8px rgba(0,0,0,0.07);
+    }
+
+    .icon-box {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+      color: var(--accent);
+    }
+    .icon-box svg { width: 28px; height: 28px; }
+
+    .why-icon svg { width: 40px; height: 40px; color: var(--accent); }
+
+    /* Stars */
+    .star-gold svg {
+      width: 16px; height: 16px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+
+    /* Review card */
+    .review-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    }
+
+    /* Hours row */
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(26,10,20,0.07);
+    }
+    .hours-row:last-child { border-bottom: none; }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* Eyebrow */
+    .eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .eyebrow-white {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      color: rgba(233,30,140,0.9);
+      margin-bottom: 16px;
+    }
+
+    /* Maps */
+    .map-frame {
+      width: 100%;
+      height: 380px;
+      border: 0;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+    }
+
+    /* Nav mobile */
+    @media (max-width: 767px) {
+      .nav-links { display: none; }
+    }
+
+    /* Gradient text accent */
+    .accent-text { color: var(--accent); }
+
+    /* Muted text */
+    .text-muted { color: var(--muted); }
+
+    /* Photo grid */
+    .photo-item {
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+    }
+    .photo-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .photo-item:hover img { transform: scale(1.04); }
+
+    @media (min-width: 768px) {
+      .map-frame { height: 400px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- [1] DEMO BANNER -->
+<div id="demo-banner">
+  <p>Hävikkikukkakauppa Kukkis — tämä esimerkkisivu on tehty juuri teille &middot; Haluatko oman? <a href="mailto:team@masasite.com">Ota yhteyttä →</a></p>
+</div>
+
+<!-- [2] STICKY NAV -->
+<nav id="main-nav">
+  <div style="max-width:1200px; margin:0 auto; padding:0 clamp(16px,5vw,48px); height:72px; display:flex; align-items:center; justify-content:space-between;">
+    <a href="#hero" style="text-decoration:none;">
+      <span style="font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1.3rem; color:var(--primary); letter-spacing:-0.01em; line-height:1.1;">
+        Hävikkikukkakauppa<br><span style="color:var(--accent);">Kukkis</span>
+      </span>
+    </a>
+    <div class="nav-links" style="display:flex; gap:32px; align-items:center;">
+      <a href="#palvelut" style="text-decoration:none; color:var(--primary); font-size:0.9rem; font-weight:500; opacity:0.8; transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">Palvelut</a>
+      <a href="#aukioloajat" style="text-decoration:none; color:var(--primary); font-size:0.9rem; font-weight:500; opacity:0.8; transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">Aukioloajat</a>
+      <a href="#yhteystiedot" style="text-decoration:none; color:var(--primary); font-size:0.9rem; font-weight:500; opacity:0.8; transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">Yhteystiedot</a>
+    </div>
+    <a href="tel:0414873352" class="btn btn-primary" style="padding:10px 22px; font-size:0.875rem;">
+      <i data-lucide="phone" style="width:15px;height:15px;"></i>
+      041 4873352
+    </a>
+  </div>
+</nav>
+
+<!-- [3] HERO -->
+<section id="hero">
+  <div style="max-width:1200px; margin:0 auto; padding:0 clamp(16px,5vw,48px); text-align:center;" class="hero-content">
+    <p class="eyebrow-white">Helsinki · Lapinlahti</p>
+    <h1 class="hero-h1" style="max-width:780px; margin:0 auto 24px;">
+      Hävikkikukista kauneimmat kukat edullisesti
+    </h1>
+    <p style="font-size:1.2rem; color:rgba(255,255,255,0.82); max-width:580px; margin:0 auto 32px; line-height:1.7;">
+      Hävikkikukkakauppa Kukkis tarjoaa korkealaatuisia, tuoreita kukkia huomattavasti halvemmalla hinnalla. Pelastamme kauniit kukat hävikistä – ympäristöystävällisesti.
+    </p>
+    <!-- Rating -->
+    <div style="display:flex; align-items:center; justify-content:center; gap:6px; margin-bottom:36px;">
+      <div style="display:flex; gap:2px;" class="star-gold">
+        <i data-lucide="star"></i>
+        <i data-lucide="star"></i>
+        <i data-lucide="star"></i>
+        <i data-lucide="star"></i>
+        <i data-lucide="star" style="color:#f59e0b; fill:#f59e0b; opacity:0.55;"></i>
+      </div>
+      <span style="color:rgba(255,255,255,0.9); font-size:0.9rem; margin-left:4px;">4.6/5 &nbsp;·&nbsp; 9 arvostelua Googlessa</span>
+    </div>
+    <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+      <a href="#palvelut" class="btn btn-primary">
+        Tutustu päivän tarjouksiin
+        <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+      </a>
+      <a href="#yhteystiedot" class="btn btn-ghost">
+        <i data-lucide="map-pin" style="width:16px;height:16px;"></i>
+        Löydä meille
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- [4] SERVICES -->
+<section id="palvelut" style="background:#fdf5f9; padding-block: clamp(64px, 10vw, 120px);">
+  <div style="max-width:1200px; margin:0 auto; padding:0 clamp(16px,5vw,48px);">
+    <div style="text-align:center; margin-bottom:64px;" class="reveal">
+      <p class="eyebrow">Palvelumme</p>
+      <h2 class="section-title">Mitä tarjoamme</h2>
+      <p style="color:var(--muted); max-width:520px; margin:16px auto 0; font-size:1rem;">Jokainen kukka on tarina – me kerromme sen uudelleen.</p>
+    </div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:24px;">
+      <div class="service-card reveal" style="--i:0;">
+        <div class="icon-box">
+          <i data-lucide="sparkles"></i>
+        </div>
+        <h3 style="font-size:1.2rem; font-weight:700; font-family:'Cormorant Garamond',serif; margin-bottom:10px; color:var(--primary);">Hävikkikukkien myynti</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7;">Päivittäin vaihtuvat, tuoreet kukat huomattavasti alennettuun hintaan – jokainen kukkanen ansaitsee kodin.</p>
+      </div>
+      <div class="service-card reveal" style="--i:1;">
+        <div class="icon-box">
+          <i data-lucide="scissors"></i>
+        </div>
+        <h3 style="font-size:1.2rem; font-weight:700; font-family:'Cormorant Garamond',serif; margin-bottom:10px; color:var(--primary);">Kukka-arrangements</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7;">Räätälöidyt kukkakimpot ja kotelot hävikkimateriaaleista – kauneus syntyy käsistä, ei hinnasta.</p>
+      </div>
+      <div class="service-card reveal" style="--i:2;">
+        <div class="icon-box">
+          <i data-lucide="heart"></i>
+        </div>
+        <h3 style="font-size:1.2rem; font-weight:700; font-family:'Cormorant Garamond',serif; margin-bottom:10px; color:var(--primary);">Juhlaostokset</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7;">Kustannustehokkaat kukkaratkaisut juhliin ja tilaisuuksiin – tee tilaisuuksista unohtumattomia ilman suurta budjettia.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO GALLERY -->
+<section style="background:#fff; padding-block: clamp(48px, 8vw, 96px);">
+  <div style="max-width:1200px; margin:0 auto; padding:0 clamp(16px,5vw,48px);">
+    <div style="text-align:center; margin-bottom:48px;" class="reveal">
+      <p class="eyebrow">Galleria</p>
+      <h2 class="section-title">Katso, miltä kukat näyttävät</h2>
+    </div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:20px;">
+      <div class="photo-item reveal" style="--i:0;">
+        <img src="assets/hävikkikukkakauppa-kukkis-5340ff35/photo1.jpg" alt="Kukkis – kukkakauppa Helsinki" />
+      </div>
+      <div class="photo-item reveal" style="--i:1;">
+        <img src="assets/hävikkikukkakauppa-kukkis-5340ff35/photo2.jpg" alt="Hävikkikukat – kauniit kukat edullisesti" />
+      </div>
+      <div class="photo-item reveal" style="--i:2;">
+        <img src="assets/hävikkikukkakauppa-kukkis-5340ff35/photo3.jpg" alt="Kukka-arrangements Kukkis Helsinki" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- [5] WHY CHOOSE US -->
+<section style="background:#fdf5f9; padding-block: clamp(64px, 10vw, 120px);">
+  <div style="max-width:1200px; margin:0 auto; padding:0 clamp(16px,5vw,48px);">
+    <div style="text-align:center; margin-bottom:64px;" class="reveal">
+      <p class="eyebrow">Miksi Kukkis?</p>
+      <h2 class="section-title">Kolme hyvää syytä valita meidät</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:40px;">
+      <div style="text-align:center;" class="reveal" style="--i:0;">
+        <div class="why-icon" style="display:flex; justify-content:center; margin-bottom:20px; color:var(--accent);">
+          <i data-lucide="zap" style="width:40px;height:40px;color:var(--accent);"></i>
+        </div>
+        <h3 style="font-size:1.2rem; font-weight:700; font-family:'Cormorant Garamond',serif; margin-bottom:10px; color:var(--primary);">50–70% halvemmalla</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7; max-width:280px; margin:0 auto;">Laadukkaat kukat huomattavasti alle markkinahinnan – säästät ilman tinkimistä laadusta.</p>
+      </div>
+      <div style="text-align:center;" class="reveal" style="--i:1;">
+        <div class="why-icon" style="display:flex; justify-content:center; margin-bottom:20px; color:var(--accent);">
+          <i data-lucide="leaf" style="width:40px;height:40px;color:var(--accent);"></i>
+        </div>
+        <h3 style="font-size:1.2rem; font-weight:700; font-family:'Cormorant Garamond',serif; margin-bottom:10px; color:var(--primary);">Kestävä liiketoiminta</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7; max-width:280px; margin:0 auto;">Pelastamme kukat hävikistä – jokainen ostos on pieni teko ympäristön hyväksi.</p>
+      </div>
+      <div style="text-align:center;" class="reveal" style="--i:2;">
+        <div class="why-icon" style="display:flex; justify-content:center; margin-bottom:20px; color:var(--accent);">
+          <i data-lucide="award" style="width:40px;height:40px;color:var(--accent);"></i>
+        </div>
+        <h3 style="font-size:1.2rem; font-weight:700; font-family:'Cormorant Garamond',serif; margin-bottom:10px; color:var(--primary);">Asiakkaat rakastavat meitä</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7; max-width:280px; margin:0 auto;">Loistava 4.6/5 Google-arvio – asiakkaamme palaavat yhä uudelleen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- [6] REVIEWS -->
+<section style="background:#fff; padding-block: clamp(64px, 10vw, 120px);">
+  <div style="max-width:1200px; margin:0 auto; padding:0 clamp(16px,5vw,48px);">
+    <div style="text-align:center; margin-bottom:64px;" class="reveal">
+      <p class="eyebrow">Asiakaskokemukset</p>
+      <h2 class="section-title">Mitä asiakkaat sanovat</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:24px;">
+
+      <!-- Review 1 -->
+      <div class="review-card reveal" style="--i:0;">
+        <div style="display:flex; gap:3px; margin-bottom:16px;" class="star-gold">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <p style="font-style:italic; color:var(--muted); font-size:0.92rem; line-height:1.75; margin-bottom:20px;">"I love this rescued plants &amp; flowers shop. I happened to find it by chance walking around and it made me very happy to know that this existed here and that all those 'leftover' plants from big shops do not go to waste. I got a cute plant that grew a lot during this last year."</p>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:38px;height:38px;border-radius:50%;background:color-mix(in srgb, var(--accent) 15%, #fff);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;color:var(--accent);">T</div>
+          <div>
+            <p style="font-weight:700; font-size:0.9rem; color:var(--primary);">Tania M</p>
+            <p style="font-size:0.78rem; color:var(--muted);">Vahvistettu arvostelu</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Review 2 -->
+      <div class="review-card reveal" style="--i:1;">
+        <div style="display:flex; gap:3px; margin-bottom:16px;" class="star-gold">
+          <i data-lucide="star" style="color:#d1d5db;fill:#d1d5db;"></i>
+          <i data-lucide="star" style="color:#d1d5db;fill:#d1d5db;"></i>
+          <i data-lucide="star" style="color:#d1d5db;fill:#d1d5db;"></i>
+          <i data-lucide="star" style="color:#d1d5db;fill:#d1d5db;"></i>
+          <i data-lucide="star" style="color:#d1d5db;fill:#d1d5db;"></i>
+        </div>
+        <p style="font-style:italic; color:var(--muted); font-size:0.92rem; line-height:1.75; margin-bottom:20px;">"We had ordered christening flowers through the place in question. When we arrived to pick up the flowers at the agreed time, the owner announced that he had forgotten the order. Reliability 0/5, I cannot recommend."</p>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:38px;height:38px;border-radius:50%;background:#f3f4f6;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;color:#6b7280;">J</div>
+          <div>
+            <p style="font-weight:700; font-size:0.9rem; color:var(--primary);">Julia Sellin</p>
+            <p style="font-size:0.78rem; color:var(--muted);">Google-arvostelu</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Review 3 -->
+      <div class="review-card reveal" style="--i:2;">
+        <div style="display:flex; gap:3px; margin-bottom:16px;" class="star-gold">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <p style="font-style:italic; color:var(--muted); font-size:0.92rem; line-height:1.75; margin-bottom:20px;">"Kukkis conjures up nature, well-being and beauty from nothing! Rejuvenating discarded flowers for people's joy while saving the climate is a brilliant idea, which is perfectly implemented by the shop in the middle of the nature of Lapinlahti. 🍀"</p>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:38px;height:38px;border-radius:50%;background:color-mix(in srgb, var(--accent) 15%, #fff);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;color:var(--accent);">P</div>
+          <div>
+            <p style="font-weight:700; font-size:0.9rem; color:var(--primary);">Petrus Pennanen</p>
+            <p style="font-size:0.78rem; color:var(--muted);">Vahvistettu arvostelu</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- [7] OPENING HOURS -->
+<section id="aukioloajat" style="background:#fdf5f9; padding-block: clamp(64px, 10vw, 120px);">
+  <div style="max-width:680px; margin:0 auto; padding:0 clamp(16px,5vw,48px);">
+    <div style="text-align:center; margin-bottom:48px;" class="reveal">
+      <p class="eyebrow">Aukioloajat</p>
+      <h2 class="section-title">Milloin olemme auki?</h2>
+    </div>
+    <div class="reveal" style="background:#fff; border-radius:20px; padding:32px 36px; box-shadow:0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);">
+      <div style="display:flex; align-items:center; gap:12px; padding:20px 0; border-bottom:1px solid rgba(26,10,20,0.07);">
+        <i data-lucide="clock" style="width:20px;height:20px;color:var(--accent);flex-shrink:0;"></i>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7;">Aukioloaikatietoja ei ole tällä hetkellä saatavilla. Soita tai tule käymään — löydät meidät Lapinlahden luonnon keskeltä!</p>
+      </div>
+      <div style="padding-top:20px; display:flex; align-items:center; gap:12px;">
+        <i data-lucide="phone" style="width:20px;height:20px;color:var(--accent);flex-shrink:0;"></i>
+        <div>
+          <p style="font-size:0.85rem; color:var(--muted); margin-bottom:2px;">Puhelin</p>
+          <a href="tel:0414873352" style="font-weight:700; color:var(--primary); text-decoration:none; font-size:1rem;">041 4873352</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- [8] CONTACT -->
+<section id="yhteystiedot" style="background:#fff; padding-block: clamp(64px, 10vw, 120px);">
+  <div style="max-width:1200px; margin:0 auto; padding:0 clamp(16px,5vw,48px);">
+    <div style="text-align:center; margin-bottom:64px;" class="reveal">
+      <p class="eyebrow">Yhteystiedot</p>
+      <h2 class="section-title">Löydä meille</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start;" class="reveal" id="contact-grid">
+      <!-- Left -->
+      <div>
+        <div style="display:flex; flex-direction:column; gap:24px; margin-bottom:36px;">
+          <div style="display:flex; align-items:flex-start; gap:16px;">
+            <div style="width:44px;height:44px;border-radius:12px;background:color-mix(in srgb, var(--accent) 12%, transparent);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <i data-lucide="map-pin" style="width:20px;height:20px;color:var(--accent);"></i>
+            </div>
+            <div>
+              <p style="font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Osoite</p>
+              <p style="font-weight:600; color:var(--primary);">Lapinlahdenpolku 2</p>
+              <p style="color:var(--muted); font-size:0.95rem;">00180 Helsinki, Suomi</p>
+            </div>
+          </div>
+          <div style="display:flex; align-items:flex-start; gap:16px;">
+            <div style="width:44px;height:44px;border-radius:12px;background:color-mix(in srgb, var(--accent) 12%, transparent);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <i data-lucide="phone" style="width:20px;height:20px;color:var(--accent);"></i>
+            </div>
+            <div>
+              <p style="font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Puhelin</p>
+              <a href="tel:0414873352" style="font-weight:600; color:var(--primary); text-decoration:none;">041 4873352</a>
+            </div>
+          </div>
+          <div style="display:flex; align-items:flex-start; gap:16px;">
+            <div style="width:44px;height:44px;border-radius:12px;background:color-mix(in srgb, var(--accent) 12%, transparent);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <i data-lucide="navigation" style="width:20px;height:20px;color:var(--accent);"></i>
+            </div>
+            <div>
+              <p style="font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Kaupunki</p>
+              <p style="font-weight:600; color:var(--primary);">Helsinki</p>
+              <p style="color:var(--muted); font-size:0.95rem;">Lapinlahden luonnon keskellä</p>
+            </div>
+          </div>
+        </div>
+        <a href="tel:0414873352" class="btn btn-primary" style="display:inline-flex;">
+          <i data-lucide="phone" style="width:16px;height:16px;"></i>
+          Soita meille
+        </a>
+      </div>
+      <!-- Right: Map -->
+      <div>
+        <iframe
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Lapinlahdenpolku%202%2C%2000180%20Helsinki%2C%20Suomi%2C%20Helsinki%2C%20Finland&language=fi"
+          width="100%"
+          height="380"
+          style="border:0; border-radius:16px; box-shadow:0 4px 24px rgba(0,0,0,0.10); display:block;"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- [9] FOOTER -->
+<footer style="background:var(--primary); padding:48px clamp(16px,5vw,48px) 32px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:32px; margin-bottom:40px;">
+      <div>
+        <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:700; color:#fff; margin-bottom:8px;">
+          Hävikkikukkakauppa<br><span style="color:var(--accent);">Kukkis</span>
+        </h3>
+        <p style="color:rgba(255,255,255,0.55); font-size:0.9rem; max-width:300px; line-height:1.7;">Kauniit kukat uuteen kotiin – hävikistä pelastettuina, ilolla tehtyinä.</p>
+      </div>
+      <div>
+        <p style="font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-bottom:12px;">Yhteystiedot</p>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; align-items:center; gap:8px; color:rgba(255,255,255,0.7); font-size:0.9rem;">
+            <i data-lucide="map-pin" style="width:15px;height:15px;color:var(--accent);flex-shrink:0;"></i>
+            Lapinlahdenpolku 2, 00180 Helsinki
+          </div>
+          <div style="display:flex; align-items:center; gap:8px; color:rgba(255,255,255,0.7); font-size:0.9rem;">
+            <i data-lucide="phone" style="width:15px;height:15px;color:var(--accent);flex-shrink:0;"></i>
+            041 4873352
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:20px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; align-items:center;">
+      <p style="font-size:11px; color:rgba(255,255,255,0.25);">Demo luotu masasite.com palvelulla</p>
+      <p style="font-size:11px; color:rgba(255,255,255,0.25);">Helsinki, Suomi</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Responsive contact grid fix -->
+<style>
+  @media (max-width: 767px) {
+    #contact-grid {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>
+
+<script>
+  // Lucide icons
+  lucide.createIcons();
+
+  // Nav scroll effect
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  });
+
+  // IntersectionObserver for .reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  revealEls.forEach((el, i) => {
+    if (el.style.getPropertyValue('--i') === '') {
+      el.style.setProperty('--i', i);
+    }
+    el.style.transitionDelay = `calc(${el.style.getPropertyValue('--i') || 0} * 80ms)`;
+  });
+
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    }),
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+  revealEls.forEach(el => io.observe(el));
+
+  // Re-run lucide after DOM ready to catch any missed icons
+  document.addEventListener('DOMContentLoaded', () => {
+    lucide.createIcons();
+  });
+</script>
+</body>
+</html>
