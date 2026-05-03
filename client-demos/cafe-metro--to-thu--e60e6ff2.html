@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cafe Metro (To Thu) — Helsingin suosikki kahvila</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #3b1f0e;
+      --accent: #c8874a;
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --text: #1a100a;
+      --muted: #7a6558;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding-top: 40px;
+      line-height: 1.7;
+    }
+
+    h1, h2, h3, .font-headline {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* Demo Banner */
+    .demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(200, 135, 74, 0.88);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.02em;
+      text-align: center;
+      padding: 0 16px;
+    }
+    .demo-banner a {
+      color: #fff;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      margin-left: 4px;
+    }
+
+    /* Nav */
+    .nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(250, 250, 249, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(59,31,14,0.08);
+      transition: box-shadow 0.3s ease;
+    }
+    .nav.scrolled {
+      box-shadow: 0 2px 20px rgba(59,31,14,0.08);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 48px);
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--primary);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--primary); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: 9999px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+    }
+    .btn:active { transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-ghost {
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.35);
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.28);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+    }
+    .btn-outline:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100svh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(20,8,2,0.72) 100%),
+        url('assets/cafe-metro--to-thu--e60e6ff2/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+    .hero-content {
+      max-width: 760px;
+      padding: clamp(16px, 5vw, 48px);
+      animation: heroFadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 5.5rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+    .hero-sub {
+      font-size: 1.125rem;
+      color: rgba(255,255,255,0.8);
+      max-width: 560px;
+      margin: 0 auto 28px;
+      line-height: 1.7;
+    }
+    .rating-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 36px;
+    }
+    .stars {
+      display: flex;
+      gap: 3px;
+    }
+    .stars i {
+      color: #f59e0b;
+      fill: #f59e0b;
+      width: 18px;
+      height: 18px;
+    }
+    .rating-text {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.75);
+      font-weight: 500;
+    }
+    .cta-row {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Sections */
+    .section {
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+      display: block;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    .section-subtitle {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: clamp(40px, 6vw, 64px);
+    }
+    .section-header .section-subtitle {
+      margin: 0 auto;
+    }
+
+    /* Services */
+    .services-bg { background: #f5ede4; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .service-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(59,31,14,0.12);
+    }
+    .icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--accent) 14%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .icon-wrap i {
+      color: var(--accent);
+      width: 28px;
+      height: 28px;
+    }
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    .service-card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* Why us */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 40px;
+    }
+    .why-item {
+      text-align: center;
+      padding: 24px;
+    }
+    .why-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .why-icon i {
+      color: var(--accent);
+      width: 44px;
+      height: 44px;
+    }
+    .why-item h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.175rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    .why-item p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* Reviews */
+    .reviews-bg { background: #fdf6ee; }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .review-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .review-stars {
+      display: flex;
+      gap: 3px;
+    }
+    .review-stars i {
+      width: 16px;
+      height: 16px;
+    }
+    .star-filled { color: #f59e0b; fill: #f59e0b; }
+    .star-empty { color: #d1ccc8; fill: transparent; }
+    .review-text {
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.75;
+      flex: 1;
+    }
+    .review-author {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    /* Hours */
+    .hours-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 48px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(59,31,14,0.06);
+      font-size: 0.95rem;
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-day { font-weight: 600; color: var(--primary); }
+    .hours-time { color: var(--muted); }
+    .hours-today { background: color-mix(in srgb, var(--accent) 8%, transparent); margin: 0 -12px; padding: 14px 12px; border-radius: 10px; border-bottom: none !important; }
+    .hours-today .hours-day { color: var(--accent); }
+    .hours-today .hours-time { color: var(--accent); font-weight: 600; }
+
+    /* Contact */
+    .contact-bg { background: #f0e8df; }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .contact-icon {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--accent) 14%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .contact-icon i {
+      color: var(--accent);
+      width: 20px;
+      height: 20px;
+    }
+    .contact-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+    .contact-value {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    .contact-map iframe {
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(59,31,14,0.12);
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--primary);
+      padding: 48px 0 32px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+    }
+    .footer-info {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.8;
+    }
+    .footer-bottom {
+      margin-top: 36px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      text-align: center;
+    }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hours-card { padding: 28px 20px; }
+      .why-grid { gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- DEMO BANNER -->
+<div class="demo-banner">
+  Cafe Metro (To Thu) — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman?
+  <a href="mailto:team@masasite.com">Ota yhteyttä →</a>
+</div>
+
+<!-- STICKY NAV -->
+<nav class="nav" id="main-nav">
+  <div class="nav-inner">
+    <span class="logo">Cafe Metro</span>
+    <ul class="nav-links">
+      <li><a href="#palvelut">Palvelut</a></li>
+      <li><a href="#aukioloajat">Aukioloajat</a></li>
+      <li><a href="#yhteystiedot">Yhteystiedot</a></li>
+    </ul>
+    <a href="#yhteystiedot" class="btn btn-primary" style="font-size:0.8rem; padding:9px 20px;">
+      Löydä meidät
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-eyebrow">Helsinki · Vuorikatu 12</span>
+    <h1>Helsingin suosikki kahvila, avoin joka päivä</h1>
+    <p class="hero-sub">Cafe Metro on Helsingissä sijaitseva laadukas kahvila, joka palvelee asiakkaitaan päivittäin aamusta illaksi. Sopiva paikka kahvitauoille ja rentoon aikaan yhdessä.</p>
+    <div class="rating-row">
+      <div class="stars">
+        <i data-lucide="star"></i>
+        <i data-lucide="star"></i>
+        <i data-lucide="star"></i>
+        <i data-lucide="star"></i>
+        <i data-lucide="star"></i>
+      </div>
+      <span class="rating-text">4.2/5 &nbsp;(149 arvostelua)</span>
+    </div>
+    <div class="cta-row">
+      <a href="#yhteystiedot" class="btn btn-primary">
+        <i data-lucide="coffee" style="width:16px;height:16px;"></i>
+        Käy kahvilla tänään
+      </a>
+      <a href="#palvelut" class="btn btn-ghost">
+        Katso palvelut
+        <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section services-bg" id="palvelut">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Mitä tarjoamme</span>
+      <h2 class="section-title">Meiltä löydät kaiken kahvitaukoon</h2>
+      <p class="section-subtitle">Laadukkaita kahvijuomia, maukasta kevyttä ruokaa ja rauhallinen ympäristö työskentelyyn tai rentoutumiseen.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="icon-wrap">
+          <i data-lucide="coffee"></i>
+        </div>
+        <h3>Kahvit ja espressojuomat</h3>
+        <p>Laadukkaita kahvijuomia ammattitaitoisesti valmistettuna. Vietnamilainen kahvi on erikoisuutemme — kokeile!</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="icon-wrap">
+          <i data-lucide="utensils"></i>
+        </div>
+        <h3>Kevyt ruoka</h3>
+        <p>Päivän snackeja ja leivonnaisia nauttimiseen. Maistuvat banh mi -patonkimme ovat asiakkaiden suosikki.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="icon-wrap">
+          <i data-lucide="wifi"></i>
+        </div>
+        <h3>Työskentely-ympäristö</h3>
+        <p>Rauhallinen paikka kahvitauoille ja etätyöskentelylle. Viihdy, rentoudu ja nauti laadukkaasta palvelusta.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="section" style="background:#fff;" id="miksi-me">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Miksi valita meidät</span>
+      <h2 class="section-title">Luotettava valinta Helsingin ytimessä</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-item reveal">
+        <div class="why-icon">
+          <i data-lucide="award"></i>
+        </div>
+        <h3>Loistava arvosana</h3>
+        <p>4.2/5 arvosana lähes 150 arvostelun perusteella kertoo asiakkaidemme tyytyväisyydestä.</p>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-icon">
+          <i data-lucide="clock"></i>
+        </div>
+        <h3>Pitkät aukioloajat</h3>
+        <p>Avoinna 7:00–20:00 arkipäivisin ja 9:00–20:00 viikonloppuisin — olemme paikalla kun tarvitset meitä.</p>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-icon">
+          <i data-lucide="map-pin"></i>
+        </div>
+        <h3>Keskeinen sijainti</h3>
+        <p>Vuorikatu 12:n osoite Helsingin keskustassa tekee meille poikkeamisesta helppoa milloin tahansa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="section" style="background:#f5ede4;">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Meillä paikan päällä</span>
+      <h2 class="section-title">Tunnelmaa ja makuja</h2>
+    </div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px;" class="reveal">
+      <div style="aspect-ratio:4/3; border-radius:20px; overflow:hidden; box-shadow:0 4px 24px rgba(59,31,14,0.1);">
+        <img src="assets/cafe-metro--to-thu--e60e6ff2/photo2.jpg" alt="Cafe Metro sisätila" style="width:100%; height:100%; object-fit:cover; transition:transform 0.5s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'" />
+      </div>
+      <div style="aspect-ratio:4/3; border-radius:20px; overflow:hidden; box-shadow:0 4px 24px rgba(59,31,14,0.1);">
+        <img src="assets/cafe-metro--to-thu--e60e6ff2/photo3.jpg" alt="Cafe Metro tuotteet" style="width:100%; height:100%; object-fit:cover; transition:transform 0.5s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section reviews-bg">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Asiakkaiden kokemukset</span>
+      <h2 class="section-title">Mitä asiakkaamme sanovat</h2>
+      <p class="section-subtitle">Oikeat arvostelut oikeilta ihmisiltä.</p>
+    </div>
+    <div class="reviews-grid">
+
+      <!-- Review 1 — 5 stars -->
+      <div class="review-card reveal">
+        <div class="review-stars">
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+        </div>
+        <p class="review-text">"An underrated spot in helsinki... great food, flavors are authentic and excellent... price is not too bad as well... even the banh mi (vietnamilainen patonki) would be a great lunch for students. We had the banh mi and the bao with coffee 👍👍 Show some love and support!"</p>
+        <span class="review-author">Evo IX</span>
+      </div>
+
+      <!-- Review 2 — 5 stars -->
+      <div class="review-card reveal">
+        <div class="review-stars">
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-filled"></i>
+        </div>
+        <p class="review-text">"Best banh mi in Helsinki!! With the vietnamese coffee, it's a chef's kiss 😘"</p>
+        <span class="review-author">Yuran Im</span>
+      </div>
+
+      <!-- Review 3 — 1 star -->
+      <div class="review-card reveal">
+        <div class="review-stars">
+          <i data-lucide="star" class="star-filled"></i>
+          <i data-lucide="star" class="star-empty"></i>
+          <i data-lucide="star" class="star-empty"></i>
+          <i data-lucide="star" class="star-empty"></i>
+          <i data-lucide="star" class="star-empty"></i>
+        </div>
+        <p class="review-text">"I don't usually leave bad reviews, but 6 euros for a cup of instant coffee mixed with milk and not a single smile from the lady… If that's how you wanna sell it, put a lower price. You may go to any other Vietnamese resto for better value."</p>
+        <span class="review-author">Tien</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- OPENING HOURS -->
+<section class="section" style="background:#fff;" id="aukioloajat">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Aukioloajat</span>
+      <h2 class="section-title">Olemme avoinna joka päivä</h2>
+      <p class="section-subtitle">Tule milloin sopii — olemme täällä aamiaisesta iltakahville.</p>
+    </div>
+    <div class="hours-card reveal">
+      <div class="hours-row">
+        <span class="hours-day">Maanantai</span>
+        <span class="hours-time">7:00 – 20:00</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day">Tiistai</span>
+        <span class="hours-time">7:00 – 20:00</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day">Keskiviikko</span>
+        <span class="hours-time">7:00 – 20:00</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day">Torstai</span>
+        <span class="hours-time">7:00 – 20:00</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day">Perjantai</span>
+        <span class="hours-time">7:00 – 20:00</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day">Lauantai</span>
+        <span class="hours-time">9:00 – 20:00</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day">Sunnuntai</span>
+        <span class="hours-time">9:00 – 20:00</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section contact-bg" id="yhteystiedot">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Yhteystiedot</span>
+      <h2 class="section-title">Löydä meidät</h2>
+      <p class="section-subtitle">Olemme Helsingin ytimessä. Helppo pysähtyä, helppo palata.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="reveal">
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i data-lucide="map-pin"></i>
+          </div>
+          <div>
+            <p class="contact-label">Osoite</p>
+            <p class="contact-value">Vuorikatu 12, 00100 Helsinki</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i data-lucide="phone"></i>
+          </div>
+          <div>
+            <p class="contact-label">Puhelin</p>
+            <p class="contact-value"><a href="tel:0452310286" style="color:inherit; text-decoration:none;">045 2310286</a></p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i data-lucide="clock"></i>
+          </div>
+          <div>
+            <p class="contact-label">Aukiolo tänään</p>
+            <p class="contact-value">7:00 – 20:00</p>
+          </div>
+        </div>
+        <div style="margin-top:32px;">
+          <a href="tel:0452310286" class="btn btn-primary" style="font-size:0.9rem; padding:13px 28px;">
+            <i data-lucide="phone" style="width:16px;height:16px;"></i>
+            Soita meille
+          </a>
+        </div>
+      </div>
+      <div class="contact-map reveal">
+        <iframe
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Vuorikatu%2012%2C%2000100%20Helsinki%2C%20Suomi%2C%20Helsinki%2C%20Finland&language=fi"
+          width="100%"
+          height="380"
+          style="border:0; border-radius:16px; display:block; min-height:280px;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Cafe Metro sijainti kartalla">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Cafe Metro</div>
+    <p class="footer-info">
+      Vuorikatu 12, 00100 Helsinki<br />
+      045 2310286<br />
+      Helsinki, Suomi
+    </p>
+    <div class="footer-bottom">
+      Demo luotu masasite.com palvelulla
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Lucide icons
+  lucide.createIcons();
+
+  // Nav scroll effect
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  revealEls.forEach((el, i) => {
+    el.style.setProperty('--i', i);
+  });
+
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    }),
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+
+  revealEls.forEach(el => io.observe(el));
+
+  // Stagger cards in grids
+  document.querySelectorAll('.services-grid .service-card, .reviews-grid .review-card').forEach((card, i) => {
+    card.style.transitionDelay = `${i * 80}ms`;
+  });
+
+  // Fix hero stars fill via JS after Lucide renders
+  lucide.createIcons();
+</script>
+</body>
+</html>
