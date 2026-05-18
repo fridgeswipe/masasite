@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Passikuva Omid Studio – Ammattitaitoinen passikuva Helsingissä</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: #0a0a0f;
+      --accent: #7c4dff;
+      --accent-light: rgba(124, 77, 255, 0.15);
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --text: #0f0f1a;
+      --muted: #6b6b80;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding-top: 40px;
+      line-height: 1.7;
+      font-size: 1rem;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Syne', sans-serif;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    /* Demo Banner */
+    #demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(124, 77, 255, 0.88);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.01em;
+      font-family: 'DM Sans', sans-serif;
+    }
+    #demo-banner a {
+      color: #fff;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      font-weight: 600;
+      margin-left: 4px;
+    }
+
+    /* Nav */
+    #main-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(255,255,255,0.96);
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      backdrop-filter: blur(12px);
+      transition: box-shadow 0.3s ease;
+    }
+    #main-nav.scrolled {
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 48px);
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+    .nav-logo span {
+      color: var(--accent);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 100px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+    }
+    .btn:active { transform: translateY(-1px); }
+    .btn-accent {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-ghost {
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.35);
+      backdrop-filter: blur(8px);
+    }
+    .btn-accent-outline {
+      background: transparent;
+      color: var(--accent);
+      border: 2px solid var(--accent);
+    }
+    .btn-accent-outline:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+    }
+
+    /* Hero */
+    #hero {
+      min-height: 100svh;
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.72) 100%),
+        url('assets/passikuva-omid-studio-ba2a50b6/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: clamp(64px, 10vw, 120px) clamp(16px, 5vw, 48px);
+    }
+    .hero-content {
+      max-width: 780px;
+      animation: heroFadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(124, 77, 255, 0.95);
+      background: rgba(124,77,255,0.18);
+      border: 1px solid rgba(124,77,255,0.4);
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+    .hero-h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .hero-sub {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.82);
+      max-width: 560px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+    .hero-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+    .hero-rating .stars {
+      display: flex;
+      gap: 3px;
+    }
+    .hero-rating .stars i {
+      color: #f59e0b;
+      fill: #f59e0b;
+      width: 20px;
+      height: 20px;
+    }
+    .hero-rating span {
+      color: rgba(255,255,255,0.88);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Sections */
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .section-tag {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+      display: block;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+    .section-subtitle {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      max-width: 560px;
+    }
+
+    /* Services */
+    #services {
+      background: #f4f4f8;
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .services-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .services-header .section-subtitle {
+      margin: 16px auto 0;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .service-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+      cursor: default;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+    .service-icon-wrap {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      background: var(--accent-light);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 24px;
+    }
+    .service-icon-wrap i {
+      color: var(--accent);
+      width: 28px; height: 28px;
+    }
+    .service-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+    .service-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* Why us */
+    #why {
+      background: var(--surface);
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .why-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 40px;
+    }
+    .why-item {
+      text-align: center;
+      padding: 40px 24px;
+      border-radius: 20px;
+      transition: background 0.3s ease;
+    }
+    .why-item:hover {
+      background: #f8f7ff;
+    }
+    .why-item i {
+      color: var(--accent);
+      width: 44px; height: 44px;
+      margin: 0 auto 20px;
+      display: block;
+    }
+    .why-item h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+    .why-item p {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+
+    /* Reviews */
+    #reviews {
+      background: #f9f8ff;
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .reviews-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .review-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
+    }
+    .review-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 16px;
+    }
+    .review-stars i {
+      color: #f59e0b;
+      fill: #f59e0b;
+      width: 16px; height: 16px;
+    }
+    .review-quote {
+      font-style: italic;
+      color: #4a4a5a;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .review-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--accent-light);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .review-name {
+      font-weight: 700;
+      font-size: 0.87rem;
+      color: var(--primary);
+    }
+    .review-verified {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 0.72rem;
+      color: #10b981;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    .review-verified i {
+      width: 12px; height: 12px;
+    }
+
+    /* Hours */
+    #hours {
+      background: var(--surface);
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .hours-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .hours-card {
+      max-width: 560px;
+      margin: 0 auto;
+      background: #f4f4f8;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 32px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      transition: background 0.2s;
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-row:hover { background: rgba(124,77,255,0.05); }
+    .hours-day {
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: var(--primary);
+    }
+    .hours-time {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .hours-today {
+      background: rgba(124,77,255,0.08);
+    }
+    .hours-today .hours-day { color: var(--accent); }
+    .hours-today .hours-time { color: var(--accent); font-weight: 600; }
+
+    /* Contact */
+    #contact {
+      background: #f4f4f8;
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+    .contact-info h2 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .contact-info .sub {
+      color: var(--muted);
+      font-size: 1rem;
+      margin-bottom: 40px;
+      line-height: 1.65;
+    }
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .contact-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: var(--accent-light);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon i {
+      color: var(--accent);
+      width: 20px; height: 20px;
+    }
+    .contact-item-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+    .contact-item-value {
+      font-weight: 600;
+      color: var(--primary);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    .map-wrap iframe {
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+      width: 100%;
+      height: 380px;
+      border: 0;
+    }
+    @media (max-width: 768px) {
+      .map-wrap iframe { height: 280px; }
+    }
+
+    /* Footer */
+    #footer {
+      background: var(--primary);
+      padding-block: 48px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .footer-logo span { color: var(--accent); }
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .footer-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.87rem;
+    }
+    .footer-contact-item i {
+      color: rgba(124,77,255,0.8);
+      width: 16px; height: 16px;
+    }
+    .footer-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 20px;
+    }
+    .footer-bottom {
+      text-align: center;
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.03em;
+    }
+    .footer-bottom a { color: rgba(255,255,255,0.4); text-decoration: none; }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+    .reveal-delay-1 { transition-delay: 80ms; }
+    .reveal-delay-2 { transition-delay: 160ms; }
+    .reveal-delay-3 { transition-delay: 240ms; }
+    .reveal-delay-4 { transition-delay: 320ms; }
+
+    /* Photo gallery strip */
+    #gallery {
+      background: var(--primary);
+      padding-block: 0;
+      overflow: hidden;
+    }
+    .gallery-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      height: 320px;
+    }
+    .gallery-strip img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0.85;
+      transition: opacity 0.3s ease, transform 0.5s ease;
+    }
+    .gallery-strip img:hover {
+      opacity: 1;
+      transform: scale(1.03);
+    }
+    @media (max-width: 640px) {
+      .gallery-strip { height: 200px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- [1] DEMO BANNER -->
+<div id="demo-banner">
+  Passikuva Omid Studio — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman?
+  <a href="mailto:team@masasite.com">Ota yhteyttä →</a>
+</div>
+
+<!-- [2] STICKY NAV -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">Passikuva&nbsp;<span>Omid</span>&nbsp;Studio</a>
+    <ul class="nav-links">
+      <li><a href="#services">Palvelut</a></li>
+      <li><a href="#hours">Aukioloajat</a></li>
+      <li><a href="#contact">Yhteystiedot</a></li>
+    </ul>
+    <a href="#contact" class="btn btn-accent" style="font-size:0.85rem; padding:10px 22px;">Varaa aika</a>
+  </div>
+</nav>
+
+<!-- [3] HERO -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Helsinki · Passikuvaus</div>
+    <h1 class="hero-h1">Ammattitaitoinen passikuva Helsingissä</h1>
+    <p class="hero-sub">Passikuva Omid Studio tarjoaa laadukkaita passikuvia ja virallisia valokuvia Helsingissä. Yrityksellä on pitkä kokemus identiteettivarmennus- ja passipalveluiden kuvauksista.</p>
+    <div class="hero-rating">
+      <div class="stars">
+        <i data-lucide="star"></i>
+        <i data-lucide="star"></i>
+        <i data-lucide="star"></i>
+        <i data-lucide="star"></i>
+        <i data-lucide="star"></i>
+      </div>
+      <span>4.8/5 &nbsp;(108 arvostelua)</span>
+    </div>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn btn-accent">
+        <i data-lucide="camera" style="width:18px;height:18px;"></i>
+        Varaa aika nyt
+      </a>
+      <a href="#services" class="btn btn-ghost">
+        Katso palvelut
+        <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO GALLERY STRIP -->
+<div id="gallery">
+  <div class="gallery-strip">
+    <div style="overflow:hidden;"><img src="assets/passikuva-omid-studio-ba2a50b6/photo1.jpg" alt="Studio" /></div>
+    <div style="overflow:hidden;"><img src="assets/passikuva-omid-studio-ba2a50b6/photo2.jpg" alt="Passikuvaus" /></div>
+    <div style="overflow:hidden;"><img src="assets/passikuva-omid-studio-ba2a50b6/photo3.jpg" alt="Omid Studio" /></div>
+  </div>
+</div>
+
+<!-- [4] SERVICES -->
+<section id="services">
+  <div class="section-container">
+    <div class="services-header reveal">
+      <span class="section-tag">Palvelumme</span>
+      <h2 class="section-title">Mitä tarjoamme</h2>
+      <p class="section-subtitle">Kaikki viralliset kuvapalvelut yhdessä paikassa — nopeasti, ammattitaitoisesti ja edullisesti.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-icon-wrap">
+          <i data-lucide="id-card"></i>
+        </div>
+        <h3>Passikuvat</h3>
+        <p>Viralliset passikuvat, jotka täyttävät kaikki kansainväliset vaatimukset. Kuvat hyväksytään takuuvarmasti passiviranomaisilla.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-icon-wrap">
+          <i data-lucide="globe"></i>
+        </div>
+        <h3>Viisumin kuvat</h3>
+        <p>Viisumin vaatimukset täyttävät tarkat valokuvat. Autamme varmistamaan, että kuvasi vastaavat kohdemaan spesifikaaatioita.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-icon-wrap">
+          <i data-lucide="shield-check"></i>
+        </div>
+        <h3>Henkilötodistus kuvat</h3>
+        <p>Notaarin ja viranomaisten hyväksymät tunnistuskuvat. Täyttävät kaikki Suomen ja EU:n viralliset vaatimukset.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- [5] WHY CHOOSE US -->
+<section id="why">
+  <div class="section-container">
+    <div class="why-header reveal">
+      <span class="section-tag">Miksi valita meidät</span>
+      <h2 class="section-title">Laatu ja luotettavuus ensin</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-item reveal reveal-delay-1">
+        <i data-lucide="award"></i>
+        <h3>Viralliset vaatimukset</h3>
+        <p>Laadukkaat kuvat, jotka täyttävät kaikki viralliset kansainväliset vaatimukset — ensimmäisellä otoksella.</p>
+      </div>
+      <div class="why-item reveal reveal-delay-2">
+        <i data-lucide="star"></i>
+        <h3>Pitkä kokemus 4.8★</h3>
+        <p>Pitkä kokemus ja erinomainen asiakaspalaute (4.8★). Yli 108 tyytyväistä asiakasta todistaa ammattitaidon.</p>
+      </div>
+      <div class="why-item reveal reveal-delay-3">
+        <i data-lucide="zap"></i>
+        <h3>Nopea palvelu</h3>
+        <p>Nopea palvelu ja joustavat aukioloajat arkisin. Saat valmiit kuvat saman tien — myös digitaalisena.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- [6] REVIEWS -->
+<section id="reviews">
+  <div class="section-container">
+    <div class="reviews-header reveal">
+      <span class="section-tag">Asiakaspalaute</span>
+      <h2 class="section-title">Mitä asiakkaamme sanovat</h2>
+      <p class="section-subtitle" style="margin: 16px auto 0;">Yli 108 tyytyväistä asiakasta — katso mitä he kertovat kokemuksestaan.</p>
+    </div>
+    <div class="reviews-grid">
+
+      <div class="review-card reveal reveal-delay-1">
+        <div class="review-stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <p class="review-quote">"My family and I have all been getting our passport photos taken here since he opened. Omid is very professional and helpful, and has a special talent for taking good passport photos for babies and young children. He can give the codes and also print the photos on the spot."</p>
+        <div class="review-author">
+          <div class="review-avatar">KL</div>
+          <div>
+            <div class="review-name">Koh Lipe</div>
+            <span class="review-verified">
+              <i data-lucide="check-circle"></i>
+              Vahvistettu arvostelu
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card reveal reveal-delay-2">
+        <div class="review-stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <p class="review-quote">"The quality and the price was at the standard level and fair. The photographer was so friendly and patient. He even retook each shot multiple times until we approved the last one."</p>
+        <div class="review-author">
+          <div class="review-avatar">HA</div>
+          <div>
+            <div class="review-name">Hedi Abd</div>
+            <span class="review-verified">
+              <i data-lucide="check-circle"></i>
+              Vahvistettu arvostelu
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card reveal reveal-delay-3">
+        <div class="review-stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <p class="review-quote">"Amazing customer service. The owner of the store doesn't hesitate to help me to take the best photo of me for the passport which will stay with me for another five years. I have been here for the second time in 2 years and it has always been supportive and professional."</p>
+        <div class="review-author">
+          <div class="review-avatar">VD</div>
+          <div>
+            <div class="review-name">Van Dinh</div>
+            <span class="review-verified">
+              <i data-lucide="check-circle"></i>
+              Vahvistettu arvostelu
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Overall rating bar -->
+    <div class="reveal" style="margin-top:48px; text-align:center;">
+      <div style="display:inline-flex; align-items:center; gap:16px; background:#fff; border-radius:16px; padding:20px 36px; box-shadow:0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.06);">
+        <div style="font-family:'Syne',sans-serif; font-size:3rem; font-weight:800; color:var(--primary); line-height:1;">4.8</div>
+        <div>
+          <div style="display:flex; gap:3px; margin-bottom:4px;">
+            <i data-lucide="star" style="width:20px;height:20px;color:#f59e0b;fill:#f59e0b;"></i>
+            <i data-lucide="star" style="width:20px;height:20px;color:#f59e0b;fill:#f59e0b;"></i>
+            <i data-lucide="star" style="width:20px;height:20px;color:#f59e0b;fill:#f59e0b;"></i>
+            <i data-lucide="star" style="width:20px;height:20px;color:#f59e0b;fill:#f59e0b;"></i>
+            <i data-lucide="star" style="width:20px;height:20px;color:#f59e0b;fill:#f59e0b;"></i>
+          </div>
+          <div style="font-size:0.82rem; color:var(--muted); font-weight:500;">108 Google-arvostelua</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- [7] OPENING HOURS -->
+<section id="hours">
+  <div class="section-container">
+    <div class="hours-header reveal">
+      <span class="section-tag">Aukioloajat</span>
+      <h2 class="section-title">Milloin olemme auki</h2>
+    </div>
+    <div class="hours-card reveal">
+      <div class="hours-row">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <i data-lucide="clock" style="width:16px;height:16px;color:var(--accent);"></i>
+          <span class="hours-day">Maanantai</span>
+        </div>
+        <span class="hours-time">9:00 – 19:30</span>
+      </div>
+      <div class="hours-row">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <i data-lucide="clock" style="width:16px;height:16px;color:var(--accent);"></i>
+          <span class="hours-day">Tiistai</span>
+        </div>
+        <span class="hours-time">9:00 – 19:30</span>
+      </div>
+      <div class="hours-row">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <i data-lucide="clock" style="width:16px;height:16px;color:var(--accent);"></i>
+          <span class="hours-day">Keskiviikko</span>
+        </div>
+        <span class="hours-time">9:00 – 19:30</span>
+      </div>
+      <div class="hours-row">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <i data-lucide="clock" style="width:16px;height:16px;color:var(--accent);"></i>
+          <span class="hours-day">Torstai</span>
+        </div>
+        <span class="hours-time">9:00 – 18:00</span>
+      </div>
+      <div class="hours-row">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <i data-lucide="clock" style="width:16px;height:16px;color:var(--accent);"></i>
+          <span class="hours-day">Perjantai</span>
+        </div>
+        <span class="hours-time">9:00 – 18:00</span>
+      </div>
+      <div class="hours-row">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <i data-lucide="clock" style="width:16px;height:16px;color:var(--accent);"></i>
+          <span class="hours-day">Lauantai</span>
+        </div>
+        <span class="hours-time">11:00 – 18:00</span>
+      </div>
+      <div class="hours-row">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <i data-lucide="clock" style="width:16px;height:16px;color:var(--accent);"></i>
+          <span class="hours-day">Sunnuntai</span>
+        </div>
+        <span class="hours-time">11:00 – 18:00</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- [8] CONTACT -->
+<section id="contact">
+  <div class="section-container">
+    <div class="contact-grid">
+
+      <div class="contact-info reveal">
+        <span class="section-tag">Ota yhteyttä</span>
+        <h2>Löydä meidät Helsingistä</h2>
+        <p class="sub">Olemme Hämeentiellä helposti saavutettavissa. Tule käymään tai soita varataaksesi ajan.</p>
+
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i data-lucide="map-pin"></i>
+          </div>
+          <div>
+            <div class="contact-item-label">Osoite</div>
+            <div class="contact-item-value">Hämeentie 21 A<br>00500 Helsinki, Suomi</div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i data-lucide="phone"></i>
+          </div>
+          <div>
+            <div class="contact-item-label">Puhelin</div>
+            <div class="contact-item-value">
+              <a href="tel:0449791649" style="color:var(--primary); text-decoration:none;">044 9791649</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">
+            <i data-lucide="clock"></i>
+          </div>
+          <div>
+            <div class="contact-item-label">Aukiolo tänään</div>
+            <div class="contact-item-value">Ma–Ke: 9:00–19:30 &nbsp;|&nbsp; To–Pe: 9:00–18:00</div>
+          </div>
+        </div>
+
+        <div style="margin-top: 32px;">
+          <a href="tel:0449791649" class="btn btn-accent">
+            <i data-lucide="phone" style="width:18px;height:18px;"></i>
+            Soita nyt
+          </a>
+        </div>
+      </div>
+
+      <div class="map-wrap reveal reveal-delay-1">
+        <iframe
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=H%C3%A4meentie%2021%20A%2C%2000500%20Helsinki%2C%20Suomi%2C%20Helsinki%2C%20Finland&language=fi"
+          width="100%"
+          height="380"
+          style="border:0; border-radius:16px; box-shadow: 0 4px 24px rgba(0,0,0,0.1);"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Passikuva Omid Studio sijainti"
+        ></iframe>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- [9] FOOTER -->
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">Passikuva&nbsp;<span>Omid</span>&nbsp;Studio</div>
+        <p style="color:rgba(255,255,255,0.4); font-size:0.82rem; margin-top:8px; max-width:260px; line-height:1.6;">
+          Ammattitaitoinen passikuvaus Helsingissä. Kaikki viralliset kuvapalvelut.
+        </p>
+      </div>
+      <div class="footer-contact">
+        <div class="footer-contact-item">
+          <i data-lucide="map-pin"></i>
+          Hämeentie 21 A, 00500 Helsinki
+        </div>
+        <div class="footer-contact-item">
+          <i data-lucide="phone"></i>
+          044 9791649
+        </div>
+        <div class="footer-contact-item">
+          <i data-lucide="star"></i>
+          4.8/5 — 108 arvostelua
+        </div>
+      </div>
+    </div>
+    <hr class="footer-divider" />
+    <div class="footer-bottom">
+      Demo luotu <a href="https://masasite.com" target="_blank">masasite.com</a> palvelulla
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Lucide icons init
+  lucide.createIcons();
+
+  // Nav scroll effect
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  });
+
+  // Intersection Observer for reveal animations
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    }),
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Stagger service cards
+  document.querySelectorAll('.service-card').forEach((c, i) => {
+    c.style.setProperty('--i', i);
+  });
+
+  // Fill star icons in hero and reviews using CSS after lucide renders
+  setTimeout(() => {
+    // Hero stars
+    document.querySelectorAll('#hero .stars i').forEach(star => {
+      star.style.fill = '#f59e0b';
+      star.style.color = '#f59e0b';
+    });
+    // Review stars
+    document.querySelectorAll('.review-stars i').forEach(star => {
+      star.style.fill = '#f59e0b';
+      star.style.color = '#f59e0b';
+    });
+    // Rating bar stars
+    document.querySelectorAll('#reviews .section-container > .reveal i[data-lucide="star"]').forEach(star => {
+      star.style.fill = '#f59e0b';
+      star.style.color = '#f59e0b';
+    });
+  }, 100);
+</script>
+
+</body>
+</html>
