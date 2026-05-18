@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Real SPA — Espoo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #1a2a1f;
+      --accent: #8fbc8f;
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --text: #0f1a12;
+      --muted: #6b7c6e;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      padding-top: 40px;
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'DM Serif Display', serif;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    /* Demo Banner */
+    .demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(143, 188, 143, 0.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: 0.01em;
+    }
+    .demo-banner a {
+      color: #fff;
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      margin-left: 4px;
+    }
+    .demo-banner a:hover { opacity: 0.85; }
+
+    /* Nav */
+    .site-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(250, 250, 249, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(26,42,31,0.08);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    .site-nav.scrolled {
+      background: rgba(250,250,249,0.96);
+      box-shadow: 0 2px 20px rgba(26,42,31,0.08);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 48px);
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      color: var(--primary);
+      letter-spacing: -0.01em;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-cta {
+      background: var(--primary);
+      color: #fff !important;
+      padding: 10px 24px;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(26,42,31,0.25);
+      background: #243829 !important;
+      color: #fff !important;
+    }
+    .nav-mobile-cta {
+      display: none;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100svh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.65) 100%),
+        url('assets/real-spa-e6af10f8/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      overflow: hidden;
+    }
+    .hero-content {
+      text-align: center;
+      color: #fff;
+      padding: clamp(24px, 8vw, 80px) clamp(16px, 5vw, 48px);
+      max-width: 780px;
+      animation: heroFadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 20px;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .hero h1 {
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin-bottom: 24px;
+    }
+    .hero-subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: rgba(255,255,255,0.82);
+      max-width: 520px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .hero-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+    .hero-stars {
+      display: flex;
+      gap: 3px;
+    }
+    .hero-stars i {
+      width: 18px; height: 18px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+    .hero-rating-text {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.85);
+      font-weight: 500;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 14px 32px;
+      border-radius: 100px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: 0.01em;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(143,188,143,0.4);
+      background: #a8d1a8;
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+    .btn-ghost {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 14px 32px;
+      border-radius: 100px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(255,255,255,0.3);
+      transition: transform 0.2s ease, background 0.2s ease;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .btn-ghost:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.25);
+    }
+
+    /* Section base */
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .section-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+      display: block;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      font-family: 'DM Serif Display', serif;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    /* Why choose us */
+    .why-icon-wrap {
+      width: 72px; height: 72px;
+      border-radius: 20px;
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+    .why-icon-wrap i {
+      width: 36px; height: 36px;
+      color: var(--accent);
+    }
+
+    /* Cards */
+    .service-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(26,42,31,0.12);
+    }
+    .service-icon-wrap {
+      width: 56px; height: 56px;
+      border-radius: 16px;
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .service-icon-wrap i {
+      width: 28px; height: 28px;
+      color: var(--accent);
+    }
+
+    /* Review card */
+    .review-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .review-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(26,42,31,0.1);
+    }
+    .review-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 16px;
+    }
+    .review-stars i {
+      width: 16px; height: 16px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+    .review-quote {
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+    .review-author {
+      font-weight: 700;
+      font-size: 0.875rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .review-verified {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      border-radius: 100px;
+      padding: 2px 8px;
+      letter-spacing: 0.04em;
+    }
+    .review-verified i { width: 11px; height: 11px; color: var(--accent); }
+
+    /* Contact */
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .contact-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon i {
+      width: 20px; height: 20px;
+      color: var(--primary);
+    }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Hours */
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(26,42,31,0.07);
+    }
+    .hours-row:last-child { border-bottom: none; }
+
+    /* Footer */
+    .site-footer {
+      background: var(--primary);
+      color: rgba(255,255,255,0.85);
+      padding: 64px clamp(16px,5vw,48px) 40px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem;
+      color: #fff;
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+    }
+    .footer-credit {
+      font-size: 11px;
+      color: rgba(255,255,255,0.35);
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* Gallery */
+    .gallery-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-mobile-cta { display: inline-flex; }
+      .hero-content { padding-top: 80px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- [1] DEMO BANNER -->
+  <div class="demo-banner">
+    <span>Real SPA — tämä esimerkkisivu on tehty juuri teille · Haluatko oman?<a href="mailto:team@masasite.com">Ota yhteyttä →</a></span>
+  </div>
+
+  <!-- [2] STICKY NAV -->
+  <nav class="site-nav" id="site-nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">Real SPA</a>
+      <ul class="nav-links">
+        <li><a href="#why">Palvelut</a></li>
+        <li><a href="#reviews">Arvostelut</a></li>
+        <li><a href="#contact">Yhteystiedot</a></li>
+        <li><a href="#contact" class="nav-cta">Ota yhteyttä</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta nav-mobile-cta" style="display:none;">Yhteystiedot</a>
+    </div>
+  </nav>
+
+  <!-- [3] HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Kauneus &amp; Hyvinvointi · Espoo</span>
+      <h1>Real SPA</h1>
+      <p class="hero-subtitle">Tervetuloa Real SPA:een Espoossä. Ammattitaitoinen hoiva ja luksuskokemus sinulle.</p>
+      <div class="hero-rating">
+        <div class="hero-stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <span class="hero-rating-text">5.0/5 (5 arvostelua) · Google</span>
+      </div>
+      <div class="hero-buttons">
+        <a href="#contact" class="btn-primary">
+          <i data-lucide="phone" style="width:18px;height:18px;"></i>
+          Ota yhteyttä
+        </a>
+        <a href="#why" class="btn-ghost">
+          Lue lisää
+          <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY STRIP -->
+  <section style="background:#fff; padding-block: clamp(48px,8vw,80px);">
+    <div class="section-container">
+      <div class="reveal" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:16px;">
+        <img src="assets/real-spa-e6af10f8/photo1.jpg" alt="Real SPA hoitola" class="gallery-img" />
+        <img src="assets/real-spa-e6af10f8/photo2.jpg" alt="Real SPA palvelut" class="gallery-img" />
+        <img src="assets/real-spa-e6af10f8/photo3.jpg" alt="Real SPA tila" class="gallery-img" />
+      </div>
+    </div>
+  </section>
+
+  <!-- [5] WHY CHOOSE US -->
+  <section id="why" style="background: var(--bg); padding-block: clamp(64px,10vw,120px);">
+    <div class="section-container">
+      <div class="reveal" style="text-align:center; margin-bottom: 64px;">
+        <span class="section-eyebrow">Miksi valita meidät</span>
+        <h2 class="section-title">Sinulle parhaat kädet</h2>
+        <p style="margin-top:16px; color:var(--muted); max-width:520px; margin-inline:auto; font-size:1rem; line-height:1.7;">
+          Real SPA:ssa yhdistyvät ammatillinen osaaminen, lämmin palvelu ja aito välittäminen asiakkaastamme.
+        </p>
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:32px; text-align:center;">
+
+        <div class="reveal service-card">
+          <div class="why-icon-wrap">
+            <i data-lucide="award"></i>
+          </div>
+          <h3 style="font-family:'DM Serif Display',serif; font-size:1.3rem; color:var(--primary); margin-bottom:12px; letter-spacing:-0.01em;">Ammattitaito</h3>
+          <p style="color:var(--muted); font-size:0.95rem; line-height:1.7;">
+            Vuosien kokemus ja jatkuva kouluttautuminen takaavat laadukkaan tuloksen jokaisessa hoidossa.
+          </p>
+        </div>
+
+        <div class="reveal service-card" style="transition-delay:80ms;">
+          <div class="why-icon-wrap">
+            <i data-lucide="shield-check"></i>
+          </div>
+          <h3 style="font-family:'DM Serif Display',serif; font-size:1.3rem; color:var(--primary); margin-bottom:12px; letter-spacing:-0.01em;">Luotettavuus</h3>
+          <p style="color:var(--muted); font-size:0.95rem; line-height:1.7;">
+            Voit luottaa siihen, että sovitut ajat pitävät ja lupaukset lunastetaan. Sinun aikasi on arvokasta.
+          </p>
+        </div>
+
+        <div class="reveal service-card" style="transition-delay:160ms;">
+          <div class="why-icon-wrap">
+            <i data-lucide="heart"></i>
+          </div>
+          <h3 style="font-family:'DM Serif Display',serif; font-size:1.3rem; color:var(--primary); margin-bottom:12px; letter-spacing:-0.01em;">Asiakaslähtöisyys</h3>
+          <p style="color:var(--muted); font-size:0.95rem; line-height:1.7;">
+            Jokainen asiakas on yksilö. Räätälöimme hoidon juuri sinun tarpeidesi ja toiveidesi mukaan.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES HINT SECTION -->
+  <section id="services" style="background: var(--primary); padding-block: clamp(64px,10vw,120px);">
+    <div class="section-container">
+      <div class="reveal" style="text-align:center; margin-bottom:56px;">
+        <span class="section-eyebrow" style="color: var(--accent);">Palvelumme</span>
+        <h2 class="section-title" style="color:#fff;">Kokonaisvaltainen hyvinvointi</h2>
+        <p style="margin-top:16px; color:rgba(255,255,255,0.65); max-width:500px; margin-inline:auto; font-size:1rem; line-height:1.7;">
+          Erikoistunut sokerointi ja muut kauneudenhoidon palvelut ammattitaidolla.
+        </p>
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap:24px;">
+
+        <div class="reveal" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:36px 28px; transition:transform 0.3s ease, background 0.3s ease;" onmouseenter="this.style.background='rgba(255,255,255,0.1)';this.style.transform='translateY(-6px)'" onmouseleave="this.style.background='rgba(255,255,255,0.06)';this.style.transform='none'">
+          <div style="width:56px;height:56px;border-radius:16px;background:rgba(143,188,143,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+            <i data-lucide="sparkles" style="width:28px;height:28px;color:var(--accent);"></i>
+          </div>
+          <h3 style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:#fff;margin-bottom:10px;letter-spacing:-0.01em;">Sokerointi</h3>
+          <p style="color:rgba(255,255,255,0.6);font-size:0.9rem;line-height:1.7;">Pitkäkestoinen, hellävarainen karvanpoisto sokerimassalla. Iho pehmeäksi ja sileäksi.</p>
+        </div>
+
+        <div class="reveal" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:36px 28px; transition:transform 0.3s ease, background 0.3s ease; transition-delay:80ms;" onmouseenter="this.style.background='rgba(255,255,255,0.1)';this.style.transform='translateY(-6px)'" onmouseleave="this.style.background='rgba(255,255,255,0.06)';this.style.transform='none'">
+          <div style="width:56px;height:56px;border-radius:16px;background:rgba(143,188,143,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+            <i data-lucide="zap" style="width:28px;height:28px;color:var(--accent);"></i>
+          </div>
+          <h3 style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:#fff;margin-bottom:10px;letter-spacing:-0.01em;">Kauneudenhoidot</h3>
+          <p style="color:rgba(255,255,255,0.6);font-size:0.9rem;line-height:1.7;">Ammattimaiset kauneudenhoidon palvelut, räätälöity sinulle. Kysy lisää ja varaa aika.</p>
+        </div>
+
+        <div class="reveal" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:36px 28px; transition:transform 0.3s ease, background 0.3s ease; transition-delay:160ms;" onmouseenter="this.style.background='rgba(255,255,255,0.1)';this.style.transform='translateY(-6px)'" onmouseleave="this.style.background='rgba(255,255,255,0.06)';this.style.transform='none'">
+          <div style="width:56px;height:56px;border-radius:16px;background:rgba(143,188,143,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+            <i data-lucide="leaf" style="width:28px;height:28px;color:var(--accent);"></i>
+          </div>
+          <h3 style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:#fff;margin-bottom:10px;letter-spacing:-0.01em;">Rentouttavat hoidot</h3>
+          <p style="color:rgba(255,255,255,0.6);font-size:0.9rem;line-height:1.7;">Arjen kiireestä irrottautuminen. Rentoudu ja anna ammattilaisen huolehtia sinusta.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- [6] REVIEWS -->
+  <section id="reviews" style="background: #f3f6f3; padding-block: clamp(64px,10vw,120px);">
+    <div class="section-container">
+      <div class="reveal" style="text-align:center; margin-bottom:64px;">
+        <span class="section-eyebrow">Asiakaspalautteet</span>
+        <h2 class="section-title">Mitä asiakkaamme sanovat</h2>
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;">
+          <div style="display:flex;gap:3px;">
+            <i data-lucide="star" style="width:20px;height:20px;color:#f59e0b;fill:#f59e0b;"></i>
+            <i data-lucide="star" style="width:20px;height:20px;color:#f59e0b;fill:#f59e0b;"></i>
+            <i data-lucide="star" style="width:20px;height:20px;color:#f59e0b;fill:#f59e0b;"></i>
+            <i data-lucide="star" style="width:20px;height:20px;color:#f59e0b;fill:#f59e0b;"></i>
+            <i data-lucide="star" style="width:20px;height:20px;color:#f59e0b;fill:#f59e0b;"></i>
+          </div>
+          <span style="color:var(--muted);font-size:0.9rem;font-weight:500;">5.0 / 5 — Google arvostelut</span>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:24px;">
+
+        <div class="review-card reveal">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"I've been going to Adelina for sugaring for two years now, everything is done very qualitatively, pleasant atmosphere and prices☺️ I recommend!!! 100%%%"</p>
+          <div class="review-author">
+            Anya Barchuk
+            <span class="review-verified">
+              <i data-lucide="check-circle"></i>
+              Vahvistettu
+            </span>
+          </div>
+        </div>
+
+        <div class="review-card reveal" style="transition-delay:80ms;">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"This isn't my first time with Adelina. She's a true professional! She does everything efficiently and quickly! I'm thrilled with the results!"</p>
+          <div class="review-author">
+            Viktoriia Shcherbakova
+            <span class="review-verified">
+              <i data-lucide="check-circle"></i>
+              Vahvistettu
+            </span>
+          </div>
+        </div>
+
+        <div class="review-card reveal" style="transition-delay:160ms;">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"Wonderful and professional artist. Very accurate and gentle, I definitely recommend!"</p>
+          <div class="review-author">
+            Irina Zayats
+            <span class="review-verified">
+              <i data-lucide="check-circle"></i>
+              Vahvistettu
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- [8] CONTACT -->
+  <section id="contact" style="background: var(--bg); padding-block: clamp(64px,10vw,120px);">
+    <div class="section-container">
+      <div class="reveal" style="text-align:center; margin-bottom:64px;">
+        <span class="section-eyebrow">Ota yhteyttä</span>
+        <h2 class="section-title">Löydä meidät</h2>
+        <p style="margin-top:16px; color:var(--muted); max-width:480px; margin-inline:auto; font-size:1rem; line-height:1.7;">
+          Varaa aikasi tai kysy lisää palveluistamme. Vastaamme mielellämme.
+        </p>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:48px; align-items:start;" class="reveal">
+
+        <div style="min-width:0;">
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i data-lucide="map-pin"></i>
+            </div>
+            <div>
+              <div style="font-weight:700; font-size:0.875rem; color:var(--primary); margin-bottom:4px; letter-spacing:0.05em; text-transform:uppercase; font-size:0.72rem;">Osoite</div>
+              <div style="color:var(--text); font-size:1rem; line-height:1.6;">Piispanportti 7<br>02240 Espoo, Suomi</div>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i data-lucide="phone"></i>
+            </div>
+            <div>
+              <div style="font-weight:700; font-size:0.72rem; color:var(--primary); margin-bottom:4px; letter-spacing:0.05em; text-transform:uppercase;">Puhelin</div>
+              <a href="tel:0505433356" style="color:var(--text); font-size:1rem; text-decoration:none; transition:color 0.2s;" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--text)'">050 5433356</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i data-lucide="clock"></i>
+            </div>
+            <div>
+              <div style="font-weight:700; font-size:0.72rem; color:var(--primary); margin-bottom:4px; letter-spacing:0.05em; text-transform:uppercase;">Aukioloajat</div>
+              <div style="color:var(--muted); font-size:0.9rem; line-height:1.6;">Kysy aukioloajat puhelimitse tai sähköpostilla.</div>
+            </div>
+          </div>
+
+          <div style="margin-top:40px; display:flex; gap:12px; flex-wrap:wrap;">
+            <a href="tel:0505433356" class="btn-primary" style="background:var(--primary); color:#fff;">
+              <i data-lucide="phone" style="width:18px;height:18px;"></i>
+              Soita nyt
+            </a>
+            <a href="https://maps.google.com/?q=Piispanportti+7,+02240+Espoo" target="_blank" rel="noopener" class="btn-ghost" style="background:transparent; color:var(--primary); border:1px solid rgba(26,42,31,0.25);" onmouseenter="this.style.background='var(--primary)';this.style.color='#fff'" onmouseleave="this.style.background='transparent';this.style.color='var(--primary)'">
+              <i data-lucide="map-pin" style="width:18px;height:18px;"></i>
+              Reittiohjeet
+            </a>
+          </div>
+
+        </div>
+
+        <div style="min-width:0;">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Piispanportti%207%2C%2002240%20Espoo%2C%20Suomi%2C%20Espoo%2C%20Finland&language=fi"
+            width="100%"
+            height="380"
+            style="border:0; border-radius:20px; box-shadow:0 4px 24px rgba(26,42,31,0.12); display:block;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Real SPA sijainti">
+          </iframe>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- [9] FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div style="display:grid; grid-template-columns: 1fr auto; gap:32px; align-items:start; flex-wrap:wrap;">
+        <div>
+          <div class="footer-logo">Real SPA</div>
+          <p style="color:rgba(255,255,255,0.55); font-size:0.9rem; line-height:1.7; max-width:320px;">
+            Ammattitaitoinen kauneudenhoidon spa Espoossa. Tervetuloa nauttimaan laadukkaasta palvelusta.
+          </p>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:0.8rem; color:rgba(255,255,255,0.5); line-height:2; font-family:'DM Sans',sans-serif;">
+            <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;margin-bottom:6px;">
+              <i data-lucide="map-pin" style="width:14px;height:14px;color:var(--accent);"></i>
+              Piispanportti 7, 02240 Espoo
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;">
+              <i data-lucide="phone" style="width:14px;height:14px;color:var(--accent);"></i>
+              050 5433356
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-credit">
+        Demo luotu masasite.com palvelulla
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Lucide icons
+    lucide.createIcons();
+
+    // Nav scroll effect
+    const nav = document.getElementById('site-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // Intersection Observer for reveal animations
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver(
+      entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    revealEls.forEach(el => io.observe(el));
+
+    // Mobile nav CTA
+    const mobileNavCta = document.querySelector('.nav-mobile-cta');
+    if (window.innerWidth < 768) {
+      mobileNavCta.style.display = 'inline-flex';
+    }
+    window.addEventListener('resize', () => {
+      if (window.innerWidth < 768) {
+        mobileNavCta.style.display = 'inline-flex';
+      } else {
+        mobileNavCta.style.display = 'none';
+      }
+    });
+
+    // Re-init icons after dynamic content (safe call)
+    lucide.createIcons();
+  </script>
+
+</body>
+</html>
