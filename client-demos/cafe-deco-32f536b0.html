@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cafe Deco – Tampere</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #3b1f0e;
+      --accent: #c8874a;
+      --bg: #faf8f5;
+      --surface: #ffffff;
+      --text: #1c0f07;
+      --muted: #7a5c47;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding-top: 40px;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    /* Demo banner */
+    .demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(200, 135, 74, 0.88);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.01em;
+      text-align: center;
+      padding-inline: 16px;
+    }
+    .demo-banner a { color: #fff; text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }
+
+    /* Nav */
+    .site-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(250, 248, 245, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(59, 31, 14, 0.08);
+      transition: box-shadow 0.3s ease;
+    }
+    .site-nav.scrolled {
+      box-shadow: 0 2px 20px rgba(59, 31, 14, 0.1);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 800;
+      font-size: 1.35rem;
+      color: var(--primary);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .btn-nav {
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-nav:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(200, 135, 74, 0.4); }
+
+    /* Hero */
+    .hero {
+      min-height: 100svh;
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.65) 100%),
+        url('assets/cafe-deco-32f536b0/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .hero-content {
+      max-width: 780px;
+      animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      color: #fff;
+      font-weight: 900;
+      margin-bottom: 24px;
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255,255,255,0.82);
+      max-width: 560px;
+      margin: 0 auto 28px;
+      line-height: 1.7;
+    }
+    .hero-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 36px;
+      color: rgba(255,255,255,0.9);
+      font-size: 0.9rem;
+    }
+    .hero-stars { display: flex; gap: 3px; }
+    .hero-stars i { color: #f59e0b; fill: #f59e0b; width: 18px; height: 18px; }
+    .hero-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 15px 32px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: inline-block;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(200,135,74,0.5); }
+    .btn-primary:active { transform: translateY(-1px); }
+    .btn-ghost {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 15px 32px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.35);
+      transition: transform 0.2s ease, background 0.2s ease;
+      display: inline-block;
+    }
+    .btn-ghost:hover { transform: translateY(-3px); background: rgba(255,255,255,0.25); }
+
+    /* Section containers */
+    .section-wrap {
+      padding-block: clamp(64px, 10vw, 112px);
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .section-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 2.9rem);
+      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 56px;
+    }
+    .section-title.centered { text-align: center; }
+
+    /* Services */
+    .services-section { background: #f5f0ea; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .service-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), box-shadow 0.25s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(59,31,14,0.12);
+    }
+    .service-icon {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      background: rgba(200, 135, 74, 0.14);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 24px;
+    }
+    .service-icon i { color: var(--accent); width: 28px; height: 28px; }
+    .service-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+      font-family: 'Playfair Display', serif;
+      letter-spacing: -0.01em;
+    }
+    .service-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* Why choose us */
+    .why-section { background: #fff; }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 32px;
+    }
+    .why-item {
+      text-align: center;
+      padding: 40px 28px;
+    }
+    .why-icon { margin: 0 auto 20px; color: var(--accent); }
+    .why-icon i { width: 44px; height: 44px; color: var(--accent); }
+    .why-item h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    .why-item p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    /* Reviews */
+    .reviews-section { background: #faf8f5; }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .review-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .review-stars { display: flex; gap: 3px; margin-bottom: 16px; }
+    .review-stars i { width: 16px; height: 16px; color: #f59e0b; fill: #f59e0b; }
+    .review-text {
+      font-style: italic;
+      font-size: 0.9rem;
+      color: #4a3728;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .review-author {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    /* Opening hours */
+    .hours-section { background: #fff; }
+    .hours-card {
+      max-width: 540px;
+      margin: 0 auto;
+      background: var(--surface);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 24px rgba(59,31,14,0.07);
+    }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 32px;
+      border-bottom: 1px solid rgba(59,31,14,0.06);
+      font-size: 0.9rem;
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-day { font-weight: 600; color: var(--primary); }
+    .hours-time { color: var(--muted); }
+    .hours-row.closed .hours-time { color: #c0a090; font-style: italic; }
+    .hours-row.today { background: rgba(200, 135, 74, 0.07); }
+
+    /* Gallery strip */
+    .gallery-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 0;
+    }
+    .gallery-img {
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 16px;
+      width: 100%;
+      display: block;
+    }
+
+    /* Contact */
+    .contact-section { background: #f5f0ea; }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .contact-info h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+      color: var(--primary);
+      margin-bottom: 28px;
+    }
+    .contact-line {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+    .contact-line i { color: var(--accent); width: 20px; height: 20px; flex-shrink: 0; }
+    .contact-line a { color: var(--text); text-decoration: none; }
+    .contact-line a:hover { color: var(--accent); }
+    .contact-btn {
+      display: inline-block;
+      margin-top: 28px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 14px 30px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .contact-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(59,31,14,0.3); }
+    .map-wrap iframe {
+      width: 100%;
+      height: 370px;
+      border: 0;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(59,31,14,0.1);
+    }
+
+    /* Footer */
+    .site-footer {
+      background: var(--primary);
+      color: rgba(255,255,255,0.85);
+      padding-block: 48px 32px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+      text-align: center;
+    }
+    .footer-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .footer-address {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 4px;
+    }
+    .footer-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      margin-block: 28px;
+    }
+    .footer-credit {
+      font-size: 11px;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.03em;
+    }
+    .footer-credit a { color: rgba(255,255,255,0.45); text-decoration: underline; }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Photo section */
+    .photos-section { background: #f5f0ea; padding-block: 0; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .gallery-strip { grid-template-columns: 1fr 1fr; }
+      .gallery-strip .gallery-img:last-child { grid-column: 1 / -1; }
+      .map-wrap iframe { height: 280px; }
+    }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 2.2rem; }
+      .gallery-strip { grid-template-columns: 1fr; }
+      .gallery-strip .gallery-img:last-child { grid-column: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- DEMO BANNER -->
+  <div class="demo-banner">
+    Cafe Deco — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman? <a href="mailto:team@masasite.com" style="margin-left:6px">Ota yhteyttä →</a>
+  </div>
+
+  <!-- STICKY NAV -->
+  <nav class="site-nav" id="site-nav">
+    <div class="nav-inner">
+      <span class="nav-logo">Cafe Deco</span>
+      <ul class="nav-links">
+        <li><a href="#palvelut">Palvelut</a></li>
+        <li><a href="#aukioloajat">Aukioloajat</a></li>
+        <li><a href="#yhteystiedot">Yhteystiedot</a></li>
+      </ul>
+      <a href="#yhteystiedot" class="btn-nav">Löydä meidät</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow">Tampere · Art Deco Kahvila</p>
+      <h1>Tamperelainen kahvila, jossa tyyli kohtaa makuun</h1>
+      <p class="hero-sub">Cafe Deco on Tampereen suosikki kahvila, joka yhdistää art deco -hengen moderniin kahvilakulttuuriin. Vierailijat arvostavat erityisesti paikan tunnelmaa ja laadukkaita juomia.</p>
+      <div class="hero-rating">
+        <div class="hero-stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <span>4.6/5 · 55 arvostelua Google Maps</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="#yhteystiedot" class="btn-primary">Käy tutustumassa nyt</a>
+        <a href="#palvelut" class="btn-ghost">Tutustu palveluihin</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services-section section-wrap" id="palvelut">
+    <div class="container">
+      <div style="text-align:center;" class="reveal">
+        <span class="section-eyebrow">Mitä tarjoamme</span>
+        <h2 class="section-title centered">Palvelumme</h2>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-icon"><i data-lucide="coffee"></i></div>
+          <h3>Specialty-kahvit</h3>
+          <p>Huolellisesti valmistetut kahvijuomat paikallisella paahdetulla pavulla. Jokainen kuppi on taideteos.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon"><i data-lucide="sparkles"></i></div>
+          <h3>Kahvilan tunnelma</h3>
+          <p>Art deco -tyyliin sisustettu, Instagram-arvoinen miljöö rentoutumiseen. Tule kokemaan ainutlaatuinen tunnelma.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon"><i data-lucide="users"></i></div>
+          <h3>Viihtyisä oleskelutila</h3>
+          <p>Ihanteellinen paikka lukea, työskennellä tai tavata ystäviä. Tervetuloa viihtymään omaan tahtiisi.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="section-wrap" style="background:#fff; padding-block: clamp(48px,7vw,80px);">
+    <div class="container">
+      <div class="gallery-strip reveal">
+        <img src="assets/cafe-deco-32f536b0/photo1.jpg" alt="Cafe Deco sisätila" class="gallery-img" />
+        <img src="assets/cafe-deco-32f536b0/photo2.jpg" alt="Cafe Deco kahvijuomat" class="gallery-img" />
+        <img src="assets/cafe-deco-32f536b0/photo3.jpg" alt="Cafe Deco leivonnaiset" class="gallery-img" />
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section class="why-section section-wrap">
+    <div class="container">
+      <div style="text-align:center;" class="reveal">
+        <span class="section-eyebrow">Miksi valita meidät</span>
+        <h2 class="section-title centered">Mikä tekee Cafe Decosta erityisen</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-item reveal">
+          <div class="why-icon"><i data-lucide="award"></i></div>
+          <h3>Erinomainen maine</h3>
+          <p>4.6/5 tähteä 55 asiakkaan arvostelun perusteella. Asiakkaamme palaavat yhä uudelleen.</p>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-icon"><i data-lucide="zap"></i></div>
+          <h3>Ainutlaatuinen design</h3>
+          <p>Persoonallinen art deco -sisustus erottuu muista kahviloista. Jokainen vierailu on elämys.</p>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-icon"><i data-lucide="heart"></i></div>
+          <h3>Käsintehtyjä herkkuja</h3>
+          <p>Paikan päällä valmistetut juomat ja leivonnaiset. Erityishuomio raaka-aineiden laatuun jokaisessa annoksessa.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews-section section-wrap">
+    <div class="container">
+      <div style="text-align:center;" class="reveal">
+        <span class="section-eyebrow">Asiakkaiden kokemuksia</span>
+        <h2 class="section-title centered">Mitä asiakkaat sanovat</h2>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card reveal">
+          <div class="review-stars">
+            <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+          </div>
+          <p class="review-text">"Exquisite savory and sweet pies and robust salads, plus cozy atmosphere."</p>
+          <div class="review-author">Janne Himanka</div>
+        </div>
+        <div class="review-card reveal">
+          <div class="review-stars">
+            <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+          </div>
+          <p class="review-text">"Excellent place, small and friendly. Good coffee, delicious homemade pastries, also A-rights, reasonable prices. Friendly service. Everything is in place, nice to rest your feet after a walk around the market."</p>
+          <div class="review-author">Wilhelm Salminen</div>
+        </div>
+        <div class="review-card reveal">
+          <div class="review-stars">
+            <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+          </div>
+          <p class="review-text">"When you bravely step inside, you are guaranteed to be surprised on the threshold. At first you only see clothes, then a few tables and a cheerful greeting is heard from somewhere. A good smell leads you to the display case. The lovely owner makes everything she serves herself."</p>
+          <div class="review-author">Anni Majander</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPENING HOURS -->
+  <section class="hours-section section-wrap" id="aukioloajat">
+    <div class="container">
+      <div style="text-align:center;" class="reveal">
+        <span class="section-eyebrow">Milloin olemme auki</span>
+        <h2 class="section-title centered">Aukioloajat</h2>
+      </div>
+      <div class="hours-card reveal">
+        <div class="hours-row closed">
+          <span class="hours-day">Maanantai</span>
+          <span class="hours-time">Suljettu</span>
+        </div>
+        <div class="hours-row closed">
+          <span class="hours-day">Tiistai</span>
+          <span class="hours-time">Suljettu</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Keskiviikko</span>
+          <span class="hours-time">12:00 – 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Torstai</span>
+          <span class="hours-time">12:00 – 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Perjantai</span>
+          <span class="hours-time">12:00 – 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Lauantai</span>
+          <span class="hours-time">10:00 – 16:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Sunnuntai</span>
+          <span class="hours-time">12:00 – 18:00</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section section-wrap" id="yhteystiedot">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <span class="section-eyebrow">Ota yhteyttä</span>
+          <h2>Löydä meidät Tampereelta</h2>
+          <div class="contact-line">
+            <i data-lucide="map-pin"></i>
+            <span>Ilmarinkatu 8, 33100 Tampere, Suomi</span>
+          </div>
+          <div class="contact-line">
+            <i data-lucide="phone"></i>
+            <a href="tel:0500315402">050 0315402</a>
+          </div>
+          <div class="contact-line">
+            <i data-lucide="clock"></i>
+            <span>Ke–Pe 12–20 · La 10–16 · Su 12–18</span>
+          </div>
+          <a href="tel:0500315402" class="contact-btn">Soita meille</a>
+        </div>
+        <div class="map-wrap reveal">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Ilmarinkatu%208%2C%2033100%20Tampere%2C%20Suomi%2C%20Tampere%2C%20Finland&language=fi"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Cafe Deco sijainti kartalla">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-name">Cafe Deco</div>
+      <p class="footer-address">Ilmarinkatu 8, 33100 Tampere, Suomi</p>
+      <p class="footer-address">050 0315402</p>
+      <hr class="footer-divider" />
+      <p class="footer-credit">Demo luotu <a href="https://masasite.com" target="_blank">masasite.com</a> palvelulla</p>
+    </div>
+  </footer>
+
+  <script>
+    // Lucide icons
+    lucide.createIcons();
+
+    // Nav scroll effect
+    const nav = document.getElementById('site-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Reveal on scroll
+    const revealEls = document.querySelectorAll('.reveal');
+    revealEls.forEach((el, i) => {
+      el.style.setProperty('--i', i % 4);
+    });
+
+    const io = new IntersectionObserver(
+      entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    revealEls.forEach(el => io.observe(el));
+
+    // Stagger cards in grids
+    document.querySelectorAll('.services-grid .service-card, .reviews-grid .review-card, .why-grid .why-item').forEach((card, i) => {
+      card.style.transitionDelay = `calc(${i % 3} * 80ms)`;
+    });
+  </script>
+</body>
+</html>
