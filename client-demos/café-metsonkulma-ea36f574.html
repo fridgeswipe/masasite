@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Café Metsonkulma – Tampere</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: #3b1f0e;
+      --accent: #c8874a;
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --text: #1a0f08;
+      --muted: #7a6055;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding-top: 40px;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    /* DEMO BANNER */
+    .demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(200, 135, 74, 0.92);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: white;
+      letter-spacing: 0.01em;
+      text-align: center;
+      padding-inline: 16px;
+    }
+    .demo-banner a { color: white; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+
+    /* NAV */
+    .site-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(250, 250, 249, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(59,31,14,0.08);
+      transition: box-shadow 0.3s ease;
+    }
+    .site-nav.scrolled {
+      box-shadow: 0 2px 20px rgba(59,31,14,0.08);
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100svh;
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.62) 100%),
+        url('assets/café-metsonkulma-ea36f574/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-content {
+      animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 9999px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      border: none;
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0,0,0,0.2); }
+    .btn:active { transform: translateY(-1px); }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-ghost {
+      background: rgba(255,255,255,0.18);
+      color: white;
+      border: 1.5px solid rgba(255,255,255,0.45);
+      backdrop-filter: blur(8px);
+    }
+    .btn-accent-sm {
+      background: var(--accent);
+      color: white;
+      padding: 10px 22px;
+      font-size: 0.875rem;
+    }
+
+    /* SERVICE CARD */
+    .service-card {
+      background: white;
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+    .icon-wrap {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+      color: var(--accent);
+    }
+    .icon-wrap i { width: 28px; height: 28px; }
+
+    /* WHY CARD */
+    .why-icon { color: var(--accent); }
+    .why-icon i { width: 40px; height: 40px; }
+
+    /* REVIEW CARD */
+    .review-card {
+      background: white;
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .review-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.10);
+    }
+    .star-gold { color: #f59e0b; fill: #f59e0b; width: 16px; height: 16px; }
+
+    /* HOURS */
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(59,31,14,0.07);
+    }
+    .hours-row:last-child { border-bottom: none; }
+
+    /* FOOTER */
+    footer {
+      background: var(--primary);
+      color: rgba(255,255,255,0.85);
+    }
+
+    /* SECTION LABEL */
+    .section-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /* HERO RATING STARS */
+    .hero-star { color: #f59e0b; fill: #f59e0b; width: 20px; height: 20px; }
+
+    /* MAPS */
+    .map-frame {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    }
+
+    /* NAV CTA */
+    .nav-cta {
+      background: var(--accent);
+      color: white;
+      padding: 9px 20px;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+    }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(200,135,74,0.35); }
+
+    /* MEDIA GALLERY */
+    .photo-grid img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ [1] DEMO BANNER ═══ -->
+<div class="demo-banner">
+  Café Metsonkulma — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman?&nbsp;<a href="mailto:team@masasite.com">Ota yhteyttä →</a>
+</div>
+
+<!-- ═══ [2] STICKY NAV ═══ -->
+<nav class="site-nav" id="site-nav">
+  <div style="max-width:1200px; margin:0 auto; padding-inline: clamp(16px,5vw,48px);">
+    <div style="display:flex; align-items:center; justify-content:space-between; height:64px; gap:24px;">
+      <!-- Logo -->
+      <a href="#" style="text-decoration:none; display:flex; align-items:center; gap:8px; flex-shrink:0;">
+        <span style="font-family:'Playfair Display',serif; font-weight:800; font-size:1.2rem; color:var(--primary); letter-spacing:-0.01em;">Café Metsonkulma</span>
+      </a>
+
+      <!-- Nav Links (desktop) -->
+      <div style="display:flex; align-items:center; gap:32px;" class="hidden md:flex">
+        <a href="#palvelut" style="text-decoration:none; font-size:0.9rem; font-weight:500; color:var(--muted); transition:color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted)'">Palvelut</a>
+        <a href="#aukioloajat" style="text-decoration:none; font-size:0.9rem; font-weight:500; color:var(--muted); transition:color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted)'">Aukioloajat</a>
+        <a href="#yhteystiedot" style="text-decoration:none; font-size:0.9rem; font-weight:500; color:var(--muted); transition:color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted)'">Yhteystiedot</a>
+      </div>
+
+      <!-- CTA -->
+      <a href="tel:0400169700" class="nav-cta">
+        <span style="display:flex;align-items:center;gap:6px;"><i data-lucide="phone" style="width:14px;height:14px;"></i> 040 0169700</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ [3] HERO ═══ -->
+<section class="hero" id="hero">
+  <div class="hero-content" style="text-align:center; color:white; padding-inline: clamp(16px,5vw,48px); max-width:860px; margin:0 auto;">
+    <p class="section-label" style="color:rgba(200,135,74,0.95); margin-bottom:20px;">Tampere &nbsp;·&nbsp; Puutarhakatu 20</p>
+    <h1 style="font-size: clamp(2.4rem, 6vw, 5.2rem); font-weight:900; color:white; margin-bottom:24px; text-shadow: 0 2px 16px rgba(0,0,0,0.3);">
+      Tampereen suosituin kahvila&nbsp;— Metsonkulma
+    </h1>
+    <p style="font-size:clamp(1rem, 2.2vw, 1.25rem); color:rgba(255,255,255,0.82); max-width:580px; margin:0 auto 32px; line-height:1.7;">
+      Café Metsonkulma on Tampereen rakastettu kahvila, jossa yhdistyvät laadukas kahvi, viihtyisä tunnelma ja asiakaspalvelu. Yli 250 asiakkaan antama 4,8 tähden arvosana kertoo pitkäaikaisesta luotettavuudesta ja johdonmukaisesta laadusta.
+    </p>
+
+    <!-- Rating -->
+    <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:36px;">
+      <div style="display:flex; gap:3px;">
+        <i data-lucide="star" class="hero-star"></i>
+        <i data-lucide="star" class="hero-star"></i>
+        <i data-lucide="star" class="hero-star"></i>
+        <i data-lucide="star" class="hero-star"></i>
+        <i data-lucide="star" class="hero-star"></i>
+      </div>
+      <span style="font-size:0.95rem; color:rgba(255,255,255,0.88); font-weight:500;">4.8/5 &nbsp;·&nbsp; 250 arvostelua</span>
+    </div>
+
+    <!-- CTAs -->
+    <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
+      <a href="#yhteystiedot" class="btn btn-primary">
+        <i data-lucide="coffee" style="width:18px;height:18px;"></i>
+        Tule nauttimaan kahvia
+      </a>
+      <a href="#palvelut" class="btn btn-ghost">
+        <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
+        Tutustu tarjontaan
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ [4] SERVICES ═══ -->
+<section id="palvelut" style="background:#f5ede3; padding-block: clamp(64px, 10vw, 112px);">
+  <div style="max-width:1200px; margin:0 auto; padding-inline: clamp(16px,5vw,48px);">
+
+    <div class="reveal" style="text-align:center; margin-bottom:56px;">
+      <p class="section-label" style="margin-bottom:12px;">Mitä tarjoamme</p>
+      <h2 style="font-size: clamp(1.75rem, 4vw, 3rem); color: var(--primary);">Kahvilakokemuksemme</h2>
+      <p style="color:var(--muted); max-width:520px; margin:16px auto 0; font-size:1rem;">Laadukkaat kahvit, tunnelmallinen ympäristö ja ystävällinen palvelu – kaikki yhdessä paikassa.</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:24px;">
+
+      <!-- Card 1 -->
+      <div class="service-card reveal" style="--i:0;">
+        <div class="icon-wrap">
+          <i data-lucide="coffee"></i>
+        </div>
+        <h3 style="font-size:1.2rem; font-weight:700; color:var(--primary); margin-bottom:10px;">Kahvit ja kahvijuomat</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7;">Ammattitaidolla valmistetut erikoiskahvit ja lämpimät juomat – joka kuppi tehdään rakkaudella ja tarkkuudella.</p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="service-card reveal" style="--i:1;">
+        <div class="icon-wrap">
+          <i data-lucide="sofa"></i>
+        </div>
+        <h3 style="font-size:1.2rem; font-weight:700; color:var(--primary); margin-bottom:10px;">Kahvilan tunnelma</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7;">Rento ja viihtyisä paikka rentoutua tai tavata ystäviä. Kodikkaat tilat kutsuvat jäämään pidemmäksikin aikaa.</p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="service-card reveal" style="--i:2;">
+        <div class="icon-wrap">
+          <i data-lucide="clock"></i>
+        </div>
+        <h3 style="font-size:1.2rem; font-weight:700; color:var(--primary); margin-bottom:10px;">Päivittäiset aukioloajat</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7;">Saatavilla arkipäivisin 10:00–18:00 sekä viikonloppuisin. Löydät meidät aina kun kahvin tarve yllättää.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO STRIP -->
+<section style="background:var(--primary); padding-block: clamp(48px,8vw,80px);">
+  <div style="max-width:1200px; margin:0 auto; padding-inline: clamp(16px,5vw,48px);">
+    <div class="photo-grid reveal" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap:16px; height: auto;">
+      <div style="aspect-ratio:4/3; overflow:hidden; border-radius:16px;">
+        <img src="assets/café-metsonkulma-ea36f574/photo2.jpg" alt="Café Metsonkulma sisätilat" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:16px;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'" />
+      </div>
+      <div style="aspect-ratio:4/3; overflow:hidden; border-radius:16px;">
+        <img src="assets/café-metsonkulma-ea36f574/photo3.jpg" alt="Café Metsonkulma kahvi" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:16px;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'" />
+      </div>
+      <div style="aspect-ratio:4/3; overflow:hidden; border-radius:16px;">
+        <img src="assets/café-metsonkulma-ea36f574/photo1.jpg" alt="Café Metsonkulma tunnelma" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:16px;transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ [5] WHY US ═══ -->
+<section style="background:white; padding-block: clamp(64px, 10vw, 112px);">
+  <div style="max-width:1200px; margin:0 auto; padding-inline: clamp(16px,5vw,48px);">
+
+    <div class="reveal" style="text-align:center; margin-bottom:56px;">
+      <p class="section-label" style="margin-bottom:12px;">Miksi valita meidät</p>
+      <h2 style="font-size: clamp(1.75rem, 4vw, 3rem); color: var(--primary);">Tamperelaisten suosikki</h2>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:40px;">
+
+      <div class="reveal" style="--i:0; text-align:center; padding:8px;">
+        <div class="why-icon" style="display:flex; justify-content:center; margin-bottom:20px;">
+          <i data-lucide="award"></i>
+        </div>
+        <h3 style="font-size:1.15rem; font-weight:700; color:var(--primary); margin-bottom:12px;">4,8/5 arvosana</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7;">Tamperelaiset antavat 4,8/5 arvosanan — yksi parhaimmista kahviloista koko kaupungissa.</p>
+      </div>
+
+      <div class="reveal" style="--i:1; text-align:center; padding:8px;">
+        <div class="why-icon" style="display:flex; justify-content:center; margin-bottom:20px;">
+          <i data-lucide="users"></i>
+        </div>
+        <h3 style="font-size:1.15rem; font-weight:700; color:var(--primary); margin-bottom:12px;">250+ tyytyväistä asiakasta</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7;">Yli 250 positiivista arvostelua osoittaa pitkäaikaista asiakastyytyväisyyttä ja luotettavuutta.</p>
+      </div>
+
+      <div class="reveal" style="--i:2; text-align:center; padding:8px;">
+        <div class="why-icon" style="display:flex; justify-content:center; margin-bottom:20px;">
+          <i data-lucide="shield-check"></i>
+        </div>
+        <h3 style="font-size:1.15rem; font-weight:700; color:var(--primary); margin-bottom:12px;">Johdonmukainen laatu</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.7;">Vakaat aukioloajat ja johdonmukainen laatu joka käyntikerralla — aina sama lämmin kokemus.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ [6] REVIEWS ═══ -->
+<section style="background:#faf5ee; padding-block: clamp(64px, 10vw, 112px);">
+  <div style="max-width:1200px; margin:0 auto; padding-inline: clamp(16px,5vw,48px);">
+
+    <div class="reveal" style="text-align:center; margin-bottom:56px;">
+      <p class="section-label" style="margin-bottom:12px;">Asiakaskokemukset</p>
+      <h2 style="font-size: clamp(1.75rem, 4vw, 3rem); color: var(--primary);">Mitä asiakkaat sanovat</h2>
+      <p style="color:var(--muted); max-width:480px; margin:16px auto 0;">Aidot arvostelut Google Mapsista — suoraan asiakkailta.</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:24px;">
+
+      <!-- Review 1 -->
+      <div class="review-card reveal" style="--i:0;">
+        <div style="display:flex; gap:3px; margin-bottom:16px;">
+          <i data-lucide="star" class="star-gold"></i>
+          <i data-lucide="star" class="star-gold"></i>
+          <i data-lucide="star" class="star-gold"></i>
+          <i data-lucide="star" class="star-gold"></i>
+          <i data-lucide="star" class="star-gold"></i>
+        </div>
+        <p style="font-style:italic; color:var(--muted); font-size:0.92rem; line-height:1.75; margin-bottom:20px;">
+          "Café Metsonkulma in Tampere is a cosy, welcoming café with a calm atmosphere, friendly staff, and good-quality coffee and pastries. What makes it stand out is its local character — the décor includes photos celebrating popular Finnish personalities who come from Tampere, giving the café a strong sense of identity."
+        </p>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:36px; height:36px; border-radius:50%; background:color-mix(in srgb, var(--accent) 20%, transparent); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-weight:700; color:var(--accent); font-size:0.9rem;">M</div>
+          <div>
+            <p style="font-weight:700; font-size:0.88rem; color:var(--primary);">Marilyn Gamboa</p>
+            <p style="font-size:0.75rem; color:var(--muted);">Google-arvostelu</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Review 2 -->
+      <div class="review-card reveal" style="--i:1;">
+        <div style="display:flex; gap:3px; margin-bottom:16px;">
+          <i data-lucide="star" class="star-gold"></i>
+          <i data-lucide="star" class="star-gold"></i>
+          <i data-lucide="star" class="star-gold"></i>
+          <i data-lucide="star" class="star-gold"></i>
+          <i data-lucide="star" class="star-gold"></i>
+        </div>
+        <p style="font-style:italic; color:var(--muted); font-size:0.92rem; line-height:1.75; margin-bottom:20px;">
+          "Very good service and nice atmosphere! Food was good too! ☺️ Kiitos!"
+        </p>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:36px; height:36px; border-radius:50%; background:color-mix(in srgb, var(--accent) 20%, transparent); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-weight:700; color:var(--accent); font-size:0.9rem;">A</div>
+          <div>
+            <p style="font-weight:700; font-size:0.88rem; color:var(--primary);">Anna Khachatryan</p>
+            <p style="font-size:0.75rem; color:var(--muted);">Google-arvostelu</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Review 3 -->
+      <div class="review-card reveal" style="--i:2;">
+        <div style="display:flex; gap:3px; margin-bottom:16px;">
+          <i data-lucide="star" class="star-gold"></i>
+          <i data-lucide="star" class="star-gold"></i>
+          <i data-lucide="star" class="star-gold"></i>
+          <i data-lucide="star" class="star-gold"></i>
+          <i data-lucide="star" class="star-gold"></i>
+        </div>
+        <p style="font-style:italic; color:var(--muted); font-size:0.92rem; line-height:1.75; margin-bottom:20px;">
+          "Very warm decor, atmosphere and staff. I went in at 10:00 and the person working was amazing and already energetic! Made my day by talking about shared interests (Pokémon) and even gave me a little handmade trinket. I will definitely stop by again."
+        </p>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:36px; height:36px; border-radius:50%; background:color-mix(in srgb, var(--accent) 20%, transparent); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-weight:700; color:var(--accent); font-size:0.9rem;">V</div>
+          <div>
+            <p style="font-weight:700; font-size:0.88rem; color:var(--primary);">Vierailija</p>
+            <p style="font-size:0.75rem; color:var(--muted);">Google-arvostelu</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ [7] OPENING HOURS ═══ -->
+<section id="aukioloajat" style="background:white; padding-block: clamp(64px, 10vw, 112px);">
+  <div style="max-width:640px; margin:0 auto; padding-inline: clamp(16px,5vw,48px);">
+
+    <div class="reveal" style="text-align:center; margin-bottom:48px;">
+      <p class="section-label" style="margin-bottom:12px;">Aukioloajat</p>
+      <h2 style="font-size: clamp(1.75rem, 4vw, 3rem); color: var(--primary);">Tervetuloa</h2>
+      <p style="color:var(--muted); margin-top:12px; font-size:0.95rem;">Olemme avoinna kuutena päivänä viikossa. Poikkea milloin tahansa!</p>
+    </div>
+
+    <div class="reveal" style="background:var(--bg); border-radius:20px; padding:8px 32px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);">
+      <div class="hours-row">
+        <span style="font-weight:600; color:var(--primary); font-size:0.95rem;">Maanantai</span>
+        <span style="color:var(--muted); font-size:0.9rem;">10:00 – 18:00</span>
+      </div>
+      <div class="hours-row">
+        <span style="font-weight:600; color:var(--primary); font-size:0.95rem;">Tiistai</span>
+        <span style="color:var(--muted); font-size:0.9rem;">10:00 – 18:00</span>
+      </div>
+      <div class="hours-row">
+        <span style="font-weight:600; color:var(--primary); font-size:0.95rem;">Keskiviikko</span>
+        <span style="color:var(--muted); font-size:0.9rem;">10:00 – 18:00</span>
+      </div>
+      <div class="hours-row">
+        <span style="font-weight:600; color:var(--primary); font-size:0.95rem;">Torstai</span>
+        <span style="color:var(--muted); font-size:0.9rem;">10:00 – 18:00</span>
+      </div>
+      <div class="hours-row">
+        <span style="font-weight:600; color:var(--primary); font-size:0.95rem;">Perjantai</span>
+        <span style="color:var(--muted); font-size:0.9rem;">10:00 – 18:00</span>
+      </div>
+      <div class="hours-row">
+        <span style="font-weight:600; color:var(--primary); font-size:0.95rem;">Lauantai</span>
+        <span style="color:var(--muted); font-size:0.9rem;">10:00 – 18:00</span>
+      </div>
+      <div class="hours-row">
+        <span style="font-weight:600; color:var(--primary); font-size:0.95rem;">Sunnuntai</span>
+        <span style="color:var(--accent); font-size:0.9rem; font-weight:500;">12:00 – 17:00</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ [8] CONTACT ═══ -->
+<section id="yhteystiedot" style="background:#f5ede3; padding-block: clamp(64px, 10vw, 112px);">
+  <div style="max-width:1200px; margin:0 auto; padding-inline: clamp(16px,5vw,48px);">
+
+    <div class="reveal" style="text-align:center; margin-bottom:56px;">
+      <p class="section-label" style="margin-bottom:12px;">Yhteystiedot</p>
+      <h2 style="font-size: clamp(1.75rem, 4vw, 3rem); color: var(--primary);">Löydät meidät täältä</h2>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap:40px; align-items:start;">
+
+      <!-- Left: Info -->
+      <div class="reveal" style="--i:0;">
+        <div style="background:white; border-radius:20px; padding:36px 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);">
+          <h3 style="font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700; color:var(--primary); margin-bottom:28px;">Café Metsonkulma</h3>
+
+          <div style="display:flex; flex-direction:column; gap:20px;">
+            <div style="display:flex; gap:14px; align-items:flex-start;">
+              <div style="width:40px; height:40px; border-radius:10px; background:color-mix(in srgb, var(--accent) 14%, transparent); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <i data-lucide="map-pin" style="width:18px;height:18px;color:var(--accent);"></i>
+              </div>
+              <div>
+                <p style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); margin-bottom:4px;">Osoite</p>
+                <p style="font-weight:500; color:var(--primary); font-size:0.95rem;">Puutarhakatu 20<br/>33210 Tampere, Suomi</p>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:14px; align-items:flex-start;">
+              <div style="width:40px; height:40px; border-radius:10px; background:color-mix(in srgb, var(--accent) 14%, transparent); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <i data-lucide="phone" style="width:18px;height:18px;color:var(--accent);"></i>
+              </div>
+              <div>
+                <p style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); margin-bottom:4px;">Puhelin</p>
+                <a href="tel:0400169700" style="font-weight:500; color:var(--primary); font-size:0.95rem; text-decoration:none;">040 0169700</a>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:14px; align-items:flex-start;">
+              <div style="width:40px; height:40px; border-radius:10px; background:color-mix(in srgb, var(--accent) 14%, transparent); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <i data-lucide="clock" style="width:18px;height:18px;color:var(--accent);"></i>
+              </div>
+              <div>
+                <p style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); margin-bottom:4px;">Aukioloajat</p>
+                <p style="font-weight:500; color:var(--primary); font-size:0.95rem;">Ma–La: 10:00–18:00<br/>Su: 12:00–17:00</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:32px;">
+            <a href="tel:0400169700" class="btn btn-primary" style="width:100%; justify-content:center;">
+              <i data-lucide="phone" style="width:17px;height:17px;"></i>
+              Soita meille
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Map -->
+      <div class="reveal" style="--i:1;">
+        <div class="map-frame" style="height:100%; min-height:380px;">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Puutarhakatu%2020%2C%2033210%20Tampere%2C%20Suomi%2C%20Tampere%2C%20Finland&language=fi"
+            width="100%"
+            height="420"
+            style="border:0; border-radius:16px; display:block;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Café Metsonkulma sijainti">
+          </iframe>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ [9] FOOTER ═══ -->
+<footer style="padding-block: clamp(40px, 6vw, 64px);">
+  <div style="max-width:1200px; margin:0 auto; padding-inline: clamp(16px,5vw,48px);">
+    <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:24px;">
+      <div>
+        <p style="font-family:'Playfair Display',serif; font-size:1.25rem; font-weight:800; color:white; margin-bottom:10px;">Café Metsonkulma</p>
+        <p style="font-size:0.9rem; color:rgba(255,255,255,0.55); line-height:1.7;">Puutarhakatu 20<br/>33210 Tampere, Suomi</p>
+        <a href="tel:0400169700" style="font-size:0.9rem; color:rgba(255,255,255,0.6); text-decoration:none; margin-top:6px; display:block;">040 0169700</a>
+      </div>
+      <div style="text-align:right;">
+        <div style="display:flex; gap:4px; justify-content:flex-end; margin-bottom:6px;">
+          <i data-lucide="star" style="width:14px;height:14px;color:#f59e0b;fill:#f59e0b;"></i>
+          <i data-lucide="star" style="width:14px;height:14px;color:#f59e0b;fill:#f59e0b;"></i>
+          <i data-lucide="star" style="width:14px;height:14px;color:#f59e0b;fill:#f59e0b;"></i>
+          <i data-lucide="star" style="width:14px;height:14px;color:#f59e0b;fill:#f59e0b;"></i>
+          <i data-lucide="star" style="width:14px;height:14px;color:#f59e0b;fill:#f59e0b;"></i>
+        </div>
+        <p style="font-size:0.8rem; color:rgba(255,255,255,0.5);">4.8/5 · 250 arvostelua</p>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,0.08); margin-top:32px; padding-top:20px; text-align:center;">
+      <p style="font-size:11px; color:rgba(255,255,255,0.28); letter-spacing:0.03em;">Demo luotu <a href="https://masasite.com" style="color:rgba(255,255,255,0.35); text-decoration:none;">masasite.com</a> palvelulla</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script>
+  // Lucide icons
+  lucide.createIcons();
+
+  // Nav scroll effect
+  const nav = document.getElementById('site-nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }, { passive: true });
+
+  // Stagger reveal cards
+  const revealEls = document.querySelectorAll('.reveal');
+  revealEls.forEach((el, i) => {
+    const iVal = el.style.getPropertyValue('--i');
+    if (iVal !== '') {
+      el.style.transitionDelay = `calc(${iVal} * 80ms)`;
+    }
+  });
+
+  // IntersectionObserver
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    }),
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
