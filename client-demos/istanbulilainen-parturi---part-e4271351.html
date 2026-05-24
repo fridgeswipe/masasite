@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Istanbulilainen Parturi – Parturi Tampere</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #1c1208;
+      --accent: #b8860b;
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --text: #1a1208;
+      --muted: #7a6a50;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding-top: 40px;
+      line-height: 1.7;
+    }
+
+    h1, h2, h3, .headline-font {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    /* Demo Banner */
+    #demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(184, 134, 11, 0.88);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.02em;
+      text-align: center;
+      padding: 0 16px;
+    }
+    #demo-banner a {
+      color: #fff;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      margin-left: 4px;
+      opacity: 0.9;
+    }
+    #demo-banner a:hover { opacity: 1; }
+
+    /* Nav */
+    #main-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(184,134,11,0.15);
+      transition: box-shadow 0.3s ease;
+    }
+    #main-nav.scrolled {
+      box-shadow: 0 4px 24px rgba(28,18,8,0.10);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 48px);
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .btn-nav {
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 9999px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      letter-spacing: 0.01em;
+    }
+    .btn-nav:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(184,134,11,0.35);
+    }
+    .btn-nav:active { transform: translateY(0); }
+
+    /* Hero */
+    #hero {
+      min-height: 100svh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.50) 0%, rgba(0,0,0,0.65) 100%),
+        url('assets/istanbulilainen-parturi---part-e4271351/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+    .hero-content {
+      text-align: center;
+      padding: clamp(32px, 8vw, 96px) clamp(16px, 5vw, 48px);
+      max-width: 840px;
+      animation: heroFadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 20px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+    }
+    .hero-h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255,255,255,0.82);
+      max-width: 580px;
+      margin: 0 auto 28px;
+      line-height: 1.7;
+    }
+    .hero-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 36px;
+    }
+    .hero-rating .stars {
+      display: flex;
+      gap: 3px;
+    }
+    .hero-rating .stars i {
+      width: 18px;
+      height: 18px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+    .hero-rating-text {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.85);
+      font-weight: 500;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 15px 32px;
+      border-radius: 9999px;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(184,134,11,0.45);
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+    .btn-ghost {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      border: 1.5px solid rgba(255,255,255,0.4);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 15px 32px;
+      border-radius: 9999px;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    .btn-ghost:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.25);
+    }
+    .btn-ghost:active { transform: translateY(-1px); }
+
+    /* Section shared */
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Services */
+    #services {
+      background: #f5f0e8;
+      padding-block: clamp(64px, 10vw, 112px);
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .service-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(28,18,8,0.13);
+    }
+    .service-icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--accent) 14%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .service-icon-wrap i {
+      width: 28px;
+      height: 28px;
+      color: var(--accent);
+    }
+    .service-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+    .service-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* Why us */
+    #why-us {
+      background: #fff;
+      padding-block: clamp(64px, 10vw, 112px);
+    }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 40px;
+      margin-top: 56px;
+    }
+    .why-item {
+      text-align: center;
+      padding: 32px 24px;
+    }
+    .why-icon {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .why-icon i {
+      width: 40px;
+      height: 40px;
+      color: var(--accent);
+    }
+    .why-item h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .why-item p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    /* Reviews */
+    #reviews {
+      background: #f9f5ed;
+      padding-block: clamp(64px, 10vw, 112px);
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .review-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .review-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 16px;
+    }
+    .review-stars i {
+      width: 16px;
+      height: 16px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+    .review-quote {
+      font-style: italic;
+      font-size: 0.9rem;
+      color: #5a4a35;
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .review-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 9999px;
+      background: color-mix(in srgb, var(--accent) 20%, #fff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--accent);
+    }
+    .review-author-name {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--primary);
+    }
+    .review-verified {
+      font-size: 0.72rem;
+      color: #4caf50;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      margin-top: 1px;
+    }
+    .review-verified i {
+      width: 12px;
+      height: 12px;
+      color: #4caf50;
+      fill: #4caf50;
+    }
+
+    /* Opening hours */
+    #hours {
+      background: #fff;
+      padding-block: clamp(64px, 10vw, 112px);
+    }
+    .hours-card {
+      background: #faf8f3;
+      border-radius: 20px;
+      padding: 40px 48px;
+      max-width: 560px;
+      margin: 56px auto 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(184,134,11,0.12);
+      font-size: 0.9rem;
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-day {
+      font-weight: 600;
+      color: var(--primary);
+    }
+    .hours-time {
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .hours-today {
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: -4px -16px;
+    }
+    .hours-today .hours-day,
+    .hours-today .hours-time {
+      color: var(--accent);
+    }
+
+    /* Contact */
+    #contact {
+      background: #f5f0e8;
+      padding-block: clamp(64px, 10vw, 112px);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+      margin-top: 56px;
+    }
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .nav-logo { font-size: 1rem; }
+    }
+    .contact-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .contact-icon-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--accent) 14%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon-wrap i {
+      width: 20px;
+      height: 20px;
+      color: var(--accent);
+    }
+    .contact-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .contact-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    .map-wrap iframe {
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(28,18,8,0.12);
+      display: block;
+    }
+
+    /* Photo strip */
+    #gallery {
+      background: var(--primary);
+      padding-block: clamp(48px, 6vw, 80px);
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .gallery-img {
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 16px;
+      width: 100%;
+      display: block;
+      transition: transform 0.4s ease, filter 0.4s ease;
+      filter: brightness(0.92) saturate(0.9);
+    }
+    .gallery-img:hover {
+      transform: scale(1.02);
+      filter: brightness(1) saturate(1.05);
+    }
+    @media (max-width: 600px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Footer */
+    #footer {
+      background: var(--primary);
+      border-top: 1px solid rgba(184,134,11,0.2);
+      padding: 48px clamp(16px, 5vw, 48px) 32px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #e8d5a8;
+      letter-spacing: -0.01em;
+    }
+    .footer-address {
+      font-size: 0.875rem;
+      color: rgba(232, 213, 168, 0.6);
+    }
+    .footer-divider {
+      width: 48px;
+      height: 1px;
+      background: rgba(184,134,11,0.3);
+      margin: 8px auto;
+    }
+    .footer-credit {
+      font-size: 11px;
+      color: rgba(232,213,168,0.35);
+      letter-spacing: 0.04em;
+    }
+    .footer-credit a {
+      color: rgba(184,134,11,0.5);
+      text-decoration: none;
+    }
+
+    /* Scroll to top scroll effect tweaks */
+    @media (max-width: 480px) {
+      .hero-h1 { font-size: clamp(2rem, 8vw, 3.5rem); }
+      .btn-primary, .btn-ghost { padding: 13px 24px; font-size: 0.875rem; }
+      .hours-card { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- [1] DEMO BANNER -->
+  <div id="demo-banner">
+    <span>Istanbulilainen Parturi – parturi Tampere &mdash; tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman? <a href="mailto:team@masasite.com">Ota yhteyttä →</a></span>
+  </div>
+
+  <!-- [2] STICKY NAV -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <span class="nav-logo">Istanbulilainen Parturi</span>
+      <ul class="nav-links">
+        <li><a href="#services">Palvelut</a></li>
+        <li><a href="#hours">Aukioloajat</a></li>
+        <li><a href="#contact">Yhteystiedot</a></li>
+      </ul>
+      <a href="tel:0413130630" class="btn-nav">
+        Soita meille
+      </a>
+    </div>
+  </nav>
+
+  <!-- [3] HERO -->
+  <section id="hero">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Tampere &bull; Tammelan puistokatu 34</span>
+      <h1 class="hero-h1">Istanbulin perinteinen partaalikekunstaituri</h1>
+      <p class="hero-subtitle">Istanbulilainen Parturi tuo Lähi-idän parturin perinteisen osaamisen Tampereelle. Ammattitaitoiset parturit tarjoavat klassisen parranajotekniikan ja modernit hiustenleikkaukset korkealla tasolla.</p>
+      <div class="hero-rating">
+        <div class="stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <span class="hero-rating-text">4.9/5 &nbsp;(232 arvostelua)</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="tel:0413130630" class="btn-primary">
+          <i data-lucide="phone" style="width:17px;height:17px;"></i>
+          Varaa aika nyt
+        </a>
+        <a href="#services" class="btn-ghost">Tutustu palveluihin</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- [4] SERVICES GRID -->
+  <section id="services">
+    <div class="section-container">
+      <div class="reveal" style="text-align:center;">
+        <span class="section-label">Palvelumme</span>
+        <h2 class="section-title">Perinteiset parturipalvelut</h2>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal" style="transition-delay: 0ms;">
+          <div class="service-icon-wrap">
+            <i data-lucide="scissors"></i>
+          </div>
+          <h3>Klassinen parranajo</h3>
+          <p>Perinteinen ja ammattitaitoinen partakäsittely erityisillä tekniikoilla. Ainutlaatuinen kokemus suoraan Istanbulista.</p>
+        </div>
+        <div class="service-card reveal" style="transition-delay: 80ms;">
+          <div class="service-icon-wrap">
+            <i data-lucide="sparkles"></i>
+          </div>
+          <h3>Hiustenleikkaus</h3>
+          <p>Modernit ja klassikot tyylitys pätevien parturien käsissä. Jokaiselle asiakkaalle räätälöity lopputulos.</p>
+        </div>
+        <div class="service-card reveal" style="transition-delay: 160ms;">
+          <div class="service-icon-wrap">
+            <i data-lucide="heart"></i>
+          </div>
+          <h3>Partahoidon palvelut</h3>
+          <p>Kokonaisvaltainen partahoito ja trimmaus. Pidä parrasi huoliteltuina ja tyylikkäinä ammattilaistemme käsissä.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [5] WHY CHOOSE US -->
+  <section id="why-us">
+    <div class="section-container">
+      <div class="reveal" style="text-align:center;">
+        <span class="section-label">Miksi meille</span>
+        <h2 class="section-title">Tampereen paras parturikokemus</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-item reveal" style="transition-delay: 0ms;">
+          <div class="why-icon">
+            <i data-lucide="award"></i>
+          </div>
+          <h3>Ylivertainen arvosana</h3>
+          <p>4.9/5 arvosana 232 asiakkaalta &mdash; Tampereen parhaat palvelut luotettavien arvostelujen perusteella.</p>
+        </div>
+        <div class="why-item reveal" style="transition-delay: 80ms;">
+          <div class="why-icon">
+            <i data-lucide="zap"></i>
+          </div>
+          <h3>Ainutlaatuinen osaaminen</h3>
+          <p>Istanbulin perinteinen osaaminen ja modernit tekniikat yhdistyvät täysin ainutlaatuiseksi kokemukseksi.</p>
+        </div>
+        <div class="why-item reveal" style="transition-delay: 160ms;">
+          <div class="why-icon">
+            <i data-lucide="clock"></i>
+          </div>
+          <h3>Pitkät aukioloajat</h3>
+          <p>Avoinna jopa klo 19:00 saakka arkisin &mdash; palvelemme silloin, kun se teille parhaiten sopii.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO GALLERY STRIP -->
+  <section id="gallery">
+    <div class="section-container">
+      <div class="gallery-grid">
+        <img src="assets/istanbulilainen-parturi---part-e4271351/photo1.jpg" alt="Istanbulilainen Parturi Tampere" class="gallery-img reveal" />
+        <img src="assets/istanbulilainen-parturi---part-e4271351/photo2.jpg" alt="Parturipalvelut Tampere" class="gallery-img reveal" style="transition-delay:80ms;" />
+        <img src="assets/istanbulilainen-parturi---part-e4271351/photo3.jpg" alt="Klassinen parranajo Tampere" class="gallery-img reveal" style="transition-delay:160ms;" />
+      </div>
+    </div>
+  </section>
+
+  <!-- [6] REVIEWS -->
+  <section id="reviews">
+    <div class="section-container">
+      <div class="reveal" style="text-align:center;">
+        <span class="section-label">Asiakaskokemukset</span>
+        <h2 class="section-title">Mitä asiakkaamme sanovat</h2>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card reveal" style="transition-delay: 0ms;">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"My long hair was brittle and had split ends, and I wanted to cut and flatten the messy ends. I am quite happy that I came here. The barber was very friendly and skilled, he understood my request clearly and cut my hair to the shape I wanted, not too short, just a nice length. The price was also reasonable."</p>
+          <div class="review-author">
+            <div class="review-avatar">J</div>
+            <div>
+              <div class="review-author-name">Jing Jia</div>
+              <div class="review-verified">
+                <i data-lucide="check-circle"></i>
+                Vahvistettu arvostelu
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card reveal" style="transition-delay: 80ms;">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"Great haircut, accurate and stylish, super gentle and even a welcome coffee! My 3-years old son loves having his haircut on the BMW sportcar seat. Mustafa is super gentle. I saw a great variety of customers attending Istanbul for their haircut. The atmosphere is relaxed and friendly."</p>
+          <div class="review-author">
+            <div class="review-avatar">A</div>
+            <div>
+              <div class="review-author-name">Alessandra Gola</div>
+              <div class="review-verified">
+                <i data-lucide="check-circle"></i>
+                Vahvistettu arvostelu
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card reveal" style="transition-delay: 160ms;">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"Yesterday was my very first time in a mostly mans' frequented place. As a woman, it was a wonderful experiment, the hairdresser was absolutely kind, patient and attentive. I went from 30 cm of length to a beautiful bob cut. I highly recommend it for women, 10/10 !!!"</p>
+          <div class="review-author">
+            <div class="review-avatar">S</div>
+            <div>
+              <div class="review-author-name">Sonia Odh</div>
+              <div class="review-verified">
+                <i data-lucide="check-circle"></i>
+                Vahvistettu arvostelu
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [7] OPENING HOURS -->
+  <section id="hours">
+    <div class="section-container">
+      <div class="reveal" style="text-align:center;">
+        <span class="section-label">Aukioloajat</span>
+        <h2 class="section-title">Milloin olemme auki</h2>
+      </div>
+      <div class="hours-card reveal">
+        <div class="hours-row">
+          <span class="hours-day">Maanantai</span>
+          <span class="hours-time">9:00 – 19:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Tiistai</span>
+          <span class="hours-time">9:00 – 19:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Keskiviikko</span>
+          <span class="hours-time">9:00 – 19:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Torstai</span>
+          <span class="hours-time">9:00 – 19:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Perjantai</span>
+          <span class="hours-time">9:00 – 19:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Lauantai</span>
+          <span class="hours-time">9:00 – 17:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Sunnuntai</span>
+          <span class="hours-time">11:00 – 17:00</span>
+        </div>
+      </div>
+      <div style="text-align:center; margin-top:32px;" class="reveal">
+        <a href="tel:0413130630" class="btn-primary" style="display:inline-flex;">
+          <i data-lucide="phone" style="width:17px;height:17px;"></i>
+          Varaa aika: 041 313 0630
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- [8] CONTACT -->
+  <section id="contact">
+    <div class="section-container">
+      <div class="reveal" style="text-align:center;">
+        <span class="section-label">Yhteystiedot</span>
+        <h2 class="section-title">Löydä meidät Tampereelta</h2>
+      </div>
+      <div class="contact-grid">
+        <div class="reveal">
+          <div class="contact-info-item">
+            <div class="contact-icon-wrap">
+              <i data-lucide="map-pin"></i>
+            </div>
+            <div>
+              <div class="contact-label">Osoite</div>
+              <div class="contact-value">Tammelan puistokatu 34</div>
+              <div class="contact-value">33100 Tampere, Suomi</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon-wrap">
+              <i data-lucide="phone"></i>
+            </div>
+            <div>
+              <div class="contact-label">Puhelin</div>
+              <div class="contact-value">
+                <a href="tel:0413130630" style="color:var(--primary); text-decoration:none;">041 313 0630</a>
+              </div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon-wrap">
+              <i data-lucide="clock"></i>
+            </div>
+            <div>
+              <div class="contact-label">Aukioloajat</div>
+              <div class="contact-value">Ma–Pe: 9:00–19:00</div>
+              <div class="contact-value">La: 9:00–17:00 &nbsp;|&nbsp; Su: 11:00–17:00</div>
+            </div>
+          </div>
+          <div style="margin-top: 32px;">
+            <a href="tel:0413130630" class="btn-primary">
+              <i data-lucide="phone" style="width:17px;height:17px;"></i>
+              Soita ja varaa aika
+            </a>
+          </div>
+        </div>
+        <div class="map-wrap reveal" style="transition-delay: 100ms;">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Tammelan%20puistokatu%2034%2C%2033100%20Tampere%2C%20Suomi%2C%20Tampere%2C%20Finland&language=fi"
+            width="100%"
+            height="380"
+            style="border:0; border-radius:16px; min-height:280px;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Istanbulilainen Parturi sijainti kartalla">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [9] FOOTER -->
+  <footer id="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">Istanbulilainen Parturi</div>
+      <div class="footer-address">Tammelan puistokatu 34, 33100 Tampere</div>
+      <div class="footer-address">041 313 0630</div>
+      <div class="footer-divider"></div>
+      <div class="footer-credit">Demo luotu <a href="https://masasite.com" target="_blank">masasite.com</a> palvelulla</div>
+    </div>
+  </footer>
+
+  <script>
+    // Lucide Icons
+    lucide.createIcons();
+
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // IntersectionObserver for .reveal
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Stagger cards
+    document.querySelectorAll('.services-grid .service-card').forEach((c, i) => {
+      c.style.setProperty('--i', i);
+    });
+    document.querySelectorAll('.reviews-grid .review-card').forEach((c, i) => {
+      c.style.setProperty('--i', i);
+    });
+  </script>
+</body>
+</html>
