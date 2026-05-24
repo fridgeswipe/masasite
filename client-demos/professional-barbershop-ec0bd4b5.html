@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Professional Barbershop – Tampere</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #1c1208;
+      --accent: #b8860b;
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --text: #1a1208;
+      --muted: #7a6a52;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding-top: 40px;
+      margin: 0;
+    }
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      letter-spacing: -0.02em;
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .hero-content {
+      animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 9999px;
+      padding: 14px 32px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(184,134,11,0.35);
+      background: #c9980e;
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+    .btn-ghost {
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.55);
+      border-radius: 9999px;
+      padding: 13px 32px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      backdrop-filter: blur(8px);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    .btn-ghost:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.28);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+    }
+    .btn-ghost:active { transform: translateY(-1px); }
+    .service-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+    .icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .icon-wrap i { color: var(--accent); width: 28px; height: 28px; }
+    .star-icon { color: #b8860b; fill: #b8860b; width: 16px; height: 16px; }
+    .star-icon-lg { color: #b8860b; fill: #b8860b; width: 20px; height: 20px; }
+    .review-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    }
+    nav.scrolled {
+      backdrop-filter: blur(12px);
+      background: rgba(250,250,249,0.88) !important;
+    }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0ede8;
+      font-size: 0.95rem;
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .demo-banner a { color: #fff; text-decoration: underline; }
+    .demo-banner a:hover { opacity: 0.85; }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero-content h1 { font-size: clamp(2rem, 8vw, 3.5rem); }
+    }
+    @media (min-width: 769px) {
+      .nav-links { display: flex; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- [1] DEMO BANNER -->
+  <div class="demo-banner" style="position:fixed;top:0;left:0;right:0;z-index:200;height:40px;background:rgba(184,134,11,0.92);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;">
+    <p style="font-size:11px;color:#fff;text-align:center;margin:0;padding:0 16px;line-height:1.4;">
+      PROFESSIONAL BARBERSHOP — tämä esimerkkisivu on tehty juuri teille &middot; Haluatko oman? <a href="mailto:team@masasite.com">Ota yhteyttä →</a>
+    </p>
+  </div>
+
+  <!-- [2] STICKY NAV -->
+  <nav id="main-nav" style="position:sticky;top:40px;z-index:100;background:#fafaf9;border-bottom:1px solid #ede9e2;transition:background 0.3s ease,backdrop-filter 0.3s ease;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,5vw,48px);display:flex;align-items:center;justify-content:space-between;height:68px;">
+      <a href="#" style="text-decoration:none;">
+        <span style="font-family:'Playfair Display',serif;font-weight:700;font-size:1.15rem;color:var(--primary);letter-spacing:-0.01em;line-height:1.1;">
+          PROFESSIONAL<br><span style="color:var(--accent);font-size:0.78rem;font-family:'DM Sans',sans-serif;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;">BARBERSHOP</span>
+        </span>
+      </a>
+      <div class="nav-links" style="gap:32px;align-items:center;">
+        <a href="#services" style="font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;color:var(--primary);text-decoration:none;opacity:0.75;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.75'">Palvelut</a>
+        <a href="#hours" style="font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;color:var(--primary);text-decoration:none;opacity:0.75;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.75'">Aukioloajat</a>
+        <a href="#contact" style="font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;color:var(--primary);text-decoration:none;opacity:0.75;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.75'">Yhteystiedot</a>
+        <a href="tel:0405535528" class="btn-primary" style="padding:10px 24px;font-size:0.875rem;">
+          <i data-lucide="phone" style="width:15px;height:15px;"></i>
+          Varaa aika
+        </a>
+      </div>
+      <!-- Mobile CTA only -->
+      <div style="display:flex;align-items:center;gap:12px;" class="md-nav-cta">
+        <a href="tel:0405535528" class="btn-primary" style="padding:10px 20px;font-size:0.85rem;display:flex;align-items:center;gap:6px;" id="mobile-cta">
+          <i data-lucide="phone" style="width:14px;height:14px;"></i>
+          <span>Soita</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <style>
+    @media (min-width: 769px) { #mobile-cta { display: none !important; } }
+    @media (max-width: 768px) { .md-nav-cta { display: flex !important; } }
+    @media (min-width: 769px) { .md-nav-cta { display: none !important; } }
+  </style>
+
+  <!-- [3] HERO -->
+  <section style="min-height:100svh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+    <div style="position:absolute;inset:0;background-image:url('assets/professional-barbershop-ec0bd4b5/photo1.jpg');background-size:cover;background-position:center;z-index:0;"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(28,18,8,0.75) 100%);z-index:1;"></div>
+    <div class="hero-content" style="position:relative;z-index:2;text-align:center;padding:0 clamp(16px,5vw,48px);max-width:860px;">
+      <p style="font-family:'DM Sans',sans-serif;font-size:0.75rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:20px;">Tampere · Hämeenpuisto 23</p>
+      <h1 style="font-size:clamp(2.5rem,6vw,5.5rem);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-0.03em;margin:0 0 24px;">Ammattilaisen käsi,<br>täydellinen lopputulos</h1>
+      <p style="font-size:clamp(1rem,2vw,1.25rem);color:rgba(255,255,255,0.82);line-height:1.7;max-width:580px;margin:0 auto 32px;">PROFESSIONAL BARBERSHOP on Tampereen johtava parturikampaamopalvelu, jossa ammattitaitoiset kampaajat tarjoavat korkealaatuisia hiustenleikkaus- ja parranajotöitä.</p>
+      <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:36px;">
+        <i data-lucide="star" class="star-icon-lg"></i>
+        <i data-lucide="star" class="star-icon-lg"></i>
+        <i data-lucide="star" class="star-icon-lg"></i>
+        <i data-lucide="star" class="star-icon-lg"></i>
+        <i data-lucide="star" style="color:#b8860b;width:20px;height:20px;opacity:0.4;"></i>
+        <span style="color:rgba(255,255,255,0.85);font-size:0.9rem;font-family:'DM Sans',sans-serif;margin-left:8px;font-weight:500;">4.1/5 (114 arvostelua)</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;">
+        <a href="tel:0405535528" class="btn-primary">
+          <i data-lucide="calendar" style="width:17px;height:17px;"></i>
+          Varaa aikasi nyt
+        </a>
+        <a href="#services" class="btn-ghost">
+          <i data-lucide="chevron-down" style="width:17px;height:17px;"></i>
+          Katso palvelut
+        </a>
+      </div>
+    </div>
+    <!-- Scroll indicator -->
+    <div style="position:absolute;bottom:32px;left:50%;transform:translateX(-50%);z-index:2;animation:fadeUp 1s ease 1.2s both;display:flex;flex-direction:column;align-items:center;gap:6px;">
+      <span style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.5);font-family:'DM Sans',sans-serif;">Selaa</span>
+      <i data-lucide="chevron-down" style="color:rgba(255,255,255,0.5);width:18px;height:18px;"></i>
+    </div>
+  </section>
+
+  <!-- [4] SERVICES GRID -->
+  <section id="services" style="background:#f5f2ec;padding:clamp(64px,10vw,120px) 0;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,5vw,48px);">
+      <div class="reveal" style="text-align:center;margin-bottom:64px;">
+        <p style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);font-weight:700;font-family:'DM Sans',sans-serif;margin-bottom:12px;">Palvelumme</p>
+        <h2 style="font-size:clamp(1.75rem,4vw,3rem);font-weight:700;color:var(--primary);margin:0 0 16px;">Korkealaatuista parturipalvelua</h2>
+        <p style="font-size:1rem;color:var(--muted);max-width:520px;margin:0 auto;line-height:1.7;">Ammattitaito ja moderni tyyli yhdistyvät jokaisessa leikkauksessa.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
+        <div class="service-card reveal" style="--i:0;">
+          <div class="icon-wrap"><i data-lucide="scissors"></i></div>
+          <h3 style="font-size:1.2rem;font-weight:700;color:var(--primary);margin:0 0 10px;">Miesten hiustenleikkaus</h3>
+          <p style="font-size:0.95rem;color:var(--muted);line-height:1.7;margin:0;">Ammattitaitoinen leikkaus eri hiustyypeille ja tyyleihin</p>
+        </div>
+        <div class="service-card reveal" style="--i:1;">
+          <div class="icon-wrap"><i data-lucide="sparkles"></i></div>
+          <h3 style="font-size:1.2rem;font-weight:700;color:var(--primary);margin:0 0 10px;">Parranajo ja grooming</h3>
+          <p style="font-size:0.95rem;color:var(--muted);line-height:1.7;margin:0;">Perinteinen parranajo ja miesten ihohoitopalvelut</p>
+        </div>
+        <div class="service-card reveal" style="--i:2;">
+          <div class="icon-wrap"><i data-lucide="star"></i></div>
+          <h3 style="font-size:1.2rem;font-weight:700;color:var(--primary);margin:0 0 10px;">Naisten hiustenleikkaus</h3>
+          <p style="font-size:0.95rem;color:var(--muted);line-height:1.7;margin:0;">Ammattilaiset leikkaukset ja muotoilut naisille</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery strip -->
+  <section style="background:var(--primary);padding:0;overflow:hidden;">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);height:clamp(180px,25vw,360px);">
+      <div style="overflow:hidden;">
+        <img src="assets/professional-barbershop-ec0bd4b5/photo1.jpg" alt="Barbershop" style="width:100%;height:100%;object-fit:cover;opacity:0.85;transition:transform 0.5s ease;display:block;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"/>
+      </div>
+      <div style="overflow:hidden;">
+        <img src="assets/professional-barbershop-ec0bd4b5/photo2.jpg" alt="Barbershop" style="width:100%;height:100%;object-fit:cover;opacity:0.85;transition:transform 0.5s ease;display:block;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"/>
+      </div>
+      <div style="overflow:hidden;">
+        <img src="assets/professional-barbershop-ec0bd4b5/photo3.jpg" alt="Barbershop" style="width:100%;height:100%;object-fit:cover;opacity:0.85;transition:transform 0.5s ease;display:block;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"/>
+      </div>
+    </div>
+  </section>
+
+  <!-- [5] WHY CHOOSE US -->
+  <section style="background:#fff;padding:clamp(64px,10vw,120px) 0;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,5vw,48px);">
+      <div class="reveal" style="text-align:center;margin-bottom:64px;">
+        <p style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);font-weight:700;font-family:'DM Sans',sans-serif;margin-bottom:12px;">Miksi me?</p>
+        <h2 style="font-size:clamp(1.75rem,4vw,3rem);font-weight:700;color:var(--primary);margin:0;">Luotettava valinta Tampereella</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:48px;">
+        <div class="reveal" style="text-align:center;--i:0;">
+          <div style="display:flex;justify-content:center;margin-bottom:20px;">
+            <i data-lucide="award" style="color:var(--accent);width:44px;height:44px;"></i>
+          </div>
+          <h3 style="font-size:1.125rem;font-weight:700;color:var(--primary);margin:0 0 10px;">4.1/5 arvosteltu palvelu</h3>
+          <p style="font-size:0.95rem;color:var(--muted);line-height:1.7;margin:0;max-width:280px;margin-left:auto;margin-right:auto;">4.1/5 arvostelun antanut luotettava ammattilaispalvelu — 114 tyytyväistä asiakasta</p>
+        </div>
+        <div class="reveal" style="text-align:center;--i:1;">
+          <div style="display:flex;justify-content:center;margin-bottom:20px;">
+            <i data-lucide="clock" style="color:var(--accent);width:44px;height:44px;"></i>
+          </div>
+          <h3 style="font-size:1.125rem;font-weight:700;color:var(--primary);margin:0 0 10px;">Pitkät aukioloajat</h3>
+          <p style="font-size:0.95rem;color:var(--muted);line-height:1.7;margin:0;max-width:280px;margin-left:auto;margin-right:auto;">Pitkät aukioloajat ma–ke klo 9–20, helppo varata aika arjen kiireidenkin keskellä</p>
+        </div>
+        <div class="reveal" style="text-align:center;--i:2;">
+          <div style="display:flex;justify-content:center;margin-bottom:20px;">
+            <i data-lucide="shield-check" style="color:var(--accent);width:44px;height:44px;"></i>
+          </div>
+          <h3 style="font-size:1.125rem;font-weight:700;color:var(--primary);margin:0 0 10px;">Kokeneet ammattilaiset</h3>
+          <p style="font-size:0.95rem;color:var(--muted);line-height:1.7;margin:0;max-width:280px;margin-left:auto;margin-right:auto;">Kokeneet kampaajat, joilla perinteinen osaaminen ja modernit trendit hallussa</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [6] REVIEWS -->
+  <section style="background:#f5f2ec;padding:clamp(64px,10vw,120px) 0;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,5vw,48px);">
+      <div class="reveal" style="text-align:center;margin-bottom:64px;">
+        <p style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);font-weight:700;font-family:'DM Sans',sans-serif;margin-bottom:12px;">Asiakkaiden kokemuksia</p>
+        <h2 style="font-size:clamp(1.75rem,4vw,3rem);font-weight:700;color:var(--primary);margin:0;">Mitä asiakkaat sanovat</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
+        <!-- Review 1 -->
+        <div class="review-card reveal" style="--i:0;">
+          <div style="display:flex;gap:3px;margin-bottom:16px;">
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+          </div>
+          <p style="font-style:italic;font-size:0.9rem;color:var(--muted);line-height:1.7;margin:0 0 20px;">"We've been using this barbershop for over four years. I get my hair cut here, as do my two boys. If you're ready to trust the barber, you'll be happy. He has his own vision of you and what haircut suits you best."</p>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:color-mix(in srgb,var(--accent) 20%,transparent);display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:0.8rem;font-weight:700;color:var(--accent);">AM</span>
+            </div>
+            <div>
+              <p style="font-weight:700;font-size:0.875rem;margin:0;color:var(--primary);">Aleksei Martemianov</p>
+              <p style="font-size:0.75rem;color:var(--muted);margin:0;">Vakioasiakas · 5/5</p>
+            </div>
+          </div>
+        </div>
+        <!-- Review 2 -->
+        <div class="review-card reveal" style="--i:1;">
+          <div style="display:flex;gap:3px;margin-bottom:16px;">
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+          </div>
+          <p style="font-style:italic;font-size:0.9rem;color:var(--muted);line-height:1.7;margin:0 0 20px;">"The first time at this barber and based on my experience, this is not only The Best Barber at Tampere, but The Best in World. Great cut, environment and experience 💪 Thx 🙏"</p>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:color-mix(in srgb,var(--accent) 20%,transparent);display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:0.8rem;font-weight:700;color:var(--accent);">VS</span>
+            </div>
+            <div>
+              <p style="font-weight:700;font-size:0.875rem;margin:0;color:var(--primary);">Ville Saarinen</p>
+              <p style="font-size:0.75rem;color:var(--muted);margin:0;">Ensikerta · 5/5</p>
+            </div>
+          </div>
+        </div>
+        <!-- Review 3 -->
+        <div class="review-card reveal" style="--i:2;border-top:3px solid #e8e0d6;">
+          <div style="display:flex;gap:3px;margin-bottom:16px;">
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" style="color:#d0c8be;width:16px;height:16px;"></i>
+            <i data-lucide="star" style="color:#d0c8be;width:16px;height:16px;"></i>
+            <i data-lucide="star" style="color:#d0c8be;width:16px;height:16px;"></i>
+            <i data-lucide="star" style="color:#d0c8be;width:16px;height:16px;"></i>
+          </div>
+          <p style="font-style:italic;font-size:0.9rem;color:var(--muted);line-height:1.7;margin:0 0 20px;">"The worst haircut I have ever had. Completely opposite cut what I have showed from an image of mine with a proper reference cut."</p>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:#f0ece6;display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:0.8rem;font-weight:700;color:var(--muted);">UC</span>
+            </div>
+            <div>
+              <p style="font-weight:700;font-size:0.875rem;margin:0;color:var(--primary);">Umut Cem Entok</p>
+              <p style="font-size:0.75rem;color:var(--muted);margin:0;">1/5</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [7] OPENING HOURS -->
+  <section id="hours" style="background:#fff;padding:clamp(64px,10vw,120px) 0;">
+    <div style="max-width:760px;margin:0 auto;padding:0 clamp(16px,5vw,48px);">
+      <div class="reveal" style="text-align:center;margin-bottom:56px;">
+        <p style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);font-weight:700;font-family:'DM Sans',sans-serif;margin-bottom:12px;">Aukioloajat</p>
+        <h2 style="font-size:clamp(1.75rem,4vw,3rem);font-weight:700;color:var(--primary);margin:0;">Milloin olemme auki</h2>
+      </div>
+      <div class="reveal" style="background:#faf8f4;border-radius:20px;padding:8px 32px 8px;box-shadow:0 1px 3px rgba(0,0,0,0.06),0 4px 16px rgba(0,0,0,0.04);">
+        <div class="hours-row">
+          <span style="font-weight:600;color:var(--primary);font-size:0.95rem;">Maanantai</span>
+          <span style="color:var(--muted);font-size:0.95rem;">9:00 – 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:600;color:var(--primary);font-size:0.95rem;">Tiistai</span>
+          <span style="color:var(--muted);font-size:0.95rem;">9:00 – 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:600;color:var(--primary);font-size:0.95rem;">Keskiviikko</span>
+          <span style="color:var(--muted);font-size:0.95rem;">9:00 – 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:600;color:var(--primary);font-size:0.95rem;">Torstai</span>
+          <span style="color:var(--muted);font-size:0.95rem;">9:00 – 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:600;color:var(--primary);font-size:0.95rem;">Perjantai</span>
+          <span style="color:var(--muted);font-size:0.95rem;">9:00 – 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:600;color:var(--primary);font-size:0.95rem;">Lauantai</span>
+          <span style="color:var(--muted);font-size:0.95rem;">9:00 – 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:600;color:var(--accent);font-size:0.95rem;">Sunnuntai</span>
+          <span style="color:var(--accent);font-size:0.95rem;font-weight:600;">9:00 – 20:00</span>
+        </div>
+      </div>
+      <div class="reveal" style="text-align:center;margin-top:32px;">
+        <a href="tel:0405535528" class="btn-primary">
+          <i data-lucide="phone" style="width:16px;height:16px;"></i>
+          Soita ja varaa aika: 040 5535528
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- [8] CONTACT -->
+  <section id="contact" style="background:#f5f2ec;padding:clamp(64px,10vw,120px) 0;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,5vw,48px);">
+      <div class="reveal" style="text-align:center;margin-bottom:64px;">
+        <p style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);font-weight:700;font-family:'DM Sans',sans-serif;margin-bottom:12px;">Yhteystiedot</p>
+        <h2 style="font-size:clamp(1.75rem,4vw,3rem);font-weight:700;color:var(--primary);margin:0;">Löydä meidät</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px;align-items:start;">
+        <div class="reveal">
+          <div style="display:flex;flex-direction:column;gap:24px;margin-bottom:32px;">
+            <div style="display:flex;align-items:flex-start;gap:16px;">
+              <div style="width:44px;height:44px;border-radius:12px;background:color-mix(in srgb,var(--accent) 15%,transparent);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i data-lucide="map-pin" style="color:var(--accent);width:22px;height:22px;"></i>
+              </div>
+              <div>
+                <p style="font-weight:700;font-size:0.875rem;color:var(--primary);margin:0 0 4px;text-transform:uppercase;letter-spacing:0.08em;font-family:'DM Sans',sans-serif;">Osoite</p>
+                <p style="font-size:1rem;color:var(--muted);margin:0;line-height:1.6;">Hämeenpuisto 23<br>33210 Tampere, Suomi</p>
+              </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:16px;">
+              <div style="width:44px;height:44px;border-radius:12px;background:color-mix(in srgb,var(--accent) 15%,transparent);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i data-lucide="phone" style="color:var(--accent);width:22px;height:22px;"></i>
+              </div>
+              <div>
+                <p style="font-weight:700;font-size:0.875rem;color:var(--primary);margin:0 0 4px;text-transform:uppercase;letter-spacing:0.08em;font-family:'DM Sans',sans-serif;">Puhelin</p>
+                <a href="tel:0405535528" style="font-size:1rem;color:var(--muted);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">040 5535528</a>
+              </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:16px;">
+              <div style="width:44px;height:44px;border-radius:12px;background:color-mix(in srgb,var(--accent) 15%,transparent);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i data-lucide="clock" style="color:var(--accent);width:22px;height:22px;"></i>
+              </div>
+              <div>
+                <p style="font-weight:700;font-size:0.875rem;color:var(--primary);margin:0 0 4px;text-transform:uppercase;letter-spacing:0.08em;font-family:'DM Sans',sans-serif;">Aukioloajat</p>
+                <p style="font-size:1rem;color:var(--muted);margin:0;line-height:1.6;">Ma–Su klo 9:00 – 20:00</p>
+              </div>
+            </div>
+          </div>
+          <a href="tel:0405535528" class="btn-primary">
+            <i data-lucide="calendar" style="width:17px;height:17px;"></i>
+            Varaa aikasi nyt
+          </a>
+        </div>
+        <div class="reveal">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=H%C3%A4meenpuisto%2023%2C%2033210%20Tampere%2C%20Suomi%2C%20Tampere%2C%20Finland&language=fi"
+            width="100%"
+            height="380"
+            style="border:0;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.1);display:block;min-height:280px;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [9] FOOTER -->
+  <footer style="background:var(--primary);padding:48px 0 32px;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,5vw,48px);">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:32px;margin-bottom:40px;">
+        <div>
+          <span style="font-family:'Playfair Display',serif;font-weight:700;font-size:1.2rem;color:#fff;display:block;margin-bottom:4px;">PROFESSIONAL</span>
+          <span style="font-family:'DM Sans',sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);">BARBERSHOP</span>
+          <p style="font-size:0.875rem;color:rgba(255,255,255,0.55);margin:16px 0 0;line-height:1.7;">Hämeenpuisto 23<br>33210 Tampere, Suomi</p>
+        </div>
+        <div>
+          <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.4);margin:0 0 12px;font-family:'DM Sans',sans-serif;">Yhteystiedot</p>
+          <a href="tel:0405535528" style="font-size:0.95rem;color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:8px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='rgba(255,255,255,0.75)'">
+            <i data-lucide="phone" style="width:15px;height:15px;"></i>
+            040 5535528
+          </a>
+        </div>
+        <div>
+          <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.4);margin:0 0 12px;font-family:'DM Sans',sans-serif;">Aukioloajat</p>
+          <p style="font-size:0.875rem;color:rgba(255,255,255,0.65);margin:0;line-height:1.7;">Ma–Su: 9:00 – 20:00</p>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;text-align:center;">
+        <p style="font-size:11px;color:rgba(255,255,255,0.3);margin:0;font-family:'DM Sans',sans-serif;">Demo luotu <a href="https://masasite.com" style="color:rgba(255,255,255,0.4);text-decoration:none;">masasite.com</a> palvelulla</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Intersection Observer for reveal
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    document.querySelectorAll('.reveal').forEach((el, i) => {
+      el.style.setProperty('--i', el.style.getPropertyValue('--i') || i);
+      const delay = parseFloat(el.style.getPropertyValue('--i')) * 80;
+      el.style.transitionDelay = delay + 'ms';
+      io.observe(el);
+    });
+
+    // Init Lucide icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>
