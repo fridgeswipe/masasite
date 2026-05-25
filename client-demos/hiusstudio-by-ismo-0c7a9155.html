@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hiusstudio_by_Ismo — Ammattitaitoinen hiustenhoito Tampereella</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #1c1208;
+      --accent: #b8860b;
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --text: #1c1208;
+      --muted: #7a6a55;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding-top: 40px;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    h1, h2, h3, .headline-font {
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    /* Demo Banner */
+    #demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(184, 134, 11, 0.88);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.01em;
+      text-align: center;
+      padding: 0 16px;
+    }
+    #demo-banner a {
+      color: #fff;
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* Nav */
+    #main-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(250, 250, 249, 0.92);
+      border-bottom: 1px solid rgba(28, 18, 8, 0.08);
+      backdrop-filter: blur(12px);
+      transition: box-shadow 0.3s ease;
+    }
+    #main-nav.scrolled {
+      box-shadow: 0 4px 24px rgba(28,18,8,0.08);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 48px);
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 1.35rem;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+    .nav-logo span {
+      color: var(--accent);
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--primary);
+      text-decoration: none;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+      letter-spacing: 0.02em;
+    }
+    .nav-links a:hover { opacity: 1; }
+    .btn-nav {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 9999px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-nav:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(184,134,11,0.35);
+    }
+
+    /* Hero */
+    #hero {
+      min-height: 100svh;
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.48) 0%, rgba(0,0,0,0.65) 100%),
+        url('assets/hiusstudio-by-ismo-0c7a9155/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: scroll;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: clamp(64px, 10vw, 120px) clamp(16px, 5vw, 48px);
+    }
+    .hero-content {
+      max-width: 760px;
+      animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 20px;
+      background: rgba(184,134,11,0.15);
+      border: 1px solid rgba(184,134,11,0.35);
+      padding: 6px 16px;
+      border-radius: 9999px;
+    }
+    .hero-h1 {
+      font-size: clamp(2.6rem, 6vw, 5.2rem);
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 24px;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+    }
+    .hero-sub {
+      font-size: 1.125rem;
+      color: rgba(255,255,255,0.82);
+      max-width: 580px;
+      margin: 0 auto 28px;
+      line-height: 1.7;
+    }
+    .hero-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 36px;
+    }
+    .hero-rating .stars {
+      display: flex;
+      gap: 3px;
+    }
+    .hero-rating .stars i {
+      width: 18px;
+      height: 18px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+    .hero-rating-text {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.85);
+      font-weight: 500;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: 9999px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(184,134,11,0.45);
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+    .btn-ghost {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 14px 32px;
+      border-radius: 9999px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.35);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-ghost:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.25);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+
+    /* Section base */
+    .section-wrap {
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .section-title {
+      font-size: clamp(1.85rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 560px;
+      line-height: 1.7;
+    }
+    .section-header-center {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .section-header-center .section-desc {
+      margin: 0 auto;
+    }
+
+    /* Services */
+    #services { background: #f5f1eb; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .service-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(28,18,8,0.12);
+    }
+    .icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .icon-wrap i {
+      width: 28px;
+      height: 28px;
+      color: var(--accent);
+    }
+    .service-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+    .service-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* Why us */
+    #why-us { background: #ffffff; }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 40px;
+    }
+    .why-item {
+      text-align: center;
+      padding: 8px;
+    }
+    .why-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .why-icon i {
+      width: 42px;
+      height: 42px;
+    }
+    .why-item h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    .why-item p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    /* Reviews */
+    #reviews { background: #faf8f5; }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .review-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .review-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 16px;
+    }
+    .review-stars i {
+      width: 16px;
+      height: 16px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+    .review-quote {
+      font-style: italic;
+      font-size: 0.95rem;
+      color: #4a3f32;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .review-author {
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      padding: 2px 8px;
+      border-radius: 9999px;
+      letter-spacing: 0.05em;
+    }
+    .verified-badge i {
+      width: 11px;
+      height: 11px;
+    }
+
+    /* Opening Hours */
+    #opening-hours { background: #ffffff; }
+    .hours-card {
+      background: #faf8f5;
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 560px;
+      margin: 0 auto;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(28,18,8,0.07);
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-day {
+      font-weight: 500;
+      color: var(--primary);
+      font-size: 0.95rem;
+    }
+    .hours-time {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+    .hours-time.closed {
+      color: #c0392b;
+      font-weight: 500;
+    }
+    .hours-time.accent {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* Contact */
+    #contact { background: #f5f1eb; }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+    .contact-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .contact-info-item .ci-icon {
+      width: 44px;
+      height: 44px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-info-item .ci-icon i {
+      width: 20px;
+      height: 20px;
+      color: var(--accent);
+    }
+    .contact-info-item .ci-text strong {
+      display: block;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+    .contact-info-item .ci-text span {
+      font-size: 1rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+    .contact-info-item .ci-text a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .contact-info-item .ci-text a:hover {
+      color: var(--accent);
+    }
+    .map-wrap iframe {
+      width: 100%;
+      height: 380px;
+      border: 0;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(28,18,8,0.1);
+    }
+
+    /* Photo strip */
+    #gallery { background: var(--primary); overflow: hidden; }
+    .photo-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      height: 320px;
+    }
+    .photo-strip img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease, filter 0.5s ease;
+      filter: brightness(0.85);
+    }
+    .photo-strip img:hover {
+      transform: scale(1.03);
+      filter: brightness(1);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--primary);
+      color: rgba(255,255,255,0.6);
+      padding: 48px clamp(16px,5vw,48px) 32px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+    .footer-logo span { color: var(--accent); }
+    .footer-addr {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
+    }
+    .footer-divider {
+      width: 40px;
+      height: 1px;
+      background: rgba(255,255,255,0.15);
+      margin: 8px auto;
+    }
+    .footer-credit {
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.05em;
+    }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Hamburger hidden on desktop */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-logo { font-size: 1.1rem; }
+    }
+    @media (max-width: 480px) {
+      .photo-strip { height: 200px; }
+      .hours-card { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- [1] DEMO BANNER -->
+  <div id="demo-banner">
+    Hiusstudio_by_Ismo — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman? <a href="mailto:team@masasite.com">&nbsp;Ota yhteyttä →</a>
+  </div>
+
+  <!-- [2] STICKY NAV -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">Hiusstudio<span>_by_Ismo</span></a>
+      <ul class="nav-links">
+        <li><a href="#services">Palvelut</a></li>
+        <li><a href="#opening-hours">Aukioloajat</a></li>
+        <li><a href="#contact">Yhteystiedot</a></li>
+      </ul>
+      <a href="tel:0451418661" class="btn-nav">
+        Varaa aika
+      </a>
+    </div>
+  </nav>
+
+  <!-- [3] HERO -->
+  <section id="hero">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Tampere · Hallituskatu 17</span>
+      <h1 class="hero-h1 headline-font">Ammattitaitoinen hiustenhoito Tampereella</h1>
+      <p class="hero-sub">Hiusstudio_by_Ismo on Tampereen johtava hiustenhoitopalvelu, jossa ammattilaiset huolehtivat hiustesi kauneudesta huippuosaamisella. Yli 149 asiakkaan kiitollisuus 4.8 arvostelulla todistaa palvelun laatua ja asiakastyytyväisyyttä.</p>
+      <div class="hero-rating">
+        <div class="stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <span class="hero-rating-text">4.8/5 &nbsp;(149 arvostelua)</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="tel:0451418661" class="btn-primary">
+          <i data-lucide="phone" style="width:18px;height:18px;"></i>
+          Varaa aika nyt
+        </a>
+        <a href="#services" class="btn-ghost">
+          Katso palvelut
+          <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- [4] SERVICES GRID -->
+  <section id="services" class="section-wrap">
+    <div class="container">
+      <div class="section-header-center reveal">
+        <span class="section-label">Palvelumme</span>
+        <h2 class="section-title headline-font">Mitä teemme puolestasi</h2>
+        <p class="section-desc">Tarjoamme monipuoliset hiustenhoitopalvelut — leikkauksesta väritykseen ja intensiivisiin hoitoihin. Jokainen asiakas on meille ainutlaatuinen.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal" style="--i:0;">
+          <div class="icon-wrap">
+            <i data-lucide="scissors"></i>
+          </div>
+          <h3>Hiustenleikkaus</h3>
+          <p>Ammattitaitoinen leikkaus, joka korostaa sinun luonnollista tyyliäsi. Räätälöity juuri sinulle.</p>
+        </div>
+        <div class="service-card reveal" style="--i:1;">
+          <div class="icon-wrap">
+            <i data-lucide="sparkles"></i>
+          </div>
+          <h3>Hiustenväritys</h3>
+          <p>Kestävä ja ammattitaitoinen värityspalvelu kaikille hiustyypeille. Värit, jotka kestävät ja hehkuvat.</p>
+        </div>
+        <div class="service-card reveal" style="--i:2;">
+          <div class="icon-wrap">
+            <i data-lucide="heart"></i>
+          </div>
+          <h3>Hoitopalvelut</h3>
+          <p>Intensiivinen hoito ja käsittelyt hiusten terveyden parantamiseksi. Anna hiustesi hengittää.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO GALLERY STRIP -->
+  <section id="gallery">
+    <div class="photo-strip">
+      <img src="assets/hiusstudio-by-ismo-0c7a9155/photo1.jpg" alt="Hiusstudio sisätilat" />
+      <img src="assets/hiusstudio-by-ismo-0c7a9155/photo2.jpg" alt="Hiustenhoitoa ammattitaidolla" />
+      <img src="assets/hiusstudio-by-ismo-0c7a9155/photo3.jpg" alt="Laadukas hiustenhoito Tampere" />
+    </div>
+  </section>
+
+  <!-- [5] WHY CHOOSE US -->
+  <section id="why-us" class="section-wrap">
+    <div class="container">
+      <div class="section-header-center reveal">
+        <span class="section-label">Miksi me?</span>
+        <h2 class="section-title headline-font">Laatu, johon voit luottaa</h2>
+        <p class="section-desc">Hiusstudio_by_Ismo on enemmän kuin parturi — se on paikka, jossa ammattitaito kohtaa lämpimän palvelun.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-item reveal" style="--i:0;">
+          <div class="why-icon">
+            <i data-lucide="award"></i>
+          </div>
+          <h3>Ammattitiimi Ismon johtamana</h3>
+          <p>Ismo:n johtama tiimi ammattilaisista hiustenhoitajista takaa korkealaatuisen lopputuloksen joka kerta.</p>
+        </div>
+        <div class="why-item reveal" style="--i:1;">
+          <div class="why-icon">
+            <i data-lucide="star"></i>
+          </div>
+          <h3>Lähes täydellinen arvosana</h3>
+          <p>Lähes täydellinen 4.8/5 arvosana sadoilta tyytyväisiltä asiakkailta — numeroita, joista voimme olla ylpeitä.</p>
+        </div>
+        <div class="why-item reveal" style="--i:2;">
+          <div class="why-icon">
+            <i data-lucide="clock"></i>
+          </div>
+          <h3>Pitkät aukioloajat</h3>
+          <p>Pitkät aukioloajat — auki arkisin aina klo 21:00 asti. Löydät ajan, joka sopii sinun aikatauluusi.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [6] REVIEWS -->
+  <section id="reviews" class="section-wrap">
+    <div class="container">
+      <div class="section-header-center reveal">
+        <span class="section-label">Asiakasarvostelut</span>
+        <h2 class="section-title headline-font">Mitä asiakkaat sanovat</h2>
+        <p class="section-desc">Yli 149 tyytyväistä asiakasta — heidän sanansa kertovat enemmän kuin me itse voisimme.</p>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card reveal" style="--i:0;">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"Curt, to-the-point. No small talk. They will do your hair, fast and well. Inexpensive too, and not as long a wait as the other places on the same street have. Recommended. In-and-out type of place."</p>
+          <div class="review-author">
+            Jani Nummela
+            <span class="verified-badge">
+              <i data-lucide="check-circle"></i>
+              Verified
+            </span>
+          </div>
+        </div>
+        <div class="review-card reveal" style="--i:1;">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"The services in this business centre are topnotch."</p>
+          <div class="review-author">
+            John Adetola
+            <span class="verified-badge">
+              <i data-lucide="check-circle"></i>
+              Verified
+            </span>
+          </div>
+        </div>
+        <div class="review-card reveal" style="--i:2;">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"The place to go for professional hair dressing in Tampere."</p>
+          <div class="review-author">
+            Alan Thompson
+            <span class="verified-badge">
+              <i data-lucide="check-circle"></i>
+              Verified
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [7] OPENING HOURS -->
+  <section id="opening-hours" class="section-wrap">
+    <div class="container">
+      <div class="section-header-center reveal">
+        <span class="section-label">Aukioloajat</span>
+        <h2 class="section-title headline-font">Milloin olemme auki</h2>
+        <p class="section-desc">Tarjoamme pitkät aukioloajat, jotta sinulle löytyy aina sopiva aika.</p>
+      </div>
+      <div class="hours-card reveal">
+        <div class="hours-row">
+          <span class="hours-day">Maanantai</span>
+          <span class="hours-time">9:00 – 19:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Tiistai</span>
+          <span class="hours-time">9:00 – 19:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Keskiviikko</span>
+          <span class="hours-time">9:00 – 19:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Torstai</span>
+          <span class="hours-time">9:00 – 19:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Perjantai</span>
+          <span class="hours-time">9:00 – 19:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Lauantai</span>
+          <span class="hours-time accent">9:00 – 17:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Sunnuntai</span>
+          <span class="hours-time closed">Suljettu</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [8] CONTACT -->
+  <section id="contact" class="section-wrap">
+    <div class="container">
+      <div class="reveal" style="margin-bottom: 56px;">
+        <span class="section-label">Yhteystiedot</span>
+        <h2 class="section-title headline-font">Tule käymään tai soita</h2>
+        <p class="section-desc">Löydät meidät Tampereen sydämestä. Tervetuloa — varaa aikasi jo tänään.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="reveal">
+          <div class="contact-info-item">
+            <div class="ci-icon">
+              <i data-lucide="map-pin"></i>
+            </div>
+            <div class="ci-text">
+              <strong>Osoite</strong>
+              <span>Hallituskatu 17 H13<br/>33200 Tampere, Suomi</span>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="ci-icon">
+              <i data-lucide="phone"></i>
+            </div>
+            <div class="ci-text">
+              <strong>Puhelin</strong>
+              <span><a href="tel:0451418661">045 1418661</a></span>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="ci-icon">
+              <i data-lucide="clock"></i>
+            </div>
+            <div class="ci-text">
+              <strong>Aukioloajat</strong>
+              <span>Ma–Pe: 9:00–19:00<br/>La: 9:00–17:00</span>
+            </div>
+          </div>
+          <div style="margin-top: 32px;">
+            <a href="tel:0451418661" class="btn-primary" style="display:inline-flex;">
+              <i data-lucide="phone" style="width:18px;height:18px;"></i>
+              Soita ja varaa aika
+            </a>
+          </div>
+        </div>
+        <div class="map-wrap reveal">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Hallituskatu%2017%20H13%2C%2033200%20Tampere%2C%20Suomi%2C%20Tampere%2C%20Finland&language=fi"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Hiusstudio_by_Ismo sijainti">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [9] FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">Hiusstudio<span>_by_Ismo</span></div>
+      <p class="footer-addr">
+        Hallituskatu 17 H13, 33200 Tampere, Suomi<br/>
+        <a href="tel:0451418661" style="color:rgba(255,255,255,0.45);text-decoration:none;">045 1418661</a>
+      </p>
+      <div class="footer-divider"></div>
+      <p class="footer-credit">Demo luotu masasite.com palvelulla</p>
+    </div>
+  </footer>
+
+  <script>
+    // Lucide icons
+    lucide.createIcons();
+
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Intersection Observer for reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    revealEls.forEach((el, i) => {
+      if (el.style.getPropertyValue('--i') === '') {
+        el.style.setProperty('--i', i);
+      }
+    });
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry, idx) => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const delay = (parseInt(el.style.getPropertyValue('--i')) || 0) * 80;
+            setTimeout(() => {
+              el.classList.add('visible');
+            }, delay);
+            io.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    revealEls.forEach((el) => io.observe(el));
+
+    // Stagger cards in grids
+    document.querySelectorAll('.services-grid .service-card, .reviews-grid .review-card, .why-grid .why-item').forEach((card, i) => {
+      card.style.setProperty('--i', i);
+    });
+  </script>
+</body>
+</html>
