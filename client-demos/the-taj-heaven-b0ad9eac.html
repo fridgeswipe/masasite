@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Taj Heaven – Intialainen Ravintola Vantaa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #1a0a00;
+      --accent: #c0392b;
+      --bg: #fdf8f3;
+      --surface: #fff;
+      --text: #1a0a00;
+      --muted: #7a6657;
+      --gold: #d4a017;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      padding-top: 40px;
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    h1, h2, h3, .headline-font {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* Demo Banner */
+    #demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(192, 57, 43, 0.9);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.02em;
+      text-align: center;
+      padding-inline: 16px;
+    }
+    #demo-banner a {
+      color: #ffe4e0;
+      text-decoration: underline;
+      margin-left: 4px;
+      font-weight: 600;
+    }
+    #demo-banner a:hover { color: #fff; }
+
+    /* Nav */
+    #main-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(253, 248, 243, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(26, 10, 0, 0.08);
+      transition: box-shadow 0.3s ease;
+    }
+    #main-nav.scrolled {
+      box-shadow: 0 2px 24px rgba(26, 10, 0, 0.1);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 48px);
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--primary);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+    .nav-logo span {
+      color: var(--accent);
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-cta {
+      background: var(--accent);
+      color: #fff;
+      padding: 10px 22px;
+      border-radius: 999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+    }
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(192, 57, 43, 0.35);
+    }
+    .nav-mobile-hide { display: flex; }
+    @media (max-width: 640px) {
+      .nav-mobile-hide { display: none; }
+    }
+
+    /* Hero */
+    #hero {
+      min-height: 100svh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-image: url('assets/the-taj-heaven-b0ad9eac/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(10,3,0,0.50) 0%, rgba(10,3,0,0.72) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 820px;
+      padding: 0 clamp(16px, 5vw, 48px);
+      animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #f0b97a;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .hero-h1 {
+      font-size: clamp(2.4rem, 6.5vw, 5rem);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .hero-sub {
+      font-size: 1.125rem;
+      color: rgba(255,255,255,0.82);
+      max-width: 580px;
+      margin: 0 auto 28px;
+      line-height: 1.7;
+    }
+    .hero-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 36px;
+    }
+    .hero-rating .stars {
+      display: flex;
+      gap: 2px;
+    }
+    .hero-rating .stars i {
+      width: 18px;
+      height: 18px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+    .hero-rating-text {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.8);
+      font-weight: 500;
+    }
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      padding: 15px 32px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: inline-block;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(192,57,43,0.45);
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+    .btn-ghost {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      padding: 15px 32px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.3);
+      transition: transform 0.2s ease, background 0.2s ease;
+      display: inline-block;
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.25);
+      transform: translateY(-3px);
+    }
+
+    /* Sections */
+    .section-pad {
+      padding-block: clamp(64px, 10vw, 112px);
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 540px;
+      line-height: 1.7;
+    }
+
+    /* Services */
+    #services { background: #fdf8f3; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .service-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+      border: 1px solid rgba(26,10,0,0.05);
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 40px rgba(26,10,0,0.12);
+    }
+    .service-icon-wrap {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .service-icon-wrap i {
+      width: 28px; height: 28px;
+      color: var(--accent);
+    }
+    .service-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+      font-family: 'Playfair Display', serif;
+    }
+    .service-desc {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.68;
+    }
+
+    /* Why us */
+    #why { background: #fff; }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 40px;
+      margin-top: 56px;
+    }
+    .why-item {
+      text-align: center;
+      padding: 32px 24px;
+    }
+    .why-icon {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .why-icon i {
+      width: 32px; height: 32px;
+      color: var(--accent);
+    }
+    .why-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+      font-family: 'Playfair Display', serif;
+    }
+    .why-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* Reviews */
+    #reviews { background: #fdf2ee; }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .review-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);
+      border: 1px solid rgba(26,10,0,0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .review-stars { display: flex; gap: 3px; }
+    .review-stars i { width: 16px; height: 16px; color: #f59e0b; fill: #f59e0b; }
+    .review-quote {
+      font-size: 0.92rem;
+      color: #4a3828;
+      font-style: italic;
+      line-height: 1.72;
+      flex-grow: 1;
+    }
+    .review-author {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .review-verified {
+      font-size: 0.72rem;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    /* Opening Hours */
+    #hours { background: #fff; }
+    .hours-card {
+      background: #fdf8f3;
+      border-radius: 20px;
+      padding: 48px;
+      max-width: 640px;
+      margin: 48px auto 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);
+      border: 1px solid rgba(26,10,0,0.06);
+    }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(26,10,0,0.06);
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-day {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    .hours-time {
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .hours-time.highlight {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Contact */
+    #contact { background: #f5ece5; }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+      margin-top: 48px;
+    }
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 24px; }
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .contact-item-icon {
+      width: 44px; height: 44px; min-width: 44px;
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .contact-item-icon i { width: 20px; height: 20px; color: var(--accent); }
+    .contact-item-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .contact-item-val {
+      font-size: 0.975rem;
+      color: var(--primary);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+    .maps-wrap iframe {
+      width: 100%;
+      height: 380px;
+      border: 0;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(26,10,0,0.1);
+      display: block;
+    }
+    @media (max-width: 640px) {
+      .maps-wrap iframe { height: 280px; }
+    }
+
+    /* Footer */
+    #footer {
+      background: var(--primary);
+      color: rgba(255,255,255,0.75);
+      padding: 48px clamp(16px, 5vw, 48px) 32px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .footer-logo span { color: #e8956d; }
+    .footer-addr {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.55);
+    }
+    .footer-divider {
+      width: 48px;
+      height: 1px;
+      background: rgba(255,255,255,0.15);
+      margin: 8px auto;
+    }
+    .footer-credit {
+      font-size: 11px;
+      color: rgba(255,255,255,0.28);
+      letter-spacing: 0.04em;
+    }
+    .footer-credit a { color: rgba(255,255,255,0.42); text-decoration: underline; }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Photo gallery strip */
+    .photo-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 56px;
+    }
+    .photo-strip img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 16px;
+      display: block;
+    }
+    @media (max-width: 640px) {
+      .photo-strip { grid-template-columns: 1fr; }
+    }
+
+    /* Scroll hero arrow */
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      animation: scrollBounce 2s ease-in-out infinite;
+      cursor: pointer;
+      z-index: 3;
+    }
+    .hero-scroll i { width: 20px; height: 20px; }
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- [1] DEMO BANNER -->
+  <div id="demo-banner">
+    The Taj Heaven — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman?
+    <a href="mailto:team@masasite.com">Ota yhteyttä →</a>
+  </div>
+
+  <!-- [2] STICKY NAV -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <div class="nav-logo">The <span>Taj</span> Heaven</div>
+      <ul class="nav-links nav-mobile-hide">
+        <li><a href="#services">Palvelut</a></li>
+        <li><a href="#hours">Aukioloajat</a></li>
+        <li><a href="#contact">Yhteystiedot</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta">Varaa pöytä</a>
+    </div>
+  </nav>
+
+  <!-- [3] HERO -->
+  <section id="hero">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Intialainen ravintola · Vantaa</span>
+      <h1 class="hero-h1">Intialainen ruoka,<br>Vantaan sydämessä</h1>
+      <p class="hero-sub">The Taj Heaven on Vantaan suosituin intialainen ravintola, joka tarjoaa perinteisiä makuja ja modernin palvelun yhdistelmää. Laajalla valikoimalla ja erinomaisella asiakaspalvelulla olemme ansainneet luotettavan maineen paikallisessa ruokakulttuurissa.</p>
+      <div class="hero-rating">
+        <div class="stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <span class="hero-rating-text">4.6/5 · 60 arvostelua Googlessa</span>
+      </div>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-primary">Varaa pöytä nyt</a>
+        <a href="#services" class="btn-ghost">Tutustu palveluihin</a>
+      </div>
+    </div>
+    <div class="hero-scroll" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">
+      <i data-lucide="chevron-down"></i>
+    </div>
+  </section>
+
+  <!-- [4] SERVICES -->
+  <section id="services" class="section-pad">
+    <div class="container">
+      <div style="text-align:center;" class="reveal">
+        <span class="section-label">Mitä tarjoamme</span>
+        <h2 class="section-title">Palvelumme</h2>
+        <p class="section-sub" style="margin: 0 auto;">Aitojen intialaisten makujen ja vieraanvaraisen palvelun yhdistelmä – joka päivä, myöhään yöhön asti.</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card reveal" style="--i:0;">
+          <div class="service-icon-wrap">
+            <i data-lucide="utensils"></i>
+          </div>
+          <div class="service-title">À la carte -ruokailu</div>
+          <p class="service-desc">Klassisia intialaisia ruokia tandoori-uunista ja wokista, jokaisen maun mieltymysten mukaan.</p>
+        </div>
+        <div class="service-card reveal" style="--i:1;">
+          <div class="service-icon-wrap">
+            <i data-lucide="moon"></i>
+          </div>
+          <div class="service-title">Myöhäisen illan ruoka</div>
+          <p class="service-desc">Auki klo 03:00 asti – täydellinen valinta myöhäiselle ruokahalun tyydyttämiseen.</p>
+        </div>
+        <div class="service-card reveal" style="--i:2;">
+          <div class="service-icon-wrap">
+            <i data-lucide="sparkles"></i>
+          </div>
+          <div class="service-title">Ravintola-ateria</div>
+          <p class="service-desc">Nautinnollinen ruokailukokemus rentoissa ja viihtyisässä ympäristössä.</p>
+        </div>
+      </div>
+
+      <!-- Photo strip -->
+      <div class="photo-strip reveal">
+        <img src="assets/the-taj-heaven-b0ad9eac/photo1.jpg" alt="The Taj Heaven ravintola" loading="lazy" />
+        <img src="assets/the-taj-heaven-b0ad9eac/photo2.jpg" alt="Intialaista ruokaa" loading="lazy" />
+        <img src="assets/the-taj-heaven-b0ad9eac/photo3.jpg" alt="Ravintolan tunnelma" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- [5] WHY CHOOSE US -->
+  <section id="why" class="section-pad">
+    <div class="container">
+      <div style="text-align:center;" class="reveal">
+        <span class="section-label">Miksi valita meidät</span>
+        <h2 class="section-title">Ylpeitä siitä mitä teemme</h2>
+        <p class="section-sub" style="margin: 0 auto;">Kolme syytä, miksi asiakkaamme palaavat yhä uudelleen.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-item reveal" style="--i:0;">
+          <div class="why-icon">
+            <i data-lucide="award"></i>
+          </div>
+          <div class="why-title">4.6/5 asiakasarvostelu</div>
+          <p class="why-desc">Yli 60 asiakkaan luottamuksella ansaittu arvosana kertoo laadustamme paremmin kuin mikään muu.</p>
+        </div>
+        <div class="why-item reveal" style="--i:1;">
+          <div class="why-icon">
+            <i data-lucide="clock"></i>
+          </div>
+          <div class="why-title">Pitkät aukioloajat</div>
+          <p class="why-desc">Auki aamusta myöhäiseen yöhön saakka – palvelemme silloin kun muut ovat kiinni.</p>
+        </div>
+        <div class="why-item reveal" style="--i:2;">
+          <div class="why-icon">
+            <i data-lucide="chef-hat"></i>
+          </div>
+          <div class="why-title">Aito intialainen keittiö</div>
+          <p class="why-desc">Ammattitaitoinen kokki valmistaa jokaisen annoksen perinteisin menetelmin tuoreista raaka-aineista.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [6] REVIEWS -->
+  <section id="reviews" class="section-pad">
+    <div class="container">
+      <div style="text-align:center;" class="reveal">
+        <span class="section-label">Asiakkaiden kokemuksia</span>
+        <h2 class="section-title">Mitä asiakkaamme sanovat</h2>
+        <p class="section-sub" style="margin: 0 auto;">Oikeiden vieraiden sanoin – autenttiset arvostelut Googlesta.</p>
+      </div>
+      <div class="reviews-grid">
+
+        <div class="review-card reveal" style="--i:0;">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"Hidden gem! We went here because of the high ranking and it did not disappoint! The kids took burgers which were good for 6,9€. But the Taj food is what you should get! The Taj Special Kana was insanely good. So much awesome flavours for 11,9€"</p>
+          <div class="review-author">
+            Erik Arnström
+            <span class="review-verified">Vahvistettu</span>
+          </div>
+        </div>
+
+        <div class="review-card reveal" style="--i:1;">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"Best Taste In Helsinki, Food 10/10! If you are looking for anything delicious with halal meal, this is the best option. Must try their food."</p>
+          <div class="review-author">
+            Haris Ahmed
+            <span class="review-verified">Vahvistettu</span>
+          </div>
+        </div>
+
+        <div class="review-card reveal" style="--i:2;">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"EXTREMELY UNDERRATED PLACE!!!! I never knew I needed blue cheese with my hamburger until I ate here. Thank you very much and greetings from Malta!"</p>
+          <div class="review-author">
+            Raphael Reichrudel
+            <span class="review-verified">Vahvistettu</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- [7] OPENING HOURS -->
+  <section id="hours" class="section-pad">
+    <div class="container">
+      <div style="text-align:center;" class="reveal">
+        <span class="section-label">Milloin olemme auki</span>
+        <h2 class="section-title">Aukioloajat</h2>
+        <p class="section-sub" style="margin: 0 auto;">Löydät meidät lähes aina paikalta – myös myöhään yöllä.</p>
+      </div>
+      <div class="hours-card reveal">
+        <div class="hours-row">
+          <span class="hours-day">Maanantai</span>
+          <span class="hours-time">10:00 – 03:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Tiistai</span>
+          <span class="hours-time">10:00 – 03:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Keskiviikko</span>
+          <span class="hours-time">10:00 – 03:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Torstai</span>
+          <span class="hours-time">10:00 – 03:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Perjantai</span>
+          <span class="hours-time">10:00 – 00:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Lauantai</span>
+          <span class="hours-time highlight">Auki 24 tuntia</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Sunnuntai</span>
+          <span class="hours-time">10:00 – 03:00</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [8] CONTACT -->
+  <section id="contact" class="section-pad">
+    <div class="container">
+      <div class="reveal">
+        <span class="section-label">Ota yhteyttä</span>
+        <h2 class="section-title">Löydä meidät</h2>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <i data-lucide="map-pin"></i>
+            </div>
+            <div>
+              <div class="contact-item-label">Osoite</div>
+              <div class="contact-item-val">Peltolantie 2<br>01300 Vantaa, Suomi</div>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <i data-lucide="phone"></i>
+            </div>
+            <div>
+              <div class="contact-item-label">Puhelin</div>
+              <div class="contact-item-val">
+                <a href="tel:0408177877" style="color: var(--primary); text-decoration: none; font-weight: 600;">040 8177877</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <i data-lucide="clock"></i>
+            </div>
+            <div>
+              <div class="contact-item-label">Aukioloajat</div>
+              <div class="contact-item-val">Ma–To & Su: 10:00–03:00<br>Pe: 10:00–00:00 · La: 24h</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 8px;">
+            <a href="tel:0408177877" class="btn-primary" style="display: inline-flex; align-items: center; gap: 8px;">
+              <i data-lucide="phone" style="width:18px; height:18px;"></i>
+              Soita meille
+            </a>
+          </div>
+
+        </div>
+
+        <div class="maps-wrap reveal">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Peltolantie%202%2C%2001300%20Vantaa%2C%20Suomi%2C%20Vantaa%2C%20Finland&language=fi"
+            width="100%"
+            height="380"
+            style="border:0; border-radius:16px; box-shadow: 0 4px 24px rgba(26,10,0,0.1);"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="The Taj Heaven sijainti kartalla">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [9] FOOTER -->
+  <footer id="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">The <span>Taj</span> Heaven</div>
+      <p class="footer-addr">
+        Peltolantie 2, 01300 Vantaa<br>
+        040 8177877
+      </p>
+      <div class="footer-divider"></div>
+      <p class="footer-credit">Demo luotu <a href="https://masasite.com" target="_blank">masasite.com</a> palvelulla</p>
+    </div>
+  </footer>
+
+  <script>
+    // Lucide icons
+    lucide.createIcons();
+
+    // Sticky nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Reveal on scroll
+    const revealEls = document.querySelectorAll('.reveal');
+
+    // Set stagger index for cards
+    document.querySelectorAll('.services-grid .service-card, .reviews-grid .review-card, .why-grid .why-item').forEach((el, i) => {
+      const idx = parseInt(el.style.getPropertyValue('--i') || 0);
+      el.style.transitionDelay = `${idx * 80}ms`;
+    });
+
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    revealEls.forEach(el => io.observe(el));
+  </script>
+
+</body>
+</html>
