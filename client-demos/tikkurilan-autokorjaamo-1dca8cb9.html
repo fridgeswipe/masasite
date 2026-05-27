@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tikkurilan autokorjaamo – Luotettava autokorjaamo Vantaalla</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #1a1a1a;
+      --accent: #f59e0b;
+      --bg: #0d1117;
+      --surface: #161b22;
+      --text: #f0f6ff;
+      --muted: rgba(240,246,255,0.55);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background-color: #0d1117;
+      color: var(--text);
+      padding-top: 40px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, .headline-font {
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: -0.01em;
+    }
+
+    /* Demo Banner */
+    #demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(245, 158, 11, 0.88);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      font-family: 'Barlow', sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      text-align: center;
+      padding: 0 16px;
+    }
+    #demo-banner a {
+      color: #fff;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* Nav */
+    #main-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(13,17,23,0.72);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(240,246,255,0.08);
+      transition: background 0.3s ease;
+    }
+    #main-nav.scrolled {
+      background: rgba(13,17,23,0.95);
+    }
+
+    /* Hero */
+    #hero {
+      min-height: 100svh;
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.68) 100%),
+        url('assets/tikkurilan-autokorjaamo-1dca8cb9/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px clamp(16px, 5vw, 48px);
+    }
+
+    .hero-content {
+      animation: heroFadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+      max-width: 820px;
+    }
+
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .hero-h1 {
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      line-height: 1.7;
+      color: rgba(255,255,255,0.82);
+      max-width: 600px;
+      margin: 0 auto 32px;
+      font-weight: 400;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #0d1117;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 14px 28px;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      font-family: 'Barlow', sans-serif;
+      letter-spacing: 0.01em;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(245,158,11,0.4);
+      background: #fbbf24;
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.14);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 14px 28px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,0.25);
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      font-family: 'Barlow', sans-serif;
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.22);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+    }
+    .btn-ghost:active { transform: translateY(-1px); }
+
+    /* Rating stars */
+    .star-icon {
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+
+    /* Section base */
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+
+    .section-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+
+    /* Services section */
+    #palvelut {
+      padding-block: clamp(64px, 10vw, 120px);
+      background: #161b22;
+    }
+
+    .service-card {
+      background: #0d1117;
+      border: 1px solid rgba(240,246,255,0.07);
+      border-radius: 20px;
+      padding: 36px 32px;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 4px 16px rgba(0,0,0,0.15);
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+      border-color: rgba(245,158,11,0.3);
+    }
+
+    .icon-container {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: rgba(245,158,11,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      color: var(--accent);
+    }
+
+    /* Why us */
+    #why-us {
+      padding-block: clamp(64px, 10vw, 120px);
+      background: #0d1117;
+    }
+
+    .why-card {
+      text-align: center;
+      padding: 40px 32px;
+    }
+
+    /* Reviews */
+    #arvostelut {
+      padding-block: clamp(64px, 10vw, 120px);
+      background: #161b22;
+    }
+
+    .review-card {
+      background: #0d1117;
+      border: 1px solid rgba(240,246,255,0.07);
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 4px 16px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .review-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    /* Opening hours */
+    #aukioloajat {
+      padding-block: clamp(64px, 10vw, 120px);
+      background: #0d1117;
+    }
+
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(240,246,255,0.07);
+      font-size: 0.95rem;
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-row.today .day-label {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .hours-closed {
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* Contact */
+    #yhteystiedot {
+      padding-block: clamp(64px, 10vw, 120px);
+      background: #161b22;
+    }
+
+    .contact-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .contact-icon-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(245,158,11,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* Photo gallery strip */
+    .photo-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+      overflow: hidden;
+    }
+    .photo-strip img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Footer */
+    footer {
+      background: #0a0a0a;
+      border-top: 1px solid rgba(240,246,255,0.06);
+      padding-block: 48px 32px;
+    }
+
+    /* Nav links */
+    .nav-link {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: rgba(240,246,255,0.7);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      letter-spacing: 0.01em;
+    }
+    .nav-link:hover { color: var(--accent); }
+
+    /* Mobile nav */
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hero-h1 { font-size: clamp(2.4rem, 9vw, 4rem); }
+    }
+
+    /* Stagger delays */
+    .stagger-1 { transition-delay: 0ms; }
+    .stagger-2 { transition-delay: 80ms; }
+    .stagger-3 { transition-delay: 160ms; }
+    .stagger-4 { transition-delay: 240ms; }
+  </style>
+</head>
+<body>
+
+  <!-- [1] DEMO BANNER -->
+  <div id="demo-banner">
+    Tikkurilan autokorjaamo — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman? <a href="mailto:team@masasite.com">&nbsp;Ota yhteyttä →</a>
+  </div>
+
+  <!-- [2] STICKY NAV -->
+  <nav id="main-nav">
+    <div class="section-container">
+      <div style="display:flex; align-items:center; justify-content:space-between; height:64px;">
+        <a href="#hero" style="text-decoration:none;">
+          <span style="font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1.25rem; color:#f0f6ff; letter-spacing:0.02em; line-height:1;">
+            TIKKURILAN <span style="color:var(--accent);">AUTOKORJAAMO</span>
+          </span>
+        </a>
+        <div class="nav-links" style="display:flex; align-items:center; gap:32px;">
+          <a href="#palvelut" class="nav-link">Palvelut</a>
+          <a href="#aukioloajat" class="nav-link">Aukioloajat</a>
+          <a href="#yhteystiedot" class="nav-link">Yhteystiedot</a>
+        </div>
+        <a href="tel:0442444629" class="btn-primary" style="font-size:0.85rem; padding:10px 22px;">
+          <i data-lucide="phone" style="width:15px;height:15px;"></i>
+          044 2444629
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- [3] HERO -->
+  <section id="hero">
+    <div class="hero-content">
+      <span class="hero-eyebrow">⬡ Vantaan luotettu autokorjaamo</span>
+      <h1 class="hero-h1">Luotettava autokorjaamo<br/>Vantaalla</h1>
+      <p class="hero-subtitle">
+        Tikkurilan autokorjaamo on asiakkaiden suosima korjaamo Vantaalla, joka tarjoaa ammattitaitoista huoltoa ja korjausta. Neljän tähtijärjestelmällä arvioidut palvelut takaavat korkean laadun ja asiakastyytyväisyyden.
+      </p>
+      <!-- Rating -->
+      <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:36px;">
+        <div style="display:flex; gap:3px;">
+          <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+        </div>
+        <span style="font-size:0.9rem; color:rgba(255,255,255,0.85); font-weight:600;">4.8/5</span>
+        <span style="font-size:0.85rem; color:rgba(255,255,255,0.55);">(54 arvostelua)</span>
+      </div>
+      <!-- CTAs -->
+      <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
+        <a href="#yhteystiedot" class="btn-primary">
+          Varaa huolto nyt
+          <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+        </a>
+        <a href="#palvelut" class="btn-ghost">
+          Katso palvelut
+          <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO STRIP -->
+  <div class="photo-strip">
+    <img src="assets/tikkurilan-autokorjaamo-1dca8cb9/photo1.jpg" alt="Tikkurilan autokorjaamo" />
+    <img src="assets/tikkurilan-autokorjaamo-1dca8cb9/photo2.jpg" alt="Tikkurilan autokorjaamo palvelut" />
+    <img src="assets/tikkurilan-autokorjaamo-1dca8cb9/photo3.jpg" alt="Tikkurilan autokorjaamo korjaamo" />
+  </div>
+
+  <!-- [4] SERVICES -->
+  <section id="palvelut">
+    <div class="section-container">
+      <div class="reveal" style="text-align:center; margin-bottom:64px;">
+        <span class="section-eyebrow">Mitä teemme</span>
+        <h2 class="section-title" style="color:#f0f6ff;">Ammattitaitoiset<br/>autopalvelut</h2>
+        <p style="margin-top:16px; color:var(--muted); max-width:520px; margin-inline:auto; line-height:1.7; font-size:1rem;">
+          Kaikki autosi tarpeet yhdestä paikasta – luotettavasti ja ammattitaidolla.
+        </p>
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:24px;">
+        <!-- Card 1 -->
+        <div class="service-card reveal stagger-1">
+          <div class="icon-container">
+            <i data-lucide="wrench" style="width:28px;height:28px;"></i>
+          </div>
+          <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:1.4rem; font-weight:700; color:#f0f6ff; margin-bottom:12px; letter-spacing:0.01em;">Autohuolto</h3>
+          <p style="color:var(--muted); line-height:1.7; font-size:0.95rem;">Säännöllinen huolto ja kunnossapito auton parhaan kunnon säilyttämiseksi. Pidämme autosi kunnossa ja tarkistamme kaikki tärkeät komponentit.</p>
+        </div>
+        <!-- Card 2 -->
+        <div class="service-card reveal stagger-2">
+          <div class="icon-container">
+            <i data-lucide="settings" style="width:28px;height:28px;"></i>
+          </div>
+          <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:1.4rem; font-weight:700; color:#f0f6ff; margin-bottom:12px; letter-spacing:0.01em;">Korjauspalvelut</h3>
+          <p style="color:var(--muted); line-height:1.7; font-size:0.95rem;">Luotettava korjaus vaurioille, moottoriongelmille ja teknisille vioille. Ammattitaitoiset mekaanikkojemme ratkaisevat ongelmat tehokkaasti.</p>
+        </div>
+        <!-- Card 3 -->
+        <div class="service-card reveal stagger-3">
+          <div class="icon-container">
+            <i data-lucide="zap" style="width:28px;height:28px;"></i>
+          </div>
+          <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:1.4rem; font-weight:700; color:#f0f6ff; margin-bottom:12px; letter-spacing:0.01em;">Diagnostiikka</h3>
+          <p style="color:var(--muted); line-height:1.7; font-size:0.95rem;">Moderni diagnostiikka autosi ongelmien nopean tunnistamisen varalle. Käytämme uusinta teknologiaa tarkan diagnoosin tekemiseen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [5] WHY CHOOSE US -->
+  <section id="why-us">
+    <div class="section-container">
+      <div class="reveal" style="text-align:center; margin-bottom:64px;">
+        <span class="section-eyebrow">Miksi me</span>
+        <h2 class="section-title" style="color:#f0f6ff;">Miksi valita<br/>Tikkurilan autokorjaamo?</h2>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:32px;">
+        <!-- Why 1 -->
+        <div class="why-card reveal stagger-1">
+          <div style="width:64px;height:64px; border-radius:50%; background:rgba(245,158,11,0.12); display:flex; align-items:center; justify-content:center; margin:0 auto 24px; color:var(--accent);">
+            <i data-lucide="award" style="width:32px;height:32px;"></i>
+          </div>
+          <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:1.3rem; font-weight:700; color:#f0f6ff; margin-bottom:12px;">4,8/5 arvostelulla</h3>
+          <p style="color:var(--muted); line-height:1.7; font-size:0.9rem;">Asiakkaat luottavat meidän ammattitaitoon. Korkeat arvostelut kertovat laadukkaasta ja rehellisestä palvelusta.</p>
+        </div>
+        <!-- Why 2 -->
+        <div class="why-card reveal stagger-2">
+          <div style="width:64px;height:64px; border-radius:50%; background:rgba(245,158,11,0.12); display:flex; align-items:center; justify-content:center; margin:0 auto 24px; color:var(--accent);">
+            <i data-lucide="clock" style="width:32px;height:32px;"></i>
+          </div>
+          <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:1.3rem; font-weight:700; color:#f0f6ff; margin-bottom:12px;">Pitkät aukioloajat 8–18</h3>
+          <p style="color:var(--muted); line-height:1.7; font-size:0.9rem;">Sopii kiireisen elämäntahdin mukaan. Pitkät aukioloajat varmistavat, että saat palvelua silloin kun tarvitset.</p>
+        </div>
+        <!-- Why 3 -->
+        <div class="why-card reveal stagger-3">
+          <div style="width:64px;height:64px; border-radius:50%; background:rgba(245,158,11,0.12); display:flex; align-items:center; justify-content:center; margin:0 auto 24px; color:var(--accent);">
+            <i data-lucide="map-pin" style="width:32px;height:32px;"></i>
+          </div>
+          <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:1.3rem; font-weight:700; color:#f0f6ff; margin-bottom:12px;">Vantaalla sijaitseva</h3>
+          <p style="color:var(--muted); line-height:1.7; font-size:0.9rem;">Paikallinen ja helposti saavutettava palvelu. Olemme Tikkurilassa lähellä sinua – helppo tulla käymään.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [6] REVIEWS -->
+  <section id="arvostelut">
+    <div class="section-container">
+      <div class="reveal" style="text-align:center; margin-bottom:64px;">
+        <span class="section-eyebrow">Asiakkaiden kokemuksia</span>
+        <h2 class="section-title" style="color:#f0f6ff;">Mitä asiakkaamme<br/>sanovat</h2>
+        <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-top:20px;">
+          <i data-lucide="star" style="width:20px;height:20px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:20px;height:20px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:20px;height:20px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:20px;height:20px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:20px;height:20px;" class="star-icon"></i>
+          <span style="font-size:1rem; color:#f0f6ff; font-weight:700; margin-left:4px;">4.8/5</span>
+          <span style="font-size:0.85rem; color:var(--muted);">(54 Google-arvostelua)</span>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:24px;">
+        <!-- Review 1 -->
+        <div class="review-card reveal stagger-1">
+          <div style="display:flex; gap:3px; margin-bottom:16px;">
+            <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+            <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+            <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+            <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+            <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+          </div>
+          <p style="font-style:italic; color:rgba(240,246,255,0.75); font-size:0.9rem; line-height:1.7; margin-bottom:20px;">"The best service in this place. They are really friendly and my car don't pass the inspection, then they checked my car and told the price. Good service."</p>
+          <div style="display:flex; align-items:center; gap:12px; border-top:1px solid rgba(240,246,255,0.07); padding-top:16px;">
+            <div style="width:36px;height:36px; border-radius:50%; background:rgba(245,158,11,0.2); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.85rem; color:var(--accent); flex-shrink:0;">JP</div>
+            <div>
+              <p style="font-weight:700; font-size:0.85rem; color:#f0f6ff;">Jenny Pham</p>
+              <div style="display:flex; align-items:center; gap:4px; margin-top:2px;">
+                <i data-lucide="check-circle" style="width:12px;height:12px; color:var(--accent);"></i>
+                <span style="font-size:0.7rem; color:var(--accent); text-transform:uppercase; letter-spacing:0.08em; font-weight:600;">Vahvistettu arvostelu</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Review 2 -->
+        <div class="review-card reveal stagger-2">
+          <div style="display:flex; gap:3px; margin-bottom:16px;">
+            <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+            <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+            <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+            <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+            <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+          </div>
+          <p style="font-style:italic; color:rgba(240,246,255,0.75); font-size:0.9rem; line-height:1.7; margin-bottom:20px;">"Great guy, and justified pricing."</p>
+          <div style="display:flex; align-items:center; gap:12px; border-top:1px solid rgba(240,246,255,0.07); padding-top:16px;">
+            <div style="width:36px;height:36px; border-radius:50%; background:rgba(245,158,11,0.2); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.85rem; color:var(--accent); flex-shrink:0;">AM</div>
+            <div>
+              <p style="font-weight:700; font-size:0.85rem; color:#f0f6ff;">Aleksandr Makarov</p>
+              <div style="display:flex; align-items:center; gap:4px; margin-top:2px;">
+                <i data-lucide="check-circle" style="width:12px;height:12px; color:var(--accent);"></i>
+                <span style="font-size:0.7rem; color:var(--accent); text-transform:uppercase; letter-spacing:0.08em; font-weight:600;">Vahvistettu arvostelu</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Review 3 -->
+        <div class="review-card reveal stagger-3">
+          <div style="display:flex; gap:3px; margin-bottom:16px;">
+            <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+            <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+            <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+            <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+            <i data-lucide="star" style="width:15px;height:15px;" class="star-icon"></i>
+          </div>
+          <p style="font-style:italic; color:rgba(240,246,255,0.75); font-size:0.9rem; line-height:1.7; margin-bottom:20px;">"Friendly staff, gets work done."</p>
+          <div style="display:flex; align-items:center; gap:12px; border-top:1px solid rgba(240,246,255,0.07); padding-top:16px;">
+            <div style="width:36px;height:36px; border-radius:50%; background:rgba(245,158,11,0.2); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.85rem; color:var(--accent); flex-shrink:0;">JB</div>
+            <div>
+              <p style="font-weight:700; font-size:0.85rem; color:#f0f6ff;">Joriz Baluyot</p>
+              <div style="display:flex; align-items:center; gap:4px; margin-top:2px;">
+                <i data-lucide="check-circle" style="width:12px;height:12px; color:var(--accent);"></i>
+                <span style="font-size:0.7rem; color:var(--accent); text-transform:uppercase; letter-spacing:0.08em; font-weight:600;">Vahvistettu arvostelu</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [7] OPENING HOURS -->
+  <section id="aukioloajat">
+    <div class="section-container">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;">
+        <div class="reveal">
+          <span class="section-eyebrow">Milloin olemme auki</span>
+          <h2 class="section-title" style="color:#f0f6ff; margin-bottom:40px;">Aukioloajat</h2>
+          <div style="background:#161b22; border:1px solid rgba(240,246,255,0.07); border-radius:20px; padding:32px; box-shadow:0 4px 24px rgba(0,0,0,0.2);">
+            <div class="hours-row">
+              <span class="day-label" style="font-weight:600; color:#f0f6ff; font-size:0.95rem;">Maanantai</span>
+              <span style="color:rgba(240,246,255,0.8); font-size:0.95rem; font-weight:500;">08:00 – 18:00</span>
+            </div>
+            <div class="hours-row">
+              <span class="day-label" style="font-weight:600; color:#f0f6ff; font-size:0.95rem;">Tiistai</span>
+              <span style="color:rgba(240,246,255,0.8); font-size:0.95rem; font-weight:500;">08:00 – 18:00</span>
+            </div>
+            <div class="hours-row">
+              <span class="day-label" style="font-weight:600; color:#f0f6ff; font-size:0.95rem;">Keskiviikko</span>
+              <span style="color:rgba(240,246,255,0.8); font-size:0.95rem; font-weight:500;">08:00 – 18:00</span>
+            </div>
+            <div class="hours-row">
+              <span class="day-label" style="font-weight:600; color:#f0f6ff; font-size:0.95rem;">Torstai</span>
+              <span style="color:rgba(240,246,255,0.8); font-size:0.95rem; font-weight:500;">08:00 – 18:00</span>
+            </div>
+            <div class="hours-row">
+              <span class="day-label" style="font-weight:600; color:#f0f6ff; font-size:0.95rem;">Perjantai</span>
+              <span style="color:rgba(240,246,255,0.8); font-size:0.95rem; font-weight:500;">08:00 – 17:00</span>
+            </div>
+            <div class="hours-row">
+              <span class="day-label" style="font-weight:600; color:var(--muted); font-size:0.95rem;">Lauantai</span>
+              <span class="hours-closed">Suljettu</span>
+            </div>
+            <div class="hours-row">
+              <span class="day-label" style="font-weight:600; color:var(--muted); font-size:0.95rem;">Sunnuntai</span>
+              <span class="hours-closed">Suljettu</span>
+            </div>
+          </div>
+        </div>
+        <div class="reveal" style="text-align:center;">
+          <div style="background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.2); border-radius:20px; padding:48px 40px;">
+            <div style="width:80px;height:80px; border-radius:50%; background:rgba(245,158,11,0.15); display:flex; align-items:center; justify-content:center; margin:0 auto 24px; color:var(--accent);">
+              <i data-lucide="clock" style="width:40px;height:40px;"></i>
+            </div>
+            <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:1.6rem; font-weight:700; color:#f0f6ff; margin-bottom:12px;">Varaa aika nyt</h3>
+            <p style="color:var(--muted); line-height:1.7; font-size:0.9rem; margin-bottom:28px;">Soita meille tai käy paikan päällä. Palvelemme teitä arkipäivisin joustavasti.</p>
+            <a href="tel:0442444629" class="btn-primary" style="display:inline-flex;">
+              <i data-lucide="phone" style="width:16px;height:16px;"></i>
+              044 2444629
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <style>
+      @media (max-width: 768px) {
+        #aukioloajat .section-container > div {
+          grid-template-columns: 1fr !important;
+          gap: 40px !important;
+        }
+      }
+    </style>
+  </section>
+
+  <!-- [8] CONTACT -->
+  <section id="yhteystiedot">
+    <div class="section-container">
+      <div class="reveal" style="text-align:center; margin-bottom:64px;">
+        <span class="section-eyebrow">Ota yhteyttä</span>
+        <h2 class="section-title" style="color:#f0f6ff;">Löydä meidät<br/>Vantaalta</h2>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start;">
+        <!-- Left: contact info -->
+        <div class="reveal">
+          <div class="contact-info-item">
+            <div class="contact-icon-wrap">
+              <i data-lucide="map-pin" style="width:20px;height:20px;"></i>
+            </div>
+            <div>
+              <p style="font-weight:700; color:#f0f6ff; font-size:0.95rem; margin-bottom:4px;">Osoite</p>
+              <p style="color:var(--muted); font-size:0.9rem; line-height:1.6;">Kellokukantie 8<br/>01300 Vantaa, Suomi</p>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon-wrap">
+              <i data-lucide="phone" style="width:20px;height:20px;"></i>
+            </div>
+            <div>
+              <p style="font-weight:700; color:#f0f6ff; font-size:0.95rem; margin-bottom:4px;">Puhelin</p>
+              <a href="tel:0442444629" style="color:var(--accent); font-size:0.9rem; text-decoration:none; font-weight:600; transition:color 0.2s;">044 2444629</a>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon-wrap">
+              <i data-lucide="clock" style="width:20px;height:20px;"></i>
+            </div>
+            <div>
+              <p style="font-weight:700; color:#f0f6ff; font-size:0.95rem; margin-bottom:4px;">Aukioloajat</p>
+              <p style="color:var(--muted); font-size:0.9rem; line-height:1.6;">Ma–To: 08:00–18:00<br/>Pe: 08:00–17:00<br/>La–Su: Suljettu</p>
+            </div>
+          </div>
+          <div style="margin-top:32px; display:flex; gap:12px; flex-wrap:wrap;">
+            <a href="tel:0442444629" class="btn-primary">
+              <i data-lucide="phone" style="width:16px;height:16px;"></i>
+              Soita nyt
+            </a>
+            <a href="#aukioloajat" class="btn-ghost" style="background:rgba(240,246,255,0.06); border-color:rgba(240,246,255,0.15);">
+              Aukioloajat
+              <i data-lucide="arrow-right" style="width:15px;height:15px;"></i>
+            </a>
+          </div>
+        </div>
+        <!-- Right: map -->
+        <div class="reveal">
+          <div style="border-radius:20px; overflow:hidden; box-shadow:0 4px 40px rgba(0,0,0,0.35); border:1px solid rgba(240,246,255,0.07);">
+            <iframe
+              src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Kellokukantie%208%2C%2001300%20Vantaa%2C%20Suomi%2C%20Vantaa%2C%20Finland&language=fi"
+              width="100%"
+              height="380"
+              style="border:0; display:block; min-height:280px;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Tikkurilan autokorjaamo sijainti">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    <style>
+      @media (max-width: 768px) {
+        #yhteystiedot .section-container > div:last-of-type {
+          grid-template-columns: 1fr !important;
+          gap: 40px !important;
+        }
+      }
+    </style>
+  </section>
+
+  <!-- [9] FOOTER -->
+  <footer>
+    <div class="section-container">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:32px; margin-bottom:40px;">
+        <div>
+          <div style="margin-bottom:16px;">
+            <span style="font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1.4rem; color:#f0f6ff; letter-spacing:0.02em;">
+              TIKKURILAN <span style="color:var(--accent);">AUTOKORJAAMO</span>
+            </span>
+          </div>
+          <p style="color:rgba(240,246,255,0.45); font-size:0.85rem; line-height:1.7; max-width:280px;">Luotettavaa autohuoltoa ja korjauspalvelua Vantaalla. Ammattitaitoinen tiimi palveluksessasi.</p>
+        </div>
+        <div>
+          <p style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.12em; color:rgba(240,246,255,0.35); font-weight:600; margin-bottom:12px;">Yhteystiedot</p>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div style="display:flex; align-items:center; gap:8px; color:rgba(240,246,255,0.55); font-size:0.85rem;">
+              <i data-lucide="map-pin" style="width:14px;height:14px; color:var(--accent); flex-shrink:0;"></i>
+              Kellokukantie 8, 01300 Vantaa
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; font-size:0.85rem;">
+              <i data-lucide="phone" style="width:14px;height:14px; color:var(--accent); flex-shrink:0;"></i>
+              <a href="tel:0442444629" style="color:rgba(240,246,255,0.55); text-decoration:none; transition:color 0.2s;">044 2444629</a>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; color:rgba(240,246,255,0.55); font-size:0.85rem;">
+              <i data-lucide="clock" style="width:14px;height:14px; color:var(--accent); flex-shrink:0;"></i>
+              Ma–Pe 08:00–18:00
+            </div>
+          </div>
+        </div>
+        <div>
+          <p style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.12em; color:rgba(240,246,255,0.35); font-weight:600; margin-bottom:12px;">Sijainti</p>
+          <p style="color:rgba(240,246,255,0.45); font-size:0.85rem; line-height:1.6;">Vantaa, Tikkurila<br/>Helppo saavutettavuus<br/>julkisilla kulkuneuvoilla</p>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(240,246,255,0.06); padding-top:24px; display:flex; justify-content:center;">
+        <p style="font-size:11px; color:rgba(240,246,255,0.2); text-align:center; letter-spacing:0.03em;">Demo luotu <a href="https://masasite.com" style="color:rgba(240,246,255,0.3); text-decoration:none;">masasite.com</a> palvelulla</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Lucide icons
+    lucide.createIcons();
+
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // Reveal on scroll
+    const revealElements = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    revealElements.forEach(el => observer.observe(el));
+
+    // Highlight current day in hours
+    const days = ['Sunnuntai', 'Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai', 'Lauantai'];
+    const today = days[new Date().getDay()];
+    document.querySelectorAll('.hours-row').forEach(row => {
+      const label = row.querySelector('.day-label');
+      if (label && label.textContent.trim() === today) {
+        row.classList.add('today');
+        label.style.color = 'var(--accent)';
+        row.style.background = 'rgba(245,158,11,0.06)';
+        row.style.borderRadius = '8px';
+        row.style.padding = '14px 12px';
+        row.style.margin = '0 -12px';
+      }
+    });
+  </script>
+
+</body>
+</html>
