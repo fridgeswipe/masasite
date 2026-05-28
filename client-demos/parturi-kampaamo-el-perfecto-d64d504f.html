@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parturi Kampaamo El Perfecto – Oulu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #1c1208;
+      --accent: #b8860b;
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --text: #1a1208;
+      --muted: #7a6e62;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding-top: 40px;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: -0.02em;
+    }
+
+    /* Demo Banner */
+    #demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(184,134,11,0.88);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.02em;
+      text-align: center;
+      padding: 0 16px;
+    }
+    #demo-banner a {
+      color: #fff;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* Nav */
+    #main-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(250,250,249,0.96);
+      border-bottom: 1px solid rgba(28,18,8,0.08);
+      backdrop-filter: blur(12px);
+      transition: box-shadow 0.3s ease;
+    }
+    #main-nav.scrolled {
+      box-shadow: 0 4px 24px rgba(28,18,8,0.1);
+    }
+
+    /* Hero */
+    #hero {
+      min-height: 100svh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.50) 0%, rgba(0,0,0,0.65) 100%),
+        url('assets/parturi-kampaamo-el-perfecto-d64d504f/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content {
+      animation: heroFadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+
+    /* Reveal animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Service Cards */
+    .service-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+
+    .icon-wrap {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      background: color-mix(in srgb, var(--accent) 14%, transparent);
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .icon-wrap i { width: 28px; height: 28px; }
+
+    /* Buttons */
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 14px 28px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border: none; cursor: pointer;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(184,134,11,0.35);
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 14px 28px;
+      border-radius: 9999px;
+      text-decoration: none;
+      border: 1.5px solid rgba(255,255,255,0.5);
+      backdrop-filter: blur(8px);
+      transition: transform 0.2s ease, background 0.2s ease;
+      cursor: pointer;
+    }
+    .btn-ghost:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.28);
+    }
+
+    .btn-nav {
+      display: inline-flex; align-items: center;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 10px 22px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-nav:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(184,134,11,0.3);
+    }
+
+    /* Stars */
+    .star-icon {
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+
+    /* Hours table */
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(28,18,8,0.07);
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-row.today {
+      background: color-mix(in srgb, var(--accent) 8%, transparent);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin: 0 -16px;
+    }
+
+    /* Review cards */
+    .review-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    }
+
+    /* Gallery */
+    .gallery-img {
+      width: 100%; height: 260px;
+      object-fit: cover;
+      border-radius: 16px;
+      transition: transform 0.4s ease;
+    }
+    .gallery-img:hover { transform: scale(1.03); }
+
+    /* Section label */
+    .section-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    /* Nav link hover */
+    .nav-link {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      padding: 6px 0;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0; right: 100%;
+      height: 1.5px;
+      background: var(--accent);
+      transition: right 0.25s ease;
+    }
+    .nav-link:hover { color: var(--accent); }
+    .nav-link:hover::after { right: 0; }
+
+    /* Mobile nav */
+    @media (max-width: 767px) {
+      .nav-links { display: none; }
+    }
+
+    /* Why us */
+    .why-card {
+      text-align: center;
+      padding: 40px 24px;
+    }
+    .why-icon {
+      color: var(--accent);
+      margin: 0 auto 20px;
+      display: flex; align-items: center; justify-content: center;
+      width: 64px; height: 64px;
+    }
+    .why-icon i { width: 40px; height: 40px; }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-left: clamp(16px, 5vw, 48px);
+      padding-right: clamp(16px, 5vw, 48px);
+    }
+
+    section { padding-block: clamp(64px, 10vw, 112px); }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════ DEMO BANNER ═══════════════════════════════════ -->
+<div id="demo-banner">
+  Parturi kampaamo EL PERFECTO — tämä esimerkkisivu on tehty juuri teille&nbsp;·&nbsp;Haluatko oman?&nbsp;<a href="mailto:team@masasite.com">Ota yhteyttä →</a>
+</div>
+
+<!-- ═══════════════════════════════════ NAV ═══════════════════════════════════ -->
+<nav id="main-nav">
+  <div class="container">
+    <div style="display:flex; align-items:center; justify-content:space-between; height:68px;">
+      <a href="#hero" style="text-decoration:none;">
+        <span style="font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1.25rem; color:var(--primary); letter-spacing:-0.01em; line-height:1.1;">
+          El Perfecto
+          <span style="display:block; font-family:'DM Sans',sans-serif; font-weight:500; font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); margin-top:1px;">Parturi · Kampaamo · Oulu</span>
+        </span>
+      </a>
+      <div class="nav-links" style="display:flex; align-items:center; gap:32px;">
+        <a href="#palvelut" class="nav-link">Palvelut</a>
+        <a href="#aukioloajat" class="nav-link">Aukioloajat</a>
+        <a href="#yhteystiedot" class="nav-link">Yhteystiedot</a>
+      </div>
+      <a href="tel:0413265566" class="btn-nav">
+        <i data-lucide="phone" style="width:14px;height:14px;margin-right:6px;"></i>
+        041 3265566
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════ HERO ═══════════════════════════════════ -->
+<section id="hero" style="padding:0;">
+  <div class="hero-content" style="text-align:center; color:#fff; padding: 0 clamp(16px,5vw,48px); max-width:860px; margin:0 auto;">
+    <span class="section-label" style="color:rgba(255,255,255,0.75);">Parturi &amp; Kampaamo · Oulu</span>
+    <h1 style="font-size:clamp(2.6rem,6vw,5rem); font-weight:700; line-height:1.1; letter-spacing:-0.02em; margin-bottom:24px; color:#fff;">
+      Ammattitaitoinen parturi<br>ja kampaamo Oulussa
+    </h1>
+    <p style="font-size:1.15rem; line-height:1.7; color:rgba(255,255,255,0.82); max-width:580px; margin:0 auto 32px; font-family:'DM Sans',sans-serif;">
+      El Perfecto on Oulussa toimiva parturi kampaamo, joka tarjoaa ammattilaisia hiustenhoito- ja parranajopalveluita. Korkealaatuista palvelua edullisesti — jo 64 tyytyväistä asiakasta.
+    </p>
+    <!-- Rating -->
+    <div style="display:flex; align-items:center; justify-content:center; gap:6px; margin-bottom:40px;">
+      <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+      <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+      <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+      <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+      <i data-lucide="star" style="width:18px;height:18px;color:#f59e0b;fill:#f59e0b;opacity:0.7;"></i>
+      <span style="font-family:'DM Sans',sans-serif; font-size:0.9rem; color:rgba(255,255,255,0.85); margin-left:8px; font-weight:500;">4.7/5 · 64 arvostelua Google</span>
+    </div>
+    <!-- CTAs -->
+    <div style="display:flex; flex-wrap:wrap; gap:16px; justify-content:center;">
+      <a href="tel:0413265566" class="btn-primary">
+        <i data-lucide="calendar" style="width:16px;height:16px;"></i>
+        Varaa aika nyt
+      </a>
+      <a href="#palvelut" class="btn-ghost">
+        <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+        Tutustu palveluihin
+      </a>
+    </div>
+  </div>
+  <!-- Scroll indicator -->
+  <div style="position:absolute; bottom:32px; left:50%; transform:translateX(-50%); color:rgba(255,255,255,0.5);">
+    <i data-lucide="chevron-down" style="width:24px;height:24px; animation: bounce 2s infinite ease-in-out;"></i>
+  </div>
+  <style>
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
+  </style>
+</section>
+
+<!-- ═══════════════════════════════════ SERVICES ═══════════════════════════════════ -->
+<section id="palvelut" style="background:#f5f0e8;">
+  <div class="container">
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <span class="section-label">Palvelumme</span>
+      <h2 style="font-size:clamp(1.8rem,4vw,3rem); font-weight:700; color:var(--primary); margin-bottom:16px;">Kattavat parturi- ja kampaamopalvelut</h2>
+      <p style="font-size:1rem; line-height:1.7; color:var(--muted); max-width:520px; margin:0 auto;">Ammattitaitoiset kädet, laadukkaat tuotteet ja sinulle räätälöity lopputulos.</p>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:24px;">
+
+      <div class="service-card reveal" style="--i:0; transition-delay: calc(0 * 80ms);">
+        <div class="icon-wrap">
+          <i data-lucide="scissors"></i>
+        </div>
+        <h3 style="font-size:1.3rem; font-weight:700; color:var(--primary); margin-bottom:12px; font-family:'Cormorant Garamond',serif;">Parturointipalvelut</h3>
+        <p style="font-size:0.97rem; line-height:1.7; color:var(--muted);">Ammattitaitoinen parranajo ja parturin palvelut miehille. Perinteiset tekniikat modernilla otteella — siisti lopputulos joka kerta.</p>
+        <div style="margin-top:24px; display:flex; align-items:center; gap:6px; font-size:0.82rem; font-weight:600; color:var(--accent); font-family:'DM Sans',sans-serif;">
+          <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+          Varaa aika
+        </div>
+      </div>
+
+      <div class="service-card reveal" style="--i:1; transition-delay: calc(1 * 80ms);">
+        <div class="icon-wrap">
+          <i data-lucide="sparkles"></i>
+        </div>
+        <h3 style="font-size:1.3rem; font-weight:700; color:var(--primary); margin-bottom:12px; font-family:'Cormorant Garamond',serif;">Kampaamopalvelut</h3>
+        <p style="font-size:0.97rem; line-height:1.7; color:var(--muted);">Hiustenleikkaus, värjäys ja muotoilu naisille ja miehille. Moderni tyyli, joka sopii juuri sinulle.</p>
+        <div style="margin-top:24px; display:flex; align-items:center; gap:6px; font-size:0.82rem; font-weight:600; color:var(--accent); font-family:'DM Sans',sans-serif;">
+          <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+          Varaa aika
+        </div>
+      </div>
+
+      <div class="service-card reveal" style="--i:2; transition-delay: calc(2 * 80ms);">
+        <div class="icon-wrap">
+          <i data-lucide="heart"></i>
+        </div>
+        <h3 style="font-size:1.3rem; font-weight:700; color:var(--primary); margin-bottom:12px; font-family:'Cormorant Garamond',serif;">Hiustenhoito</h3>
+        <p style="font-size:0.97rem; line-height:1.7; color:var(--muted);">Korkealaatuiset hoitopalvelut terveille ja kauneille hiuksille. Annamme hiuksillesi ne ansaitsemansa hoidon.</p>
+        <div style="margin-top:24px; display:flex; align-items:center; gap:6px; font-size:0.82rem; font-weight:600; color:var(--accent); font-family:'DM Sans',sans-serif;">
+          <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+          Varaa aika
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ GALLERY ═══════════════════════════════════ -->
+<section style="background:#fff; padding-block: clamp(48px,8vw,96px);">
+  <div class="container">
+    <div class="reveal" style="text-align:center; margin-bottom:48px;">
+      <span class="section-label">Galeria</span>
+      <h2 style="font-size:clamp(1.8rem,4vw,3rem); font-weight:700; color:var(--primary);">Katso tulokset itse</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:20px;">
+      <div class="reveal" style="overflow:hidden; border-radius:16px;">
+        <img src="assets/parturi-kampaamo-el-perfecto-d64d504f/photo1.jpg" alt="El Perfecto parturi kampaamo" class="gallery-img" />
+      </div>
+      <div class="reveal" style="overflow:hidden; border-radius:16px; transition-delay:80ms;">
+        <img src="assets/parturi-kampaamo-el-perfecto-d64d504f/photo2.jpg" alt="El Perfecto kampaamo palvelut" class="gallery-img" />
+      </div>
+      <div class="reveal" style="overflow:hidden; border-radius:16px; transition-delay:160ms;">
+        <img src="assets/parturi-kampaamo-el-perfecto-d64d504f/photo3.jpg" alt="El Perfecto hiustenhoito" class="gallery-img" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ WHY US ═══════════════════════════════════ -->
+<section style="background:#f5f0e8;">
+  <div class="container">
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <span class="section-label">Miksi El Perfecto?</span>
+      <h2 style="font-size:clamp(1.8rem,4vw,3rem); font-weight:700; color:var(--primary);">Laatu ja ammattitaito yhdistettynä</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:8px;">
+
+      <div class="why-card reveal">
+        <div class="why-icon">
+          <i data-lucide="award"></i>
+        </div>
+        <h3 style="font-size:1.2rem; font-weight:700; color:var(--primary); margin-bottom:10px; font-family:'Cormorant Garamond',serif;">4,7/5 Tähteä</h3>
+        <p style="font-size:0.95rem; line-height:1.7; color:var(--muted);">4,7/5 tähden arvosana 64 tyytyväiseltä asiakkaalta. Laatu puhuu puolestaan.</p>
+      </div>
+
+      <div class="why-card reveal" style="transition-delay:80ms;">
+        <div class="why-icon">
+          <i data-lucide="zap"></i>
+        </div>
+        <h3 style="font-size:1.2rem; font-weight:700; color:var(--primary); margin-bottom:10px; font-family:'Cormorant Garamond',serif;">Ammattilaiset</h3>
+        <p style="font-size:0.95rem; line-height:1.7; color:var(--muted);">Ammattilaiset parturi- ja kampaamopalveluissa. Jokainen asiakas saa yksilöllistä huomiota.</p>
+      </div>
+
+      <div class="why-card reveal" style="transition-delay:160ms;">
+        <div class="why-icon">
+          <i data-lucide="clock"></i>
+        </div>
+        <h3 style="font-size:1.2rem; font-weight:700; color:var(--primary); margin-bottom:10px; font-family:'Cormorant Garamond',serif;">Joustavat ajat</h3>
+        <p style="font-size:0.95rem; line-height:1.7; color:var(--muted);">Pitkät aukioloajat ma–su klo 9–19, helppo varata aika myös viime hetkellä.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ REVIEWS ═══════════════════════════════════ -->
+<section style="background:#fff;">
+  <div class="container">
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <span class="section-label">Asiakasarvostelut</span>
+      <h2 style="font-size:clamp(1.8rem,4vw,3rem); font-weight:700; color:var(--primary); margin-bottom:12px;">Mitä asiakkaamme sanovat</h2>
+      <div style="display:flex; align-items:center; justify-content:center; gap:6px;">
+        <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+        <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+        <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+        <i data-lucide="star" style="width:18px;height:18px;" class="star-icon"></i>
+        <i data-lucide="star" style="width:18px;height:18px;color:#f59e0b;fill:#f59e0b;opacity:0.65;"></i>
+        <span style="font-size:0.9rem; color:var(--muted); margin-left:8px; font-weight:500;">4.7/5 Google-arvostelut (64 arvostelua)</span>
+      </div>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:24px;">
+
+      <div class="review-card reveal">
+        <div style="display:flex; gap:3px; margin-bottom:16px;">
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+        </div>
+        <p style="font-size:0.92rem; line-height:1.7; color:var(--muted); font-style:italic; margin-bottom:20px;">"I visited on 18/1/2025. I couldn't believe the good service that the handsome barber took care of me from every single angle. He handled my Southeast Asian hair very well. I love my haircut and I will come back for sure if I still stay in Oulu. The price is the lowest in Oulu. Highly recommended!"</p>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:36px; height:36px; border-radius:50%; background:color-mix(in srgb, var(--accent) 18%, transparent); display:flex; align-items:center; justify-content:center; font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1rem; color:var(--accent);">K</div>
+          <div>
+            <div style="font-weight:700; font-size:0.88rem; color:var(--primary);">Ka Che</div>
+            <div style="font-size:0.75rem; color:var(--muted); letter-spacing:0.05em;">Verified Google Review</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card reveal" style="transition-delay:80ms;">
+        <div style="display:flex; gap:3px; margin-bottom:16px;">
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+        </div>
+        <p style="font-size:0.92rem; line-height:1.7; color:var(--muted); font-style:italic; margin-bottom:20px;">"Such a nice barber, he also cut my hair like I wanted it and it just looks fire."</p>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:36px; height:36px; border-radius:50%; background:color-mix(in srgb, var(--accent) 18%, transparent); display:flex; align-items:center; justify-content:center; font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1rem; color:var(--accent);">N</div>
+          <div>
+            <div style="font-weight:700; font-size:0.88rem; color:var(--primary);">_Niqumi_ _</div>
+            <div style="font-size:0.75rem; color:var(--muted); letter-spacing:0.05em;">Verified Google Review</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card reveal" style="transition-delay:160ms;">
+        <div style="display:flex; gap:3px; margin-bottom:16px;">
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+          <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+        </div>
+        <p style="font-size:0.92rem; line-height:1.7; color:var(--muted); font-style:italic; margin-bottom:20px;">"The hairdresser is super friendly and very professional. He cut my hair precisely how I wanted it and I am happy with the result. Also, the price-benefit is very good. Anytime again! :)"</p>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:36px; height:36px; border-radius:50%; background:color-mix(in srgb, var(--accent) 18%, transparent); display:flex; align-items:center; justify-content:center; font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1rem; color:var(--accent);">S</div>
+          <div>
+            <div style="font-weight:700; font-size:0.88rem; color:var(--primary);">Stella Langthaler</div>
+            <div style="font-size:0.75rem; color:var(--muted); letter-spacing:0.05em;">Verified Google Review</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ OPENING HOURS ═══════════════════════════════════ -->
+<section id="aukioloajat" style="background:#f5f0e8;">
+  <div class="container">
+    <div style="max-width:640px; margin:0 auto;">
+      <div class="reveal" style="text-align:center; margin-bottom:48px;">
+        <span class="section-label">Aukioloajat</span>
+        <h2 style="font-size:clamp(1.8rem,4vw,3rem); font-weight:700; color:var(--primary);">Olemme palveluksessasi</h2>
+      </div>
+      <div class="reveal" style="background:#fff; border-radius:20px; padding:32px 40px; box-shadow:0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);">
+        <div class="hours-row">
+          <span style="font-weight:600; color:var(--primary); font-size:0.97rem;">Maanantai</span>
+          <span style="color:var(--accent); font-weight:600; font-size:0.97rem;">9:00 – 19:00</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:600; color:var(--primary); font-size:0.97rem;">Tiistai</span>
+          <span style="color:var(--accent); font-weight:600; font-size:0.97rem;">9:00 – 19:00</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:600; color:var(--primary); font-size:0.97rem;">Keskiviikko</span>
+          <span style="color:var(--accent); font-weight:600; font-size:0.97rem;">9:00 – 19:00</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:600; color:var(--primary); font-size:0.97rem;">Torstai</span>
+          <span style="color:var(--accent); font-weight:600; font-size:0.97rem;">9:00 – 19:00</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:600; color:var(--primary); font-size:0.97rem;">Perjantai</span>
+          <span style="color:var(--accent); font-weight:600; font-size:0.97rem;">9:00 – 19:00</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:600; color:var(--primary); font-size:0.97rem;">Lauantai</span>
+          <span style="color:var(--accent); font-weight:600; font-size:0.97rem;">9:30 – 18:00</span>
+        </div>
+        <div class="hours-row">
+          <span style="font-weight:600; color:var(--primary); font-size:0.97rem;">Sunnuntai</span>
+          <span style="color:var(--accent); font-weight:600; font-size:0.97rem;">11:30 – 17:00</span>
+        </div>
+        <div style="margin-top:24px; padding-top:24px; border-top: 1px solid rgba(28,18,8,0.07); display:flex; align-items:center; gap:10px;">
+          <i data-lucide="phone" style="width:18px;height:18px; color:var(--accent); flex-shrink:0;"></i>
+          <span style="font-size:0.9rem; color:var(--muted);">Varaukset puhelimitse: <a href="tel:0413265566" style="color:var(--primary); font-weight:700; text-decoration:none;">041 3265566</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ CONTACT ═══════════════════════════════════ -->
+<section id="yhteystiedot" style="background:#fff;">
+  <div class="container">
+    <div class="reveal" style="text-align:center; margin-bottom:64px;">
+      <span class="section-label">Yhteystiedot</span>
+      <h2 style="font-size:clamp(1.8rem,4vw,3rem); font-weight:700; color:var(--primary);">Löydät meidät helposti</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:40px; align-items:start;">
+
+      <div class="reveal">
+        <div style="margin-bottom:32px;">
+          <p style="font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); font-weight:600; margin-bottom:8px;">Osoite</p>
+          <div style="display:flex; align-items:flex-start; gap:12px; margin-bottom:20px;">
+            <i data-lucide="map-pin" style="width:20px;height:20px; color:var(--accent); flex-shrink:0; margin-top:2px;"></i>
+            <div>
+              <p style="font-weight:700; color:var(--primary); font-size:1rem;">Pakkahuoneenkatu 12</p>
+              <p style="color:var(--muted); font-size:0.95rem;">90100 Oulu, Suomi</p>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+            <i data-lucide="phone" style="width:20px;height:20px; color:var(--accent); flex-shrink:0;"></i>
+            <a href="tel:0413265566" style="font-weight:700; color:var(--primary); font-size:1rem; text-decoration:none;">041 3265566</a>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+            <i data-lucide="clock" style="width:20px;height:20px; color:var(--accent); flex-shrink:0;"></i>
+            <span style="color:var(--muted); font-size:0.95rem;">Ma–Pe 9:00–19:00 · La 9:30–18:00 · Su 11:30–17:00</span>
+          </div>
+        </div>
+        <div style="background: color-mix(in srgb, var(--accent) 8%, transparent); border-radius:16px; padding:24px; margin-bottom:32px;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+            <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+            <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+            <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+            <i data-lucide="star" style="width:16px;height:16px;" class="star-icon"></i>
+            <i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b;opacity:0.6;"></i>
+          </div>
+          <p style="font-weight:700; color:var(--primary); font-size:1rem;">4.7 / 5 Google</p>
+          <p style="color:var(--muted); font-size:0.85rem;">64 arvostelua</p>
+        </div>
+        <a href="tel:0413265566" class="btn-primary" style="width:100%; justify-content:center;">
+          <i data-lucide="phone" style="width:16px;height:16px;"></i>
+          Soita ja varaa aika
+        </a>
+      </div>
+
+      <div class="reveal" style="transition-delay:100ms;">
+        <iframe
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Pakkahuoneenkatu%2012%2C%2090100%20Oulu%2C%20Suomi%2C%20Oulu%2C%20Finland&language=fi"
+          width="100%"
+          height="380"
+          style="border:0; border-radius:16px; box-shadow:0 4px 24px rgba(28,18,8,0.1); min-height:280px;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ FOOTER ═══════════════════════════════════ -->
+<footer style="background:var(--primary); color:#fff; padding-block: clamp(40px,6vw,72px);">
+  <div class="container">
+    <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:32px; margin-bottom:40px;">
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1.5rem; letter-spacing:-0.01em; margin-bottom:4px;">El Perfecto</div>
+        <div style="font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase; color:rgba(184,134,11,0.9); margin-bottom:16px;">Parturi · Kampaamo · Oulu</div>
+        <p style="font-size:0.9rem; color:rgba(255,255,255,0.6); line-height:1.6; max-width:280px;">Ammattitaitoista parturi- ja kampaamopalvelua Oulussa. Tervetuloa!</p>
+      </div>
+      <div>
+        <p style="font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:16px;">Yhteystiedot</p>
+        <div style="display:flex; align-items:flex-start; gap:10px; margin-bottom:12px;">
+          <i data-lucide="map-pin" style="width:16px;height:16px; color:var(--accent); flex-shrink:0; margin-top:2px;"></i>
+          <span style="font-size:0.9rem; color:rgba(255,255,255,0.7);">Pakkahuoneenkatu 12, 90100 Oulu</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <i data-lucide="phone" style="width:16px;height:16px; color:var(--accent); flex-shrink:0;"></i>
+          <a href="tel:0413265566" style="font-size:0.9rem; color:rgba(255,255,255,0.7); text-decoration:none;">041 3265566</a>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <i data-lucide="clock" style="width:16px;height:16px; color:var(--accent); flex-shrink:0;"></i>
+          <span style="font-size:0.9rem; color:rgba(255,255,255,0.7);">Ma–Pe 9–19 · La 9:30–18 · Su 11:30–17</span>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,0.1); padding-top:24px; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px;">
+      <span style="font-size:0.78rem; color:rgba(255,255,255,0.35);">Parturi Kampaamo El Perfecto · Oulu</span>
+      <span style="font-size:0.72rem; color:rgba(255,255,255,0.25);">Demo luotu <a href="https://masasite.com" style="color:rgba(184,134,11,0.6); text-decoration:none;">masasite.com</a> palvelulla</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Lucide icons
+  lucide.createIcons();
+
+  // Nav scroll effect
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  });
+
+  // Reveal on scroll
+  const revealObserver = new IntersectionObserver(
+    entries => entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObserver.unobserve(e.target);
+      }
+    }),
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    if (!el.style.transitionDelay) {
+      el.style.transitionDelay = '0ms';
+    }
+    revealObserver.observe(el);
+  });
+</script>
+</body>
+</html>
