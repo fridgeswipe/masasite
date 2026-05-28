@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tikkurilan Tilitoimisto Oy – Kirjanpito ja taloushallinto Vantaalla</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0a1a0a;
+      --accent: #2e7d32;
+      --accent-light: #4caf50;
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --text: #0f1a0f;
+      --muted: #6b7c6b;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      padding-top: 40px;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'EB Garamond', serif;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    /* DEMO BANNER */
+    .demo-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(46, 125, 50, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.01em;
+      padding: 0 16px;
+      text-align: center;
+    }
+
+    .demo-banner a {
+      color: #fff;
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      margin-left: 4px;
+    }
+
+    /* NAV */
+    .site-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(250, 250, 249, 0.95);
+      border-bottom: 1px solid rgba(10, 26, 10, 0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .site-nav.scrolled {
+      background: rgba(250, 250, 249, 0.92);
+      box-shadow: 0 2px 16px rgba(10, 26, 10, 0.08);
+    }
+
+    .nav-logo {
+      font-family: 'EB Garamond', serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--primary);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-link {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      padding: 8px 4px;
+    }
+
+    .nav-link:hover { color: var(--primary); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(46, 125, 50, 0.35);
+      background: #256427;
+    }
+
+    .btn-primary:active { transform: translateY(-1px); }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.18);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 14px 28px;
+      border-radius: 9999px;
+      border: 1.5px solid rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      backdrop-filter: blur(8px);
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .btn-ghost:hover {
+      transform: translateY(-3px);
+      background: rgba(255, 255, 255, 0.28);
+      border-color: rgba(255, 255, 255, 0.75);
+    }
+
+    .btn-hero-primary {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .btn-hero-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(46, 125, 50, 0.45);
+      background: #256427;
+    }
+
+    /* HERO */
+    .hero-section {
+      min-height: 100svh;
+      background-image:
+        linear-gradient(to bottom, rgba(5, 15, 5, 0.52) 0%, rgba(5, 15, 5, 0.70) 100%),
+        url('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1600&q=85');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-content {
+      animation: heroFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+    }
+
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      font-weight: 500;
+    }
+
+    /* CARDS */
+    .service-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .icon-container {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: var(--accent);
+    }
+
+    .icon-container i { width: 28px; height: 28px; }
+
+    /* REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* STAR ICONS */
+    .star-gold {
+      color: #f59e0b;
+      fill: #f59e0b;
+      width: 18px;
+      height: 18px;
+    }
+
+    .star-sm {
+      color: #f59e0b;
+      fill: #f59e0b;
+      width: 14px;
+      height: 14px;
+    }
+
+    /* REVIEW CARD */
+    .review-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.05);
+    }
+
+    /* HOURS TABLE */
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(10, 26, 10, 0.07);
+    }
+
+    .hours-row:last-child { border-bottom: none; }
+
+    /* SECTION LABEL */
+    .section-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    /* WHY US ICON */
+    .why-icon {
+      width: 52px;
+      height: 52px;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    /* MAPS */
+    .map-iframe {
+      width: 100%;
+      height: 380px;
+      border: 0;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    }
+
+    /* FOOTER */
+    .site-footer {
+      background: var(--primary);
+      color: rgba(255,255,255,0.85);
+    }
+
+    /* MOBILE NAV */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-logo { font-size: 1rem; }
+    }
+
+    /* SECTION PADDING */
+    .section-pad {
+      padding-block: clamp(64px, 10vw, 112px);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+
+    /* CONTACT INFO ITEM */
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .contact-item-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--accent);
+    }
+  </style>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0a1a0a',
+            accent: '#2e7d32',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body>
+
+<!-- [1] DEMO BANNER -->
+<div class="demo-banner">
+  Tikkurilan Tilitoimisto Oy — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman?
+  <a href="mailto:team@masasite.com">Ota yhteyttä →</a>
+</div>
+
+<!-- [2] STICKY NAV -->
+<nav class="site-nav" id="mainNav">
+  <div class="container">
+    <div style="display:flex; align-items:center; justify-content:space-between; height:68px;">
+      <span class="nav-logo">Tikkurilan Tilitoimisto Oy</span>
+      <div class="nav-links" style="display:flex; align-items:center; gap:32px;">
+        <a href="#palvelut" class="nav-link">Palvelut</a>
+        <a href="#yhteystiedot" class="nav-link">Yhteystiedot</a>
+      </div>
+      <a href="#yhteystiedot" class="btn-primary">
+        <i data-lucide="phone" style="width:15px;height:15px;"></i>
+        Ota yhteyttä
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- [3] HERO -->
+<section class="hero-section" id="hero">
+  <div class="container">
+    <div class="hero-content" style="max-width:780px; margin:0 auto;">
+      <p class="eyebrow" style="margin-bottom:20px;">Kirjanpito &amp; taloushallinto — Vantaa</p>
+      <h1 style="font-size:clamp(2.5rem, 6vw, 5rem); font-weight:800; color:#ffffff; margin-bottom:24px; letter-spacing:-0.025em; line-height:1.1;">
+        Luotettava tilitoimisto<br>Vantaalla 35 vuotta
+      </h1>
+      <p style="font-size:clamp(1rem, 2vw, 1.2rem); color:rgba(255,255,255,0.80); max-width:600px; margin:0 auto 32px; line-height:1.7;">
+        Tikkurilan Tilitoimisto Oy on vuodesta 1989 toiminut asiantunteva kirjanpito- ja verosuunnittelun kumppani pienille ja keskisuurille yrityksille. Palvelemme noin 200 asiakasta eri toimialoilta räätälöidyillä ratkaisuilla, joissa yhdistyvät ammattitaito ja luotettavuus.
+      </p>
+
+      <!-- Rating -->
+      <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:36px;">
+        <div style="display:flex; gap:3px;">
+          <i data-lucide="star" class="star-gold"></i>
+          <i data-lucide="star" class="star-gold"></i>
+          <i data-lucide="star" class="star-gold"></i>
+          <i data-lucide="star" class="star-gold"></i>
+          <i data-lucide="star" class="star-gold"></i>
+        </div>
+        <span style="color:rgba(255,255,255,0.85); font-size:0.9rem; font-weight:500;">5.0/5 (2 arvostelua)</span>
+      </div>
+
+      <!-- CTA buttons -->
+      <div style="display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap;">
+        <a href="#yhteystiedot" class="btn-hero-primary">
+          <i data-lucide="calendar" style="width:18px;height:18px;"></i>
+          Ota yhteyttä neuvotteluun
+        </a>
+        <a href="#palvelut" class="btn-ghost">
+          <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
+          Tutustu palveluihin
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- [4] SERVICES GRID -->
+<section id="palvelut" class="section-pad" style="background:#f4f7f4;">
+  <div class="container">
+    <div class="reveal" style="text-align:center; margin-bottom:56px;">
+      <span class="section-label">Palvelumme</span>
+      <h2 style="font-size:clamp(1.75rem, 4vw, 3rem); font-weight:700; color:var(--primary); max-width:600px; margin:0 auto 16px;">
+        Kattavat taloushallinnon palvelut yrityksellesi
+      </h2>
+      <p style="font-size:1rem; color:var(--muted); max-width:520px; margin:0 auto;">
+        Tarjoamme räätälöityjä ratkaisuja yrityksesi tarpeiden mukaan — yli 35 vuoden kokemuksella.
+      </p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:24px;">
+
+      <!-- Card 1 -->
+      <div class="service-card reveal" style="--i:0">
+        <div class="icon-container">
+          <i data-lucide="book-open"></i>
+        </div>
+        <h3 style="font-size:1.2rem; font-weight:700; color:var(--primary); margin-bottom:12px; font-family:'EB Garamond',serif; letter-spacing:-0.01em;">
+          Kirjanpito ja tilitoimistopalvelut
+        </h3>
+        <p style="font-size:0.9375rem; color:var(--muted); line-height:1.7;">
+          Asiantunteva kirjanpidon hoito osake- ja henkilöyhtiöille sekä yhdistyksille. Pidämme kirjasi ajan tasalla ja huolehdimme lakisääteisistä velvoitteistasi.
+        </p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="service-card reveal" style="--i:1">
+        <div class="icon-container">
+          <i data-lucide="building-2"></i>
+        </div>
+        <h3 style="font-size:1.2rem; font-weight:700; color:var(--primary); margin-bottom:12px; font-family:'EB Garamond',serif; letter-spacing:-0.01em;">
+          Yrityksen perustamispalvelut
+        </h3>
+        <p style="font-size:0.9375rem; color:var(--muted); line-height:1.7;">
+          Neuvonta ja avustaminen uuden yrityksen perustamisen kaikissa vaiheissa. Autamme sinut alkuun sujuvasti ja oikeaoppisesti.
+        </p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="service-card reveal" style="--i:2">
+        <div class="icon-container">
+          <i data-lucide="trending-up"></i>
+        </div>
+        <h3 style="font-size:1.2rem; font-weight:700; color:var(--primary); margin-bottom:12px; font-family:'EB Garamond',serif; letter-spacing:-0.01em;">
+          Verosuunnittelu
+        </h3>
+        <p style="font-size:0.9375rem; color:var(--muted); line-height:1.7;">
+          Räätälöidyt verosuunnitteluratkaisut yrityksen taloudellisen tehokkuuden parantamiseksi. Optimoimme verokantasi laillisesti ja tehokkaasti.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- [5] WHY CHOOSE US -->
+<section class="section-pad" style="background:#ffffff;">
+  <div class="container">
+    <div class="reveal" style="text-align:center; margin-bottom:56px;">
+      <span class="section-label">Miksi valita meidät</span>
+      <h2 style="font-size:clamp(1.75rem, 4vw, 3rem); font-weight:700; color:var(--primary); max-width:580px; margin:0 auto;">
+        Kokemus, luottamus ja henkilökohtainen palvelu
+      </h2>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:40px;">
+
+      <div class="reveal" style="--i:0; text-align:center; padding:8px;">
+        <div style="display:flex; justify-content:center; margin-bottom:20px;">
+          <i data-lucide="award" class="why-icon"></i>
+        </div>
+        <h3 style="font-size:1.15rem; font-weight:700; color:var(--primary); margin-bottom:10px; font-family:'EB Garamond',serif;">
+          Yli 35 vuoden kokemus
+        </h3>
+        <p style="font-size:0.9375rem; color:var(--muted); line-height:1.7; max-width:280px; margin:0 auto;">
+          Yli 35 vuoden kokemus tilitoimistopalveluista takaa asiantuntevan ja luotettavan palvelun jokaisessa tilanteessa.
+        </p>
+      </div>
+
+      <div class="reveal" style="--i:1; text-align:center; padding:8px;">
+        <div style="display:flex; justify-content:center; margin-bottom:20px;">
+          <i data-lucide="users" class="why-icon"></i>
+        </div>
+        <h3 style="font-size:1.15rem; font-weight:700; color:var(--primary); margin-bottom:10px; font-family:'EB Garamond',serif;">
+          ~200 tyytyväistä asiakasta
+        </h3>
+        <p style="font-size:0.9375rem; color:var(--muted); line-height:1.7; max-width:280px; margin:0 auto;">
+          Henkilökohtainen palvelu noin 200 vakiintuneen asiakkaan tukemuksesta. Tunnemme asiakkaamme ja heidän liiketoimintansa.
+        </p>
+      </div>
+
+      <div class="reveal" style="--i:2; text-align:center; padding:8px;">
+        <div style="display:flex; justify-content:center; margin-bottom:20px;">
+          <i data-lucide="shield-check" class="why-icon"></i>
+        </div>
+        <h3 style="font-size:1.15rem; font-weight:700; color:var(--primary); margin-bottom:10px; font-family:'EB Garamond',serif;">
+          Räätälöidyt ratkaisut
+        </h3>
+        <p style="font-size:0.9375rem; color:var(--muted); line-height:1.7; max-width:280px; margin:0 auto;">
+          Asiantuntemuksella räätälöidyt ratkaisut jokaiselle yritykselle. Ei mallipohjaratkaisuja — jokainen asiakas on meille tärkeä.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- [6] REVIEWS -->
+<section class="section-pad" style="background:#f4f7f4;">
+  <div class="container">
+    <div class="reveal" style="text-align:center; margin-bottom:56px;">
+      <span class="section-label">Asiakaspalaute</span>
+      <h2 style="font-size:clamp(1.75rem, 4vw, 3rem); font-weight:700; color:var(--primary); max-width:520px; margin:0 auto 16px;">
+        Mitä asiakkaamme sanovat
+      </h2>
+      <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
+        <div style="display:flex; gap:3px;">
+          <i data-lucide="star" class="star-gold"></i>
+          <i data-lucide="star" class="star-gold"></i>
+          <i data-lucide="star" class="star-gold"></i>
+          <i data-lucide="star" class="star-gold"></i>
+          <i data-lucide="star" class="star-gold"></i>
+        </div>
+        <span style="font-size:0.875rem; color:var(--muted); font-weight:500;">Google-arvosana 5.0/5</span>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:24px; max-width:800px; margin:0 auto;">
+
+      <!-- Review 1 -->
+      <div class="review-card reveal" style="--i:0">
+        <div style="display:flex; gap:3px; margin-bottom:16px;">
+          <i data-lucide="star" class="star-sm"></i>
+          <i data-lucide="star" class="star-sm"></i>
+          <i data-lucide="star" class="star-sm"></i>
+          <i data-lucide="star" class="star-sm"></i>
+          <i data-lucide="star" class="star-sm"></i>
+        </div>
+        <p style="font-size:0.9375rem; color:var(--text); line-height:1.7; font-style:italic; margin-bottom:20px;">
+          "A full-service accounting firm, and a little more,"
+        </p>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:40px; height:40px; border-radius:50%; background:color-mix(in srgb, var(--accent) 15%, transparent); display:flex; align-items:center; justify-content:center; color:var(--accent); font-weight:700; font-size:1rem; font-family:'EB Garamond',serif;">
+            K
+          </div>
+          <div>
+            <p style="font-weight:600; font-size:0.875rem; color:var(--primary); margin:0;">Kai Salo</p>
+            <div style="display:flex; align-items:center; gap:4px; margin-top:2px;">
+              <i data-lucide="check-circle" style="width:12px;height:12px;color:var(--accent);fill:none;"></i>
+              <span style="font-size:0.75rem; color:var(--accent); font-weight:500;">Vahvistettu arvostelu</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Review 2 -->
+      <div class="review-card reveal" style="--i:1">
+        <div style="display:flex; gap:3px; margin-bottom:16px;">
+          <i data-lucide="star" class="star-sm"></i>
+          <i data-lucide="star" class="star-sm"></i>
+          <i data-lucide="star" class="star-sm"></i>
+          <i data-lucide="star" class="star-sm"></i>
+          <i data-lucide="star" class="star-sm"></i>
+        </div>
+        <p style="font-size:0.9375rem; color:var(--text); line-height:1.7; font-style:italic; margin-bottom:20px;">
+          "The best thing about Vanta"
+        </p>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:40px; height:40px; border-radius:50%; background:color-mix(in srgb, var(--accent) 15%, transparent); display:flex; align-items:center; justify-content:center; color:var(--accent); font-weight:700; font-size:1rem; font-family:'EB Garamond',serif;">
+            ع
+          </div>
+          <div>
+            <p style="font-weight:600; font-size:0.875rem; color:var(--primary); margin:0;">علي الهادي محمد الربيعي</p>
+            <div style="display:flex; align-items:center; gap:4px; margin-top:2px;">
+              <i data-lucide="check-circle" style="width:12px;height:12px;color:var(--accent);fill:none;"></i>
+              <span style="font-size:0.75rem; color:var(--accent); font-weight:500;">Vahvistettu arvostelu</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- [8] CONTACT -->
+<section id="yhteystiedot" class="section-pad" style="background:#ffffff;">
+  <div class="container">
+    <div class="reveal" style="text-align:center; margin-bottom:56px;">
+      <span class="section-label">Yhteystiedot</span>
+      <h2 style="font-size:clamp(1.75rem, 4vw, 3rem); font-weight:700; color:var(--primary); max-width:520px; margin:0 auto;">
+        Otetaan yhteyttä ja sovitaan tapaaminen
+      </h2>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start;" class="contact-grid">
+
+      <!-- Left: contact info -->
+      <div class="reveal" style="--i:0">
+        <div style="background:#f4f7f4; border-radius:20px; padding:40px 36px; border:1px solid rgba(46,125,50,0.1);">
+
+          <h3 style="font-family:'EB Garamond',serif; font-size:1.5rem; font-weight:700; color:var(--primary); margin-bottom:8px; letter-spacing:-0.01em;">
+            Tikkurilan Tilitoimisto Oy
+          </h3>
+          <p style="font-size:0.875rem; color:var(--muted); margin-bottom:32px;">Kirjanpito ja taloushallinto asiantuntijoidesi kanssa</p>
+
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <i data-lucide="map-pin" style="width:20px;height:20px;"></i>
+            </div>
+            <div>
+              <p style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); margin-bottom:4px;">Osoite</p>
+              <p style="font-size:0.9375rem; color:var(--text); font-weight:500; margin:0;">Peltolantie 10<br>01300 Vantaa, Suomi</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <i data-lucide="phone" style="width:20px;height:20px;"></i>
+            </div>
+            <div>
+              <p style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); margin-bottom:4px;">Puhelin</p>
+              <a href="tel:098572481" style="font-size:0.9375rem; color:var(--accent); font-weight:600; text-decoration:none;">09 8572481</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <i data-lucide="globe" style="width:20px;height:20px;"></i>
+            </div>
+            <div>
+              <p style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); margin-bottom:4px;">Verkkosivut</p>
+              <a href="http://www.tikkurilantilitoimisto.fi/" target="_blank" rel="noopener" style="font-size:0.9375rem; color:var(--accent); font-weight:500; text-decoration:none; word-break:break-all;">www.tikkurilantilitoimisto.fi</a>
+            </div>
+          </div>
+
+          <div style="margin-top:32px;">
+            <a href="tel:098572481" class="btn-primary" style="width:100%; justify-content:center; font-size:0.9375rem; padding:14px 24px;">
+              <i data-lucide="phone" style="width:17px;height:17px;"></i>
+              Soita 09 8572481
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Google Maps -->
+      <div class="reveal" style="--i:1">
+        <iframe
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Peltolantie%2010%2C%2001300%20Vantaa%2C%20Suomi%2C%20Vantaa%2C%20Finland&language=fi"
+          class="map-iframe"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Tikkurilan Tilitoimisto Oy sijainti">
+        </iframe>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- [9] FOOTER -->
+<footer class="site-footer" style="padding:48px 0 24px;">
+  <div class="container">
+    <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:32px; padding-bottom:32px; border-bottom:1px solid rgba(255,255,255,0.1);">
+      <div style="max-width:320px;">
+        <div style="font-family:'EB Garamond',serif; font-size:1.25rem; font-weight:700; color:#fff; margin-bottom:10px; letter-spacing:-0.01em;">
+          Tikkurilan Tilitoimisto Oy
+        </div>
+        <p style="font-size:0.875rem; color:rgba(255,255,255,0.55); line-height:1.7; margin:0;">
+          Luotettava kirjanpito- ja taloushallinnon kumppanisi Vantaalla vuodesta 1989.
+        </p>
+      </div>
+      <div>
+        <p style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:rgba(255,255,255,0.35); margin-bottom:14px;">Yhteystiedot</p>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <span style="font-size:0.875rem; color:rgba(255,255,255,0.65);">Peltolantie 10, 01300 Vantaa</span>
+          <a href="tel:098572481" style="font-size:0.875rem; color:rgba(255,255,255,0.65); text-decoration:none;">09 8572481</a>
+          <a href="http://www.tikkurilantilitoimisto.fi/" target="_blank" rel="noopener" style="font-size:0.875rem; color:rgba(255,255,255,0.65); text-decoration:none;">www.tikkurilantilitoimisto.fi</a>
+        </div>
+      </div>
+    </div>
+    <div style="padding-top:24px; text-align:center;">
+      <p style="font-size:11px; color:rgba(255,255,255,0.25); margin:0; letter-spacing:0.03em;">
+        Demo luotu <a href="https://masasite.com" style="color:rgba(255,255,255,0.35); text-decoration:none;">masasite.com</a> palvelulla
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  @media (max-width: 768px) {
+    .contact-grid {
+      grid-template-columns: 1fr !important;
+    }
+    .map-iframe {
+      height: 280px !important;
+    }
+  }
+</style>
+
+<script>
+  // LUCIDE ICONS
+  lucide.createIcons();
+
+  // NAV SCROLL EFFECT
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  });
+
+  // INTERSECTION OBSERVER FOR REVEAL
+  const reveals = document.querySelectorAll('.reveal');
+  reveals.forEach((el, i) => {
+    const idx = el.style.getPropertyValue('--i') || i;
+    el.style.transitionDelay = `${parseInt(idx) * 80}ms`;
+  });
+
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    }),
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+
+  reveals.forEach(el => io.observe(el));
+
+  // Re-init lucide after DOM is fully loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    lucide.createIcons();
+  });
+</script>
+
+</html>
