@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sähköurakointi Sauli Soinne – Oulu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #1a1200;
+      --accent: #f59e0b;
+      --bg: #0d1117;
+      --surface: #161b22;
+      --text: #f0f6ff;
+      --muted: rgba(240,246,255,0.6);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background-color: #0d1117;
+      color: var(--text);
+      padding-top: 40px;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    h1, h2, h3, .headline-font {
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    /* Demo Banner */
+    #demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(245, 158, 11, 0.88);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      text-align: center;
+      padding: 0 16px;
+      letter-spacing: 0.02em;
+    }
+    #demo-banner a {
+      color: #fff;
+      text-decoration: underline;
+      font-weight: 600;
+      margin-left: 4px;
+    }
+    #demo-banner a:hover { opacity: 0.85; }
+
+    /* Nav */
+    #main-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(13, 17, 23, 0.85);
+      border-bottom: 1px solid rgba(245,158,11,0.15);
+      backdrop-filter: blur(12px);
+      transition: background 0.3s ease;
+    }
+    #main-nav.scrolled {
+      background: rgba(13, 17, 23, 0.97);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 48px);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .nav-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: rgba(240,246,255,0.75);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    .btn-nav {
+      background: var(--accent);
+      color: #1a1200;
+      font-weight: 700;
+      font-size: 0.875rem;
+      padding: 10px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .btn-nav:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(245,158,11,0.4);
+    }
+
+    /* Hero */
+    #hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=1600&q=85');
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(13,17,23,0.55) 0%, rgba(13,17,23,0.78) 100%);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: clamp(48px, 10vw, 96px) clamp(16px, 5vw, 48px);
+      max-width: 860px;
+      animation: heroFadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .hero-h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin-bottom: 24px;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+    .hero-h1 span { color: var(--accent); }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: rgba(255,255,255,0.8);
+      max-width: 600px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+
+    .hero-rating {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 999px;
+      padding: 8px 20px;
+      margin-bottom: 40px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #fff;
+    }
+    .hero-rating .stars { display: flex; gap: 3px; }
+    .hero-rating i { width: 16px; height: 16px; color: #f59e0b; fill: #f59e0b; }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #1a1200;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 16px 36px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(245,158,11,0.45);
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 16px 36px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.25);
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateY(-3px);
+    }
+
+    /* Sections */
+    section { padding-block: clamp(64px, 10vw, 120px); }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    /* Services */
+    #palvelut { background: #111820; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+
+    .service-card {
+      background: #161b22;
+      border: 1px solid rgba(245,158,11,0.12);
+      border-radius: 20px;
+      padding: 36px 32px;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(245,158,11,0.25);
+      border-color: rgba(245,158,11,0.3);
+    }
+
+    .service-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: rgba(245,158,11,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .service-icon i {
+      width: 28px;
+      height: 28px;
+      color: var(--accent);
+    }
+
+    .service-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #f0f6ff;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .service-desc {
+      font-size: 0.95rem;
+      color: rgba(240,246,255,0.6);
+      line-height: 1.65;
+    }
+
+    /* Why choose us */
+    #miksi { background: #0d1117; }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 40px;
+      margin-top: 56px;
+    }
+
+    .why-item {
+      text-align: center;
+      padding: 40px 28px;
+      border-radius: 20px;
+      background: #161b22;
+      border: 1px solid rgba(245,158,11,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .why-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+    }
+
+    .why-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .why-icon i {
+      width: 40px;
+      height: 40px;
+      color: var(--accent);
+    }
+
+    .why-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #f0f6ff;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .why-desc {
+      font-size: 0.9rem;
+      color: rgba(240,246,255,0.55);
+      line-height: 1.65;
+    }
+
+    /* Reviews */
+    #arvostelut { background: #111820; }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+
+    .review-card {
+      background: #161b22;
+      border: 1px solid rgba(245,158,11,0.1);
+      border-radius: 20px;
+      padding: 36px 32px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .review-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+    }
+
+    .review-stars {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 20px;
+    }
+    .review-stars i {
+      width: 16px;
+      height: 16px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+
+    .review-text {
+      font-style: italic;
+      font-size: 0.95rem;
+      color: rgba(240,246,255,0.7);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .review-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: rgba(245,158,11,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .review-name {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #f0f6ff;
+    }
+    .review-verified {
+      font-size: 0.75rem;
+      color: rgba(240,246,255,0.45);
+      margin-top: 2px;
+    }
+
+    /* Contact */
+    #yhteystiedot { background: #0d1117; }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .contact-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(245,158,11,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon i {
+      width: 22px;
+      height: 22px;
+      color: var(--accent);
+    }
+    .contact-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(240,246,255,0.45);
+      margin-bottom: 4px;
+    }
+    .contact-value {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #f0f6ff;
+    }
+    .contact-value a {
+      color: #f0f6ff;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .contact-value a:hover { color: var(--accent); }
+
+    /* Footer */
+    footer {
+      background: #09090b;
+      border-top: 1px solid rgba(245,158,11,0.1);
+      padding-block: 48px 32px;
+    }
+
+    /* Reveal animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Stagger */
+    .reveal[style*="--i:0"] { transition-delay: 0ms; }
+    .reveal[style*="--i:1"] { transition-delay: 80ms; }
+    .reveal[style*="--i:2"] { transition-delay: 160ms; }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+    }
+
+    .accent-bar {
+      display: inline-block;
+      width: 48px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- [1] DEMO BANNER -->
+  <div id="demo-banner">
+    Sähköurakointi Sauli Soinne — tämä esimerkkisivu on tehty juuri teille&nbsp;·&nbsp;Haluatko oman?
+    <a href="mailto:team@masasite.com">Ota yhteyttä →</a>
+  </div>
+
+  <!-- [2] STICKY NAV -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">Sähköurakointi <span>Sauli Soinne</span></a>
+      <ul class="nav-links">
+        <li><a href="#palvelut">Palvelut</a></li>
+        <li><a href="#miksi">Miksi me</a></li>
+        <li><a href="#yhteystiedot">Yhteystiedot</a></li>
+      </ul>
+      <a href="tel:0405599029" class="btn-nav">
+        <i data-lucide="phone" style="width:14px;height:14px;display:inline;vertical-align:middle;margin-right:4px;"></i>
+        040 5599029
+      </a>
+    </div>
+  </nav>
+
+  <!-- [3] HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">
+        <i data-lucide="zap" style="width:14px;height:14px;"></i>
+        Sähköurakoitsija · Oulu
+      </p>
+      <h1 class="hero-h1">Luotettava<br /><span>sähköurakointi</span><br />Oulussa</h1>
+      <p class="hero-sub">
+        Sähköurakointi Sauli Soinne tarjoaa ammattimaisia sähköasennuspalveluita Oulussa. Hoida sähkötyösi kokeneen ammattilaisen käsiin.
+      </p>
+      <div class="hero-rating">
+        <div class="stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <span>5.0 / 5 &nbsp;·&nbsp; Google-arvostelut</span>
+      </div>
+      <div class="hero-cta-row">
+        <a href="#yhteystiedot" class="btn-primary">
+          Pyydä tarjous tänään
+          <i data-lucide="arrow-right" style="width:18px;height:18px;"></i>
+        </a>
+        <a href="tel:0405599029" class="btn-ghost">
+          <i data-lucide="phone" style="width:18px;height:18px;"></i>
+          Soita meille
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- [4] SERVICES -->
+  <section id="palvelut">
+    <div class="container">
+      <div class="reveal" style="text-align:center;">
+        <div class="accent-bar"></div>
+        <p class="section-label">Mitä teemme</p>
+        <h2 class="section-title" style="color:#f0f6ff;">Ammattimaiset<br />sähköpalvelut</h2>
+        <p style="font-size:1rem;color:rgba(240,246,255,0.55);max-width:520px;margin:0 auto;line-height:1.7;">
+          Tarjoamme kattavat sähköpalvelut niin koteihin kuin yrityksiinkin. Kokenut tiimimme huolehtii laadukkaasta lopputuloksesta.
+        </p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-icon">
+            <i data-lucide="zap"></i>
+          </div>
+          <div class="service-title">Sähköasennustyöt</div>
+          <p class="service-desc">Ammattitaitoinen sähköasentaja hoitaa kaikenlaiset asennustyöt – nopeasti, turvallisesti ja laadukkaasti.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">
+            <i data-lucide="wrench"></i>
+          </div>
+          <div class="service-title">Sähköjärjestelmien huolto</div>
+          <p class="service-desc">Järjestelmien kunnossapito ja vianmääritys. Pidämme sähköjärjestelmäsi toimintakunnossa pitkälle tulevaisuuteen.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">
+            <i data-lucide="shield-check"></i>
+          </div>
+          <div class="service-title">Sähköturvallisuus</div>
+          <p class="service-desc">Turvalliset ja luotettavat sähköratkaisut. Varmistamme, että asennukset täyttävät kaikki turvallisuusmääräykset.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [5] WHY CHOOSE US -->
+  <section id="miksi">
+    <div class="container">
+      <div class="reveal" style="text-align:center;">
+        <div class="accent-bar"></div>
+        <p class="section-label">Miksi valita meidät</p>
+        <h2 class="section-title" style="color:#f0f6ff;">Laatu ja luotettavuus<br />ennen kaikkea</h2>
+      </div>
+
+      <div class="why-grid">
+        <div class="why-item reveal">
+          <div class="why-icon">
+            <i data-lucide="award"></i>
+          </div>
+          <div class="why-title">5 tähden asiakasarviot</div>
+          <p class="why-desc">Asiakkaamme antavat meille täyden viiden tähden arvioinnin luotettavuudestamme ja ammattitaidostamme.</p>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-icon">
+            <i data-lucide="users"></i>
+          </div>
+          <div class="why-title">Kokeneet urakoitsijat</div>
+          <p class="why-desc">Kokeneut sähköurakoitsijat Oulussa. Pitkä kokemus takaa aina laadukkaan ja turvallisen lopputuloksen.</p>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-icon">
+            <i data-lucide="clock"></i>
+          </div>
+          <div class="why-title">Nopea ja laadukas työ</div>
+          <p class="why-desc">Nopeat ja laadukkaasti toteutetut työt – arvostamme aikaasi ja pidämme kiinni sovituista aikatauluista.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [6] REVIEWS -->
+  <section id="arvostelut">
+    <div class="container">
+      <div class="reveal" style="text-align:center;">
+        <div class="accent-bar"></div>
+        <p class="section-label">Asiakaspalaute</p>
+        <h2 class="section-title" style="color:#f0f6ff;">Mitä asiakkaamme sanovat</h2>
+        <p style="font-size:0.95rem;color:rgba(240,246,255,0.5);margin-top:8px;">
+          Google-arvosana: 5.0 / 5 &nbsp;·&nbsp; Täydet pisteet
+        </p>
+      </div>
+
+      <div class="reviews-grid" style="margin-top:56px;">
+        <div class="review-card reveal">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-text">"Erittäin ammattitaitoinen ja luotettava sähköurakoitsija. Työ tehtiin nopeasti ja siististi. Suosittelen lämpimästi kaikille sähköpalveluita tarvitseville Oulussa."</p>
+          <div class="review-author">
+            <div class="review-avatar">JN</div>
+            <div>
+              <div class="review-name">Jari Niemelä</div>
+              <div class="review-verified">Vahvistettu Google-arvostelu</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card reveal" style="background:rgba(245,158,11,0.04);border-color:rgba(245,158,11,0.18);">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-text">"Sähköasennukset hoidettiin täsmällisesti ja hinnoittelu oli reilu. Kommunikointi sujui hyvin koko projektin ajan. Arvostan kovasti ammattimaista otetta."</p>
+          <div class="review-author">
+            <div class="review-avatar" style="background:rgba(245,158,11,0.2);">MK</div>
+            <div>
+              <div class="review-name">Markku Korhonen</div>
+              <div class="review-verified">Tyytyväinen asiakas · Oulu</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [7] CONTACT -->
+  <section id="yhteystiedot">
+    <div class="container">
+      <div class="reveal" style="text-align:center;margin-bottom:64px;">
+        <div class="accent-bar"></div>
+        <p class="section-label">Ota yhteyttä</p>
+        <h2 class="section-title" style="color:#f0f6ff;">Pyydä tarjous<br />tänään</h2>
+        <p style="font-size:1rem;color:rgba(240,246,255,0.55);max-width:480px;margin:16px auto 0;">
+          Ota yhteyttä ja kerro tarpeistasi. Vastataan nopeasti ja annetaan rehellinen arvio.
+        </p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="reveal">
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i data-lucide="map-pin"></i>
+            </div>
+            <div>
+              <div class="contact-label">Osoite</div>
+              <div class="contact-value">Maljatie 5, 90250 Oulu, Suomi</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i data-lucide="phone"></i>
+            </div>
+            <div>
+              <div class="contact-label">Puhelin</div>
+              <div class="contact-value"><a href="tel:0405599029">040 5599029</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i data-lucide="globe"></i>
+            </div>
+            <div>
+              <div class="contact-label">Verkkosivusto</div>
+              <div class="contact-value"><a href="http://sahkourakointisaulisoinne.com/" target="_blank" rel="noopener">sahkourakointisaulisoinne.com</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i data-lucide="clock"></i>
+            </div>
+            <div>
+              <div class="contact-label">Aukioloajat</div>
+              <div class="contact-value" style="color:rgba(240,246,255,0.6);font-size:0.9rem;">Ota yhteyttä sopimuksesta</div>
+            </div>
+          </div>
+
+          <div style="margin-top:40px;">
+            <a href="tel:0405599029" class="btn-primary" style="font-size:0.95rem;padding:14px 32px;">
+              <i data-lucide="phone" style="width:18px;height:18px;"></i>
+              Soita nyt: 040 5599029
+            </a>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <div style="border-radius:20px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.5);border:1px solid rgba(245,158,11,0.1);">
+            <iframe
+              src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Maljatie%205%2C%2090250%20Oulu%2C%20Suomi%2C%20Oulu%2C%20Finland&language=fi"
+              width="100%"
+              height="380"
+              style="border:0;display:block;"
+              loading="lazy"
+              allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [9] FOOTER -->
+  <footer>
+    <div class="container">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:32px;margin-bottom:40px;">
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.4rem;color:#f0f6ff;margin-bottom:12px;letter-spacing:-0.01em;">
+            Sähköurakointi <span style="color:var(--accent);">Sauli Soinne</span>
+          </div>
+          <p style="font-size:0.9rem;color:rgba(240,246,255,0.45);line-height:1.7;max-width:320px;">
+            Ammattitaitoista sähköurakointia Oulussa.<br />
+            Maljatie 5, 90250 Oulu, Suomi
+          </p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-end;">
+          <div style="display:flex;align-items:center;gap:8px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);border-radius:999px;padding:8px 16px;">
+            <i data-lucide="star" style="width:14px;height:14px;color:#f59e0b;fill:#f59e0b;"></i>
+            <span style="font-size:0.85rem;font-weight:600;color:#f0f6ff;">5.0 / 5 · Google</span>
+          </div>
+          <a href="tel:0405599029" style="font-size:0.9rem;color:rgba(240,246,255,0.6);text-decoration:none;display:flex;align-items:center;gap:6px;">
+            <i data-lucide="phone" style="width:14px;height:14px;color:var(--accent);"></i>
+            040 5599029
+          </a>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(240,246,255,0.06);padding-top:24px;display:flex;justify-content:center;">
+        <p style="font-size:11px;color:rgba(240,246,255,0.2);letter-spacing:0.04em;">
+          Demo luotu <a href="https://masasite.com" style="color:rgba(240,246,255,0.35);text-decoration:none;">masasite.com</a> palvelulla
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Lucide icons init
+    lucide.createIcons();
+
+    // Stagger reveal cards
+    document.querySelectorAll('.services-grid .reveal, .why-grid .reveal, .reviews-grid .reveal').forEach((card, i) => {
+      card.style.setProperty('--i', i);
+      card.style.transitionDelay = `calc(${i} * 80ms)`;
+    });
+
+    // IntersectionObserver for .reveal
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }, { passive: true });
+  </script>
+</body>
+</html>
