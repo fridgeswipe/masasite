@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>APRIL PARTURI 28 — Parturi Vantaalla</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #1c1208;
+      --accent: #b8860b;
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --text: #1c1208;
+      --muted: #7a6a52;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding-top: 40px;
+      font-size: 1rem;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    /* Demo Banner */
+    #demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(184, 134, 11, 0.88);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.02em;
+      text-align: center;
+      padding: 0 16px;
+    }
+    #demo-banner a {
+      color: #fff;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      margin-left: 4px;
+    }
+    #demo-banner a:hover { opacity: 0.8; }
+
+    /* Nav */
+    #main-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(250, 250, 249, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(184, 134, 11, 0.15);
+      transition: box-shadow 0.3s ease;
+    }
+    #main-nav.scrolled {
+      box-shadow: 0 4px 24px rgba(28, 18, 8, 0.1);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 48px);
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 1.35rem;
+      color: var(--primary);
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .nav-logo span {
+      color: var(--accent);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .btn-nav {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 10px 24px;
+      border-radius: 9999px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-nav:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(184, 134, 11, 0.35);
+    }
+    .nav-mobile-cta { display: none; }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .btn-nav { display: none; }
+      .nav-mobile-cta { display: block; }
+    }
+
+    /* Hero */
+    #hero {
+      min-height: 100svh;
+      position: relative;
+      background-image: url('assets/april-parturi-28-277adcae/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.50) 0%, rgba(0,0,0,0.68) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: clamp(48px, 8vw, 96px) clamp(16px, 5vw, 48px);
+      max-width: 860px;
+      animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+      background: rgba(184, 134, 11, 0.18);
+      border: 1px solid rgba(184, 134, 11, 0.4);
+      padding: 6px 16px;
+      border-radius: 9999px;
+    }
+    .hero-h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255,255,255,0.82);
+      max-width: 600px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+    .hero-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+    .hero-rating .stars {
+      display: flex;
+      gap: 3px;
+    }
+    .hero-rating .stars i {
+      color: #f59e0b;
+      fill: #f59e0b;
+      width: 20px;
+      height: 20px;
+    }
+    .hero-rating-text {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.85);
+      font-weight: 500;
+    }
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 16px 36px;
+      border-radius: 9999px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(184, 134, 11, 0.45);
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+    .btn-ghost {
+      background: rgba(255,255,255,0.16);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 16px 36px;
+      border-radius: 9999px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.35);
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-ghost:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.25);
+    }
+
+    /* Sections */
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .section-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+    .section-subtitle {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* Services */
+    #services {
+      background: #f4f1ec;
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .services-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .service-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+      cursor: default;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.13);
+    }
+    .service-icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: color-mix(in srgb, #b8860b 14%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .service-icon-wrap i {
+      color: var(--accent);
+      width: 28px;
+      height: 28px;
+    }
+    .service-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .service-card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* Why us */
+    #why-us {
+      background: #fff;
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .why-us-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .why-us-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 40px;
+    }
+    .why-item {
+      text-align: center;
+      padding: 16px;
+    }
+    .why-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: color-mix(in srgb, #b8860b 10%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+    .why-icon i {
+      color: var(--accent);
+      width: 32px;
+      height: 32px;
+    }
+    .why-item h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .why-item p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
+    /* Reviews */
+    #reviews {
+      background: #f8f5f0;
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .reviews-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .review-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .review-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 16px;
+    }
+    .review-stars i {
+      color: #f59e0b;
+      fill: #f59e0b;
+      width: 16px;
+      height: 16px;
+    }
+    .review-quote {
+      font-size: 0.92rem;
+      color: #4a3f30;
+      line-height: 1.75;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .review-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: color-mix(in srgb, #b8860b 20%, #1c1208);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .review-author-name {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .review-verified {
+      font-size: 0.72rem;
+      color: var(--accent);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .review-verified i { width: 12px; height: 12px; }
+
+    /* Hours */
+    #hours {
+      background: #fff;
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .hours-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .hours-card {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #faf8f4;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(184, 134, 11, 0.15);
+    }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 32px;
+      border-bottom: 1px solid rgba(184, 134, 11, 0.08);
+      transition: background 0.2s ease;
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-row:hover { background: rgba(184, 134, 11, 0.05); }
+    .hours-day {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    .hours-time {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+    .hours-accent {
+      background: color-mix(in srgb, #b8860b 8%, #fff);
+    }
+
+    /* Contact */
+    #contact {
+      background: #f4f1ec;
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+    .contact-info h2 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 24px;
+    }
+    .contact-info p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .contact-icon-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: color-mix(in srgb, #b8860b 12%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon-wrap i {
+      color: var(--accent);
+      width: 20px;
+      height: 20px;
+    }
+    .contact-item-text {
+      padding-top: 4px;
+    }
+    .contact-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 2px;
+    }
+    .contact-value {
+      font-size: 0.95rem;
+      color: var(--primary);
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .contact-value:hover { color: var(--accent); }
+    .contact-map iframe {
+      border-radius: 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+    }
+
+    /* Footer */
+    #footer {
+      background: var(--primary);
+      padding-block: 48px 32px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+    }
+    .footer-logo span { color: var(--accent); }
+    .footer-address {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 4px;
+      line-height: 1.6;
+    }
+    .footer-divider {
+      width: 40px;
+      height: 1px;
+      background: rgba(184, 134, 11, 0.4);
+      margin: 24px auto;
+    }
+    .footer-credit {
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.04em;
+    }
+    .footer-credit a {
+      color: rgba(255,255,255,0.35);
+      text-decoration: none;
+    }
+    .footer-credit a:hover { color: rgba(255,255,255,0.6); }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Stagger delay */
+    .stagger-1 { transition-delay: 0ms; }
+    .stagger-2 { transition-delay: 80ms; }
+    .stagger-3 { transition-delay: 160ms; }
+    .stagger-4 { transition-delay: 240ms; }
+    .stagger-5 { transition-delay: 320ms; }
+    .stagger-6 { transition-delay: 400ms; }
+
+    /* Scrollbar subtle */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: rgba(184, 134, 11, 0.35); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+  <!-- [1] DEMO BANNER -->
+  <div id="demo-banner">
+    <span>APRIL PARTURI 28 &mdash; tämä esimerkkisivu on tehty juuri teille &middot; Haluatko oman?&nbsp;<a href="mailto:team@masasite.com">Ota yhteyttä &rarr;</a></span>
+  </div>
+
+  <!-- [2] STICKY NAV -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">APRIL <span>PARTURI</span> 28</a>
+      <ul class="nav-links">
+        <li><a href="#services">Palvelut</a></li>
+        <li><a href="#hours">Aukioloajat</a></li>
+        <li><a href="#contact">Yhteystiedot</a></li>
+      </ul>
+      <a href="tel:0403686666" class="btn-nav">Varaa aika</a>
+      <a href="tel:0403686666" class="btn-nav nav-mobile-cta">Soita</a>
+    </div>
+  </nav>
+
+  <!-- [3] HERO -->
+  <section id="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-eyebrow">Parturi &middot; Vantaa</span>
+      <h1 class="hero-h1">Ammattitaitoinen<br>parturi palvelut<br>Vantaalla</h1>
+      <p class="hero-subtitle">APRIL PARTURI 28 on Vantaalla sijaitseva hiustenleikkauspalvelun ammattilainen. Korkealla arvostelulla tuettu palvelu takaa laadukkaita tuloksia jokaiselle asiakkaalle.</p>
+      <div class="hero-rating">
+        <div class="stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <span class="hero-rating-text">4.9/5 &mdash; 50 arvostelua</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="tel:0403686666" class="btn-primary">
+          <i data-lucide="phone" style="width:18px;height:18px;"></i>
+          Varaa aika nyt
+        </a>
+        <a href="#services" class="btn-ghost">
+          Katso palvelut
+          <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- [4] SERVICES GRID -->
+  <section id="services">
+    <div class="section-container">
+      <div class="services-header reveal">
+        <span class="section-eyebrow">Palvelumme</span>
+        <h2 class="section-title" style="margin-bottom:16px;">Laadukkaat parturipalvelut</h2>
+        <p class="section-subtitle" style="margin:0 auto;">Ammattitaitoinen tiimi tarjoaa yksilöllisiä ratkaisuja jokaisen asiakkaan tarpeisiin. Korkealaatuista palvelua jokaisella käynnillä.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal stagger-1">
+          <div class="service-icon-wrap">
+            <i data-lucide="scissors"></i>
+          </div>
+          <h3>Miesten hiustenleikkaus</h3>
+          <p>Klassinen ja modernit hiustenleikkaukset ammattitaitoisesti toteutettuna. Räätälöity jokaisen miehen tyyliin.</p>
+        </div>
+        <div class="service-card reveal stagger-2">
+          <div class="service-icon-wrap">
+            <i data-lucide="sparkles"></i>
+          </div>
+          <h3>Partahoito</h3>
+          <p>Laadukkaita parran muotoilu- ja hoitopalveluita. Siististä trimmailusta täydelliseen parranajoon.</p>
+        </div>
+        <div class="service-card reveal stagger-3">
+          <div class="service-icon-wrap">
+            <i data-lucide="heart"></i>
+          </div>
+          <h3>Naisten hiustenleikkaus</h3>
+          <p>Ammattitaitoisia leikkauksia ja muotoiluja naisten hiuksille. Kauniit tulokset jokaisen toiveen mukaan.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [5] WHY CHOOSE US -->
+  <section id="why-us">
+    <div class="section-container">
+      <div class="why-us-header reveal">
+        <span class="section-eyebrow">Miksi meille</span>
+        <h2 class="section-title" style="margin-bottom:16px;">Miksi valita April Parturi 28?</h2>
+        <p class="section-subtitle" style="margin:0 auto;">Olemme ansainneet asiakkaidemme luottamuksen laadukkaalla palvelulla ja ammattitaidolla.</p>
+      </div>
+      <div class="why-us-grid">
+        <div class="why-item reveal stagger-1">
+          <div class="why-icon">
+            <i data-lucide="award"></i>
+          </div>
+          <h3>Huipputason ammattitaito</h3>
+          <p>4.9/5 arvosanalla palkittu ammattitaito ja asiakastyytyväisyys. Yli 50 onnellista asiakasarvostelua.</p>
+        </div>
+        <div class="why-item reveal stagger-2">
+          <div class="why-icon">
+            <i data-lucide="clock"></i>
+          </div>
+          <h3>Laajat aukioloajat</h3>
+          <p>Pitkät aukioloajat ma–su, sopiva kaikille aikatauluille. Myös viikonloppuisin palvelemme asiakkaitamme.</p>
+        </div>
+        <div class="why-item reveal stagger-3">
+          <div class="why-icon">
+            <i data-lucide="shield-check"></i>
+          </div>
+          <h3>Yksilölliset ratkaisut</h3>
+          <p>Kokenut parturi-ammattilainen yksilöllisillä ratkaisuilla jokaiselle asiakkaalle. Sinun tyylisi, meidän asiantuntemuksemme.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO STRIP -->
+  <section style="background:#1c1208; padding:0; overflow:hidden;">
+    <div style="display:grid; grid-template-columns:1fr 1fr; height:360px; max-height:400px;">
+      <div style="overflow:hidden;">
+        <img src="assets/april-parturi-28-277adcae/photo2.jpg" alt="April Parturi 28 - Parturipalvelut" style="width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.5s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'" />
+      </div>
+      <div style="overflow:hidden;">
+        <img src="assets/april-parturi-28-277adcae/photo3.jpg" alt="April Parturi 28 - Parturipalvelut Vantaa" style="width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.5s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'" />
+      </div>
+    </div>
+  </section>
+
+  <!-- [6] REVIEWS -->
+  <section id="reviews">
+    <div class="section-container">
+      <div class="reviews-header reveal">
+        <span class="section-eyebrow">Asiakasarvostelut</span>
+        <h2 class="section-title" style="margin-bottom:16px;">Mitä asiakkaamme sanovat</h2>
+        <p class="section-subtitle" style="margin:0 auto;">Yli 50 tyytyväistä asiakasta on antanut meille 4.9/5 arvosanan Googlessa.</p>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card reveal stagger-1">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"Something Exceptional including Experienced staff, Hygiene maintained, Great ambience. A must visit Hair salon in Vantaa."</p>
+          <div class="review-author">
+            <div class="review-avatar">TA</div>
+            <div>
+              <div class="review-author-name">Taha Ahmad</div>
+              <div class="review-verified">
+                <i data-lucide="check-circle"></i>
+                Vahvistettu arvostelu
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card reveal stagger-2">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"So nice!! Professional. Erittäin tyytyväinen palveluun ja lopputulokseen."</p>
+          <div class="review-author">
+            <div class="review-avatar">MP</div>
+            <div>
+              <div class="review-author-name">Mario Pacu</div>
+              <div class="review-verified">
+                <i data-lucide="check-circle"></i>
+                Vahvistettu arvostelu
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card reveal stagger-3">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"Great service and price 👍🏽 Suosittelen lämpimästi kaikille. Laadukas palvelu hyvään hintaan."</p>
+          <div class="review-author">
+            <div class="review-avatar">ZC</div>
+            <div>
+              <div class="review-author-name">Zac</div>
+              <div class="review-verified">
+                <i data-lucide="check-circle"></i>
+                Vahvistettu arvostelu
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overall rating bar -->
+      <div class="reveal" style="margin-top:48px; text-align:center;">
+        <div style="display:inline-flex; align-items:center; gap:16px; background:#fff; padding:20px 36px; border-radius:16px; box-shadow:0 2px 16px rgba(0,0,0,0.07);">
+          <div style="text-align:left;">
+            <div style="font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:700; color:var(--primary); line-height:1;">4.9</div>
+            <div style="font-size:0.75rem; color:var(--muted); font-weight:500; text-transform:uppercase; letter-spacing:0.08em;">/ 5 Google</div>
+          </div>
+          <div style="width:1px; height:48px; background:rgba(184,134,11,0.2);"></div>
+          <div>
+            <div style="display:flex; gap:4px; margin-bottom:6px;">
+              <i data-lucide="star" style="color:#f59e0b;fill:#f59e0b;width:22px;height:22px;"></i>
+              <i data-lucide="star" style="color:#f59e0b;fill:#f59e0b;width:22px;height:22px;"></i>
+              <i data-lucide="star" style="color:#f59e0b;fill:#f59e0b;width:22px;height:22px;"></i>
+              <i data-lucide="star" style="color:#f59e0b;fill:#f59e0b;width:22px;height:22px;"></i>
+              <i data-lucide="star" style="color:#f59e0b;fill:#f59e0b;width:22px;height:22px;"></i>
+            </div>
+            <div style="font-size:0.8rem; color:var(--muted);">50 arvostelua</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [7] OPENING HOURS -->
+  <section id="hours">
+    <div class="section-container">
+      <div class="hours-header reveal">
+        <span class="section-eyebrow">Aukioloajat</span>
+        <h2 class="section-title" style="margin-bottom:16px;">Milloin olemme avoinna</h2>
+        <p class="section-subtitle" style="margin:0 auto;">Palvelemme sinua laajoin aukioloajoin joka päivä viikossa.</p>
+      </div>
+      <div class="hours-card reveal">
+        <div class="hours-row">
+          <span class="hours-day">
+            <i data-lucide="clock" style="width:14px;height:14px;color:var(--accent);display:inline-block;margin-right:8px;vertical-align:middle;"></i>
+            Maanantai
+          </span>
+          <span class="hours-time">12:00 – 19:30</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">
+            <i data-lucide="clock" style="width:14px;height:14px;color:var(--accent);display:inline-block;margin-right:8px;vertical-align:middle;"></i>
+            Tiistai
+          </span>
+          <span class="hours-time">10:00 – 19:30</span>
+        </div>
+        <div class="hours-row hours-accent">
+          <span class="hours-day">
+            <i data-lucide="clock" style="width:14px;height:14px;color:var(--accent);display:inline-block;margin-right:8px;vertical-align:middle;"></i>
+            Keskiviikko
+          </span>
+          <span class="hours-time">10:00 – 19:30</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">
+            <i data-lucide="clock" style="width:14px;height:14px;color:var(--accent);display:inline-block;margin-right:8px;vertical-align:middle;"></i>
+            Torstai
+          </span>
+          <span class="hours-time">10:00 – 19:30</span>
+        </div>
+        <div class="hours-row hours-accent">
+          <span class="hours-day">
+            <i data-lucide="clock" style="width:14px;height:14px;color:var(--accent);display:inline-block;margin-right:8px;vertical-align:middle;"></i>
+            Perjantai
+          </span>
+          <span class="hours-time">10:00 – 19:30</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">
+            <i data-lucide="clock" style="width:14px;height:14px;color:var(--accent);display:inline-block;margin-right:8px;vertical-align:middle;"></i>
+            Lauantai
+          </span>
+          <span class="hours-time">11:00 – 18:00</span>
+        </div>
+        <div class="hours-row hours-accent">
+          <span class="hours-day">
+            <i data-lucide="clock" style="width:14px;height:14px;color:var(--accent);display:inline-block;margin-right:8px;vertical-align:middle;"></i>
+            Sunnuntai
+          </span>
+          <span class="hours-time">11:00 – 18:00</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [8] CONTACT -->
+  <section id="contact">
+    <div class="section-container">
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <span class="section-eyebrow">Yhteystiedot</span>
+          <h2>Tule käymään tai soita meille</h2>
+          <p>Tervetuloa tutustumaan palveluihimme. Voit varata ajan soittamalla tai käymällä paikan päällä. Olemme Vantaalla lähellä sinua.</p>
+
+          <div class="contact-item">
+            <div class="contact-icon-wrap">
+              <i data-lucide="map-pin"></i>
+            </div>
+            <div class="contact-item-text">
+              <span class="contact-label">Osoite</span>
+              <span class="contact-value">Leineläntie 4, 01340 Vantaa, Suomi</span>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon-wrap">
+              <i data-lucide="phone"></i>
+            </div>
+            <div class="contact-item-text">
+              <span class="contact-label">Puhelin</span>
+              <a href="tel:0403686666" class="contact-value">040 3686666</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon-wrap">
+              <i data-lucide="map-pin"></i>
+            </div>
+            <div class="contact-item-text">
+              <span class="contact-label">Kaupunki</span>
+              <span class="contact-value">Vantaa, Suomi</span>
+            </div>
+          </div>
+
+          <div style="margin-top:32px;">
+            <a href="tel:0403686666" class="btn-primary" style="display:inline-flex;">
+              <i data-lucide="phone" style="width:18px;height:18px;"></i>
+              Varaa aika nyt
+            </a>
+          </div>
+        </div>
+
+        <div class="contact-map reveal stagger-2">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Leinel%C3%A4ntie%204%2C%2001340%20Vantaa%2C%20Suomi%2C%20Vantaa%2C%20Finland&language=fi"
+            width="100%"
+            height="380"
+            style="border:0; border-radius:20px; display:block; min-height:280px;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="April Parturi 28 sijainti">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [9] FOOTER -->
+  <footer id="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">APRIL <span>PARTURI</span> 28</div>
+      <div class="footer-address">Leineläntie 4, 01340 Vantaa, Suomi</div>
+      <div class="footer-address">040 3686666</div>
+      <div class="footer-divider"></div>
+      <div class="footer-credit">Demo luotu <a href="https://masasite.com" target="_blank">masasite.com</a> palvelulla</div>
+    </div>
+  </footer>
+
+  <script>
+    // Init Lucide icons
+    lucide.createIcons();
+
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // IntersectionObserver for reveal animations
+    const revealObserver = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObserver.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Re-init Lucide icons after dynamic changes
+    // (already called above, but good practice after DOM updates)
+    setTimeout(() => { lucide.createIcons(); }, 100);
+  </script>
+</body>
+</html>
