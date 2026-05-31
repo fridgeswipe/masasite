@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asianajotoimisto Tolonen & Teittinen – Oikeuspalvelut Oulussa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #0f0f0f;
+      --accent: #9e9e9e;
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --text: #1a1a1a;
+      --muted: #6b6b6b;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      padding-top: 40px;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'EB Garamond', serif;
+      letter-spacing: -0.02em;
+    }
+
+    /* Demo Banner */
+    .demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 40px;
+      background: rgba(30, 30, 30, 0.88);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: rgba(255,255,255,0.9);
+      text-align: center;
+      letter-spacing: 0.02em;
+      padding: 0 16px;
+    }
+    .demo-banner a {
+      color: #d4d4d4;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      margin-left: 4px;
+    }
+    .demo-banner a:hover { color: #fff; }
+
+    /* Nav */
+    .nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(250, 250, 249, 0.92);
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      backdrop-filter: blur(12px);
+      transition: box-shadow 0.3s ease;
+    }
+    .nav.scrolled {
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 48px);
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .nav-logo {
+      font-family: 'EB Garamond', serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--primary);
+      line-height: 1.2;
+      text-decoration: none;
+      max-width: 220px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #555; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.875rem;
+      padding: 12px 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      letter-spacing: 0.02em;
+    }
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+    }
+    .btn:active { transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+    .btn-primary:hover { background: #222; }
+    .btn-ghost {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.35);
+      backdrop-filter: blur(8px);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.25); }
+    .btn-nav {
+      background: var(--primary);
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 0.8rem;
+      border-radius: 4px;
+    }
+    .btn-nav:hover { background: #2a2a2a; }
+
+    /* Hero */
+    .hero {
+      min-height: 100svh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1800&q=80');
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.55) 0%, rgba(5,5,5,0.75) 100%);
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 clamp(16px, 5vw, 48px);
+      max-width: 900px;
+      animation: heroFadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.78);
+      line-height: 1.7;
+      max-width: 620px;
+      margin: 0 auto 32px;
+    }
+    .hero-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 36px;
+    }
+    .hero-rating .stars {
+      display: flex;
+      gap: 3px;
+    }
+    .hero-rating .stars i {
+      width: 16px; height: 16px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+    .hero-rating span {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.7);
+      font-weight: 500;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Section styles */
+    .section-tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+    .section-subtitle {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+    .section-header-center {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .section-header-center .section-subtitle {
+      margin: 12px auto 0;
+    }
+
+    /* Services */
+    .services-section {
+      background: #f4f4f2;
+      padding: clamp(64px, 10vw, 120px) 0;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .service-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+    .service-icon-wrap {
+      width: 56px; height: 56px;
+      border-radius: 12px;
+      background: rgba(100,100,100,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .service-icon-wrap i {
+      width: 28px; height: 28px;
+      color: #3a3a3a;
+    }
+    .service-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+      font-family: 'EB Garamond', serif;
+    }
+    .service-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* Why us */
+    .whyus-section {
+      background: #fff;
+      padding: clamp(64px, 10vw, 120px) 0;
+    }
+    .whyus-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 40px;
+      margin-top: 64px;
+    }
+    .whyus-item {
+      text-align: center;
+    }
+    .whyus-icon {
+      width: 56px; height: 56px;
+      margin: 0 auto 20px;
+      color: #3a3a3a;
+    }
+    .whyus-icon i {
+      width: 48px; height: 48px;
+    }
+    .whyus-item h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    .whyus-item p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
+    /* Reviews */
+    .reviews-section {
+      background: #f7f7f5;
+      padding: clamp(64px, 10vw, 120px) 0;
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .review-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+    .review-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 16px;
+    }
+    .review-stars i {
+      width: 16px; height: 16px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+    .review-stars i.empty {
+      color: #d4d4d4;
+      fill: #d4d4d4;
+    }
+    .review-quote {
+      font-size: 0.92rem;
+      color: #444;
+      font-style: italic;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .review-author {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .review-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.72rem;
+      color: #4caf50;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      margin-left: 8px;
+    }
+    .review-badge i {
+      width: 13px; height: 13px;
+      color: #4caf50;
+    }
+
+    /* Contact */
+    .contact-section {
+      background: #f4f4f2;
+      padding: clamp(64px, 10vw, 120px) 0;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hero h1 { font-size: 2.2rem; }
+    }
+    .contact-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .contact-icon-wrap {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon-wrap i {
+      width: 20px; height: 20px;
+      color: #3a3a3a;
+    }
+    .contact-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .contact-value {
+      font-size: 0.95rem;
+      color: var(--text);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+    .maps-wrapper {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--primary);
+      padding: 48px 0 32px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 48px);
+    }
+    .footer-name {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 8px;
+    }
+    .footer-address {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+    .footer-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+      margin-bottom: 20px;
+    }
+    .footer-bottom {
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.03em;
+    }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Horizontal rule decoration */
+    .title-underline {
+      width: 48px;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 2px;
+      margin: 16px auto 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 48px);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- [1] DEMO BANNER -->
+  <div class="demo-banner">
+    <span>Asianajotoimisto Tolonen &amp; Teittinen — tämä esimerkkisivu on tehty juuri teille &nbsp;·&nbsp; Haluatko oman? <a href="mailto:team@masasite.com">Ota yhteyttä →</a></span>
+  </div>
+
+  <!-- [2] STICKY NAV -->
+  <nav class="nav" id="mainNav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">Tolonen &amp; Teittinen</a>
+      <ul class="nav-links">
+        <li><a href="#palvelut">Palvelut</a></li>
+        <li><a href="#aukioloajat">Aukioloajat</a></li>
+        <li><a href="#yhteystiedot">Yhteystiedot</a></li>
+      </ul>
+      <a href="#yhteystiedot" class="btn btn-nav">Ota yhteyttä</a>
+    </div>
+  </nav>
+
+  <!-- [3] HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Asianajotoimisto · Oulu · Suomi</p>
+      <h1>Asianajotoimisto Finsta – oikeuspalvelut Oulussa</h1>
+      <p class="hero-subtitle">Asianajotoimisto Finsta Oy tarjoaa ammattitaitoista oikeudellista neuvontaa ja asianajoa. Toimistolla on pitkä kokemus eri oikeusalueiden asioista.</p>
+      <div class="hero-rating">
+        <div class="stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <span>4.5 / 5 &nbsp;(2 arvostelua, Google)</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="#yhteystiedot" class="btn btn-primary">Ota yhteyttä nyt</a>
+        <a href="#palvelut" class="btn btn-ghost">Tutustu palveluihin</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- [4] SERVICES -->
+  <section class="services-section" id="palvelut">
+    <div class="container">
+      <div class="section-header-center reveal">
+        <span class="section-tag">Palvelumme</span>
+        <h2 class="section-title">Oikeudellinen osaaminen käytössäsi</h2>
+        <div class="title-underline"></div>
+        <p class="section-subtitle" style="margin-top:16px;">Kokeneet asianajajat Matti Tolonen ja Sampsa Teittinen palvelevat liike-elämän ja yksityishenkilöiden juridisissa kysymyksissä.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal" style="transition-delay: 0ms;">
+          <div class="service-icon-wrap">
+            <i data-lucide="book-open"></i>
+          </div>
+          <h3>Oikeudellinen neuvonta</h3>
+          <p>Ammattitaitoinen oikeusneuvonta liike-elämän ja yksityishenkilöiden asioissa. Selkeät vastaukset monimutkaisiin oikeudellisiin kysymyksiin.</p>
+        </div>
+        <div class="service-card reveal" style="transition-delay: 80ms;">
+          <div class="service-icon-wrap">
+            <i data-lucide="scale"></i>
+          </div>
+          <h3>Asianajo</h3>
+          <p>Riitaisissa asioissa antautuneet asianajajat puolustamaan oikeuksiaasi. Vahva kokemus oikeudenkäynneistä ja riidanratkaisusta.</p>
+        </div>
+        <div class="service-card reveal" style="transition-delay: 160ms;">
+          <div class="service-icon-wrap">
+            <i data-lucide="briefcase"></i>
+          </div>
+          <h3>Juridinen konsultointi</h3>
+          <p>Strateginen oikeudellinen neuvonta vaativissa liiketoiminnan kysymyksissä. Ennakoiva oikeusapu yrityksen kasvun tueksi.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [5] WHY CHOOSE US -->
+  <section class="whyus-section">
+    <div class="container">
+      <div class="section-header-center reveal">
+        <span class="section-tag">Miksi valita meidät</span>
+        <h2 class="section-title">Luotettava kumppani oikeudellisissa asioissa</h2>
+        <div class="title-underline"></div>
+      </div>
+      <div class="whyus-grid">
+        <div class="whyus-item reveal" style="transition-delay: 0ms;">
+          <div class="whyus-icon">
+            <i data-lucide="award"></i>
+          </div>
+          <h3>Kokeneet asianajajat</h3>
+          <p>Matti Tolonen ja Sampsa Teittinen tuovat vahvan juridisen osaamisen jokaisen asiakkaan palveluun.</p>
+        </div>
+        <div class="whyus-item reveal" style="transition-delay: 80ms;">
+          <div class="whyus-icon">
+            <i data-lucide="map-pin"></i>
+          </div>
+          <h3>Paikalliset asiantuntijat</h3>
+          <p>Oululaiset ammattilaiset vuosien kokemuksella – tunnemme alueen olosuhteet ja toimintaympäristön.</p>
+        </div>
+        <div class="whyus-item reveal" style="transition-delay: 160ms;">
+          <div class="whyus-icon">
+            <i data-lucide="shield-check"></i>
+          </div>
+          <h3>Luotettava neuvonantaja</h3>
+          <p>Luotettava kumppani sekä liike- että yksityisasioissa. Asiakkaasi etu on aina etusijalla.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [6] REVIEWS -->
+  <section class="reviews-section">
+    <div class="container">
+      <div class="section-header-center reveal">
+        <span class="section-tag">Asiakaspalautteet</span>
+        <h2 class="section-title">Mitä asiakkaamme sanovat</h2>
+        <div class="title-underline"></div>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card reveal" style="transition-delay: 0ms;">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star" class="empty"></i>
+          </div>
+          <p class="review-quote">"Expert law firm!"</p>
+          <div>
+            <span class="review-author">Ane Ahnger</span>
+            <span class="review-badge"><i data-lucide="check-circle"></i> Vahvistettu</span>
+          </div>
+        </div>
+        <div class="review-card reveal" style="transition-delay: 80ms;">
+          <div class="review-stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+          <p class="review-quote">"Erittäin ammattitaitoinen ja luotettava asianajotoimisto. Suosittelen lämpimästi."</p>
+          <div>
+            <span class="review-author">Iris Pietilä</span>
+            <span class="review-badge"><i data-lucide="check-circle"></i> Vahvistettu</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [7] OPENING HOURS -->
+  <section id="aukioloajat" style="background:#fff; padding: clamp(64px, 10vw, 120px) 0;">
+    <div class="container">
+      <div class="section-header-center reveal">
+        <span class="section-tag">Aukioloajat</span>
+        <h2 class="section-title">Toimiston aukioloajat</h2>
+        <div class="title-underline"></div>
+      </div>
+      <div class="reveal" style="max-width: 480px; margin: 0 auto;">
+        <div style="background: #f7f7f5; border-radius: 16px; padding: 32px 36px; box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+            <i data-lucide="clock" style="width:20px;height:20px;color:#6b6b6b;"></i>
+            <span style="font-size:0.85rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#6b6b6b;">Aukioloaika</span>
+          </div>
+          <p style="font-size:0.95rem; color:#555; line-height:1.75;">Aukioloaikatietoja ei ole saatavilla. Ota yhteyttä puhelimitse tai sähköpostitse niin sovimme ajan teille sopivaan ajankohtaan.</p>
+          <div style="margin-top:24px; padding-top:20px; border-top:1px solid rgba(0,0,0,0.07);">
+            <a href="tel:0888821820" style="display:inline-flex;align-items:center;gap:8px;font-size:0.95rem;font-weight:600;color:#1a1a1a;text-decoration:none;">
+              <i data-lucide="phone" style="width:16px;height:16px;"></i>
+              08 8821820
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [8] CONTACT -->
+  <section class="contact-section" id="yhteystiedot">
+    <div class="container">
+      <div class="section-header-center reveal">
+        <span class="section-tag">Yhteystiedot</span>
+        <h2 class="section-title">Ota yhteyttä</h2>
+        <div class="title-underline"></div>
+        <p class="section-subtitle" style="margin-top:16px;">Olemme valmiita auttamaan. Ota yhteyttä ja sovitaan tapaaminen.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="reveal">
+          <div class="contact-info-item">
+            <div class="contact-icon-wrap">
+              <i data-lucide="map-pin"></i>
+            </div>
+            <div>
+              <div class="contact-label">Osoite</div>
+              <div class="contact-value">Uusikatu 35, TO 203<br />90100 Oulu, Suomi</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon-wrap">
+              <i data-lucide="phone"></i>
+            </div>
+            <div>
+              <div class="contact-label">Puhelin</div>
+              <div class="contact-value"><a href="tel:0888821820" style="color:inherit;text-decoration:none;">08 8821820</a></div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon-wrap">
+              <i data-lucide="globe"></i>
+            </div>
+            <div>
+              <div class="contact-label">Verkkosivut</div>
+              <div class="contact-value"><a href="http://www.kttlex.fi/" target="_blank" rel="noopener" style="color:inherit;">www.kttlex.fi</a></div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon-wrap">
+              <i data-lucide="users"></i>
+            </div>
+            <div>
+              <div class="contact-label">Asianajajat</div>
+              <div class="contact-value">Matti Tolonen<br />Sampsa Teittinen</div>
+            </div>
+          </div>
+          <div style="margin-top:16px;">
+            <a href="tel:0888821820" class="btn btn-primary" style="width:100%;justify-content:center;">
+              <i data-lucide="phone" style="width:16px;height:16px;"></i>
+              Ota yhteyttä nyt
+            </a>
+          </div>
+        </div>
+        <div class="reveal maps-wrapper" style="transition-delay:80ms;">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Uusikatu%2035%2C%20TO%20203%2C%2090100%20Oulu%2C%20Suomi%2C%20Oulu%2C%20Finland&language=fi"
+            width="100%"
+            height="380"
+            style="border:0;display:block;min-height:280px;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Asianajotoimisto Tolonen & Teittinen kartta">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [9] FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-name">Asianajotoimisto Tolonen &amp; Teittinen</div>
+      <div class="footer-address">
+        Uusikatu 35, TO 203 · 90100 Oulu · Suomi<br />
+        Puh. 08 8821820 · <a href="http://www.kttlex.fi/" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.4);text-decoration:none;">www.kttlex.fi</a>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">Demo luotu masasite.com palvelulla</div>
+    </div>
+  </footer>
+
+  <script>
+    // Init Lucide icons
+    lucide.createIcons();
+
+    // Nav scroll effect
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Reveal on scroll
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    revealEls.forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
