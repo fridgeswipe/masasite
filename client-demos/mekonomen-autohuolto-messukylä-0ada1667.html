@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mekonomen Autohuolto Messukylä | JK-Performance Oy – Tampere</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #1a1a1a;
+      --accent: #f59e0b;
+      --bg: #0d1117;
+      --surface: #161b22;
+      --text: #f0f6ff;
+      --muted: rgba(240,246,255,0.6);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      padding-top: 40px;
+      font-family: 'Barlow', sans-serif;
+      background-color: #f8f7f4;
+      color: #1a1a1a;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    /* Demo banner */
+    #demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 40px;
+      z-index: 200;
+      background: rgba(245, 158, 11, 0.92);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      letter-spacing: 0.02em;
+      text-align: center;
+      padding: 0 16px;
+    }
+    #demo-banner a {
+      color: #fff;
+      font-weight: 700;
+      text-decoration: underline;
+      margin-left: 4px;
+    }
+
+    /* Nav */
+    #main-nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: rgba(255,255,255,0.97);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      transition: backdrop-filter 0.3s, background 0.3s, box-shadow 0.3s;
+    }
+    #main-nav.scrolled {
+      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.88);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 48px);
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .nav-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #1a1a1a;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      max-width: 280px;
+    }
+    .nav-logo span {
+      color: #f59e0b;
+    }
+    .nav-links {
+      display: none;
+      gap: 32px;
+      list-style: none;
+    }
+    @media (min-width: 768px) { .nav-links { display: flex; } }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #374151;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #f59e0b; }
+    .nav-cta {
+      background: #f59e0b;
+      color: #1a1a1a;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 10px 24px;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      white-space: nowrap;
+    }
+    .nav-cta:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(245,158,11,0.35);
+      background: #e08d00;
+    }
+    .nav-cta:active { transform: translateY(-1px); }
+
+    /* Hero */
+    #hero {
+      min-height: 100svh;
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.68) 100%),
+        url('assets/mekonomen-autohuolto-messukylä-0ada1667/photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: clamp(80px, 12vw, 140px) clamp(16px, 5vw, 48px);
+    }
+    .hero-content {
+      max-width: 800px;
+      animation: heroFadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #f59e0b;
+      margin-bottom: 20px;
+      background: rgba(245,158,11,0.15);
+      border: 1px solid rgba(245,158,11,0.3);
+      padding: 6px 16px;
+      border-radius: 9999px;
+    }
+    .hero-h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin-bottom: 24px;
+    }
+    .hero-h1 span { color: #f59e0b; }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255,255,255,0.8);
+      max-width: 580px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+    .hero-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+    .hero-rating .stars {
+      display: flex;
+      gap: 3px;
+    }
+    .hero-rating .stars i {
+      width: 20px;
+      height: 20px;
+      color: #f59e0b;
+      fill: #f59e0b;
+    }
+    .hero-rating-text {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.85);
+      font-weight: 500;
+    }
+    .hero-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+    }
+    .btn-primary {
+      background: #f59e0b;
+      color: #1a1a1a;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 16px 36px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(245,158,11,0.4);
+      background: #e08d00;
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+    .btn-ghost {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 16px 36px;
+      border-radius: 9999px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.3);
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-ghost:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.22);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+    }
+    .btn-ghost:active { transform: translateY(-1px); }
+
+    /* Section base */
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(16px, 5vw, 48px);
+    }
+    .section-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #f59e0b;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      font-weight: 800;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 1rem;
+      color: #6b7280;
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* Services */
+    #palvelut {
+      background: #f3f4f6;
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .services-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .services-header .section-desc { margin: 0 auto; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    @media (min-width: 640px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .services-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .service-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+    .service-icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: rgba(245,158,11,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .service-icon-wrap i {
+      width: 28px;
+      height: 28px;
+      color: #f59e0b;
+    }
+    .service-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #1a1a1a;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+    .service-desc {
+      font-size: 0.9rem;
+      color: #6b7280;
+      line-height: 1.65;
+    }
+
+    /* Why us */
+    #why-us {
+      background: #ffffff;
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .why-header { text-align: center; margin-bottom: 64px; }
+    .why-header .section-desc { margin: 0 auto; }
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    @media (min-width: 768px) { .why-grid { grid-template-columns: repeat(3, 1fr); } }
+    .why-card {
+      text-align: center;
+      padding: 40px 28px;
+    }
+    .why-icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 24px;
+      color: #f59e0b;
+    }
+    .why-icon i {
+      width: 100%;
+      height: 100%;
+    }
+    .why-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .why-text {
+      font-size: 0.9rem;
+      color: #6b7280;
+      line-height: 1.7;
+    }
+
+    /* Gallery strip */
+    #gallery {
+      background: #1a1a1a;
+      padding-block: 0;
+    }
+    .gallery-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      height: 300px;
+    }
+    @media (min-width: 768px) { .gallery-strip { height: 380px; } }
+    .gallery-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.85);
+      transition: filter 0.3s ease, transform 0.3s ease;
+    }
+    .gallery-img:hover { filter: brightness(1); transform: scale(1.03); }
+    .gallery-item { overflow: hidden; }
+
+    /* Reviews */
+    #arvostelut {
+      background: #f8f7f4;
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .reviews-header { text-align: center; margin-bottom: 64px; }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    @media (min-width: 768px) { .reviews-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .review-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .review-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 16px;
+    }
+    .review-stars i {
+      width: 16px;
+      height: 16px;
+    }
+    .star-filled { color: #f59e0b; fill: #f59e0b; }
+    .star-empty  { color: #d1d5db; fill: #d1d5db; }
+    .review-quote {
+      font-size: 0.9rem;
+      color: #4b5563;
+      font-style: italic;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .review-author {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      letter-spacing: 0.02em;
+    }
+    .review-divider {
+      width: 32px;
+      height: 3px;
+      background: #f59e0b;
+      border-radius: 2px;
+      margin-bottom: 20px;
+    }
+
+    /* Opening hours */
+    #aukioloajat {
+      background: #ffffff;
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .hours-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (min-width: 768px) { .hours-layout { grid-template-columns: 1fr 1fr; } }
+
+    .hours-card {
+      background: #f3f4f6;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .hours-card-header {
+      background: #1a1a1a;
+      padding: 24px 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hours-card-header i {
+      width: 20px;
+      height: 20px;
+      color: #f59e0b;
+    }
+    .hours-card-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 32px;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-day {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #374151;
+    }
+    .hours-time {
+      font-size: 0.9rem;
+      color: #6b7280;
+      font-weight: 500;
+    }
+    .hours-closed {
+      color: #ef4444;
+      font-weight: 600;
+    }
+    .hours-open {
+      color: #10b981;
+      font-weight: 600;
+    }
+    .hours-info {
+      padding: 32px 0;
+    }
+    .hours-info-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+    }
+    .hours-info-text {
+      font-size: 0.95rem;
+      color: #6b7280;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+    .hours-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16,185,129,0.1);
+      color: #065f46;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border-radius: 9999px;
+      border: 1px solid rgba(16,185,129,0.2);
+    }
+    .hours-badge i {
+      width: 14px;
+      height: 14px;
+      color: #10b981;
+    }
+
+    /* Contact */
+    #yhteystiedot {
+      background: #f3f4f6;
+      padding-block: clamp(64px, 10vw, 120px);
+    }
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    @media (min-width: 768px) { .contact-layout { grid-template-columns: 1fr 1fr; } }
+
+    .contact-info { padding: 8px 0; }
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .contact-icon-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(245,158,11,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon-wrap i {
+      width: 20px;
+      height: 20px;
+      color: #f59e0b;
+    }
+    .contact-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #9ca3af;
+      margin-bottom: 4px;
+    }
+    .contact-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      line-height: 1.5;
+    }
+    .contact-value a {
+      color: #1a1a1a;
+      text-decoration: none;
+    }
+    .contact-value a:hover { color: #f59e0b; }
+
+    .map-wrap {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    }
+    .map-wrap iframe {
+      display: block;
+      width: 100%;
+      height: 380px;
+      border: 0;
+    }
+    @media (max-width: 640px) { .map-wrap iframe { height: 280px; } }
+
+    /* Footer */
+    footer {
+      background: #111111;
+      padding: 48px clamp(16px, 5vw, 48px) 32px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 16px;
+    }
+    .footer-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+    .footer-logo span { color: #f59e0b; }
+    .footer-address {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.6;
+    }
+    .footer-phone a {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-phone a:hover { color: #f59e0b; }
+    .footer-divider {
+      width: 40px;
+      height: 2px;
+      background: rgba(245,158,11,0.4);
+      border-radius: 1px;
+      margin: 8px auto;
+    }
+    .footer-credit {
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.04em;
+    }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- [1] DEMO BANNER -->
+  <div id="demo-banner">
+    <span>Mekonomen Autohuolto Messukylä | JK-Performance Oy — tämä esimerkkisivu on tehty juuri teille&nbsp;·&nbsp;Haluatko oman? <a href="mailto:team@masasite.com">Ota yhteyttä →</a></span>
+  </div>
+
+  <!-- [2] STICKY NAV -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <span style="color:#f59e0b;">Mekonomen</span> Autohuolto Messukylä
+      </div>
+      <ul class="nav-links">
+        <li><a href="#palvelut">Palvelut</a></li>
+        <li><a href="#aukioloajat">Aukioloajat</a></li>
+        <li><a href="#yhteystiedot">Yhteystiedot</a></li>
+      </ul>
+      <a href="tel:0440766168" class="nav-cta">
+        <i data-lucide="phone" style="width:14px;height:14px;display:inline;vertical-align:middle;margin-right:4px;"></i>
+        Soita nyt
+      </a>
+    </div>
+  </nav>
+
+  <!-- [3] HERO -->
+  <section id="hero">
+    <div class="hero-content">
+      <div class="hero-eyebrow">Tampere · Messukylä · JK-Performance Oy</div>
+      <h1 class="hero-h1">Luotettava autohuolto<br /><span>Messukylässä</span></h1>
+      <p class="hero-sub">Mekonomen Autohuolto Messukylä tarjoaa ammattimaista autojen huoltoa ja korjausta Tampereella. JK-Performance Oy:n johdolla saat laadukasta palvelua kokeneilta mekaanikoilta.</p>
+      <div class="hero-rating">
+        <div class="stars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star" style="color:rgba(245,158,11,0.35);fill:rgba(245,158,11,0.35);"></i>
+        </div>
+        <span class="hero-rating-text">4.0/5 · 77 arvostelua Google-palvelussa</span>
+      </div>
+      <div class="hero-btns">
+        <a href="tel:0440766168" class="btn-primary">
+          <i data-lucide="phone" style="width:18px;height:18px;"></i>
+          Varaa huolto nyt
+        </a>
+        <a href="#palvelut" class="btn-ghost">
+          Tutustu palveluihin
+          <i data-lucide="arrow-right" style="width:18px;height:18px;"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- [4] SERVICES -->
+  <section id="palvelut">
+    <div class="section-container">
+      <div class="services-header reveal">
+        <span class="section-eyebrow">Palvelumme</span>
+        <h2 class="section-title">Kaikki autohuollon tarpeet<br />yhdestä paikasta</h2>
+        <p class="section-desc">Ammattitaitoinen henkilöstömme huolehtii autostasi alusta loppuun. Käytämme laadukkaita varaosia ja moderneja laitteita.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal" style="--i:0;">
+          <div class="service-icon-wrap">
+            <i data-lucide="wrench"></i>
+          </div>
+          <div class="service-title">Autojen huolto</div>
+          <p class="service-desc">Säännöllinen huolto ja kunnossapito kaikille automalleille. Varmistamme, että autosi on aina turvallinen ja toimintakuntoinen.</p>
+        </div>
+        <div class="service-card reveal" style="--i:1;">
+          <div class="service-icon-wrap">
+            <i data-lucide="settings"></i>
+          </div>
+          <div class="service-title">Korjauspalvelut</div>
+          <p class="service-desc">Moottori-, jarru- ja muut korjaustyöt ammattilaisvoimin. Löydämme vian ja korjaamme sen tehokkaasti ja kestävästi.</p>
+        </div>
+        <div class="service-card reveal" style="--i:2;">
+          <div class="service-icon-wrap">
+            <i data-lucide="zap"></i>
+          </div>
+          <div class="service-title">Diagnostiikka</div>
+          <p class="service-desc">Nopea ja tarkka vikadiagnostiikka modernilla tekniikalla. Selvitämme ongelman syyn nopeasti ilman arvailu.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY STRIP -->
+  <div id="gallery">
+    <div class="gallery-strip">
+      <div class="gallery-item">
+        <img src="assets/mekonomen-autohuolto-messukylä-0ada1667/photo1.jpg" alt="Autohuolto Tampere" class="gallery-img" />
+      </div>
+      <div class="gallery-item">
+        <img src="assets/mekonomen-autohuolto-messukylä-0ada1667/photo2.jpg" alt="Mekonomen korjaamo" class="gallery-img" />
+      </div>
+      <div class="gallery-item">
+        <img src="assets/mekonomen-autohuolto-messukylä-0ada1667/photo3.jpg" alt="JK-Performance autohuolto" class="gallery-img" />
+      </div>
+    </div>
+  </div>
+
+  <!-- [5] WHY CHOOSE US -->
+  <section id="why-us">
+    <div class="section-container">
+      <div class="why-header reveal">
+        <span class="section-eyebrow">Miksi valita meidät</span>
+        <h2 class="section-title">Luotettava valinta Tampereella</h2>
+        <p class="section-desc" style="margin:0 auto;">Olemme ansainneet asiakkaidemme luottamuksen ammattitaidolla ja rehellisellä palvelulla.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card reveal" style="--i:0;">
+          <div class="why-icon">
+            <i data-lucide="award"></i>
+          </div>
+          <div class="why-title">Kokeneet mekaannikot ja luotettava palvelu</div>
+          <p class="why-text">Tiimimme koostuu kokeneista ammattilaisista, jotka tuntevat kaikki automerkitä. Palvelemme rehellisesti ja avoimesti.</p>
+        </div>
+        <div class="why-card reveal" style="--i:1;">
+          <div class="why-icon">
+            <i data-lucide="users"></i>
+          </div>
+          <div class="why-title">Hyvät asiakasarviot ja pitkä historia</div>
+          <p class="why-text">Vuosien kokemus ja yli 77 Google-arvostelua kertovat tyytyväisistä asiakkaista ja laadukkaasta tekemisestä.</p>
+        </div>
+        <div class="why-card reveal" style="--i:2;">
+          <div class="why-icon">
+            <i data-lucide="clock"></i>
+          </div>
+          <div class="why-title">Kätevät aukioloajat arkisin klo 8–17</div>
+          <p class="why-text">Palvelemme arkipäivisin kello 8–17. Jätä autosi aamulla ja nouda se työn jälkeen — helppo ja vaivaton tapa.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [6] REVIEWS -->
+  <section id="arvostelut">
+    <div class="section-container">
+      <div class="reviews-header reveal">
+        <span class="section-eyebrow">Asiakasarviot</span>
+        <h2 class="section-title">Mitä asiakkaamme sanovat</h2>
+        <p class="section-desc" style="margin:0 auto;">Oikeat kokemukset oikeilta ihmisiltä. Lue mitä he ovat meistä kirjoittaneet Google-palvelussa.</p>
+      </div>
+      <div class="reviews-grid">
+
+        <!-- 5 stars -->
+        <div class="review-card reveal" style="--i:0;">
+          <div class="review-stars">
+            <i data-lucide="star" class="star-filled"></i>
+            <i data-lucide="star" class="star-filled"></i>
+            <i data-lucide="star" class="star-filled"></i>
+            <i data-lucide="star" class="star-filled"></i>
+            <i data-lucide="star" class="star-filled"></i>
+          </div>
+          <div class="review-divider"></div>
+          <p class="review-quote">"Fast and effective"</p>
+          <div class="review-author">Pierre-Yves Paillard</div>
+        </div>
+
+        <!-- 1 star -->
+        <div class="review-card reveal" style="--i:1;">
+          <div class="review-stars">
+            <i data-lucide="star" class="star-filled"></i>
+            <i data-lucide="star" class="star-empty"></i>
+            <i data-lucide="star" class="star-empty"></i>
+            <i data-lucide="star" class="star-empty"></i>
+            <i data-lucide="star" class="star-empty"></i>
+          </div>
+          <div class="review-divider" style="background:#ef4444;"></div>
+          <p class="review-quote">"Vaihdatin auton pakoputken lokakuussa. Talven aikana alkoi kuulua kova ääni ja myöhemmin huomasin, että koko putki on löysällä. Auto on ajettu kaupunkiajossa varsin maltillisesti."</p>
+          <div class="review-author">Minna Ruuska</div>
+        </div>
+
+        <!-- 2 stars -->
+        <div class="review-card reveal" style="--i:2;">
+          <div class="review-stars">
+            <i data-lucide="star" class="star-filled"></i>
+            <i data-lucide="star" class="star-filled"></i>
+            <i data-lucide="star" class="star-empty"></i>
+            <i data-lucide="star" class="star-empty"></i>
+            <i data-lucide="star" class="star-empty"></i>
+          </div>
+          <div class="review-divider" style="background:#f97316;"></div>
+          <p class="review-quote">"Vein auton nelipyöräsuuntaukseen klo 8 ja odotin sen valmistuvan aamuun mennessä, mutta auto oli valmis vasta klo 16 jälkeen."</p>
+          <div class="review-author">Aulis Lamminmäki</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- [7] OPENING HOURS -->
+  <section id="aukioloajat">
+    <div class="section-container">
+      <div class="hours-layout">
+        <div class="reveal">
+          <span class="section-eyebrow">Aukioloajat</span>
+          <div class="hours-info-title">Olemme avoinna<br />arkisin klo 8–17</div>
+          <p class="hours-info-text">Palvelemme teitä maanantaista perjantaihin. Varaamme ajan puhelimitse tai voit tulla suoraan korjaamolle. Nopea palvelu on meille kunnia-asia.</p>
+          <div class="hours-badge">
+            <i data-lucide="check-circle"></i>
+            Nyt auki arkisin
+          </div>
+          <div style="margin-top:32px;">
+            <a href="tel:0440766168" class="btn-primary" style="display:inline-flex;">
+              <i data-lucide="phone" style="width:18px;height:18px;"></i>
+              044 0766168
+            </a>
+          </div>
+        </div>
+        <div class="reveal" style="--i:1;">
+          <div class="hours-card">
+            <div class="hours-card-header">
+              <i data-lucide="clock"></i>
+              <span class="hours-card-title">Viikkoaikataulu</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Maanantai</span>
+              <span class="hours-time hours-open">8:00 – 17:00</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Tiistai</span>
+              <span class="hours-time hours-open">8:00 – 17:00</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Keskiviikko</span>
+              <span class="hours-time hours-open">8:00 – 17:00</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Torstai</span>
+              <span class="hours-time hours-open">8:00 – 17:00</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Perjantai</span>
+              <span class="hours-time hours-open">8:00 – 17:00</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Lauantai</span>
+              <span class="hours-time hours-closed">Suljettu</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Sunnuntai</span>
+              <span class="hours-time hours-closed">Suljettu</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [8] CONTACT -->
+  <section id="yhteystiedot">
+    <div class="section-container">
+      <div class="reveal" style="margin-bottom:48px;text-align:center;">
+        <span class="section-eyebrow">Yhteystiedot</span>
+        <h2 class="section-title">Ota yhteyttä tai käy paikan päällä</h2>
+        <p class="section-desc" style="margin:0 auto;">Löydät meidät helposti Messukylästä. Varaa aika soittamalla tai käy suoraan korjaamolle.</p>
+      </div>
+      <div class="contact-layout">
+        <div class="contact-info reveal">
+          <div class="contact-item">
+            <div class="contact-icon-wrap">
+              <i data-lucide="map-pin"></i>
+            </div>
+            <div>
+              <div class="contact-label">Osoite</div>
+              <div class="contact-value">Sulapuronkatu 4<br />33560 Tampere, Suomi</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon-wrap">
+              <i data-lucide="phone"></i>
+            </div>
+            <div>
+              <div class="contact-label">Puhelin</div>
+              <div class="contact-value"><a href="tel:0440766168">044 0766168</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon-wrap">
+              <i data-lucide="clock"></i>
+            </div>
+            <div>
+              <div class="contact-label">Aukioloajat</div>
+              <div class="contact-value">Ma–Pe: 8:00–17:00<br />La–Su: Suljettu</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon-wrap">
+              <i data-lucide="map-pin"></i>
+            </div>
+            <div>
+              <div class="contact-label">Kaupunki</div>
+              <div class="contact-value">Tampere · Messukylä</div>
+            </div>
+          </div>
+          <a href="tel:0440766168" class="btn-primary" style="margin-top:8px;display:inline-flex;">
+            <i data-lucide="phone" style="width:18px;height:18px;"></i>
+            Varaa huolto nyt
+          </a>
+        </div>
+        <div class="map-wrap reveal" style="--i:1;">
+          <iframe
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCrW5dWcdSJSeX9g6shHfo20dDGg1MbJzc&q=Sulapuronkatu%204%2C%2033560%20Tampere%2C%20Suomi%2C%20Tampere%2C%20Finland&language=fi"
+            width="100%"
+            height="380"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Mekonomen Autohuolto Messukylä kartta">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [9] FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <span>Mekonomen</span> Autohuolto Messukylä
+      </div>
+      <div class="footer-address">
+        Sulapuronkatu 4, 33560 Tampere, Suomi<br />
+        JK-Performance Oy
+      </div>
+      <div class="footer-phone">
+        <a href="tel:0440766168">044 0766168</a>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-credit">Demo luotu masasite.com palvelulla</div>
+    </div>
+  </footer>
+
+  <script>
+    // Lucide icons
+    lucide.createIcons();
+
+    // Hero star fills
+    document.querySelectorAll('.hero-rating .stars i').forEach((star, i) => {
+      if (i < 4) {
+        star.setAttribute('fill', '#f59e0b');
+        star.style.fill = '#f59e0b';
+        star.style.color = '#f59e0b';
+      }
+    });
+
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Scroll reveal with stagger
+    const reveals = document.querySelectorAll('.reveal');
+    reveals.forEach((el, i) => {
+      const stagger = el.style.getPropertyValue('--i');
+      if (stagger) {
+        el.style.transitionDelay = `${parseFloat(stagger) * 80}ms`;
+      }
+    });
+
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    reveals.forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
